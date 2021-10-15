@@ -9,6 +9,7 @@
       <button v-on:click="minusItemCart(product)">-</button>
     </div>
   </div>
+  <p>{{ sum }}</p>
 </template>
 
 <script>
@@ -17,75 +18,81 @@ export default {
   data: () => {
     return {
       totalOrder: [],
+      dateOrder:[],
       products: [
         {
           name: 'First',
           cost: 1000,
           image1: 'Testpic1',
           image2: './assets/Testpic1.jpg',
-          count: 0
+          count: 0,
+          id: 1
         },
         {
           name: 'Second',
           cost: 2000,
           image1: 'Testpic2',
           image2: './assets/Testpic2.jpg',
-          count: 0
+          count: 0,
+          id: 2
         },
         {
           name: 'Third',
           cost: 3000,
           image1: 'Testpic2',
           image2: './assets/Testpic2.jpg',
-          count: 0
+          count: 0,
+          id: 3
         },
         {
           name: '4th',
           cost: 1000,
           image1: 'Testpic2',
           image2: './assets/Testpic2.jpg',
-          count: 0
+          count: 0,
+          id: 4
         },
         {
           name: '5th',
           cost: 2000,
           image1: 'Testpic2',
           image2: './assets/Testpic2.jpg',
-          count: 0
+          count: 0,
+          id: 5
         },
         {
           name: 'End',
           cost: 2000,
           image1: 'Testpic1',
           image2: './assets/Testpic1.jpg',
-          count: 0
+          count: 0,
+          id: 6
         }
       ]
     }
   },
   methods: {
     addItemCart(product) {
-      this.totalOrder.push(product.cost);
+      this.totalOrder.push(product);
       console.log(this.totalOrder)
       console.log(this.totalOrder.length);
-      // let sum = 0;
-      // for(let i = 0; i < this.totalOrder.length; i++){
-      //   console.log(this.totalOrder[i])
-      //   sum += this.totalOrder[i];
-      // }
-      // console.log("SUM:", sum);
-      let sum = this.totalOrder.reduce((cost, curr) => {
-        return curr + cost;
+      let sum = this.totalOrder.reduce((value, curr) => {
+        console.log("add-value : ", value);
+        console.log("add-curr : ", curr)
+        return value + curr.cost;
       }, 0);
       console.log("SUM:", sum);
     },
     minusItemCart(product) {
-      this.totalOrder.splice(this.totalOrder.indexOf(product));
-        let sum = this.totalOrder.reduce((cost, curr) => {
-        return curr + cost;
-        }, 0);
-        console.log(this.totalOrder)
-      console.log("SUM:", sum);
+      if (this.totalOrder.indexOf(product) > -1) {
+        this.totalOrder.splice(this.totalOrder.indexOf(product), 1);
+          let sum = this.totalOrder.reduce((value, curr) => {
+            console.log("minus-value : ", value);
+            console.log("minus-curr : ", curr);
+            return curr.cost + value;
+          }, 0);
+        console.log("SUM:", sum);
+      }
     }
   }
 }
