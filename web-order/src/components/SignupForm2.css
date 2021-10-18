@@ -1,0 +1,27 @@
+* {
+    box-sizing: border-box;
+}
+/* 박스의 크기 계산 기준 */
+
+body {
+    background-color:burlywood;
+}
+
+.title {
+    margin-bottom: 2rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    position: absolute; 
+    top: 32px;
+    right: 5px;
+    pointer-events: none;
+    /* 해당 영역의 이벤트에 응답하지 않도록 */
+    z-index: 2;
+}
