@@ -6,7 +6,8 @@
     <input name="name" type="text" /><br />
 
     <label for="password">비밀번호</label>
-    <input name="password" type="password" /><br />
+    <input name="password" id="password" type="password" onkeyup="return passwordCheck();" /><br />
+    <span id="check">비밀번호를 입력해주세요.</span><br /><br />
 
     <input type="button" value="회원가입" onclick="ValidateEmail(document.signupForm.email)" />
 
@@ -28,4 +29,37 @@
             return false;
         }
     }
+
+    //  비밀번호 보안 수준 체크
+
+    function passwordCheck() {
+        const check = document.getElementById("check");
+        const form = document.signupForm;
+        const strongRegex = new RegExp("^(?=.{14,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
+        const mediumRegex = new RegExp("^(?=.{10,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
+        const enoughRegex = new RegExp("(?=.{8,}).*", "g");
+        const pwd = form.password.value;
+
+        if (pwd.length == 0) {
+            // check.insertAdjacentHTML('beforeend', '<span>비밀번호를 입력해주세요.</span>');
+            check.innerHTML = '<span>비밀번호를 입력해주세요.</span>';
+
+            //  innerHTML은 느리고 XSS 공격에 취약. 
+            //  그러나 노드를 새로 그려야 하므로 별 수 없나?
+
+        } else if (enoughRegex.test(pwd) == false) {
+            // check.insertAdjacentHTML('beforeend', '<span>너무 짧습니다!</span>');
+            check.innerHTML = '<span>너무 짧습니다!</span>';
+        } else if (strongRegex.test(pwd)) {
+            // check.insertAdjacentHTML('beforeend','<span style="color:green">안전!</span>');
+            check.innerHTML = '<span style="color:green">매우 복잡한 비밀번호!</span>';
+        } else if (mediumRegex.test(pwd)) {
+            // check.insertAdjacentHTML('beforeend','<span style="color:orange">보통!</span>');
+            check.innerHTML = '<span style="color:orange">보통 수준의 비밀번호!</span>';
+        } else {
+            // check.insertAdjacentHTML('beforeend','<span style="color:red">취약!</span>');
+            check.innerHTML = '<span style="color:red">취약한 비밀번호!</span>';
+        }
+    }
+    
 </script>
