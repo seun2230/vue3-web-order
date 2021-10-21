@@ -17,9 +17,37 @@ class FormValidator {
             self.fields.forEach(field => {  //  forEch -> 입력값 각 문자에 대해 검증시도
                 const input = document.querySelector(`#${field}`);
                 self.validateFields(input)
-            })
-        })
+            });
+            form.submit();
+            
+            // self.clearForm();
+        });
     }
+
+    //  폼 삭제
+    //  이거 form.reset(); 과 같은 기능 아닌가?
+    // clearForm() {
+    //     let messageErr = [];
+    //     const errorMessages = document.querySelectorAll('.error-message');
+    //     errorMessages.forEach(err => {
+    //         if (err.innerText != "") {
+    //             messageErr.push(err.innerText);
+    //         }
+    //     });
+
+    //     if (messageErr.length == 0) {
+    //         const inputs = document.querySelectorAll('input');
+    //         const svgIcons = document.querySelectorAll('.icon');
+    //         svgIcons.forEach(icon => {
+    //             icon.classList.add('hidden');
+    //         });
+    //         inputs.forEach(input => {
+    //             if (input.value != '회원 가입') {
+    //                 input.value = "";
+    //             }
+    //         });
+    //     }
+    // }
 
     validateOnEntry() {
         let self = this;
