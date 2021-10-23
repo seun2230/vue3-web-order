@@ -1,75 +1,13 @@
 <template>
-  <div class="product">
-    <div v-for="product in products" :key="product.name" id="products">
-      <img :src="product.image2" id="product-image"/>
-      <img :src="require(`@/assets/${product.image1}.jpg`)" id="product-image" />
-      <div id="product-name">{{ product.name }}</div>
-      <div id="product-cost">{{ product.cost }}</div>
-      <button v-on:click="addItemCart(product)">+</button>
-      <button v-on:click="minusItemCart(product)">-</button>
-    </div>
-  </div>
-  <p>{{ sum }}</p>
+  <MenuList />
 </template>
 
 <script>
+import MenuList from './components/MenuList.vue'
+
 export default {
-  name: "App",
-  data: () => {
-    return {
-      totalOrder: [],
-      dateOrder:[],
-      products: [
-        {
-          name: 'First',
-          cost: 1000,
-          image1: 'Testpic1',
-          image2: './assets/Testpic1.jpg',
-          count: 0,
-          id: 1
-        },
-        {
-          name: 'Second',
-          cost: 2000,
-          image1: 'Testpic2',
-          image2: './assets/Testpic2.jpg',
-          count: 0,
-          id: 2
-        },
-        {
-          name: 'Third',
-          cost: 3000,
-          image1: 'Testpic2',
-          image2: './assets/Testpic2.jpg',
-          count: 0,
-          id: 3
-        },
-        {
-          name: '4th',
-          cost: 1000,
-          image1: 'Testpic2',
-          image2: './assets/Testpic2.jpg',
-          count: 0,
-          id: 4
-        },
-        {
-          name: '5th',
-          cost: 2000,
-          image1: 'Testpic2',
-          image2: './assets/Testpic2.jpg',
-          count: 0,
-          id: 5
-        },
-        {
-          name: 'End',
-          cost: 2000,
-          image1: 'Testpic1',
-          image2: './assets/Testpic1.jpg',
-          count: 0,
-          id: 6
-        }
-      ]
-    }
+  components: {
+    MenuList
   },
   methods: {
     addItemCart(product) {
@@ -97,22 +35,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .product {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  #product-image {
-    width: 100px;
-    height: 100px;
-  }
-
-  #products {
-    width:200px;
-    height: auto;
-    margin: 10px;
-    border: 1px solid gold
-  }
-</style>

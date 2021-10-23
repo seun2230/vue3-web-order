@@ -1,0 +1,34 @@
+{
+    "Foods": [
+        {
+            "name": "FirstFood",
+            "price": 1500,
+            "info": "First",
+            "image": "testpic.jpg"
+        },
+        {
+            "name": "SecondFood",
+            "price": 1500,
+            "info": "Second",
+            "image": "testpic.jpg"
+        },
+        {
+            "name": "ThirdFood",
+            "price": 1500,
+            "info": "Third",
+            "image": "testpic.jpg"
+        },
+        {
+            "name": "FourthFood",
+            "price": 1500,
+            "info": "Fourth",
+            "image": "testpic.jpg"
+        },
+        {
+            "name": "FifthFood",
+            "price": 1500,
+            "info": "Fifth",
+            "image": "testpic.jpg"
+        }
+    ]
+}
