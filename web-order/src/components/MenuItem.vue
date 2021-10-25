@@ -1,12 +1,20 @@
 <template>
-    <div class="image">
-        <img :src="`${food.image}`" :alt="`${food.name}`" />
-        <div class="info">
-            <div class="name">{{ food.name }}</div>
-            <div class="price">{{ food.price }}</div>
-            <div class="info">{{ food.info }}</div>
-        </div>
+  <div class="image">
+    <img 
+      :src="`${food.image}`" 
+      :alt="`${food.name}`" />
+    <div class="infos">
+      <div class="name">
+        {{ food.name }}
+      </div>
+      <div class="price">
+        {{ food.price }}
+      </div>
     </div>
+  </div>
+  <button @click="addCart()">
+    +
+  </button>
 </template>
 
 <script>
@@ -18,6 +26,15 @@ export default {
             type: Object,
             default: function() { return {} }
         }
+    },
+    methods: {
+      addCart() {
+        console.log('addCart Clicked');
+        this.$store.dispatch('food/addCart', {
+          food: this.food,
+          quantity: 1
+          })
+      }
     }
 }
 </script>
@@ -28,7 +45,7 @@ export default {
 .image {
   $width: 200px;
   width: $width;
-  height: $width * 3 / 2;
+  height: $width;
   margin: 10px;
   border-radius: 4px;
   background-color: $gray-400;
@@ -44,7 +61,7 @@ export default {
     right: 0;
     border: 6px solid $primary;
   }
-  .info {
+  .infos {
     background-color: rgba($black, .3);
     width: 100%;
     padding: 14px;
