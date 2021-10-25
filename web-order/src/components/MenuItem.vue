@@ -11,10 +11,11 @@
         {{ food.price }}
       </div>
     </div>
-  </div>
-  <button @click="addCart()">
-    +
+    <button @click="addCart()">
+    babo
   </button>
+  </div>
+  
 </template>
 
 <script>
