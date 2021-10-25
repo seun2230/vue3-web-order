@@ -1,8 +1,7 @@
 <template>
   <div class="container">
     <div class="inner">
-      <div
-        class="foods">
+      <div class="foods">
         <MenuItem
           v-for="food in foods"
           :key="food.name"
@@ -17,14 +16,15 @@ import MenuItem from './MenuItem.vue'
 import { mapState } from 'vuex'
 
 export default {
-    components: {
-        MenuItem
-    },
-    computed: {
-        ...mapState('food', [
-            'foods'
-        ])
-    }
+  components: {
+    MenuItem
+  },
+  computed: {
+    // Helper를 사용하여 state에 정의된 foods 접근
+    ...mapState('food', [
+      'foods'
+    ])
+  }
 }
 </script>
 

@@ -1,47 +1,48 @@
 <template>
-  <div class="image">
-    <img 
-      :src="`${food.image}`" 
-      :alt="`${food.name}`" />
-    <div class="infos">
-      <div class="name">
-        {{ food.name }}
-      </div>
-      <div class="price">
-        {{ food.price }}
+  <button class="btn btn-primay" @click="addCart()">
+    <div class="image">
+      <img 
+        :src="`${food.image}`" 
+        :alt="`${food.name}`" />
+      <div class="infos">
+        <div class="name">
+          {{ food.name }}
+        </div>
+        <div class="price">
+          {{ food.price }}
+        </div>
       </div>
     </div>
-    <button @click="addCart()">
-    babo
   </button>
-  </div>
-  
 </template>
 
 <script>
-
-
 export default {
-    props: {
-        food: {
-            type: Object,
-            default: function() { return {} }
-        }
-    },
-    methods: {
-      addCart() {
-        console.log('addCart Clicked');
-        this.$store.dispatch('food/addCart', {
-          food: this.food,
-          quantity: 1
-          })
-      }
+  props: {
+    food: {
+      type: Object,
+      default: function() { return {} }
     }
+  },
+
+  methods: {
+    addCart() {
+      this.$store.dispatch('food/addCart', {
+        food: this.food,
+        quantity: 1
+      })
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 @import '../scss/main.scss';
+
+.btn-primay {
+  padding: 0;
+  margin: 0;
+}
 
 .image {
   $width: 200px;
@@ -53,6 +54,7 @@ export default {
   background-size: cover;
   overflow: hidden;
   position: relative;
+
   &:hover::after {
     content: "";
     position: absolute;
@@ -72,6 +74,7 @@ export default {
     left: 0;
     bottom: 0;
     backdrop-filter: blur(10px);
+
     .price {
       color: $primary;
     }
