@@ -2,14 +2,14 @@ export default {
     namespaced: true,
     state: () => {
         return {
-            cart: [],
+            carts: [],
             foods: [
                 {
                     "name": "FirstFood",
                     "price": 1500,
                     "info": "First",
                     "image": "https://img.huffingtonpost.com/asset/602c66fc240000ae01cbc1e2.jpeg?cache=YXkQIJs6ue&ops=1778_1000",
-                    "count": 0,
+                    "count": 1,
                     "id": 1
                 },
                 {
@@ -17,7 +17,7 @@ export default {
                     "price": 1500,
                     "info": "Second",
                     "image": "https://img.huffingtonpost.com/asset/602c66fc240000ae01cbc1e2.jpeg?cache=YXkQIJs6ue&ops=1778_1000",
-                    "count": 0,
+                    "count": 1,
                     "id": 2
                 },
                 {
@@ -25,7 +25,7 @@ export default {
                     "price": 1500,
                     "info": "Third",
                     "image": "https://img.huffingtonpost.com/asset/602c66fc240000ae01cbc1e2.jpeg?cache=YXkQIJs6ue&ops=1778_1000",
-                    "count": 0,
+                    "count": 1,
                     "id": 3
                 },
                 {
@@ -33,7 +33,7 @@ export default {
                     "price": 1500,
                     "info": "Fourth",
                     "image": "https://img.huffingtonpost.com/asset/602c66fc240000ae01cbc1e2.jpeg?cache=YXkQIJs6ue&ops=1778_1000",
-                    "count": 0,
+                    "count": 1,
                     "id": 4
                 },
                 {
@@ -41,7 +41,7 @@ export default {
                     "price": 1500,
                     "info": "Fifth",
                     "image": "https://img.huffingtonpost.com/asset/602c66fc240000ae01cbc1e2.jpeg?cache=YXkQIJs6ue&ops=1778_1000",
-                    "count": 0,
+                    "count": 1,
                     "id": 5
                 },
                 {
@@ -49,7 +49,7 @@ export default {
                     "price": 1500,
                     "info": "Sixth",
                     "image": "https://img.huffingtonpost.com/asset/602c66fc240000ae01cbc1e2.jpeg?cache=YXkQIJs6ue&ops=1778_1000",
-                    "count": 0,
+                    "count": 1,
                     "id": 6
                 },
                 {
@@ -57,7 +57,7 @@ export default {
                     "price": 1500,
                     "info": "Fifth",
                     "image": "https://img.huffingtonpost.com/asset/602c66fc240000ae01cbc1e2.jpeg?cache=YXkQIJs6ue&ops=1778_1000",
-                    "count": 0,
+                    "count": 1,
                     "id": 7
                 },
                 {
@@ -65,15 +65,15 @@ export default {
                     "price": 1500,
                     "info": "Fifth",
                     "image": "https://img.huffingtonpost.com/asset/602c66fc240000ae01cbc1e2.jpeg?cache=YXkQIJs6ue&ops=1778_1000",
-                    "count": 0,
+                    "count": 1,
                     "id": 8
                 },
                 {
-                    "name": "NinethFood",
+                    "name": "NinthFood",
                     "price": 1500,
                     "info": "Fifth",
                     "image": "https://img.huffingtonpost.com/asset/602c66fc240000ae01cbc1e2.jpeg?cache=YXkQIJs6ue&ops=1778_1000",
-                    "count": 0,
+                    "count": 1,
                     "id": 9
                 },
                 {
@@ -81,7 +81,7 @@ export default {
                     "price": 1500,
                     "info": "Fifth",
                     "image": "https://img.huffingtonpost.com/asset/602c66fc240000ae01cbc1e2.jpeg?cache=YXkQIJs6ue&ops=1778_1000",
-                    "count": 0,
+                    "count": 1,
                     "id": 10
                 },
                 {
@@ -89,47 +89,56 @@ export default {
                     "price": 1500,
                     "info": "Fifth",
                     "image": "https://img.huffingtonpost.com/asset/602c66fc240000ae01cbc1e2.jpeg?cache=YXkQIJs6ue&ops=1778_1000",
-                    "count": 0,
+                    "count": 1,
                     "id": 11
                 },
                 {
-                    "name": "TwelvethFood",
+                    "name": "TwelfthFood",
                     "price": 1500,
                     "info": "Fifth",
                     "image": "https://img.huffingtonpost.com/asset/602c66fc240000ae01cbc1e2.jpeg?cache=YXkQIJs6ue&ops=1778_1000",
-                    "count": 0,
-                    "id": 12
-                },
-                {
-                    "name": "TwelvethFood",
-                    "price": 1500,
-                    "info": "Fifth",
-                    "image": "https://img.huffingtonpost.com/asset/602c66fc240000ae01cbc1e2.jpeg?cache=YXkQIJs6ue&ops=1778_1000",
-                    "count": 0,
+                    "count": 1,
                     "id": 12
                 }
             ] 
         }  
     },
-    getters: {},
+    getters: {
+        totalPrice(state) {
+            state.carts.forEach(item => {
+                let total = 0;
+                total = total + item.food.price * item.quantity;
+                console.log("total : ", total)
+                return total
+            })
+        }
+    },
     mutations: {
         addToCart(state, { food, quantity }) {
-            console.log("state : ", state)
-            console.log("this.state : ", this.state)
-            console.log("food : ", food)
-            console.log("this.food : ", this.food)
-            console.log("quantity : ", quantity)
-            console.log("this.quantity : ", this.quantity)
-            state.cart.push(
+            let addCart = state.carts.find(item => {
+                return item.food.id === food.id;
+            });
+
+            if (addCart) {
+                addCart.quantity += quantity;
+                return;
+            }
+
+            state.carts.push(
                 { food, quantity }
             )
         },
+        removeToCart(state, food) {
+            console.log(food)
+            state.carts.splice(food)
+        }
     },
     actions: {
         addCart({ commit }, { food, quantity }) {
             commit('food/addToCart', { food, quantity }, { root: true });
-            console.log("food : ", food, "foodType : ", typeof(food))
-            console.log("quantity : ", quantity, "quantityType : ", typeof(quantity))
+        },
+        removeCart({ commit }, { food, quantity } ) {
+            commit('food/removeToCart', { food, quantity }, { root: true });
         }
     }
 }

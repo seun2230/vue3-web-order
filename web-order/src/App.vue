@@ -1,17 +1,19 @@
 <template>
   <MenuList />
-  <CartItem />
+  <CartList />
+  <TotalPrice />
 </template>
 
 <script>
 import MenuList from './components/MenuList.vue'
-import CartItem from './components/CartItem.vue'
+import CartList from './components/CartList.vue'
+import TotalPrice from './components/TotalPrice.vue'
 
 export default {
   components: {
     MenuList,
-    CartItem
-
+    CartList,
+    TotalPrice
   },
   methods: {
 

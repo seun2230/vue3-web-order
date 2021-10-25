@@ -1,19 +1,20 @@
 <template>
-  <div class="image">
-    <img 
-      :src="`${food.image}`" 
-      :alt="`${food.name}`" />
-    <div class="infos">
-      <div class="name">
-        {{ food.name }}
-      </div>
-      <div class="price">
-        {{ food.price }}
+  <button
+    class="btn btn-primay"
+    @click="addCart()">
+    <div class="image">
+      <img 
+        :src="`${food.image}`" 
+        :alt="`${food.name}`" />
+      <div class="infos">
+        <div class="name">
+          {{ food.name }}
+        </div>
+        <div class="price">
+          {{ food.price }}
+        </div>
       </div>
     </div>
-  </div>
-  <button @click="addCart()">
-    +
   </button>
 </template>
 
@@ -29,7 +30,6 @@ export default {
     },
     methods: {
       addCart() {
-        console.log('addCart Clicked');
         this.$store.dispatch('food/addCart', {
           food: this.food,
           quantity: 1
@@ -41,7 +41,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '../scss/main.scss';
-
+.btn-primay {
+  padding: 0;
+  margin: 0;
+}
 .image {
   $width: 200px;
   width: $width;
