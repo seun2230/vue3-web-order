@@ -105,12 +105,15 @@ export default {
     },
     getters: {
         totalPrice(state) {
+            let total = 0;
             state.carts.forEach(item => {
-                let total = 0;
-                total = total + item.food.price * item.quantity;
-                console.log("total : ", total)
-                return total
+                console.log("item : ", item)
+                
+                total += item.food.price * item.quantity;
+                console.log("total" , total)
+                
             })
+            return total;
         }
     },
     mutations: {
@@ -129,8 +132,7 @@ export default {
             )
         },
         removeToCart(state, food) {
-            console.log(food)
-            state.carts.splice(food)
+            state.carts.splice(this.carts.indexOf(food))
         }
     },
     actions: {

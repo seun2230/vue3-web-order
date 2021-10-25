@@ -7,12 +7,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
     computed: {
-        totalPrice() {
-            console.log("computed:", this.$store);
-            return this.$store.getters.totalPrice;
-        }
-    }
+      ... mapGetters('food', ['totalPrice'])
+    },
 }
 </script>

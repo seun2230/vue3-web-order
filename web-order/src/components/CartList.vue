@@ -1,12 +1,18 @@
 <template>
-  <div class="container">
+  <div class="container show-grid">
     <div class="inner">
-      <div
-        class="carts">
-        <CartItem
-          v-for="cart in carts"
-          :key="cart.food.name"
-          :cart="cart" />
+      <div class="row">
+        <div class="col-md-8">
+          <div class="carts">
+            <CartItem
+              v-for="cart in carts"
+              :key="cart.food.name"
+              :cart="cart" />
+          </div>
+        </div>
+        <div class="col-md-4">
+          <TotalPrice />
+        </div>
       </div>
     </div>
   </div>
@@ -14,12 +20,13 @@
 
 <script>
 import CartItem from './CartItem.vue'
+import TotalPrice from './TotalPrice.vue'
 import { mapState } from 'vuex'
-// import { mapGetters } from 'vuex'
 
 export default {
     components: {
-        CartItem
+        CartItem,
+        TotalPrice
     },
     computed: {
         ...mapState('food', [
@@ -41,7 +48,6 @@ export default {
         text-align: center;
     }
     .carts {
-        // display: flex;
         flex-wrap: wrap;
         justify-content: center;
     }
