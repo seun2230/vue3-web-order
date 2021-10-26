@@ -42,7 +42,7 @@ export default {
   margin-top: 30px;
   .inner {
     background-color: $gray-200;
-    padding: 10px 0;
+    padding: 20px;
     border-radius: 4px;
     text-align: center;
   }
@@ -50,6 +50,8 @@ export default {
     // display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    background-color: white;
+    border-radius: 5px;
   }
 }
 </style> 

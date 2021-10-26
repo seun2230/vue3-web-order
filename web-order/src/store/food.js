@@ -115,13 +115,9 @@ export default {
     // 총합
     totalPrice(state) {
       let total = 0;
-      state.carts.forEach(item => {
-          
-        console.log("item : ", item)
 
-        total += item.food.price * item.quantity;
-        console.log("total" , total)
-
+      state.carts.forEach(item => {           
+        total += item.food.price * item.quantity;               
       })
       return total;
     }
@@ -129,7 +125,10 @@ export default {
 
   mutations: {
     addToCart(state, { food, quantity }) {
-      let addCart = state.carts.find(item => item.food.id === food.id)
+      // let addCart = state.carts.find(item => item.food.id === food.id)
+      let addCart = state.carts.find(item => {
+        return item.food.id === food.id;
+      });
     
       if (addCart) {
         addCart.quantity += quantity;
@@ -140,35 +139,22 @@ export default {
     },
     
     // 전체 삭제
-    //removeToCart(state, { food, quantity }) {
-      
-      //let removeCartFind = state.carts.find(item => {
-        //return item.food.id === food.id
-      //})
-
-    
-        //const removeFilter = state.carts.filter(item => item.food.id {
-          //removeFilter.quantity--;
-        //})
-      //}
-    // },
-    removeToCart(state, { food, quantity} ) {
-     let removeCart = state.carts.find(item => {
+    removeToCart(state, { food, quantity }) {
+      let removeCartFind = state.carts.find(item => {
         return item.food.id === food.id
-    })
-      
-      //state.carts.splice(this.carts.indexOf(food))
-      //state.cart.splice(food.id)
-      // if(removeCartFilter = state.carts.filter(item => item.carts.id)){
-      // removeCart.quantity -= quantity;
-      //}
-     // let removeCart = state.carts.filter(
-     // item => item.food.id !== food.id
-      //)
-       
-    //}
-    //}
+      })
+
+      if (removeCartFind.quantity === 1) {
+        const filteredCarts = state.carts.filter(item => item.food.id !== food.id);
+        state.carts = filteredCarts
+      } else {
+        removeCartFind.quantity -= quantity
+      }
+      console.log("this.food :", food)
+      console.log("index", state.carts.indexOf({ food, quantity }));
+    }
   },
+
   actions: {
     addCart({ commit }, { food, quantity }) {
       commit('food/addToCart', { food, quantity }, { root: true });

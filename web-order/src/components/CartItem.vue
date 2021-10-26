@@ -11,8 +11,10 @@
         금액 {{ cart.food.price * cart.quantity }}
       </div>
     </div>
-    <button @click="removeCart()">
-     -
+    <button
+      class="remove-btn"
+      @click="removeCart(this.cart.food)">
+      -
     </button>
   </div>
 </template>
@@ -40,7 +42,11 @@ export default {
 </script> 
 
 <style lang="scss" scoped>
-  .infos {
-   display: flex;
+@import '../scss/main.scss';
+
+  .infos:not(.remove-btn) {
+    display: flex;
+    background-color: $white;
+    border-radius: 5px;
   }
 </style> 
