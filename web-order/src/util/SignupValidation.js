@@ -1,4 +1,4 @@
-class FormValidator {
+export default class FormValidator {
     constructor(form, fields) {
         this.form = form;
         this.fields = fields;
@@ -13,48 +13,20 @@ class FormValidator {
         let self = this;
 
         self.form.addEventListener('submit', e => {
-            e.preventDefault();     //  html에서의 a 또는 submit의 페이지 이동, 전송 등의 동작 중단
-            self.fields.forEach(field => {  //  forEch -> 입력값 각 문자에 대해 검증시도
+            e.preventDefault();
+            self.fields.forEach(field => {
                 const input = document.querySelector(`#${field}`);
                 self.validateFields(input)
             });
-            form.submit();
-
-            // self.clearForm();
         });
     }
-
-    //  폼 삭제
-    //  이거 form.reset(); 과 같은 기능 아닌가?
-    // clearForm() {
-    //     let messageErr = [];
-    //     const errorMessages = document.querySelectorAll('.error-message');
-    //     errorMessages.forEach(err => {
-    //         if (err.innerText != "") {
-    //             messageErr.push(err.innerText);
-    //         }
-    //     });
-
-    //     if (messageErr.length == 0) {
-    //         const inputs = document.querySelectorAll('input');
-    //         const svgIcons = document.querySelectorAll('.icon');
-    //         svgIcons.forEach(icon => {
-    //             icon.classList.add('hidden');
-    //         });
-    //         inputs.forEach(input => {
-    //             if (input.value != '회원 가입') {
-    //                 input.value = "";
-    //             }
-    //         });
-    //     }
-    // }
 
     validateOnEntry() {
         let self = this;
 
         this.fields.forEach(field => {
             const input = document.querySelector(`#${field}`);
-            input.addEventListener('input', event => {
+            input.addEventListener('input', event => {// eslint-disable-line no-unused-vars
                 self.validateFields(input)
             })
         })
@@ -75,7 +47,8 @@ class FormValidator {
 
         //  이메일 주소 유효성 검사
         if (field.type === "email") {
-            const re = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+            const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+
             if (re.test(field.value)) {
                 this.setStatus(field, null, "success");
             } else {

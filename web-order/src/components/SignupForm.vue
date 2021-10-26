@@ -96,6 +96,7 @@
 </template>
 
 <script>
+import FormValidator from '../util/SignupValidation.js';
 export default {
     name: 'SignupForm',
     data () {
@@ -107,10 +108,11 @@ export default {
         };
     },
     methods: {
-        submitForm() {
+        async submitForm() {
             this.$router.push('/');
         }
-    }
+    },
+    FormValidator
 }
 </script>
 
