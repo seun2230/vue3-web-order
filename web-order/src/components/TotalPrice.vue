@@ -1,7 +1,10 @@
 <template>
   <div class="total">
+    <h1 class="message">
+      총 금액 :
+    </h1>
     <div class="price">
-      {{ totalPrice }}
+      {{ totalPrice }} 원
     </div>
   </div>
 </template>
@@ -15,3 +18,11 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+@import '../scss/main.scss';
+
+.total {
+    text-align: center;
+}
+</style>

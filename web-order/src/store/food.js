@@ -106,12 +106,8 @@ export default {
     getters: {
         totalPrice(state) {
             let total = 0;
-            state.carts.forEach(item => {
-                console.log("item : ", item)
-                
-                total += item.food.price * item.quantity;
-                console.log("total" , total)
-                
+            state.carts.forEach(item => {           
+                total += item.food.price * item.quantity;               
             })
             return total;
         }
@@ -131,8 +127,31 @@ export default {
                 { food, quantity }
             )
         },
-        removeToCart(state, food) {
-            state.carts.splice(this.carts.indexOf(food))
+        removeToCart(state, { food, quantity }) {
+            let removeCartFind = state.carts.find(item => {
+              return item.food.id === food.id
+            })
+
+            if (removeCartFind.quantity === 1) {
+              const filteredCarts = state.carts.filter(item => item.food.id !== food.id);
+              state.carts = filteredCarts
+            } else {
+              removeCartFind.quantity -= quantity
+            }
+
+            // if (removeCartFind) {
+            //   removeCartFind.quantity -= quantity;
+            //   return
+            // }
+            // let removeCartFilter = state.carts.filter(item => {
+            //   item.food.id !== food.id
+            // })
+            // console.log("remove : ",removeCart)
+            console.log("this.food :", food)
+            console.log("index", state.carts.indexOf({ food, quantity }));
+            // if (removeCart.quantity == 0) {
+            //     state.carts = state.carts.splice(state.carts.indexOf(food), 1); 
+            // }
         }
     },
     actions: {

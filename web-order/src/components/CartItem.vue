@@ -9,10 +9,12 @@
     <div class="total-price">
       금액 {{ cart.food.price * cart.quantity }}
     </div>
+    <button
+      class="remove-btn"
+      @click="removeCart(this.cart.food)">
+      -
+    </button>
   </div>
-  <button @click="removeCart()">
-    -
-  </button>
 </template>
 
 <script>
@@ -26,9 +28,10 @@ export default {
     }
   },
   methods: {
-      removeCart() {
+      removeCart(food) {
         this.$store.dispatch('food/removeCart', {
-          food: this.food
+          food,
+          quantity: 1
           })
       }
   }
@@ -37,8 +40,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.infos {
-  display: flex;
-}
+@import '../scss/main.scss';
 
+.infos:not(.remove-btn) {
+  display: flex;
+  background-color: $white;
+  border-radius: 5px;
+}
 </style>

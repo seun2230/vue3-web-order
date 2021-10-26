@@ -42,10 +42,6 @@ export default {
       padding: 70px 0;
     }
   }
-  .message {
-    color: $gray-400;
-    font-size: 20px;
-  }
   .foods {
     display: flex;
     flex-wrap: wrap;
