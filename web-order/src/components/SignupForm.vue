@@ -110,9 +110,9 @@ export default {
     methods: {
         async signup() {
             const req = {
-                USER_NAME: this.username,
-                USER_EMAIL: this.email,
-                USER_PASSWORD: this.password
+                user_name: this.username,
+                user_email: this.email,
+                user_password: this.password
             };
             try {
                 await signup(req);

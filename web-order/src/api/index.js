@@ -1,10 +1,10 @@
-import axios from 'axios';
+// import axios from 'axios';
 
-function createInstanceAuth(url) {
-    const instance = axios.create({
-        baseURL: 'http://localhost:8080'
-    });
-    return instance;
-}
+// function createInstanceAuth(url) {
+//     const instance = axios.create({
+//         baseURL: `http://localhost:3000/api/${url}`
+//     });
+//     return instance;
+// }
 
-export const user = createInstanceAuth('user');
+// export const user = createInstanceAuth('user');

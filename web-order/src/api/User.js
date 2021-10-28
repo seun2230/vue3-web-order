@@ -1,9 +1,9 @@
-import { user } from './index.js';
+// import { user } from './index.js';
 
-function signup(req) {
-    return user.post('signup', req);
-}
+// function signup(req) {
+//     return user.post('signup', req);
+// }
 
-export {
-    signup
-};
+// export {
+//     signup
+// };
