@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <h2 class="title">회원 가입</h2>
-        <form class="form" method="post" action="#" v-on:submit.prevent="submitForm">
+        <form class="form" method="post" action="#" v-on:submit.prevent="signup">
 
             <div class="input-group">
                 <label for="username" class="label">이름</label>
@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import FormValidator from '../util/SignupValidation.js';
+import { signup } from '../api/User.js';
 export default {
     name: 'SignupForm',
     data () {
@@ -108,11 +108,21 @@ export default {
         };
     },
     methods: {
-        async submitForm() {
-            this.$router.push('/');
-        }
-    },
-    FormValidator
+        async signup() {
+            const req = {
+                USER_NAME: this.username,
+                USER_EMAIL: this.email,
+                USER_PASSWORD: this.password
+            };
+            try {
+                await signup(req);
+                alert(this.USER_NAME + '님, 환영합니다!');
+                this.$router.push('/');
+            } catch (error) {
+                alert(error);
+            }
+        },
+    }
 }
 </script>
 
