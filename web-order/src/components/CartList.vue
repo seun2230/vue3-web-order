@@ -7,7 +7,7 @@
             class="carts">
             <CartItem
               v-for="cart in carts"
-              :key="cart.food.name"
+              :key="cart.name"
               :cart="cart" />
           </div>
           <div

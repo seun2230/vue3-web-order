@@ -12,7 +12,7 @@ export default {
         totalPrice(state) {
             let total = 0;
             state.carts.forEach(item => {           
-                total += item.food.price * item.food.count;               
+                total += item.price * item.count;               
             })
             return total;
         }
@@ -26,29 +26,32 @@ export default {
 			fail() {
 				console.log("error")
 			},
-      addToCart(state, { food }) {
+      addToCart(state, food) {
         let addCart = state.carts.find(item => { 
-          return item.food.id === food.id; 
+          return item.id === food.id; 
         });
         
         if (addCart) { 
-          addCart.food.count ++;
+          addCart.count ++;
           return;
         }
-        
-        state.carts.push({ food })
+      
+        let copiedFood = Object.assign({}, food)
+
+        state.carts.push(copiedFood)
 
       },
-      removeToCart(state, { food }) {
+      removeToCart(state, food) {
         let removeCartFind = state.carts.find(item => {
-          return item.food.id === food.id
+          return item.id === food.id
           })
 
-        if (removeCartFind.food.count === 1) {
-          const filteredCarts = state.carts.filter(item => item.food.id !== food.id);
+        if (removeCartFind.count === 1) {
+          const filteredCarts = state.carts.filter(item => item.id !== food.id);
           state.carts = filteredCarts
         } else {
-          removeCartFind.food.count -= food.count
+          removeCartFind.count --
+          return;
         }
       }
     },
@@ -64,11 +67,11 @@ export default {
           commit('food/fail', res, { root: true })
         })
       },
-      addCart({ commit }, { food }) {
-        commit('food/addToCart', { food }, { root: true });
+      addCart({ commit }, food) {
+        commit('food/addToCart', food, { root: true });
       },
-      removeCart({ commit }, { food } ) {
-        commit('food/removeToCart', { food }, { root: true });
+      removeCart({ commit }, food) {
+        commit('food/removeToCart', food, { root: true });
       }
     }
 }

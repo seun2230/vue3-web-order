@@ -1,17 +1,17 @@
 <template>
   <div class="infos">
     <div class="name">
-      {{ cart.food.name }}
+      {{ cart.name }}
     </div>
     <div class="quantity">
-      수량 {{ cart.food.count }}
+      수량 {{ cart.count }}
     </div>
     <div class="total-price">
-      금액 {{ cart.food.price * cart.food.count }}
+      금액 {{ cart.price * cart.count }}
     </div>
     <button
       class="remove-btn"
-      @click="removeCart(this.cart.food)">
+      @click="removeCart(this.cart)">
       -
     </button>
   </div>
@@ -29,9 +29,7 @@ export default {
   },
   methods: {
       removeCart(food) {
-        this.$store.dispatch('food/removeCart', {
-          food
-          })
+        this.$store.dispatch('food/removeCart', food)
       }
   }
 

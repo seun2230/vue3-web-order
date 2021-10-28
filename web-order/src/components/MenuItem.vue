@@ -30,9 +30,7 @@ export default {
     },
     methods: {
       addCart() {
-        this.$store.dispatch('food/addCart', {
-          food: this.food 
-          })
+        this.$store.dispatch('food/addCart', this.food)
       }
     }
 }
