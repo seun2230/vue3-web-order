@@ -1,7 +1,7 @@
 export default {
   namespaced: true,
   state: () => {
-    return {
+    return {                                                                                            
       carts: [],
       foods: [
         {
@@ -9,7 +9,7 @@ export default {
           "price": 1500,
           "info": "First",
           "image": "https://img.huffingtonpost.com/asset/602c66fc240000ae01cbc1e2.jpeg?cache=YXkQIJs6ue&ops=1778_1000",
-          "count": 1,
+          "count": 1, 
           "id": 1
         },
         {
