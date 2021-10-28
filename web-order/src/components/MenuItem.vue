@@ -2,7 +2,6 @@
   <button
     class="btn btn-primay"
     @click="addCart()">
->>>>>>> 363dc2d663c3cde5e4ba5bda89aefbc4f1d5d76d
     <div class="image">
       <img 
         :src="`${food.image}`" 
@@ -33,7 +32,6 @@ export default {
       }
     }
   }
-}
 </script>
 
 <style lang="scss" scoped>

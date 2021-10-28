@@ -74,5 +74,4 @@ export default {
         commit('food/removeToCart', food, { root: true });
       }
     }
-  }
-} 
+  } 
