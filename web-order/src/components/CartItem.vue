@@ -1,19 +1,17 @@
 <template>
-  <div>
-    <div class="infos">
-      <div class="name">
-        {{ cart.food.name }}
-      </div>
-      <div class="quantity">
-        수량 {{ cart.quantity }}
-      </div>
-      <div class="total-price">
-        금액 {{ cart.food.price * cart.quantity }}
-      </div>
+  <div class="infos">
+    <div class="name">
+      {{ cart.name }}
+    </div>
+    <div class="quantity">
+      수량 {{ cart.count }}
+    </div>
+    <div class="total-price">
+      금액 {{ cart.price * cart.count }}
     </div>
     <button
       class="remove-btn"
-      @click="removeCart(this.cart.food)">
+      @click="removeCart(this.cart)">
       -
     </button>
   </div>
@@ -29,24 +27,22 @@ export default {
       }
     }
   },
-
   methods: {
-    removeCart(food) {
-      this.$store.dispatch('food/removeCart', {
-        food,
-        quantity: 1
-      })
-    }
+      removeCart(food) {
+        this.$store.dispatch('food/removeCart', food)
+      }
   }
+
 }
-</script> 
+</script>
 
 <style lang="scss" scoped>
 @import '../scss/main.scss';
 
-  .infos:not(.remove-btn) {
-    display: flex;
-    background-color: $white;
-    border-radius: 5px;
-  }
-</style> 
+.infos:not(.remove-btn) {
+  display: flex;
+  background-color: $white;
+  border-radius: 5px;
+}
+</style>
+>>>>>>> 363dc2d663c3cde5e4ba5bda89aefbc4f1d5d76d

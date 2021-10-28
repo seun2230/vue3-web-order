@@ -13,18 +13,29 @@
 
 <script>
 import MenuItem from './MenuItem.vue'
-import { mapState } from 'vuex'
+// import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  components: {
-    MenuItem
-  },
-  computed: {
-    // Helper를 사용하여 state에 정의된 foods 접근
-    ...mapState('food', [
-      'foods'
-    ])
-  }
+    components: {
+        MenuItem
+    },
+    // created: {
+      // ...mapActions('food', [
+      //   'getState'
+      // ])
+    // },
+    created() {
+      this.$store.dispatch("food/getState");
+    },
+    computed: {
+        ...mapState('food', [
+            'foods'
+        ]),
+        ...mapActions('food', [
+        'getState'
+      ])
+    }
 }
 </script>
 

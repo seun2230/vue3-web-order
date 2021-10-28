@@ -1,5 +1,8 @@
 <template>
-  <button class="btn btn-primay" @click="addCart()">
+  <button
+    class="btn btn-primay"
+    @click="addCart()">
+>>>>>>> 363dc2d663c3cde5e4ba5bda89aefbc4f1d5d76d
     <div class="image">
       <img 
         :src="`${food.image}`" 
@@ -18,19 +21,16 @@
 
 <script>
 export default {
-  props: {
-    food: {
-      type: Object,
-      default: function() { return {} }
-    }
-  },
-
-  methods: {
-    addCart() {
-      this.$store.dispatch('food/addCart', {
-        food: this.food,
-        quantity: 1
-      })
+    props: {
+        food: {
+            type: Object,
+            default: function() { return {} }
+        }
+    },
+    methods: {
+      addCart() {
+        this.$store.dispatch('food/addCart', this.food)
+      }
     }
   }
 }

@@ -1,5 +1,8 @@
 <template>
   <div class="total">
+    <h1 class="message">
+      총 금액 :
+    </h1>
     <div class="price">
       {{ totalPrice }} 원
     </div>
@@ -8,18 +11,18 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
 export default {
-  
-  computed: {
-    ... mapGetters('food', ['totalPrice'])
-  },
+    computed: {
+      ... mapGetters('food', ['totalPrice'])
+    },
 }
-</script> 
+</script>
 
 <style lang="scss" scoped>
-
 @import '../scss/main.scss';
-  .total {
+
+.total {
     text-align: center;
-  }
+}
 </style>
