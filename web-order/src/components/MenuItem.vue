@@ -31,8 +31,7 @@ export default {
     methods: {
       addCart() {
         this.$store.dispatch('food/addCart', {
-          food: this.food,
-          quantity: 1
+          food: this.food 
           })
       }
     }

@@ -4,10 +4,10 @@
       {{ cart.food.name }}
     </div>
     <div class="quantity">
-      수량 {{ cart.quantity }}
+      수량 {{ cart.food.count }}
     </div>
     <div class="total-price">
-      금액 {{ cart.food.price * cart.quantity }}
+      금액 {{ cart.food.price * cart.food.count }}
     </div>
     <button
       class="remove-btn"
@@ -30,8 +30,7 @@ export default {
   methods: {
       removeCart(food) {
         this.$store.dispatch('food/removeCart', {
-          food,
-          quantity: 1
+          food
           })
       }
   }
