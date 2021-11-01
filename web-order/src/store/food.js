@@ -58,7 +58,7 @@ export default {
     actions: {
       getState({ commit }) {
         console.log("action!")
-        axios.get('http://localhost/foods')
+        axios.get('http://localhost:3000')
         .then((res) => {
           console.log(res)
           commit('food/success', res.data, { root: true });

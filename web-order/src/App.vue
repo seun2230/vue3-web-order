@@ -1,7 +1,6 @@
 <template>
   <MenuList />
   <CartList />
-
 </template>
 
 <script>
