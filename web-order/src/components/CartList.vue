@@ -19,8 +19,15 @@
         <div class="col-md-4">
           <TotalPrice />
         </div>
+        <div class="btn-primary">
+        </div>
       </div>
     </div>
+    <button
+      class="submit-btn"
+      @click="submitCart(this.carts)">
+      -
+    </button>
   </div>
 </template>
 
@@ -28,37 +35,56 @@
 import CartItem from './CartItem.vue'
 import TotalPrice from './TotalPrice.vue'
 import { mapState } from 'vuex'
+import axios from 'axios'
 
 export default {
-    components: {
-        CartItem,
-        TotalPrice
+  components: {
+    CartItem,
+    TotalPrice
     },
     computed: {
-        ...mapState('food', [
-            'carts'
-        ])
+      ...mapState('food', [
+        'carts'
+      ])
+    },
+    methods: {
+      submitCart(carts) {
+        console.log(JSON.stringify(carts))
+        axios.post("http://localhost:3000/foods/post", 
+          JSON.stringify(carts),
+          {
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
+        .then((res) => {
+          console.log("res Data :", res.data)
+        })
+        .catch(err => {
+          console.error(err);
+        })
+
+      }
     }
-}
+  }
 </script>
 
 <style lang="scss" scoped>
 @import "../scss/main.scss";
 
 .container {
-    margin-top: 30px;
-    .inner {
-        background-color: $gray-200;
-        padding: 20px;
-        border-radius: 4px;
-        text-align: center;
-        .carts {
-        flex-wrap: wrap;
-        justify-content: center;
-        background-color: white;
-        border-radius: 5px;
+  margin-top: 30px;
+  .inner {
+    background-color: $gray-200;
+    padding: 20px;
+    border-radius: 4px;
+    text-align: center;
+    .carts {
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: white;
+    border-radius: 5px;
     }
-    }
-    
+  }  
 }
 </style>

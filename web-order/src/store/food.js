@@ -3,29 +3,27 @@ import axios from "axios";
 export default {
     namespaced: true,
     state: () => {
-        return {
-            carts: [],
-            foods: [] 
-        }  
+      return {
+        carts: [],
+        foods: []
+      }  
     },
     getters: {
-        totalPrice(state) {
-            let total = 0;
-            state.carts.forEach(item => {           
-                total += item.price * item.count;               
-            })
-            return total;
-        }
+      totalPrice(state) {
+        let total = 0;
+        state.carts.forEach(item => {
+          total += item.price * item.count;
+        })
+        return total;
+      }
     },
     mutations: {
       success(state, payload) {
-				console.log(state)
-				console.log("payload", payload)
 				state.foods = payload
 			},
-			fail() {
-				console.log("error")
-			},
+      fail() {
+        console.log("error")
+      },
       addToCart(state, food) {
         let addCart = state.carts.find(item => { 
           return item.id === food.id; 
@@ -36,7 +34,7 @@ export default {
           return;
         }
       
-        let copiedFood = Object.assign({}, food)
+        let copiedFood = Object.assign({ user_id : 1 }, food)
 
         state.carts.push(copiedFood)
 
@@ -44,7 +42,7 @@ export default {
       removeToCart(state, food) {
         let removeCartFind = state.carts.find(item => {
           return item.id === food.id
-          })
+        })
 
         if (removeCartFind.count === 1) {
           const filteredCarts = state.carts.filter(item => item.id !== food.id);
@@ -58,7 +56,7 @@ export default {
     actions: {
       getState({ commit }) {
         console.log("action!")
-        axios.get('http://localhost/foods')
+        axios.get('http://localhost:3000/foods')
         .then((res) => {
           console.log(res)
           commit('food/success', res.data, { root: true });
