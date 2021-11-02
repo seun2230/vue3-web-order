@@ -19,6 +19,9 @@
         <div class="col-md-4">
           <TotalPrice />
         </div>
+        <div>
+          <button type="button" @click="sendPayment(this.carts)">결제</button>
+        </div>
       </div>
     </div>
   </div>
@@ -28,11 +31,25 @@
 import CartItem from './CartItem.vue'
 import TotalPrice from './TotalPrice.vue'
 import { mapState } from 'vuex'
+import axios from 'axios'
 
 export default {
     components: {
         CartItem,
         TotalPrice
+    },
+
+    methods: {
+      sendPayment(carts) {
+        console.log('결제 내역 mysql 전달');
+        const url = 'https://localhost:3000/menu/pay';
+        axios.post(url, carts);
+        // .then((res) => res.stringify.json())
+        // .catch((err) => {
+        //  console.log('fail', err);
+       // })
+      }
+      
     },
     computed: {
         ...mapState('food', [
@@ -59,7 +76,7 @@ export default {
         background-color: white;
         border-radius: 5px;
     }
-    }
+  }
     
 }
 </style>

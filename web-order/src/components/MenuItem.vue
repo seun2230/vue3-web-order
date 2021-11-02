@@ -31,17 +31,15 @@ export default {
         this.$store.dispatch('food/addCart', this.food)
       }
     }
-  }
+}
 </script>
 
 <style lang="scss" scoped>
 @import '../scss/main.scss';
-
 .btn-primay {
   padding: 0;
   margin: 0;
 }
-
 .image {
   $width: 200px;
   width: $width;
@@ -52,7 +50,6 @@ export default {
   background-size: cover;
   overflow: hidden;
   position: relative;
-
   &:hover::after {
     content: "";
     position: absolute;
@@ -72,7 +69,6 @@ export default {
     left: 0;
     bottom: 0;
     backdrop-filter: blur(10px);
-
     .price {
       color: $primary;
     }

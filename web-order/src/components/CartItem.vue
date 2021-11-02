@@ -1,19 +1,36 @@
 <template>
   <div class="infos">
-    <div class="name">
+    <form>
+      <div>
+        <input id="name" type="text">
+        
+      </div>
+       <div>
+        <label for="quantity">{{  cart.count }}</label>
+        <input id="quantity" type="text">
+      </div>
+       <div>
+        <label for="total-price">{{ cart.price * cart.count }}</label>
+        <input id="total-price" type="text">
+      </div>
+      <button  class="remove-btn"
+      @click="removeCart(this.cart)"> - </button>
+
+    <!--div class="name">
       {{ cart.name }}
-    </div>
+    </~div>
     <div class="quantity">
       수량 {{ cart.count }}
     </div>
     <div class="total-price">
       금액 {{ cart.price * cart.count }}
     </div>
-    <button
+    <button--
       class="remove-btn"
       @click="removeCart(this.cart)">
       -
-    </button>
+    </button-->
+    </form>
   </div>
 </template>
 
@@ -30,7 +47,7 @@ export default {
   methods: {
       removeCart(food) {
         this.$store.dispatch('food/removeCart', food)
-      }
+      },
   }
 
 }
@@ -45,4 +62,3 @@ export default {
   border-radius: 5px;
 }
 </style>
->>>>>>> 363dc2d663c3cde5e4ba5bda89aefbc4f1d5d76d

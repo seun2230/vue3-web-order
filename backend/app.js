@@ -1,8 +1,9 @@
+const { query } = require('express');
 const express = require('express');
-
+const bodyParser = require('body-parser')
 const mysql = require('mysql2');
-
 const path = require('path');
+const { error } = require('console');
 const app = express();
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -17,15 +18,20 @@ connection.connect();
 var port = "3000";
 app.set('port', port);
 
+app.set('data', []);
+
 // app.get('/', (req, res) => {
 //   res.send('테스트');
 // })
 
-app.get('/', (req, res) => {
+app.use(express.json());
+app.use(express.urlencoded( {extended : false } ));
+
+
+app.get('/menu', (req, res) => {
   connection.query('SELECT * from food_items',(error, results) => {
     if (error) {
-      console.log(error)
-      res.send("실패하였습니다.")
+      res.status(500).send("실패하였습니다.")
     } else {
       //var results ='rows:' + JSON.stringify(rows);
       console.log("result", results);
@@ -36,56 +42,45 @@ app.get('/', (req, res) => {
   })
 });
 
-// app.get('/test/:id', (req, res) => {
-//   // const user
-//   connection.query('SELECT * from food_items WHERE id=?', (err, row, results) =>{
-//     console.log('row', row);
-//     console.log('result: ', results);
-//     res.json(results);
-//   })
-// })
-// app.post('/', function(req, res) {
-//   // var id = req.body.id;
-//   // var info = req.body.info;
-//   // var price = req.body.price;
-//   const { id, info, price} = req.query
-//   try {
-//     const result = connection.query('insert into food_items set ?' ,
-//       {id: id, info: info, price: price})
+app.get('/menu/:_id', (req, res) => {
+ connection.query('select from food_items where _id = ?', [req.params._id], (err, results) => {
+    if(err) {
+      res.status(500).send("500 status error");
+    } else {
+      console.log(results)
+      res.redirect('/menu');
+     }
+   }
+ )
+  
+});
 
-//   } catch (error){
-//     return res.status(500)
-//   }
+app.post('/menu/pay', (req, res) => {
+  var payment = {
+    '_id': req.body.id,
+    'name': req.body.name,
+    'price': req.body.price
+  };
 
-//   const result = {id:id, info: info, price: price}
-//   connection.query('insert into food_items set ?', result, function(rows) {
-//     console.log("테스트 성공:", rows);
-//     res.send(result)
-//   })
-// })
-
-
-// app.post("/food", (req, res) => {
-//   console.log(req);
-// })
-
-//app.listen(app.get("port"));
-//console.log(app.get("port"));
+  connection.query('insert into food_items set ?', payment, (err, results) => {
+    if(err) throw error;
+    console.log(results)
+    res.send('데이터 확인', results)
+  })
+}) 
 
 
-//var indexRouter = require('./routes/index');
-//var usersRouter = require('./routes/users');
+//app.post('/menu/myData', (req, res,) => {
+  // const post = req.body.post;
+  // console.log(post);
+  // res.send(post);
 
-
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'pug');
-
-
-//app.use('/', indexRouter);
-//app.use('/users', usersRouter);
-
-
-
+  // const axios = require('axios')
+  // axios.post('http://localhost:8080/',{
+  //   name : 'balmostory'
+  // }).then((res)=>{
+  // console.log(res)
+  // })
+//})
 
 module.exports = app;

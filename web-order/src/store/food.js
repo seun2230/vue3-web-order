@@ -58,7 +58,7 @@ export default {
     actions: {
       getState({ commit }) {
         console.log("action!")
-        axios.get('http://localhost:3000')
+        axios.get('http://localhost:3000/menu')
         .then((res) => {
           console.log(res)
           commit('food/success', res.data, { root: true });
@@ -74,4 +74,4 @@ export default {
         commit('food/removeToCart', food, { root: true });
       }
     }
-  } 
+}

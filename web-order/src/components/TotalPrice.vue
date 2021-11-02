@@ -5,7 +5,7 @@
     </h1>
     <div class="price">
       {{ totalPrice }} 원
-    </div>
+    </div>  
   </div>
 </template>
 
