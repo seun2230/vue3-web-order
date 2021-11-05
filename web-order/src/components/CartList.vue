@@ -26,7 +26,7 @@
     <button
       class="submit-btn"
       @click="submitCart(this.carts)">
-      -
+      결제
     </button>
   </div>
 </template>
@@ -49,7 +49,6 @@ export default {
     },
     methods: {
       submitCart(carts) {
-        console.log(JSON.stringify(carts))
         axios.post("http://localhost:3000/foods/post", 
           JSON.stringify(carts),
           {
@@ -58,7 +57,7 @@ export default {
             }
           })
         .then((res) => {
-          console.log("res Data :", res.data)
+          console.log("submit res.data :", res.data)
         })
         .catch(err => {
           console.error(err);

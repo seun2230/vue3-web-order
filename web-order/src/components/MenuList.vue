@@ -14,18 +14,12 @@
 
 <script>
 import MenuItem from './MenuItem.vue'
-// import { mapState, mapActions } from 'vuex'
 import { mapState, mapActions } from 'vuex'
 
 export default {
     components: {
         MenuItem
     },
-    // created: {
-      // ...mapActions('food', [
-      //   'getState'
-      // ])
-    // },
     created() {
       this.$store.dispatch("food/getState");
     },
