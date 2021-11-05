@@ -12,7 +12,7 @@ export default {
       totalPrice(state) {
         let total = 0;
         state.carts.forEach(item => {
-          total += item.price * item.count;
+          total += item.food_price * item.quantity;
         })
         return total;
       }
@@ -31,23 +31,25 @@ export default {
         
         let date = new Date();
         let addCart = state.carts.find(item => { 
-          return item.id === food.id; 
+          return item.food_id === food.food_id; 
         });
         
         if (addCart) { 
-          addCart.count ++;
+          addCart.quantity ++;
           return;
         }
 
+        // promise 가 자꾸 떴어 ㅇㅇ 
+        // 그래서 await async 를 사용함 다른 방법도 잇는지 거민점 해보셈; ;;
         let num = await axios.get("http://localhost:3000/order_list")
           .then((res) => {
             return res.data[res.data.length-1].order_num
           }).catch(() => {
-            console.log("order_list table 안에 order_num에는 어떠한 값도 없습니다.")
             return 0
-          })        
+          })
 
-        let copiedFood = Object.assign({ 
+        let copiedFood = Object.assign({
+          quantity : 1,
           user_id : 1,
           order_num: num + 1,
           order_time: date.toDateString()
@@ -58,19 +60,19 @@ export default {
       },
       removeToCart(state, food) {
         let removeCartFind = state.carts.find(item => {
-          return item.id === food.id
+          return item.food_id === food.food_id
         })
 
-        if (removeCartFind.count === 1) {
-          const filteredCarts = state.carts.filter(item => item.id !== food.id);
+        if (removeCartFind.quantity === 1) {
+          const filteredCarts = state.carts.filter(item => item.food_id !== food.food_id);
           state.carts = filteredCarts
         } else {
-          removeCartFind.count --
+          removeCartFind.quantity --
           return;
         }
       },
       realRemoveCart(state, food) {
-        const filteredCarts = state.carts.filter(item => item.id !== food.id);
+        const filteredCarts = state.carts.filter(item => item.food_id !== food.food_id);
         state.carts = filteredCarts
       }
     },

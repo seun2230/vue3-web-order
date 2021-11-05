@@ -58,6 +58,7 @@ export default {
           })
         .then((res) => {
           console.log("submit res.data :", res.data)
+          this.$store.commit('food/resetCart')
         })
         .catch(err => {
           console.error(err);

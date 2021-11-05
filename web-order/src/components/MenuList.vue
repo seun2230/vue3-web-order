@@ -5,7 +5,7 @@
         class="foods">
         <MenuItem
           v-for="food in foods"
-          :key="food.name"
+          :key="food.food_name"
           :food="food" />
       </div>
     </div>

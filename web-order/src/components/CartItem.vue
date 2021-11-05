@@ -1,13 +1,13 @@
 <template>
   <div class="infos">
     <div class="name">
-      {{ cart.name }}
+      {{ cart.food_name }}
     </div>
     <div class="quantity">
-      수량 {{ cart.count }}
+      수량 {{ cart.quantity }}
     </div>
     <div class="total-price">
-      금액 {{ cart.price * cart.count }}
+      금액 {{ cart.food_price * cart.quantity }}
     </div>
     <button
       class="remove-btn"
