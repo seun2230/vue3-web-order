@@ -1,36 +1,19 @@
 <template>
   <div class="infos">
-    <form>
-      <div>
-        <input id="name" type="text">
-        
-      </div>
-       <div>
-        <label for="quantity">{{  cart.count }}</label>
-        <input id="quantity" type="text">
-      </div>
-       <div>
-        <label for="total-price">{{ cart.price * cart.count }}</label>
-        <input id="total-price" type="text">
-      </div>
-      <button  class="remove-btn"
-      @click="removeCart(this.cart)"> - </button>
-
-    <!--div class="name">
+    <div class="name">
       {{ cart.name }}
-    </~div>
+    </div>
     <div class="quantity">
       수량 {{ cart.count }}
     </div>
     <div class="total-price">
       금액 {{ cart.price * cart.count }}
     </div>
-    <button--
+    <button
       class="remove-btn"
       @click="removeCart(this.cart)">
       -
-    </button-->
-    </form>
+    </button>
   </div>
 </template>
 
@@ -40,7 +23,8 @@ export default {
     cart: {
       type: Object,
       default: function() {
-        return {}
+        return {
+        }
       }
     }
   },
@@ -49,7 +33,6 @@ export default {
         this.$store.dispatch('food/removeCart', food)
       },
   }
-
 }
 </script>
 

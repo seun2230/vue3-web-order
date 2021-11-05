@@ -1,10 +1,9 @@
-const { query } = require('express');
 const express = require('express');
-const bodyParser = require('body-parser')
 const mysql = require('mysql2');
-const path = require('path');
-const { error } = require('console');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
+
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -14,19 +13,17 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
-// console.log(app);
 var port = "3000";
 app.set('port', port);
 
-app.set('data', []);
+app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({ extends: true })) 
 
-// app.get('/', (req, res) => {
-//   res.send('테스트');
-// })
 
-app.use(express.json());
-app.use(express.urlencoded( {extended : false } ));
-
+app.get('/', (req, res) => {
+  res.send('test')
+})
 
 app.get('/menu', (req, res) => {
   connection.query('SELECT * from food_items',(error, results) => {
@@ -36,51 +33,46 @@ app.get('/menu', (req, res) => {
       //var results ='rows:' + JSON.stringify(rows);
       console.log("result", results);
       res.header("Access-Control-Allow-Origin", "*").send(results)
-      //(path.join(__dirname, '../public/js/index.html'));
       //.header("Access-Control-Allow-Origin", "*")
     }
   })
 });
 
-app.get('/menu/:_id', (req, res) => {
- connection.query('select from food_items where _id = ?', [req.params._id], (err, results) => {
-    if(err) {
-      res.status(500).send("500 status error");
-    } else {
-      console.log(results)
-      res.redirect('/menu');
-     }
-   }
- )
-  
-});
+// app.get('/menu/:id', (req, res) => {
+//   console.log(req.body)
+// const { id } = req.body
+//  connection.query(`select from food_items where id = '${id}'`, (err, results) => {
+//   if(err) {
+//      res.status(500).send("500 status error");
+//    } else {
+//      console.log(results)
+//      res.redirect('/menu');
+//     }
+//   })
+// });
+
+
+
 
 app.post('/menu/pay', (req, res) => {
-  var payment = {
-    '_id': req.body.id,
-    'name': req.body.name,
-    'price': req.body.price
-  };
+  responseJson = JSON.stringify(req.body);
+  
+  let data =  [ req.body[0].id, req.body[0].name, req.body[0].price , req.body[0].count];
+  
+  // console.log("json", JSON.stringify(req.body))
+ // console.log("req.body", req.body);
+  
+  const sql = 'INSERT INTO order_list(id, name, price, count) VALUES (?,?,?,?)';
+  connection.query(sql, data, (err, result) => {
+    if (err) {
+      console.log('err', err);
+    } else {
+      console.log(result);
+      res.send(result); 
+   }
+  //res.send(results)
+  });
+});
 
-  connection.query('insert into food_items set ?', payment, (err, results) => {
-    if(err) throw error;
-    console.log(results)
-    res.send('데이터 확인', results)
-  })
-}) 
-
-
-//app.post('/menu/myData', (req, res,) => {
-  // const post = req.body.post;
-  // console.log(post);
-  // res.send(post);
-
-  // const axios = require('axios')
-  // axios.post('http://localhost:8080/',{
-  //   name : 'balmostory'
-  // }).then((res)=>{
-  // console.log(res)
-  // })
-//})
 
 module.exports = app;

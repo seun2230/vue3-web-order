@@ -20,7 +20,7 @@
           <TotalPrice />
         </div>
         <div>
-          <button type="button" @click="sendPayment(this.carts)">결제</button>
+        <button type="button" @click="sendPayment(this.carts)">결제</button>
         </div>
       </div>
     </div>
@@ -42,15 +42,25 @@ export default {
     methods: {
       sendPayment(carts) {
         console.log('결제 내역 mysql 전달');
-        const url = 'https://localhost:3000/menu/pay';
-        axios.post(url, carts);
-        // .then((res) => res.stringify.json())
-        // .catch((err) => {
-        //  console.log('fail', err);
-       // })
+        // console.log(JSON.stringify(carts));
+        const url = 'http://localhost:3000/menu/pay';
+        axios.post(url, JSON.stringify(carts),
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+        .then((res)  => {
+          // alert('결제하시겠습니까?')
+          console.log("res.data",res.data);         
+        })
+        .catch((err) => {
+          console.log("error",err);
+          alert('결제 시 문제가 생겼습니다.');
+        });
       }
-      
     },
+
     computed: {
         ...mapState('food', [
             'carts'
