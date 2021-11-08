@@ -1,12 +1,11 @@
 import { createStore } from 'vuex'
 
+// import food from './food.js'
+import user from './user.js'
+
 export default createStore({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+    modules: {
+        // food,
+        user,
+    }
+});
