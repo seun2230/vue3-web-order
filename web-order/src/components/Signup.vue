@@ -1,29 +1,7 @@
 <template>
     <div class="container">
         <h2 class="title">회원 가입</h2>
-        <form class="form" method="post" action="#" v-on:submit.prevent="signup">
-
-            <div class="input-group">
-                <label for="username" class="label">이름</label>
-                <input
-                    type="text"
-                    id="username"
-                    class="input"
-                    placeholder="이름을 입력하세요."
-                    v-model="username">
-                <span class="error-message"></span>
-                <svg class="icon icon-success hidden hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clip-rule="evenodd" />
-                </svg>
-
-                <svg class="icon icon-error hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                        clip-rule="evenodd" />
-                </svg>
-            </div>
+        <form class="form" @submit.prevent="submitForm">
 
             <div class="input-group">
                 <label for="email" class="label">이메일</label>
@@ -32,7 +10,7 @@
                     id="email"
                     class="input"
                     placeholder="이메일을 입력하세요."
-                    v-model = "email">
+                    v-model="user.user_email">
                 <span class="error-message"></span>
                 <svg class="icon icon-success hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
@@ -48,12 +26,34 @@
             </div>
 
             <div class="input-group">
+                <label for="username" class="label">이름</label>
+                <input
+                    type="text"
+                    id="username"
+                    class="input"
+                    placeholder="이름을 입력하세요."
+                    v-model="user.user_name">
+                <span class="error-message"></span>
+                <svg class="icon icon-success hidden hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd" />
+                </svg>
+
+                <svg class="icon icon-error hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                        clip-rule="evenodd" />
+                </svg>
+            </div>
+
+            <div class="input-group">
                 <label for="password" class="label">비밀번호</label>
                 <input
                     type="password"
                     id="password"
                     class="input"
-                    v-model="password">
+                    v-model="user.user_password">
                 <span class="error-message"></span>
                 <svg class="icon icon-success hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
@@ -74,7 +74,7 @@
                     type="password"
                     id="password_confirmation"
                     class="input"
-                    v-model="passwordConfirmation">
+                    v-model="user.user_passwordConfirmation">
                 <span class="error-message"></span>
                 <svg class="icon icon-success hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
@@ -106,6 +106,7 @@ export default {
                     user_email: this.user.user_email,
                     user_name: this.user.user_name,
                     user_password: this.user.user_password,
+                    user_passwordConfirmation: this.user.user_passwordConfirmation,
                 };
                 console.log('userData on Front: ', userData);
                 const config = {
