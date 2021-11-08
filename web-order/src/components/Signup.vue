@@ -106,7 +106,6 @@ export default {
                     user_email: this.user.user_email,
                     user_name: this.user.user_name,
                     user_password: this.user.user_password,
-                    user_passwordConfirmation: this.user.user_passwordConfirmation,
                 };
                 console.log('userData on Front: ', userData);
                 const config = {
@@ -133,6 +132,7 @@ export default {
                 user_name: '',
                 user_email: '',
                 user_password: '',
+                user_passwordConfirmation: '',
             },
         };
     },
