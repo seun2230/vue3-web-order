@@ -30,7 +30,6 @@ app.get('/menu', (req, res) => {
     if (error) {
       res.status(500).send("실패하였습니다.")
     } else {
-      //var results ='rows:' + JSON.stringify(rows);
       console.log("result", results);
       res.header("Access-Control-Allow-Origin", "*").send(results)
       //.header("Access-Control-Allow-Origin", "*")
@@ -52,26 +51,34 @@ app.get('/menu', (req, res) => {
 // });
 
 
-
-
 app.post('/menu/pay', (req, res) => {
-  responseJson = JSON.stringify(req.body);
-  
-  let data =  [ req.body[0].id, req.body[0].name, req.body[0].price , req.body[0].count];
-  
-  // console.log("json", JSON.stringify(req.body))
- // console.log("req.body", req.body);
-  
-  const sql = 'INSERT INTO order_list(id, name, price, count) VALUES (?,?,?,?)';
-  connection.query(sql, data, (err, result) => {
-    if (err) {
-      console.log('err', err);
-    } else {
-      console.log(result);
-      res.send(result); 
-   }
-  //res.send(results)
-  });
+  // console.log(req.body[0].name);
+  // console.log(req.body[1].name);
+  // console.log(req.body[2].name);   
+
+  for (let i = 0; i <= req.body.length; i++) {
+
+    let data = [ 
+      req.body[i].id,
+      req.body[i].name, 
+      req.body[i].price, 
+      req.body[i].count
+    ];
+
+    let sql = 'INSERT INTO order_list(id, name, price, count) VALUES (?,?,?,?)';
+    
+    connection.query(sql, data, (err, result) => {
+      //console.log(result)
+      if (err) {
+        console.log(err)
+        return;
+        // res.redirect('/menu');
+      } else {
+        console.log(result)
+        res.send(result)
+      }
+    })
+  }
 });
 
 

@@ -18,6 +18,7 @@ export default {
         }
     },
     mutations: {
+      // payload: 상태값 변이 시킬 때 사용함.
       success(state, payload) {
 				console.log(state)
 				console.log("payload", payload)
@@ -26,6 +27,8 @@ export default {
 			fail() {
 				console.log("error")
 			},
+      
+      // 이미지 버튼 클릭시 수량 추가하는 경우
       addToCart(state, food) {
         let addCart = state.carts.find(item => { 
           return item.id === food.id; 
@@ -38,9 +41,15 @@ export default {
       
         let copiedFood = Object.assign({}, food)
 
-        state.carts.push(copiedFood)
+        state.carts.push(copiedFood) 
 
       },
+
+      // 수량 추가 버튼 
+      // increaseToCart(state, food) {
+
+      // },
+
       removeToCart(state, food) {
         let removeCartFind = state.carts.find(item => {
           return item.id === food.id
@@ -53,8 +62,21 @@ export default {
           removeCartFind.count --
           return;
         }
-      }
+      },
+
+      removeAllCart(state, food) {
+        // const cartItem = state.cart.find(item => item.id === food.id)
+        const removeCart = state.carts.filter(item => item.id !== food.id);
+        state.carts = removeCart
+        // console.log(state.carts);
+        // 조금 더 고민해보기
+        state.carts = [];
+        console.log(state.carts);
+      },
+    
+      // 전체삭제 튼 눌렀을 시 cart 안 내용이 비워져야 함. -> 초기화값이 필요함
     },
+
     actions: {
       getState({ commit }) {
         console.log("action!")
@@ -70,8 +92,14 @@ export default {
       addCart({ commit }, food) {
         commit('food/addToCart', food, { root: true });
       },
+      increaseCart({ commit }, food) {
+        commit('food/increaseToCart', food, { root: true});
+      },
       removeCart({ commit }, food) {
         commit('food/removeToCart', food, { root: true });
+      },
+      removeAllCart({ commit }, food) {
+        commit('food/removeAllCart', food, { root: true});
       }
     }
 }
