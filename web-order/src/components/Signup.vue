@@ -96,34 +96,46 @@
 </template>
 
 <script>
-import { signup } from '../api/User.js';
+import axios from 'axios';
+
 export default {
-    name: 'SignupForm',
-    data () {
-        return {
-            username: '',
-            email: '',
-            password: '',
-            passwordConfirmation: '',
-        };
-    },
     methods: {
-        async signup() {
-            const req = {
-                user_name: this.username,
-                user_email: this.email,
-                user_password: this.password
-            };
+        async submitForm() {
             try {
-                await signup(req);
-                alert(this.USER_NAME + '님, 환영합니다!');
-                this.$router.push('/');
+                const userData = {
+                    user_email: this.user.user_email,
+                    user_name: this.user.user_name,
+                    user_password: this.user.user_password,
+                };
+                console.log('userData on Front: ', userData);
+                const config = {
+                    headers: {
+                        'Content-type': 'application/json',
+                    },
+                };
+                const { data } = await (axios.post('api/users/signup', userData, config));
+                // const { data } = await signUp(userData);
+                if (data.message === true) {
+                    alert(data.message);
+                    this.$router.push('/login');
+                } else {
+                    alert(data.message);
+                }
             } catch (error) {
-                alert(error);
+                console.log('error on Front: ', error.res);
             }
         },
-    }
-}
+    },
+    data() {
+        return {
+            user: {
+                user_name: '',
+                user_email: '',
+                user_password: '',
+            },
+        };
+    },
+};
 </script>
 
 <style scoped>

@@ -1,10 +1,17 @@
-// import axios from 'axios';
+import axios from 'axios';
 
-// function createInstanceAuth(url) {
-//     const instance = axios.create({
-//         baseURL: `http://localhost:3000/api/${url}`
-//     });
-//     return instance;
-// }
+const axiosInstance = axios.create({
+    baseURL: 'http://localhost:3000/',
+});
 
-// export const user = createInstanceAuth('user');
+const config = {
+    headers: {
+        'Content-type': 'application/json',
+    },
+};
+
+function signUp(userData) {
+    return axiosInstance.post('api/users/signup', userData, config);
+}
+
+export default { signUp };
