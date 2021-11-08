@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-// const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 
 let mysql = require('mysql');
 
@@ -39,12 +39,11 @@ router.post('/signup', function (req, res) {
   user.user_email,
     function (err, row) {
       if (row[0] === undefined) {
-        // const salt = bcrypt.genSaltSync();
-        // const encryptedPassword = bcrypt.hashSync(user.user_password, salt);
-        // console.log(encryptedPassword);
+        const salt = bcrypt.genSaltSync();
+        const encryptedPassword = bcrypt.hashSync(user.user_password, salt);
         connection.query
           ('INSERT INTO web_order.users (user_email, user_name, user_password) VALUES (?, ?, ?)',
-          [user.user_email, user.user_name, user.user_password],
+          [user.user_email, user.user_name, encryptedPassword],
           function (err, row2) {
               if (err) throw err;
             });
