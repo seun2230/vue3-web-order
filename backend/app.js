@@ -4,6 +4,18 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 
+const multer  = require('multer')
+const storage = multer.diskStorage({
+  destination (req, file, callback) {
+    callback(null, 'uploads/')
+  },
+  filename (req, file, callback) {
+    callback(null, file.originalname)
+  }
+})
+
+var upload = multer({storage:storage})
+
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -15,15 +27,22 @@ connection.connect();
 
 var port = "3000";
 app.set('port', port);
+app.set('view engine' , 'pug');
 
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extends: true })) 
 
 
-app.get('/', (req, res) => {
-  res.send('test')
-})
+// app.get('/upload', (req, res) => {
+//   res.render('upload')
+// })
+
+app.post('/upload', upload.array('userfile',5), (req, res) => {
+  console.log(req.files);
+
+  res.render('upload')
+});
 
 app.get('/menu', (req, res) => {
   connection.query('SELECT * from food_items',(error, results) => {
@@ -37,19 +56,18 @@ app.get('/menu', (req, res) => {
   })
 });
 
-// app.get('/menu/:id', (req, res) => {
-//   console.log(req.body)
-// const { id } = req.body
-//  connection.query(`select from food_items where id = '${id}'`, (err, results) => {
-//   if(err) {
-//      res.status(500).send("500 status error");
-//    } else {
-//      console.log(results)
-//      res.redirect('/menu');
-//     }
-//   })
-// });
-
+app.get('/menu/:id', (req, res) => {
+  console.log(req.body)
+const { id } = req.body
+ connection.query(`select from food_items where id = '${id}'`, (err, results) => {
+  if(err) {
+     res.status(500).send("500 status error");
+   } else {
+     console.log(results)
+     res.redirect('/menu');
+    }
+  })
+});
 
 app.post('/menu/pay', (req, res) => {
   // console.log(req.body[0].name);
