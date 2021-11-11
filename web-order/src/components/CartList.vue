@@ -94,7 +94,6 @@ export default {
 
       .btn-group {
         padding: 10px;
-        
       }
     }
   }

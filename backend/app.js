@@ -35,11 +35,11 @@ app.use(cors())
 app.use(express.json())
 app.use('/upload', express.static('uploads'));
 
-
+app.get('/upload',)
 // File Upload
-app.post('/upload', upload.array('userfile'), (req, res) => {
-  console.log("req.files ",req.files)
-  console.log("req.body ",req.body);
+app.post('/upload', upload.array('file'), (req, res) => {
+  console.log("req.files", req.files)
+  console.log("req.body", req.body);
   let image = []
 
   for( let i = 0; i < req.files.length; i++) {
