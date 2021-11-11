@@ -43,9 +43,13 @@ export default {
         // 그래서 await async 를 사용함 다른 방법도 잇는지 거민점 해보셈; ;;
         let num = await axios.get("http://localhost:3000/order_list")
           .then((res) => {
-            return res.data[res.data.length-1].order_num
-          }).catch(() => {
-            return 0
+            if (res.data[0]["max(order_num)"] === null) {
+              return 0
+            } else {
+              return res.data[0]["max(order_num)"]
+            }
+          }).catch((err) => {
+            console.log(err)
           })
 
         let copiedFood = Object.assign({

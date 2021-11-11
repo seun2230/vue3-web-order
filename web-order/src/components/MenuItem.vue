@@ -4,7 +4,7 @@
     @click="addCart()">
     <div class="image">
       <img 
-        :src="`${food.food_image}`" 
+        :src="`${food.food_image1}`" 
         :alt="`${food.food_name}`" />
       <div class="infos">
         <div class="name">
