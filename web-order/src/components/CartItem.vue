@@ -13,7 +13,7 @@
       </button>
       {{ cart.count }}
       <button
-       @click="increaseCart(this.cart)"> +
+       @click="increaseCount(this.cart)"> +
       </button>
     </div>
     
@@ -35,8 +35,8 @@ export default {
       removeCart(food) {
         this.$store.dispatch('food/removeCart', food)
       },
-      increaseCart(food) {
-        this.$store.dispatch('food/increaseCart', food)
+      increaseCount(food) {
+        this.$store.dispatch('food/increaseCount', food)
       }
   }
 }

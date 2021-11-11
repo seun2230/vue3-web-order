@@ -46,9 +46,10 @@ export default {
       },
 
       // 수량 추가 버튼 
-      // increaseToCart(state, food) {
-
-      // },
+      increaseToCount(state,food) {
+        let addItem = state.carts.find(item => item.id == food.id);
+        addItem.count++;
+      },
 
       removeToCart(state, food) {
         let removeCartFind = state.carts.find(item => {
@@ -70,7 +71,7 @@ export default {
         state.carts = removeCart
         // console.log(state.carts);
         // 조금 더 고민해보기
-        state.carts = [];
+      state.carts = [];
         console.log(state.carts);
       },
     
@@ -92,8 +93,8 @@ export default {
       addCart({ commit }, food) {
         commit('food/addToCart', food, { root: true });
       },
-      increaseCart({ commit }, food) {
-        commit('food/increaseToCart', food, { root: true});
+      increaseCount({ commit }, food) {
+        commit('food/increaseToCount', food, { root: true});
       },
       removeCart({ commit }, food) {
         commit('food/removeToCart', food, { root: true });

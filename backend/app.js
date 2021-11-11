@@ -14,7 +14,9 @@ const storage = multer.diskStorage({
   }
 })
 
-var upload = multer({storage:storage})
+var upload = multer({
+  storage:storage,
+})
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -31,19 +33,45 @@ app.set('view engine' , 'pug');
 
 app.use(cors())
 app.use(express.json())
-app.use(express.urlencoded({ extends: true })) 
+app.use('/upload', express.static('uploads'));
 
 
-// app.get('/upload', (req, res) => {
-//   res.render('upload')
-// })
+// File Upload
+app.post('/upload', upload.array('userfile'), (req, res) => {
+  console.log("req.files ",req.files)
+  console.log("req.body ",req.body);
+  let image = []
 
-app.post('/upload', upload.array('userfile',5), (req, res) => {
-  console.log(req.files);
+  for( let i = 0; i < req.files.length; i++) {
+    
+    image[i] = 'http://localhost:3000/upload/' + req.files[i].originalname;
+  }
+  console.log("image ", image)
 
+  let sql = 'INSERT INTO food_items ( name, image, image2, count, info, price) VALUES (?,?,?,?,?,?)';
+
+  let data = [ 
+    //req.body.id,
+    req.body.name, 
+    image[0],
+    image[1],
+    req.body.count, 
+    req.body.info,
+    req.body.price
+  ];
+
+  connection.query(sql, data, (err, res) => {
+    //if (err) throw err;
+    //console.log("file upload")
+    console.log("result : ", res)
+  })
+  
+  // console.log(req.files);
+  // res.send(req.files)
   res.render('upload')
 });
 
+// Menu food_items information
 app.get('/menu', (req, res) => {
   connection.query('SELECT * from food_items',(error, results) => {
     if (error) {
@@ -58,7 +86,7 @@ app.get('/menu', (req, res) => {
 
 app.get('/menu/:id', (req, res) => {
   console.log(req.body)
-const { id } = req.body
+  const { id } = req.body
  connection.query(`select from food_items where id = '${id}'`, (err, results) => {
   if(err) {
      res.status(500).send("500 status error");
@@ -69,13 +97,15 @@ const { id } = req.body
   })
 });
 
+// Menu CartItem Information
 app.post('/menu/pay', (req, res) => {
   // console.log(req.body[0].name);
   // console.log(req.body[1].name);
   // console.log(req.body[2].name);   
-
-  for (let i = 0; i <= req.body.length; i++) {
-
+ // console.log("data", req.body)
+  //console.log("req.body", req.body[0].id)
+  for (let i = 0; i < req.body.length; i++) {
+    
     let data = [ 
       req.body[i].id,
       req.body[i].name, 
@@ -86,15 +116,16 @@ app.post('/menu/pay', (req, res) => {
     let sql = 'INSERT INTO order_list(id, name, price, count) VALUES (?,?,?,?)';
     
     connection.query(sql, data, (err, result) => {
-      //console.log(result)
-      if (err) {
-        console.log(err)
-        return;
+      console.log(result)
+      
+      //if (err) {
+        //console.log(err)
+        //return;
         // res.redirect('/menu');
-      } else {
-        console.log(result)
-        res.send(result)
-      }
+      //} else {
+      //  console.log(result)
+       // res.send(result)
+      //}
     })
   }
 });
