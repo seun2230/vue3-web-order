@@ -4,9 +4,10 @@
     <hr/>
     <div class="form-group">
       <!-- ref: 자식 객체에 접근하는 속성 -->
-      Menu <input type="text" name="menu" placeholder="Menu Write"/>
+      Menu: <input type="text" name="menu" placeholder="Menu Write"/>
       file: <input type="file" name="file" ref="file" @change="addFile()" multiple />
       <button type="submit" @click="clickFile()">Upload</button>
+      <button type="button" @click="removeFile()">Remove</button>
     </div>
   </div>
 </template>
@@ -17,22 +18,29 @@ export default {
   data() {
     return {
       filename: '',
-      files: '',
+      files: [],
     }
   },
   methods: { 
-    addFile() {
-      this.files = this.$refs.file.files[0];
-      //this.file = this.$refs.file.files[i];
-      console.log(this.files);
+    addFile() {    
+      // console.log("this.ref$",this.$refs.file.files)
+      // console.log("length", this.$refs.file.files.length)
+      for(let i = 0; i < this.$refs.file.files.length; i++) {
+        this.files[i] = this.$refs.file.files[i];
+      }
+      console.log("this.files",this.files);
     },
     
     // upload button click -> axios로 담긴 파일을 보내야함.
     clickFile() {
       // FormData(): 페이지 전환없이 폼 데이터 제출 하는 경우
       const formData = new FormData(); 
+      for(let i = 0; i < this.files.length; i++) {
+        
+        formData.append('file', this.files[i]);
+
+      }
       
-      formData.append('file', this.files);
       //formData.append('files', document.getElementById('file').files[0]);
       const headers = {
         'Content-Type': 'multipart/form-data'
@@ -46,6 +54,10 @@ export default {
       .catch((err) => {
         console.log(err);
       });
+    },
+
+    removeFile() {
+      this.files = [];
     }
   }
 }
