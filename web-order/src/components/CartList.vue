@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-8">
           <div
-            class="carts">
+            class="carts scroll-y">
             <CartItem
               v-for="cart in carts"
               :key="cart.name"
@@ -80,17 +80,19 @@ export default {
 
 .container {
   margin-top: 30px;
+  
    .inner {
       background-color: $gray-200;
       padding: 20px;
       border-radius: 4px;
       text-align: center;
-
+  
       .carts {
-      flex-wrap: wrap;
-      justify-content: center;
-      background-color: white;
-      border-radius: 5px;
+        flex-wrap: wrap;
+        justify-content: center;
+        background-color: white;
+        border-radius: 5px;
+        overflow-y:scroll;
 
       .btn-group {
         padding: 10px;

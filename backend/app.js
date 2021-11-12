@@ -38,7 +38,7 @@ app.use('/upload', express.static('uploads'));
 app.get('/upload',)
 // File Upload
 app.post('/upload', upload.array('file'), (req, res) => {
-  console.log("req.files", req.files)
+  console.log("req.files", req.files);
   console.log("req.body", req.body);
   let image = []
 
@@ -48,7 +48,7 @@ app.post('/upload', upload.array('file'), (req, res) => {
   }
   console.log("image ", image)
 
-  let sql = 'INSERT INTO food_items ( name, image, image2, count, info, price) VALUES (?,?,?,?,?,?)';
+  let sql = 'INSERT INTO food_items (name, image, image2, count, info, price) VALUES (?,?,?,?,?,?)';
 
   let data = [ 
     //req.body.id,

@@ -4,7 +4,22 @@
     <hr/>
     <div class="form-group">
       <!-- ref: 자식 객체에 접근하는 속성 -->
-      Menu: <input type="text" name="menu" placeholder="Menu Write"/>
+      <select v-model="category">
+        <option disabled value="">Category</option>
+        <option>덮밥</option>
+        <option>라멘</option>
+        <option>음료수</option>
+        <option>기타</option>
+      </select>
+        {{ category }}
+      <br/>
+        Menu: <input type="text" name="menu" ref="name" value="" placeholder="Menu Write"/>
+        Count: <input type="text" name="count" ref="count" value="" />
+        Info: <input type="text" name="Info" ref="info" value="" />
+        Price: <input type="price" name="price" ref="price" value="" />
+    </div>  
+     
+    <div class="form-group">
       file: <input type="file" name="file" ref="file" @change="addFile()" multiple />
       <button type="submit" @click="clickFile()">Upload</button>
       <button type="button" @click="removeFile()">Remove</button>
@@ -17,7 +32,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      filename: '',
+      category: '',
       files: [],
     }
   },
@@ -30,7 +45,7 @@ export default {
       }
       console.log("this.files",this.files);
     },
-    
+
     // upload button click -> axios로 담긴 파일을 보내야함.
     clickFile() {
       // FormData(): 페이지 전환없이 폼 데이터 제출 하는 경우
@@ -38,18 +53,24 @@ export default {
       for(let i = 0; i < this.files.length; i++) {
         
         formData.append('file', this.files[i]);
-
+        console.log(this.files);
       }
       
-      //formData.append('files', document.getElementById('file').files[0]);
+      
+      formData.append("name", this.$refs.name.value);
+      formData.append("count", this.$refs.count.value);
+      formData.append("info", this.$refs.info.value);
+      formData.append("price", this.$refs.price.value);
+      // console.log("menu:", this.$refs.menu.value);
+     
+      //formData.append('file', document.getElementById('file').files[0]);
       const headers = {
         'Content-Type': 'multipart/form-data'
       };
-
       axios.post('http://localhost:3000/upload/', formData, { headers })      
-      .then((res, result) => {
-        console.log(res);
-        res.send(result);
+      .then(() => {
+        console.log("데이터 전달 성공");
+        // res.send(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -63,6 +84,20 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import "../scss/main.scss";
 
+  .container {
+    display: grid;
+    background-color: lightgoldenrodyellow;
+    border-radius: 10px;
+    margin-top: 30px;
+    border: 1px; 
+  }
+
+  .form-group {
+    margin: 20px;
+    font-size: 20px;
+  }
+  
 </style>
