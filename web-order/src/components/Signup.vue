@@ -96,11 +96,11 @@
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
 
 export default {
     methods: {
-        async submitForm() {
+        submitForm() {
             try {
                 const userData = {
                     user_email: this.user.user_email,
@@ -108,19 +108,7 @@ export default {
                     user_password: this.user.user_password,
                 };
                 console.log('userData on Front: ', userData);
-                const config = {
-                    headers: {
-                        'Content-type': 'application/json',
-                    },
-                };
-                const { data } = await (axios.post('api/users/signup', userData, config));
-                // const { data } = await signUp(userData);
-                if (data.message === true) {
-                    alert(data.message);
-                    this.$router.push('/login');
-                } else {
-                    alert(data.message);
-                }
+                this.$store.dispatch('signup', userData);
             } catch (error) {
                 console.log('error on Front: ', error.res);
             }

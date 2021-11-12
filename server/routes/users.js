@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 let mysql = require('mysql');
 
@@ -47,7 +48,11 @@ router.post('/signup', function (req, res) {
           function (err, row2) {
               if (err) throw err;
             });
+            const token = jwt.sign({ user }, 'access_token');
             res.json({
+              token,
+              email: user.user_email,
+              name: user.user_name,
               success: true,
               message: '회원 가입이 완료되었습니다!'
             })
@@ -69,6 +74,7 @@ router.post('/login', function (req, res) {
   [user.user_email],
   function (err, row) {
     if (err) {
+      const token = jwt.sign({ user }, 'access_token');
       res.json({  //  아이디 없음
         success: false,
         message: '아이디 또는 이메일 주소를 확인해주세요!'
@@ -77,7 +83,10 @@ router.post('/login', function (req, res) {
     if (row[0] !== undefined && row[0].user_email === user.user_email) {
       bcrypt.compare(user.user_password, row[0].user_password, function (err, res2) {
         if (res2) {
+          const token = jwt.sign({ user }, 'access_token');
           res.json({
+            token,
+            email: user.user_email,
             success: true,
             message: '로그인 성공!'
           })

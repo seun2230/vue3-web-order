@@ -13,6 +13,7 @@
 </template>
 <script>
 import axios from 'axios';
+import { authComputed } from '../store/helper.js';
 
 export default {
     data() {
@@ -24,6 +25,9 @@ export default {
         axios.get('/api/users').then((response) => {
             this.users = response.data;
         });
+    },
+    computed: {
+        ...authComputed
     },
 };
 </script>

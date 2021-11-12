@@ -15,7 +15,7 @@
     </div>
 </template>
 <script>
-import axios from 'axios';
+// import axios from 'axios';
 
 export default {
     data() {
@@ -27,23 +27,16 @@ export default {
         };
     },
     methods: {
-        async login() {
+        login() {
             try {
                 const loginData = {
                     user_email: this.user.user_email,
                     user_password: this.user.user_password,
                 };
-                const config = {
-                    headers: {
-                        'Content-type': 'application/json',
-                    },
-                };
-                const { data } = await (axios.post('api/users/login', loginData, config));
-                if (data.success === true) {
-                    this.$router.push('/index');
-                } else if (data.success === false) {
-                    alert(data.message);
-                }
+                this.$store.dispatch('login', loginData)
+                .then(() => {
+                    this.$router.push('/');
+                })
             } catch (error) {
                 console.log('error on Front: ', error.res)
             }
