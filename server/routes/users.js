@@ -48,11 +48,9 @@ router.post('/signup', function (req, res) {
           function (err, row2) {
               if (err) throw err;
             });
-            const token = jwt.sign({ user }, 'access_token');
+            const token = jwt.sign({ user: user.user_email }, 'access_token');
             res.json({
               token,
-              email: user.user_email,
-              name: user.user_name,
               success: true,
               message: '회원 가입이 완료되었습니다!'
             })
@@ -83,10 +81,9 @@ router.post('/login', function (req, res) {
     if (row[0] !== undefined && row[0].user_email === user.user_email) {
       bcrypt.compare(user.user_password, row[0].user_password, function (err, res2) {
         if (res2) {
-          const token = jwt.sign({ user }, 'access_token');
+          const token = jwt.sign({ user: user.user_email }, 'access_token');
           res.json({
             token,
-            email: user.user_email,
             success: true,
             message: '로그인 성공!'
           })
