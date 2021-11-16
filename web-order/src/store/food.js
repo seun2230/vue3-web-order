@@ -5,7 +5,8 @@ export default {
     state: () => {
       return {
         carts: [],
-        foods: []
+        foods: [],
+        order: []
       }  
     },
     getters: {
@@ -39,8 +40,6 @@ export default {
           return;
         }
 
-        // promise 가 자꾸 떴어 ㅇㅇ 
-        // 그래서 await async 를 사용함 다른 방법도 잇는지 거민점 해보셈; ;;
         let num = await axios.get("http://localhost:3000/order_list")
           .then((res) => {
             if (res.data[0]["max(order_num)"] === null) {
@@ -60,6 +59,7 @@ export default {
         }, food)
 
         state.carts.push(copiedFood)
+        state.order.push(copiedFood)
 
       },
       removeToCart(state, food) {

@@ -82,6 +82,7 @@
 		},
 		methods: {
 			addFiles() {
+        console.log("addFiles clicked!")
 				document.getElementById('multiple-image-preview').click();
 			},
 			submitFiles() {
@@ -114,6 +115,10 @@
 			},
 
 			handleFilesUpload(event) {
+        console.log("event", event)
+        console.log("event.target", event.target)
+        console.log("Eve", event.target.files)
+
 				let uploadedFiles = event.target.files;
 
 				for (let i = 0; i < uploadedFiles.length; i++) {
