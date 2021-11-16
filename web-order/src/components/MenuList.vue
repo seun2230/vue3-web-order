@@ -13,7 +13,6 @@
 
 <script>
 import MenuItem from './MenuItem.vue'
-// import { mapState, mapActions } from 'vuex'
 import { mapState, mapActions } from 'vuex'
 
 export default {

@@ -56,7 +56,6 @@ export default {
         console.log(this.files);
       }
       
-      
       formData.append("name", this.$refs.name.value);
       formData.append("count", this.$refs.count.value);
       formData.append("info", this.$refs.info.value);

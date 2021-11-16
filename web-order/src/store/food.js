@@ -5,7 +5,8 @@ export default {
     state: () => {
         return {
             carts: [],
-            foods: [] 
+            foods: [],
+            orders: [] 
         }  
     },
     getters: {
@@ -40,8 +41,8 @@ export default {
         }
       
         let copiedFood = Object.assign({}, food)
-
-        state.carts.push(copiedFood) 
+        state.carts.push(copiedFood)
+        state.orders.push(copiedFood)
 
       },
 
@@ -71,7 +72,7 @@ export default {
         state.carts = removeCart
         // console.log(state.carts);
         // 조금 더 고민해보기
-      state.carts = [];
+        state.carts = [];
         console.log(state.carts);
       },
     
