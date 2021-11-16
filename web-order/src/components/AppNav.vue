@@ -3,13 +3,16 @@
         <router-link to="/">
             Home
         </router-link>
-        <router-link to="/login">
+        <router-link v-if='!loggedIn' to="/login">
             Login
         </router-link>
-        <router-link to="/signup">
+        <router-link v-if='loggedIn' to="/mypage">
+            MyPage
+        </router-link>
+        <router-link v-if='!loggedIn' to="/signup">
             signUp
         </router-link>
-        <button class='logout' @click='logout'>
+        <button v-if='loggedIn' class='logout' @click='logout'>
             LogOut
         </button>
     </div>

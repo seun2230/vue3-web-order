@@ -1,33 +1,19 @@
 <template>
-    <div class='hello'>
-        <div v-for='(user, index) in users' :key='user.user_id' class='user-wrap'>
-            <h2>No. {{ index + 1 }}</h2>
-            <dl>
-                <dt>이메일</dt>
-                <dd>{{ user.user_email }}</dd>
-                <dt>이름</dt>
-                <dd>{{ user.user_name }}</dd>
-            </dl>
-        </div>
+    <div>
+        <h1>HOME</h1>
+        {{ isAuthenticated ? "로그인 되었습니다" : "로그인 해 주세요" }}
     </div>
 </template>
 <script>
-import axios from 'axios';
-import { authComputed } from '../store/helper.js';
+import { mapGetters } from 'vuex';
 
 export default {
-    data() {
-        return {
-            users: [],
-        };
-    },
-    created() {
-        axios.get('/api/users').then((response) => {
-            this.users = response.data;
-        });
-    },
+    name: 'Index',
+    components: {},
     computed: {
-        ...authComputed
+        ...mapGetters(['isAuthenticated']),
     },
+    methods: {},
 };
 </script>
+

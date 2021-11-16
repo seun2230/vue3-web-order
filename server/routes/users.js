@@ -28,6 +28,15 @@ router.get('/', function (req, res) {
   });
 });
 
+// router.get('/update', function (req, res) {
+//   connection.query
+//     ('SELECT * FROM web_order.users WHERE user_email = ?',
+//     user.user_email, function (err, row) {
+//       if (err) throw err;
+//       res.send(row);
+//     })
+// })
+
 router.post('/signup', function (req, res) {
   console.log('req.body on Back: ', req.body);
   const user = {
@@ -96,6 +105,25 @@ router.post('/login', function (req, res) {
       })
     }
   })
+});
+
+router.post('/update', function(req, res, next) {
+  console.log('update user data', req.body);
+  const user = {
+    'user_email': req.body.user_email,
+    'user_name': req.body.user_name,
+    'user_password': req.body.user_password
+  };
+  const salt = bcrypt.genSaltSync();
+  const encryptedPassword = bcrypt.hashSync(user.user_password, salt);
+  connection.query
+    ('UPDATE web_order.users SET user_name = ? , user_password = ? WHERE user_email = ?',
+    [user.user_name, encryptedPassword, user.user_email],
+    function (err, row) {
+      if (err) {
+        throw err;
+      }
+    });
 });
 
 module.exports = router;

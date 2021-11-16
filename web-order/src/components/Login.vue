@@ -10,7 +10,7 @@
             <input type='password' id='password' v-model='user.user_password' />
         </div>
         <button v-on:click='login'>로그인</button>
-        <a href='/#/signup'>가입하기</a>
+        <a href='/signup'>가입하기</a>
         </form>
     </div>
 </template>

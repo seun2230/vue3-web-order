@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h2 class="title">회원 가입</h2>
+        <h2 class="title">회원 정보 수정</h2>
         <form class="form" @submit.prevent="submitForm">
 
             <div class="input-group">
@@ -9,8 +9,8 @@
                     type="email"
                     id="email"
                     class="input"
-                    placeholder="이메일을 입력하세요."
-                    v-model="user.user_email">
+                    v-model="user.user_email"
+                    disabled>
                 <span class="error-message"></span>
                 <svg class="icon icon-success hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
@@ -32,7 +32,7 @@
                     id="username"
                     class="input"
                     placeholder="이름을 입력하세요."
-                    v-model="user.user_name">
+                    v-model="userInfo.user_name">
                 <span class="error-message"></span>
                 <svg class="icon icon-success hidden hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
@@ -89,14 +89,14 @@
                 </svg>
             </div>
 
-            <input type="submit" class="button" value="회원 가입">
+            <input type="submit" class="button" value="회원 정보 수정">
 
         </form>
     </div>
 </template>
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 
 export default {
     methods: {
@@ -108,7 +108,7 @@ export default {
                     user_password: this.user.user_password,
                 };
                 console.log('userData on Front: ', userData);
-                this.$store.dispatch('signup', userData)
+                this.$store.dispatch('update', userData)
                 .then(() => {
                     this.$router.push('/');
                 })
@@ -121,11 +121,17 @@ export default {
         return {
             user: {
                 user_name: '',
-                user_email: '',
+                user_email: userInfo.user_email,
                 user_password: '',
                 user_passwordConfirmation: '',
             },
         };
+    },
+    created() {
+        axios.get('/update').then((response) => {
+            console.log('response when created:', response);
+            this.userInfo = response.data;
+        });
     },
 };
 </script>
