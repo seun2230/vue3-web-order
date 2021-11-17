@@ -11,12 +11,10 @@
         <option>음료수</option>
         <option>기타</option>
       </select>
-        {{ category }}
       <br/>
-        Menu: <input type="text" name="menu" ref="name" value="" placeholder="Menu Write"/>
-        Count: <input type="text" name="count" ref="count" value="" />
-        Info: <input type="text" name="Info" ref="info" value="" />
-        Price: <input type="price" name="price" ref="price" value="" />
+        Menu: <input type="text" name="name" ref="name" value="" placeholder="Menu Write"/>
+        Info: <input type="text" name="info" ref="info" value="" />
+        Price: <input type="text" name="price" ref="price" value="" />
     </div>  
      
     <div class="form-group">
@@ -57,9 +55,9 @@ export default {
       }
       
       formData.append("name", this.$refs.name.value);
-      formData.append("count", this.$refs.count.value);
       formData.append("info", this.$refs.info.value);
       formData.append("price", this.$refs.price.value);
+      formData.append("category", this.category);
       // console.log("menu:", this.$refs.menu.value);
      
       //formData.append('file', document.getElementById('file').files[0]);
@@ -78,6 +76,7 @@ export default {
 
     removeFile() {
       this.files = [];
+      console.log(this.files);
     }
   }
 }

@@ -1,22 +1,29 @@
 <template>
   <div class="infos">
     <div class="name">
-      {{ cart.name }}
-    </div>
-    <div class="total-price">
-      금액 {{ cart.price * cart.count }}
+      {{ cart.food_name }}
     </div>
     <div class="quantity">
-      <button 
-       class="remove-btn"
-       @click="removeCart(this.cart)"> -
-      </button>
-      {{ cart.count }}
-      <button
-       @click="increaseCount(this.cart)"> +
-      </button>
+      수량 {{ cart.quantity }}
     </div>
-    
+    <div class="total-price">
+      금액 {{ cart.food_price * cart.quantity }}
+    </div>
+    <button
+      class="remove-btn"
+      @click="removeCart(this.cart)">
+      -
+    </button>
+    <button
+      class="remove-btn"
+      @click="realRemoveCart(this.cart)">
+      X
+    </button>
+    <button
+      class="remove-btn"
+      @click="addCart(this.cart)">
+      +
+    </button>
   </div>
 </template>
 
@@ -32,12 +39,15 @@ export default {
     }
   },
   methods: {
-      removeCart(food) {
-        this.$store.dispatch('food/removeCart', food)
-      },
-      increaseCount(food) {
-        this.$store.dispatch('food/increaseCount', food)
-      }
+    removeCart(food) {
+      this.$store.dispatch('food/removeCart', food)
+    },
+    realRemoveCart(food) {
+      this.$store.dispatch('food/realRemoveCart', food)
+    },
+    addCart(food) {
+      this.$store.dispatch('food/addCart', food)
+    }
   }
 }
 </script>

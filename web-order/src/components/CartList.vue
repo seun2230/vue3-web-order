@@ -19,12 +19,15 @@
         <div class="col-md-4">
           <TotalPrice />
         </div>
-        <div class="btn-group">
-          <button type="button" @click="removeAllCart(this.carts)">전체 주문 취소</button>
-          <button type="button" @click="sendPayment(this.carts)">최종 결제</button>
+        <div class="btn-primary">
         </div>
       </div>
     </div>
+    <button
+      class="submit-btn"
+      @click="submitCart(this.carts)">
+      결제
+    </button>
   </div>
 </template>
 
@@ -35,43 +38,35 @@ import { mapState } from 'vuex'
 import axios from 'axios'
 
 export default {
-    components: {
-        CartItem,
-        TotalPrice
-    },
-
-    methods: {
-      removeAllCart(food) {
-       this.$store.dispatch('food/removeAllCart', food)
-      },
-
-      sendPayment(carts) {
-        console.log('결제 내역 mysql 전달');
-        // console.log(JSON.stringify(carts));
-        const url = 'http://localhost:3000/menu/pay';
-        axios.post(url, JSON.stringify(carts),
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
-        .then((res)  => {
-          // alert('결제하시겠습니까?')
-          console.log("res.data", res.data);         
-        })
-        .catch((err) => {
-          console.log(err);
-          alert('결제 시 문제가 생겼습니다.');
-        });
-      }, 
+  components: {
+    CartItem,
+    TotalPrice
     },
 
     computed: {
-        ...mapState('food', [
-            'carts'
-        ])
+      ...mapState('food', [
+        'carts'
+      ])
+    },
+    methods: {
+      submitCart(carts) {
+        axios.post("http://localhost:3000/foods/pay", 
+          JSON.stringify(carts),
+          {
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
+        .then((res) => {
+          console.log("submit res.data :", res.data)
+          this.$store.commit('food/resetCart')
+        })
+        .catch(err => {
+          console.error(err);
+        })
+      }
     }
-}
+  }
 </script>
 
 <style lang="scss" scoped>
@@ -80,7 +75,6 @@ export default {
 
 .container {
   margin-top: 30px;
-  
    .inner {
       background-color: $gray-200;
       padding: 20px;
@@ -100,6 +94,5 @@ export default {
       }
     }
   }
-    
 }
 </style>

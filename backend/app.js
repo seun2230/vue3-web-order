@@ -29,40 +29,43 @@ connection.connect();
 
 var port = "3000";
 app.set('port', port);
-app.set('view engine' , 'pug');
+app.set('view engine', 'pug');
 
 app.use(cors())
 app.use(express.json())
 app.use('/upload', express.static('uploads'));
 
 app.get('/upload',)
-// File Upload
+
 app.post('/upload', upload.array('file'), (req, res) => {
   console.log("req.files", req.files);
   console.log("req.body", req.body);
+  
   let image = []
-
   for( let i = 0; i < req.files.length; i++) {
     
     image[i] = 'http://localhost:3000/upload/' + req.files[i].originalname;
   }
-  console.log("image ", image)
+  console.log("imageooo ", image[0])
 
-  let sql = 'INSERT INTO food_items (name, image, image2, count, info, price) VALUES (?,?,?,?,?,?)';
+  let sql = 'INSERT INTO food_items' + 
+  '(food_name, food_image1, food_image2, food_image3, food_info, food_price, food_category)' + 
+  'VALUES (?,?,?,?,?,?,?)';
 
   let data = [ 
-    //req.body.id,
     req.body.name, 
     image[0],
     image[1],
-    req.body.count, 
-    req.body.info,
-    req.body.price
+    image[2],
+    req.body.info, 
+    req.body.price,
+    req.body.category
   ];
 
   connection.query(sql, data, (err, res) => {
     //if (err) throw err;
     //console.log("file upload")
+    console.log("er", err)
     console.log("result : ", res)
   })
   
@@ -72,7 +75,7 @@ app.post('/upload', upload.array('file'), (req, res) => {
 });
 
 // Menu food_items information
-app.get('/menu', (req, res) => {
+app.get('/foods', (req, res) => {
   connection.query('SELECT * from food_items',(error, results) => {
     if (error) {
       res.status(500).send("실패하였습니다.")
@@ -84,7 +87,7 @@ app.get('/menu', (req, res) => {
   })
 });
 
-app.get('/menu/:id', (req, res) => {
+app.get('/foods/:id', (req, res) => {
   console.log(req.body)
   const { id } = req.body
  connection.query(`select from food_items where id = '${id}'`, (err, results) => {
@@ -98,7 +101,7 @@ app.get('/menu/:id', (req, res) => {
 });
 
 // Menu CartItem Information
-app.post('/menu/pay', (req, res) => {
+app.post('/foods/pay', (req, res) => {
   // console.log(req.body[0].name);
   // console.log(req.body[1].name);
   // console.log(req.body[2].name);   
@@ -113,7 +116,7 @@ app.post('/menu/pay', (req, res) => {
       req.body[i].count
     ];
 
-    let sql = 'INSERT INTO order_list(id, name, price, count) VALUES (?,?,?,?)';
+    let sql = 'INSERT INTO order_list(id_order_list, order_quantity, food_items_food_id, order_num_id_order_num) VALUES (?,?,?,?)';
     
     connection.query(sql, data, (err, result) => {
       console.log(result)

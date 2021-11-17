@@ -4,14 +4,14 @@
     @click="addCart()">
     <div class="image">
       <img 
-        :src="`${food.image}`" 
-        :alt="`${food.name}`" />
+        :src="`${food.food_image1}`" 
+        :alt="`${food.food_name}`" />
       <div class="infos">
         <div class="name">
-          {{ food.name }}
+          {{ food.food_name }}
         </div>
         <div class="price">
-          {{ food.price }}
+          {{ food.food_price }}
         </div>
       </div>
     </div>

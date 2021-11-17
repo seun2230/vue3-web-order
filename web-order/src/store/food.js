@@ -3,47 +3,62 @@ import axios from "axios";
 export default {
     namespaced: true,
     state: () => {
-        return {
-            carts: [],
-            foods: [],
-            orders: [] 
-        }  
+      return {
+        carts: [],
+        foods: [],
+        order: []
+      }  
     },
     getters: {
-        totalPrice(state) {
-            let total = 0;
-            state.carts.forEach(item => {           
-                total += item.price * item.count;               
-            })
-            return total;
-        }
+      totalPrice(state) {
+        let total = 0;
+        state.carts.forEach(item => {
+          total += item.food_price * item.quantity;
+        })
+        return total;
+      }
     },
     mutations: {
-      // payload: 상태값 변이 시킬 때 사용함.
+      resetCart(state) {
+        state.carts = []
+      },
       success(state, payload) {
-				console.log(state)
-				console.log("payload", payload)
 				state.foods = payload
 			},
-			fail() {
-				console.log("error")
-			},
-      
-      // 이미지 버튼 클릭시 수량 추가하는 경우
-      addToCart(state, food) {
+      fail() {
+        console.log("error")
+      },
+      async addToCart(state, food) {
+        let date = new Date();
         let addCart = state.carts.find(item => { 
-          return item.id === food.id; 
+          return item.food_id === food.food_id; 
         });
         
         if (addCart) { 
-          addCart.count ++;
+          addCart.quantity ++;
           return;
         }
-      
-        let copiedFood = Object.assign({}, food)
-        state.carts.push(copiedFood)
-        state.orders.push(copiedFood)
 
+        let num = await axios.get("http://localhost:3000/order_list")
+          .then((res) => {
+            if (res.data[0]["max(order_num)"] === null) {
+              return 0
+            } else {
+              return res.data[0]["max(order_num)"]
+            }
+          }).catch((err) => {
+            console.log(err)
+          })
+
+        let copiedFood = Object.assign({
+          quantity : 1,
+          user_id : 1,
+          order_num: num + 1,
+          order_time: date.toDateString()
+        }, food)
+
+        state.carts.push(copiedFood)
+        state.order.push(copiedFood)
       },
 
       // 수량 추가 버튼 
@@ -54,38 +69,30 @@ export default {
 
       removeToCart(state, food) {
         let removeCartFind = state.carts.find(item => {
-          return item.id === food.id
-          })
+          return item.food_id === food.food_id
+        })
 
-        if (removeCartFind.count === 1) {
-          const filteredCarts = state.carts.filter(item => item.id !== food.id);
+        if (removeCartFind.quantity === 1) {
+          const filteredCarts = state.carts.filter(item => item.food_id !== food.food_id);
           state.carts = filteredCarts
         } else {
-          removeCartFind.count --
+          removeCartFind.quantity --
           return;
         }
       },
 
-      removeAllCart(state, food) {
-        // const cartItem = state.cart.find(item => item.id === food.id)
-        const removeCart = state.carts.filter(item => item.id !== food.id);
-        state.carts = removeCart
-        // console.log(state.carts);
-        // 조금 더 고민해보기
-        state.carts = [];
-        console.log(state.carts);
-      },
-    
-      // 전체삭제 튼 눌렀을 시 cart 안 내용이 비워져야 함. -> 초기화값이 필요함
+      realRemoveCart(state, food) {
+        const filteredCarts = state.carts.filter(item => item.food_id !== food.food_id);
+        state.carts = filteredCarts
+      }
     },
 
     actions: {
-      getState({ commit }) {
-        console.log("action!")
-        axios.get('http://localhost:3000/menu')
+      getState({ commit, state }) {
+        axios.get('http://localhost:3000/foods')
         .then((res) => {
-          console.log(res)
           commit('food/success', res.data, { root: true });
+          state.carts = []
         })
         .catch((res) => {
           commit('food/fail', res, { root: true })
@@ -100,8 +107,8 @@ export default {
       removeCart({ commit }, food) {
         commit('food/removeToCart', food, { root: true });
       },
-      removeAllCart({ commit }, food) {
-        commit('food/removeAllCart', food, { root: true});
+      realRemoveCart({ commit }, food) {
+        commit('food/realRemoveCart', food, { root: true });
       }
     }
 }

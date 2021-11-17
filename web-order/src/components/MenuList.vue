@@ -4,7 +4,7 @@
       <div class="foods">
         <MenuItem
           v-for="food in foods"
-          :key="food.name"
+          :key="food.food_name"
           :food="food" />
       </div>
     </div>
@@ -19,11 +19,6 @@ export default {
     components: {
         MenuItem
     },
-    // created: {
-      // ...mapActions('food', [
-      //   'getState'
-      // ])
-    // },
     created() {
       this.$store.dispatch("food/getState");
     },
