@@ -18,6 +18,8 @@ http.interceptors.request.use(
         Promise.reject(error);
     }
 )
-http.defaults.headers.post['Content-Type'] = 'application/x-www=form-urlencoded';
+// http.defaults.headers.post['Content-Type'] = 'application/x-www=form-urlencoded';
+http.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.headers.common = {'Authorization': `Bearer ${token}`}
 
 export default http;

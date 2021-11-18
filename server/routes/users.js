@@ -21,6 +21,24 @@ connection.connect((err) => {
   }
 });
 
+//  verifying Token
+function verifyToken(req, res, next) {
+  const bearerHeader = req.headers['authorization'];
+  console.log('Bearer Token!:', req.headers);
+  if (typeof bearerHeader !== 'undefined') {
+    const bearer = bearerHeader.split(' ');
+    const bearerToken = bearer[1].trim();
+    req.token = bearerToken;
+    console.log('req.token on verified:', req.token);
+    next();
+  } else {
+    console.log('req.headers on verifying:', req.headers);
+    console.log('req.token on verifying:', req.token);
+    console.log('Unauthorized on verifying token');
+    res.sendStatus(401);
+  }
+}
+
 router.get('/', function (req, res) {
   connection.query('SELECT * FROM web_order.users', function (err, rows) {
     if (err) throw err;
@@ -28,14 +46,26 @@ router.get('/', function (req, res) {
   });
 });
 
-// router.get('/update', function (req, res) {
-//   connection.query
-//     ('SELECT * FROM web_order.users WHERE user_email = ?',
-//     user.user_email, function (err, row) {
-//       if (err) throw err;
-//       res.send(row);
-//     })
-// })
+router.get('/mypage', verifyToken, function (req, res) {
+  console.log('update token:', req.token);
+  jwt.verify(req.token, 'the_secret_key', err => {
+    if (err) {
+      console.log('Unauthorized');
+      res.sendStatus(401);
+    } else {
+        const base64Payload = req.token.split('.')[1];
+        const payload = Buffer.from(base64Payload, 'base64');
+        const result = JSON.parse(payload.toString());
+        connection.query
+        ('SELECT * FROM web_order.users WHERE user_email = ?',
+        result.user, function (err, row) {
+          console.log('result.user:', result.user);
+          if (err) throw err;
+          res.send(row);
+        })
+      }
+  })
+})
 
 router.post('/signup', function (req, res) {
   console.log('req.body on Back: ', req.body);
@@ -57,7 +87,7 @@ router.post('/signup', function (req, res) {
           function (err, row2) {
               if (err) throw err;
             });
-            const token = jwt.sign({ user: user.user_email }, 'access_token');
+            const token = jwt.sign({ user: user.user_email }, 'the_secret_key');
             res.json({
               token,
               success: true,
@@ -81,7 +111,6 @@ router.post('/login', function (req, res) {
   [user.user_email],
   function (err, row) {
     if (err) {
-      const token = jwt.sign({ user }, 'access_token');
       res.json({  //  아이디 없음
         success: false,
         message: '아이디 또는 이메일 주소를 확인해주세요!'
@@ -90,7 +119,7 @@ router.post('/login', function (req, res) {
     if (row[0] !== undefined && row[0].user_email === user.user_email) {
       bcrypt.compare(user.user_password, row[0].user_password, function (err, res2) {
         if (res2) {
-          const token = jwt.sign({ user: user.user_email }, 'access_token');
+          const token = jwt.sign({ user: user.user_email }, 'the_secret_key');
           res.json({
             token,
             success: true,

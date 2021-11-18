@@ -32,7 +32,7 @@
                     id="username"
                     class="input"
                     placeholder="이름을 입력하세요."
-                    v-model="userInfo.user_name">
+                    v-model="user.user_name">
                 <span class="error-message"></span>
                 <svg class="icon icon-success hidden hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
@@ -96,21 +96,27 @@
 </template>
 
 <script>
-import axios from 'axios';
+import http from '../api/interceptor';
 
 export default {
     methods: {
         submitForm() {
             try {
-                const userData = {
-                    user_email: this.user.user_email,
-                    user_name: this.user.user_name,
-                    user_password: this.user.user_password,
-                };
-                console.log('userData on Front: ', userData);
-                this.$store.dispatch('update', userData)
-                .then(() => {
-                    this.$router.push('/');
+                http.get('/api/users/mypage').then((response) => {
+                    console.log('response when created:', response);
+                    const userInfo = response.data.user_email;
+
+                    const userData = {
+                        user_email: userInfo,
+                        user_name: this.user.user_name,
+                        user_password: this.user.user_password,
+                    };
+                    console.log('userData on Front: ', userData);
+
+                    this.$store.dispatch('update', userData)
+                    .then(() => {
+                        this.$router.push('/');
+                    })
                 })
             } catch (error) {
                 console.log('error on Front: ', error.res);
@@ -121,17 +127,11 @@ export default {
         return {
             user: {
                 user_name: '',
-                user_email: userInfo.user_email,
+                user_email: '',
                 user_password: '',
                 user_passwordConfirmation: '',
             },
         };
-    },
-    created() {
-        axios.get('/update').then((response) => {
-            console.log('response when created:', response);
-            this.userInfo = response.data;
-        });
     },
 };
 </script>

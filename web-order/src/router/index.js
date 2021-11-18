@@ -23,19 +23,19 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'login',
+    name: 'Login',
     component: () => import('../components/Login.vue'),
-    beforeEnter: beforeAuth(true),
+    beforeEnter: beforeAuth(false),
   },
   {
     path: '/signup',
-    name: 'signup',
+    name: 'Signup',
     component: () => import('../components/Signup.vue'),
     beforeEnter: beforeAuth(false),
   },
   {
     path: '/mypage',
-    name: 'mypage',
+    name: 'Mypage',
     component: () => import('../components/Mypage.vue'),
     beforeEnter: beforeAuth(true),
   },

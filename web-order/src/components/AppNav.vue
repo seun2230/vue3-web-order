@@ -3,16 +3,16 @@
         <router-link to="/">
             Home
         </router-link>
-        <router-link v-if='!loggedIn' to="/login">
+        <router-link v-if='!isAuthenticated' to="/login">
             Login
         </router-link>
-        <router-link v-if='loggedIn' to="/mypage">
+        <router-link v-if='isAuthenticated' to="/mypage">
             MyPage
         </router-link>
-        <router-link v-if='!loggedIn' to="/signup">
+        <router-link v-if='!isAuthenticated' to="/signup">
             signUp
         </router-link>
-        <button v-if='loggedIn' class='logout' @click='logout'>
+        <button v-if='isAuthenticated' class='logout' @click='logout'>
             LogOut
         </button>
     </div>

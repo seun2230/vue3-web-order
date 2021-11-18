@@ -34,8 +34,10 @@ export default {
                     user_password: this.user.user_password,
                 };
                 this.$store.dispatch('login', loginData)
-                .then(() => {
-                    this.$router.push('/');
+                .then(response => {
+                    if (response.status == 200) {
+                        this.$router.push('/');
+                    }
                 })
             } catch (error) {
                 console.log('error on Front: ', error.res)
