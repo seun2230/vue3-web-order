@@ -28,8 +28,8 @@ export default {
       fail() {
         console.log("error")
       },
-      async addToCart(state, food) {
-        let date = new Date();
+      addToCart(state, food) {
+        // let date = new Date();
         let addCart = state.carts.find(item => { 
           return item.food_id === food.food_id; 
         });
@@ -39,22 +39,22 @@ export default {
           return;
         }
 
-        let num = await axios.get("http://localhost:3000/order_list")
-          .then((res) => {
-            if (res.data[0]["max(order_num)"] === null) {
-              return 0
-            } else {
-              return res.data[0]["max(order_num)"]
-            }
-          }).catch((err) => {
-            console.log(err)
-          })
+        // let num = await axios.get("http://localhost:3000/order_list")
+        //   .then((res) => {
+        //     if (res.data[0]["max(order_num)"] === null) {
+        //       return 0
+        //     } else {
+        //       return res.data[0]["max(order_num)"]
+        //     }
+        //   }).catch((err) => {
+        //     console.log(err)
+        //   })
 
         let copiedFood = Object.assign({
           quantity : 1,
           user_id : 1,
-          order_num: num + 1,
-          order_time: date.toDateString()
+          // order_num: num + 1,
+          // order_time: date.toDateString()
         }, food)
 
         state.carts.push(copiedFood)

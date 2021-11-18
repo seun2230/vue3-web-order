@@ -25,7 +25,7 @@
     </div>
     <button
       class="submit-btn"
-      @click="submitCart(this.carts)">
+      @click="submitCart(this.carts, this.totalPrice)">
       결제
     </button>
   </div>
@@ -34,7 +34,7 @@
 <script>
 import CartItem from './CartItem.vue'
 import TotalPrice from './TotalPrice.vue'
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import axios from 'axios'
 
 export default {
@@ -46,12 +46,16 @@ export default {
     computed: {
       ...mapState('food', [
         'carts'
+      ]),
+      ...mapGetters('food', [
+        'totalPrice'
       ])
     },
     methods: {
-      submitCart(carts) {
-        axios.post("http://localhost:3000/foods/pay", 
-          JSON.stringify(carts),
+      submitCart(carts, totalprice) {
+        const list = [carts, totalprice]
+        axios.post("http://localhost:3000/foods/post", 
+          JSON.stringify(list),
           {
             headers: {
               "Content-Type": "application/json"
