@@ -1,7 +1,8 @@
 // import { response } from 'express';
-import axios from 'axios';
+// import axios from 'axios';
 import http from '../api/interceptor';
 import jwt from '../util/jwt';
+import router from '../router/index'
 
 export const user = {
     state: {
@@ -12,34 +13,23 @@ export const user = {
         isAuthenticated: !!jwt.getToken(),
     },
     mutations: {
-        // setToken(state, data) {
-        //     console.log('data in setToken mutations: ', data);
-        //     state.user = data;
-        //     localStorage.setItem('user', JSON.stringify(data));
-        //     axios.defaults.headers.common[
-        //         'Authorization'
-        //     ] = `Bearer ${data.token}`;
-        // },
         logout: function(state = {}) {
             state.token.accessToken = '';
             state.isAuthenticated = false;
             jwt.destroyToken();
-            location.reload();
+            // location.reload();
+            router.push('/');
         },
         login: function(state, payload = {}) {
-            console.log('payload on mutations', payload);
             const bearerToken = `Bearer ${payload.accessToken}`;
             state.token.accessToken = bearerToken;
-            console.log('bearerToken:', bearerToken);
-            console.log('state:', state);
             state.isAuthenticated = true;
             jwt.saveToken(bearerToken);
         },
     },
     actions: {
         signup: function (context, payload) {
-            console.log('payload', payload);
-            let userData = {
+            const userData = {
                 user_email: payload.user_email,
                 user_name: payload.user_name,
                 user_password: payload.user_password,
@@ -49,33 +39,22 @@ export const user = {
                 .post('/api/users/signup', userData)
                 .then(response => {
                     const { data } = response;
-                    context.commit('login', {
-                        success: data.success,
-                        accessToken: data.token,
-                    });
-                    resolve(response);
+                    if (data.success === true) {
+                        alert('환영합니다!');
+                        context.commit('login', {
+                            success: data.success,
+                            accessToken: data.token,
+                        });
+                        resolve(response);
+                    } else {
+                        alert('이미 등록된 이메일 주소입니다!');
+                    }
                 })
                 .catch(error => {
                     reject(error);
                 })
             })
         },
-        // async signup({ commit }, credentials) {
-        //     const config = {
-        //         headers: {
-        //             'Content-type': 'application/json',
-        //         },
-        //     };
-        //     const { data } = await axios.post('api/users/signup', credentials, config);
-        //     // const { data } = await signUp(userData);
-        //     console.log('setToken data: ', data);
-        //     if (data.success === true) {
-        //         commit('setToken', data);
-        //     } else {
-        //         return;
-        //     }
-        // },
-
         login: function(context, payload) {
             let loginData = {
                 user_email: payload.user_email,
@@ -86,30 +65,21 @@ export const user = {
                     .post('/api/users/login', loginData)
                     .then(response => {
                         const { data } = response;
-                        console.log('data on login actions', data);
-                        context.commit('login', {
-                            success: data.success,
-                            accessToken: data.token,
-                        })
-                        resolve(response);
+                        if (data.success === false) {
+                            alert('이메일 또는 비밀번호가 잘못 입력되었습니다.');
+                        } else {
+                            context.commit('login', {
+                                success: data.success,
+                                accessToken: data.token,
+                            })
+                            resolve(response);
+                        }
                     })
                     .catch(error => {
                         reject(error);
                     })
-            })
+                })
         },
-
-        // async login({ commit }, credentials) {
-        //     const config = {
-        //         headers: {
-        //             'Content-type': 'application/json',
-        //         },
-        //     };
-        //     const { data } = await axios.post('api/users/login', credentials, config);
-        //     console.log('setToken data: ', data);
-        //     commit('setToken', data);
-        // },
-
         logout: function(context, payload) {
             return new Promise(resolve => {
                 setTimeout(function () {
@@ -118,26 +88,8 @@ export const user = {
                 }, 1000);
             })
         },
-
-        // logout({ commit }) {
-        //     commit('logout');
-        // },
-
-        async update ({ commit }, credentials) {
-            const config = {
-                headers: {
-                    'Content-type': 'application/json',
-                },
-            };
-            const { data } = await axios.post('api/users/update', credentials, config);
-            console.log('setToken data in update: ', data);
-            commit('setToken', data);
-        },
     },
     getters: {
-        // loggedIn(state) {
-        //     return !!state.user;
-        // },
         getAccessToken: function(state) {
             return state.token.accessToken
         },

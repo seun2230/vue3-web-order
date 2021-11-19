@@ -62,18 +62,41 @@ router.get('/mypage', verifyToken, function (req, res) {
           console.log('result.user:', result.user);
           if (err) throw err;
           res.send(row);
+          console.log('res.send(row)', row);
         })
       }
   })
 })
+
+router.post('/update', function(req, res, next) {
+  console.log('update user data', req.body);
+  const user = {
+    'user_email': req.body.user_email,
+    'user_name': req.body.user_name,
+    'user_password': req.body.user_password
+  };
+  const salt = bcrypt.genSaltSync();
+  const encryptedPassword = bcrypt.hashSync(user.user_password, salt);
+  connection.query
+    ('UPDATE web_order.users SET user_name = ? , user_password = ? WHERE user_email = ?',
+    [user.user_name, encryptedPassword, user.user_email],
+    function (err, row) {
+      if (err) {
+        throw err;
+      } else {
+        res.sendStatus(200);
+      }
+    });
+});
 
 router.post('/signup', function (req, res) {
   console.log('req.body on Back: ', req.body);
   const user = {
     'user_email': req.body.user_email,
     'user_name': req.body.user_name,
-    'user_password': req.body.user_password
+    'user_password': req.body.user_password,
   };
+  if (user.user_email)
   console.log('user to MySQL: ', user);
   connection.query('SELECT user_email FROM web_order.users WHERE user_email = ?',
   user.user_email,
@@ -91,12 +114,12 @@ router.post('/signup', function (req, res) {
             res.json({
               token,
               success: true,
-              message: '회원 가입이 완료되었습니다!'
+              // message: '회원 가입이 완료되었습니다!'
             })
       } else {
         res.json({
           success: false,
-          message: '이미 등록된 이메일 주소입니다!'
+          // message: '이미 등록된 이메일 주소입니다!'
         })
       }
     });
@@ -113,7 +136,7 @@ router.post('/login', function (req, res) {
     if (err) {
       res.json({  //  아이디 없음
         success: false,
-        message: '아이디 또는 이메일 주소를 확인해주세요!'
+        // message: '아이디 또는 이메일 주소를 확인해주세요!'
       })
     }
     if (row[0] !== undefined && row[0].user_email === user.user_email) {
@@ -123,36 +146,17 @@ router.post('/login', function (req, res) {
           res.json({
             token,
             success: true,
-            message: '로그인 성공!'
+            // message: '로그인 성공!'
           })
         } else {
           res.json({  //  비밀번호 다름
             success: false,
-            message: '비밀번호를 확인해주세요!'
+            // message: '비밀번호를 확인해주세요!'
           })
         }
       })
     }
   })
-});
-
-router.post('/update', function(req, res, next) {
-  console.log('update user data', req.body);
-  const user = {
-    'user_email': req.body.user_email,
-    'user_name': req.body.user_name,
-    'user_password': req.body.user_password
-  };
-  const salt = bcrypt.genSaltSync();
-  const encryptedPassword = bcrypt.hashSync(user.user_password, salt);
-  connection.query
-    ('UPDATE web_order.users SET user_name = ? , user_password = ? WHERE user_email = ?',
-    [user.user_name, encryptedPassword, user.user_email],
-    function (err, row) {
-      if (err) {
-        throw err;
-      }
-    });
 });
 
 module.exports = router;

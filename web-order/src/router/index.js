@@ -1,9 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-// import Home from '../views/Home.vue';
-// import Index from '@/components/UserList.vue';
-// import Login from '@/components/Login.vue';
-// import SignUp from '@/components/Signup.vue';
-// import Mypage from '@/components/Mypage.vue';
 import store from '../store';
 
 const beforeAuth = isAuth => (from, to, next) => {
@@ -19,7 +14,7 @@ const routes = [
   {
     path: '/',
     name: 'Index',
-    component: () => import('../components/UserList.vue'),
+    component: () => import('../components/Main.vue'),
   },
   {
     path: '/login',

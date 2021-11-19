@@ -8,8 +8,8 @@ const http = axios.create({
 
 http.interceptors.request.use(
     config => {
-        const isAuthenthicated = store.getters['isAuthenthicated'];
-        if (isAuthenthicated) {
+        const isAuthenticated = store.getters['isAuthenticated'];
+        if (isAuthenticated) {
             config.headers.common['Authorization'] = store.getters['getAccessToken'];
         }
         return config;
@@ -20,6 +20,5 @@ http.interceptors.request.use(
 )
 // http.defaults.headers.post['Content-Type'] = 'application/x-www=form-urlencoded';
 http.defaults.headers.post['Content-Type'] = 'application/json';
-// axios.defaults.headers.common = {'Authorization': `Bearer ${token}`}
 
 export default http;

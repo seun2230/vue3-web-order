@@ -109,9 +109,11 @@ export default {
                 };
                 console.log('userData on Front: ', userData);
                 this.$store.dispatch('signup', userData)
-                .then(() => {
-                    this.$router.push('/');
-                })
+                .then(response => {
+                        if (response.status == 200) {
+                            this.$router.push('/');
+                        }
+                    })
             } catch (error) {
                 console.log('error on Front: ', error.res);
             }
