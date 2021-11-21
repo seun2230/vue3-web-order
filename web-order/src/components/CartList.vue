@@ -48,21 +48,24 @@ export default {
       ]),
       ...mapGetters('food', [
         'totalPrice'
-      ])
+      ]),
+      ...mapState('user', [
+        'token'])
     },
     methods: {
       submitCart(carts, totalPrice) {
         let list = [ carts, totalPrice ]
-
+        console.log("list",JSON.stringify(list))
         axios.post("http://localhost:3000/foods/post", 
           JSON.stringify(list),
           {
             headers: {
               "Content-Type": "application/json"
-            }
+            },
+            withCredentials: true
           })
         .then((res) => {
-          console.log("submit res.data :", res.data)
+          console.log("server res :", res.data)
           this.$store.commit('food/resetCart')
         })
         .catch(err => {
