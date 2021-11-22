@@ -46,6 +46,38 @@ router.get('/', function (req, res) {
   });
 });
 
+router.get('/orderHistory', verifyToken, function (req, res) {
+  jwt.verify(req.token, 'the_secret_key', err => {
+    if (err) {
+      console.log('Unauthorized');
+      res.sendStatus(401);
+    } else {
+        const base64Payload = req.token.split('.')[1];
+        const payload = Buffer.from(base64Payload, 'base64');
+        const result = JSON.parse(payload.toString());
+
+        const query1 = 'SELECT user_id FROM web_order.users WHERE user_email = ?';
+        const query2 = 'SELECT * FROM web_order.orders WHERE user_id = ?';
+        connection.query
+        (query1, result.user, function (err, row) {
+          if (err) {
+            throw err
+          } else {
+            connection.query
+            (query2, row[0].user_id, function (err, row2) {
+              if (err) {
+                throw err;
+              } else {
+                res.send(row2);
+                console.log('orderHistory response:', row2);
+              }
+            })
+          }
+        })
+      }
+    })
+})
+
 router.get('/mypage', verifyToken, function (req, res) {
   console.log('update token:', req.token);
   jwt.verify(req.token, 'the_secret_key', err => {

@@ -30,8 +30,20 @@ const routes = [
   },
   {
     path: '/mypage',
-    name: 'Mypage',
-    component: () => import('../components/Mypage.vue'),
+    name: 'MyPage',
+    component: () => import('../views/MyPage.vue'),
+    beforeEnter: beforeAuth(true),
+  },
+  {
+    path: '/modify',
+    name: 'MofidyForm',
+    component: () => import('../components/ModifyForm.vue'),
+    beforeEnter: beforeAuth(true),
+  },
+  {
+    path: '/orderhistory',
+    name: 'OrderHistory',
+    component: () => import('../views/OrderHistory.vue'),
     beforeEnter: beforeAuth(true),
   },
 ];

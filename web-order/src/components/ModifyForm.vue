@@ -96,6 +96,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import http from '../api/interceptor';
 
 export default {
@@ -130,6 +131,11 @@ export default {
                 user_passwordConfirmation: '',
             },
         };
+    },
+    computed: {
+        ...mapState({
+            updateUser: state => state.user,
+        })
     },
 };
 </script>
