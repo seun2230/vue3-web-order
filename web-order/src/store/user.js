@@ -7,6 +7,7 @@ import router from '../router/index'
 export const user = {
     state: {
         count: 0,
+        loginUser: null,
         token: {
             accessToken: jwt.getToken(),
         },
@@ -16,6 +17,7 @@ export const user = {
         logout: function(state = {}) {
             state.token.accessToken = '';
             state.isAuthenticated = false;
+            state.loginUser = null;
             jwt.destroyToken();
             // location.reload();
             router.push('/');
@@ -25,6 +27,10 @@ export const user = {
             state.token.accessToken = bearerToken;
             state.isAuthenticated = true;
             jwt.saveToken(bearerToken);
+        },
+        loginUser: function(state, payload = {}) {
+            const user = payload.user;
+            state.loginUser = user;
         },
     },
     actions: {
@@ -44,6 +50,9 @@ export const user = {
                         context.commit('login', {
                             success: data.success,
                             accessToken: data.token,
+                        });
+                        context.commit('loginUser', {
+                            user: userData.user_email,
                         });
                         resolve(response);
                     } else {
@@ -73,6 +82,9 @@ export const user = {
                                 accessToken: data.token,
                             })
                             resolve(response);
+                            context.commit('loginUser', {
+                                user: loginData.user_email,
+                            });
                         }
                     })
                     .catch(error => {

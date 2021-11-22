@@ -3,13 +3,13 @@
         <h2 class="title">회원 정보 수정</h2>
         <form class="form" @submit.prevent="submitForm">
 
-            <!-- <div class="input-group">
+            <div class="input-group">
                 <label for="email" class="label">이메일</label>
                 <input
                     type="email"
                     id="email"
                     class="input"
-                    v-model="user.user_email"
+                    v-model="loginUser"
                     disabled>
                 <span class="error-message"></span>
                 <svg class="icon icon-success hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
@@ -23,7 +23,7 @@
                         d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
                         clip-rule="evenodd" />
                 </svg>
-            </div> -->
+            </div>
 
             <div class="input-group">
                 <label for="username" class="label">이름</label>
@@ -126,6 +126,7 @@ export default {
     data() {
         return {
             user: {
+                user_email: '',
                 user_name: '',
                 user_password: '',
                 user_passwordConfirmation: '',
@@ -134,7 +135,7 @@ export default {
     },
     computed: {
         ...mapState({
-            updateUser: state => state.user,
+            updateUser: state => state.loginUser,
         })
     },
 };
