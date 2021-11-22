@@ -13,6 +13,9 @@
     <button @click="login($event)">
       login
     </button>
+    <button @click="logout()">
+      logout
+    </button>
   </div>
 </template>
 
@@ -35,7 +38,10 @@ export default {
 				user_password : this.user_password
 			}
       this.$store.dispatch('user/login', login_user)
-		}
+		},
+    logout() {
+      this.$store.dispatch('user/logout')
+    }
 	}
 }
 </script>

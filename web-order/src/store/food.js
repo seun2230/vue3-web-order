@@ -19,17 +19,32 @@ export default {
       }
     },
     mutations: {
+      getState(state) {
+        axios.get('http://localhost:3000/foods')
+        .then((res) => {
+          state.foods = res.data
+        })
+        .catch((res) => {
+          console.log(res)
+        })
+      },
+      getOrder(state) {
+        axios.get('http://localhost:3000/orderlist')
+        .then((res) => {
+          state.order = res.data
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      },
       resetCart(state) {
         state.carts = []
       },
-      success(state, payload) {
-				state.foods = payload
-			},
-      fail() {
-        console.log("error")
+      addOrder(state, payload) {
+        console.log(payload)
+        state.order = payload
       },
-      async addToCart(state, food) {
-        
+      addToCart(state, food) {      
         let addCart = state.carts.find(item => { 
           return item.food_id === food.food_id; 
         });
@@ -40,12 +55,10 @@ export default {
         }
 
         let copiedFood = Object.assign({
-          quantity : 1,
-          user_id : 1,
+          quantity : 1
         }, food)
 
         state.carts.push(copiedFood)
-        state.order.push(copiedFood)
 
       },
       removeToCart(state, food) {
@@ -64,19 +77,9 @@ export default {
       realRemoveCart(state, food) {
         const filteredCarts = state.carts.filter(item => item.food_id !== food.food_id);
         state.carts = filteredCarts
-      }
+      },
     },
     actions: {
-      async getState({ commit, state }) {
-        axios.get('http://localhost:3000/foods')
-        .then((res) => {
-          commit('food/success', res.data, { root: true });
-          state.carts = []
-        })
-        .catch((res) => {
-          commit('food/fail', res, { root: true })
-        })
-      },
       addCart({ commit }, food) {
         commit('food/addToCart', food, { root: true });
       },

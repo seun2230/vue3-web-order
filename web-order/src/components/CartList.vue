@@ -55,7 +55,7 @@ export default {
     methods: {
       submitCart(carts, totalPrice) {
         let list = [ carts, totalPrice ]
-        console.log("list",JSON.stringify(list))
+
         axios.post("http://localhost:3000/foods/post", 
           JSON.stringify(list),
           {

@@ -6,13 +6,13 @@ export default {
   namespaced: true,
   state: () => {
     return {
-      user_info: []
+      user_info: [],
+      token: []
     }
   },
   getters: {
-    getToken(state) {
-      let token = VueCookies.get('Auth')
-      state.token = token
+    stateInfo(state) {
+      if (!state.token === VueCookies.get("Auth")) { state.user_info = [] }
     }
   },
   mutations: {
@@ -20,9 +20,13 @@ export default {
       console.log("mutation_loginToken_payload_user_info", payload.rows[0])
       VueCookies.set("Auth", payload.token)
       state.user_info = payload.rows[0]
+      state.token = payload.token
     },
-    removeToken() {
-      VueCookies.remove('3cookie')
+    logoutToken(state) {
+      VueCookies.remove('Auth')
+      state.user_info = []
+      state.token = []
+      location.reload;
     }
   },
   actions: {
@@ -39,6 +43,9 @@ export default {
         }).catch(err => {
           console.log("err", err)
         })
+      },
+      logout({ commit }) {
+        commit('logoutToken')
       }
     }
   }
