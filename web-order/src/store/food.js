@@ -25,6 +25,11 @@ export default {
       success(state, payload) {
 				state.foods = payload
 			},
+
+      orderList(state, payload) {
+        state.order = payload;
+      },
+
       fail() {
         console.log("error")
       },
@@ -39,17 +44,6 @@ export default {
           return;
         }
 
-        // let num = await axios.get("http://localhost:3000/order_list")
-        //   .then((res) => {
-        //     if (res.data[0]["max(order_num)"] === null) {
-        //       return 0
-        //     } else {
-        //       return res.data[0]["max(order_num)"]
-        //     }
-        //   }).catch((err) => {
-        //     console.log(err)
-        //   })
-
         let copiedFood = Object.assign({
           quantity : 1,
           user_id : 1,
@@ -58,7 +52,7 @@ export default {
         }, food)
 
         state.carts.push(copiedFood)
-        state.order.push(copiedFood)
+       //  state.order.push(copiedFood)
       },
 
       // 수량 추가 버튼 

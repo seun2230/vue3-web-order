@@ -4,28 +4,36 @@
       <h2>주문 현황</h2>
     <table class="table-list">
       <thread>
+      <tr>
         <th>주문 번호</th>
         <th>메뉴 이름</th>
         <th>이미지</th>
         <th>수량</th>
         <th>메뉴 정보</th>
         <th>가격</th>
+      </tr>
       </thread>
       <tbody>
-        <tr v-for="order in orders" 
-          :key="order.id">
-          <td>{{ order.id }}</td>
-          <td>{{ order.name }}</td>
-          <td>{{ order.image }}</td>
-          <td>{{ order.count }}</td>
-          <td>{{ order.info }}</td>
-          <td>{{ order.price }}</td>
+        <tr 
+          v-for="(order, i) in order[0]" 
+          :key="i">
+          <td>{{ order.food_id }}</td>
+          <td>{{ order.food_name }}</td>
+          <td>{{ order.food_image1 }}</td>
+          <td>{{ order.quantity }}</td>
+          <td>{{ order.food_info }}</td>
+          <td>{{ order.food_price}} 원 </td>
+          <td> 
+            <button>추가</button>
+          </td>
+          <td> 
+            <button>삭제</button>
+          </td>
         </tr>
       </tbody>
     </table>
+    <!-- {{ order[0][0].qunatity}} -->
     </div>
-    
-    <!-- {{ orders }} -->
   </div>
 </template>
 
@@ -35,7 +43,7 @@ import { mapState } from 'vuex'
 export default {
   computed: {
     ...mapState('food', [ 
-      "orders"
+      "order"
     ])
   },
 }
@@ -50,14 +58,14 @@ export default {
   border-radius: 10px;
 
   .table-list {
-    table-layout: fixed;  
-    // word-break: break-all; // 줄바꿈 변화
+    table-layout: fixed;
     text-align: center;
 
-    td, th {  
-      width: 200px;
+    th, td {  
+      padding: 8px;
       border: 1px solid #ccc;
     }
+    
   }
  
 }
