@@ -6,26 +6,30 @@ export default {
   namespaced: true,
   state: () => {
     return {
-      user_info: [],
-      token: []
+      user_infos: [],
+      token: [],
+      user_orders: []
     }
   },
   getters: {
-    stateInfo(state) {
-      if (!state.token === VueCookies.get("Auth")) { state.user_info = [] }
-    }
+
   },
   mutations: {
+    user_orders(state, payload) {
+      console.log("mutation_user_order_payload", payload)
+      state.user_orders = payload
+    },
     loginToken(state, payload) {
       console.log("mutation_loginToken_payload_user_info", payload.rows[0])
       VueCookies.set("Auth", payload.token)
-      state.user_info = payload.rows[0]
+      state.user_infos = payload.rows[0]
       state.token = payload.token
     },
     logoutToken(state) {
       VueCookies.remove('Auth')
-      state.user_info = []
+      state.user_infos = []
       state.token = []
+      state.user_orders = []
       location.reload;
     }
   },
@@ -36,9 +40,9 @@ export default {
         {
 					headers: {
 						'Content-Type' : "application/json"
-					}
-        }).then(res => {
-          commit('loginToken', res.data)
+          }
+        }).then(async(res) => {
+          await commit('loginToken', res.data)
           console.log(res);
         }).catch(err => {
           console.log("err", err)
@@ -46,6 +50,20 @@ export default {
       },
       logout({ commit }) {
         commit('logoutToken')
+      },
+      user_orders({ commit }, state) {
+        console.log("state", state)
+        axios.get('http://localhost:3000/myorder', JSON.stringify(state),
+        { 
+          headers: {
+            "Content-Type" : "application/json" 
+          },
+          withCredentials: true
+        }).then(res => {
+          commit('user_orders', res.data)
+        }).catch(err => {
+          console.log(err)
+        })
       }
     }
   }
