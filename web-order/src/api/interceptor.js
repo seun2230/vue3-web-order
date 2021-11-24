@@ -2,7 +2,7 @@ import axios from 'axios';
 import store from '../store';
 
 const http = axios.create({
-    baseURL: 'http://localhost:3000/',
+    baseURL: process.env.VUE_APP_API_URL,
     headers: { 'content-type': 'application/json' },
 });
 

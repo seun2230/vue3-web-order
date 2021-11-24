@@ -47,7 +47,7 @@ router.get('/', function (req, res) {
 });
 
 router.get('/orderHistory', verifyToken, function (req, res) {
-  jwt.verify(req.token, 'the_secret_key', err => {
+  jwt.verify(req.token, process.env.VUE_APP_JWT_KEY, err => {
     if (err) {
       console.log('Unauthorized');
       res.sendStatus(401);
@@ -80,7 +80,7 @@ router.get('/orderHistory', verifyToken, function (req, res) {
 
 router.get('/mypage', verifyToken, function (req, res) {
   console.log('update token:', req.token);
-  jwt.verify(req.token, 'the_secret_key', err => {
+  jwt.verify(req.token, process.env.VUE_APP_JWT_KEY, err => {
     if (err) {
       console.log('Unauthorized');
       res.sendStatus(401);
@@ -142,7 +142,7 @@ router.post('/signup', function (req, res) {
           function (err, row2) {
               if (err) throw err;
             });
-            const token = jwt.sign({ user: user.user_email }, 'the_secret_key');
+            const token = jwt.sign({ user: user.user_email }, process.env.VUE_APP_JWT_KEY);
             res.json({
               token,
               success: true,
@@ -162,7 +162,7 @@ router.post('/login', function (req, res) {
     'user_email': req.body.user_email,
     'user_password': req.body.user_password
   };
-  connection.query('SELECT user_email, user_password FROM web_order.users WHERE user_email = ?',
+  connection.query('SELECT user_email, user_name, user_password FROM web_order.users WHERE user_email = ?',
   [user.user_email],
   function (err, row) {
     if (err) {
@@ -174,9 +174,11 @@ router.post('/login', function (req, res) {
     if (row[0] !== undefined && row[0].user_email === user.user_email) {
       bcrypt.compare(user.user_password, row[0].user_password, function (err, res2) {
         if (res2) {
-          const token = jwt.sign({ user: user.user_email }, 'the_secret_key');
+          const token = jwt.sign({ user: user.user_email }, `${process.env.VUE_APP_JWT_KEY}`);
+          const user_name = row[0].user_name;
           res.json({
             token,
+            user_name,
             success: true,
             // message: '로그인 성공!'
           })

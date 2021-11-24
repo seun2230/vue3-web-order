@@ -3,11 +3,13 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+let cors = require('cors');
 
 var indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
 
 var app = express();
+app.use(cors());
 app.use(express.json());
 app.use('/api/users', usersRouter);
 

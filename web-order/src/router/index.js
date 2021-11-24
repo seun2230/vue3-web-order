@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import store from '../store';
 
 const beforeAuth = isAuth => (from, to, next) => {
-  const isAuthenticated = store.getters['isAuthenticated'];
+  const isAuthenticated = store.getters['user/isAuthenticated'];
   if ((isAuthenticated && isAuth) || (!isAuthenticated && !isAuth)) {
     return next();
   } else {

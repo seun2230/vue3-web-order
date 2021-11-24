@@ -108,7 +108,7 @@ export default {
                     user_password: this.user.user_password,
                 };
                 console.log('userData on Front: ', userData);
-                this.$store.dispatch('signup', userData)
+                this.$store.dispatch('user/signup', userData)
                 .then(response => {
                         if (response.status == 200) {
                             this.$router.push('/');

@@ -4,10 +4,12 @@ import http from '../api/interceptor';
 import jwt from '../util/jwt';
 import router from '../router/index'
 
-export const user = {
+export default {
+    namespaced: true,
     state: {
         count: 0,
-        loginUser: null,
+        loginUserEmail: '',
+        loginUserName: '',
         token: {
             accessToken: jwt.getToken(),
         },
@@ -17,7 +19,8 @@ export const user = {
         logout: function(state = {}) {
             state.token.accessToken = '';
             state.isAuthenticated = false;
-            state.loginUser = null;
+            state.loginUserEmail = '';
+            state.loginUserName = '';
             jwt.destroyToken();
             // location.reload();
             router.push('/');
@@ -29,8 +32,13 @@ export const user = {
             jwt.saveToken(bearerToken);
         },
         loginUser: function(state, payload = {}) {
-            const user = payload.user;
-            state.loginUser = user;
+            console.log('payload:', payload);
+            const userEmail = payload.userEmail;
+            const userName = payload.userName;
+            state.loginUserEmail = userEmail;
+            state.loginUserName = userName;
+            console.log('state:', state.loginUserEmail);
+            console.log('state:', state.loginUserName);
         },
     },
     actions: {
@@ -52,7 +60,8 @@ export const user = {
                             accessToken: data.token,
                         });
                         context.commit('loginUser', {
-                            user: userData.user_email,
+                            userEmail: userData.user_email,
+                            userName: userData.user_name,
                         });
                         resolve(response);
                     } else {
@@ -82,8 +91,10 @@ export const user = {
                                 accessToken: data.token,
                             })
                             resolve(response);
+                            console.log('loginusername:', response.data.user_name);
                             context.commit('loginUser', {
-                                user: loginData.user_email,
+                                userEmail: loginData.user_email,
+                                userName: response.data.user_name,
                             });
                         }
                     })
@@ -107,6 +118,6 @@ export const user = {
         },
         isAuthenticated: function(state) {
             return state.isAuthenticated;
-        }
+        },
     }
 };

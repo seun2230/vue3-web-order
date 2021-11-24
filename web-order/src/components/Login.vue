@@ -71,7 +71,7 @@ export default {
                     user_email: this.user.user_email,
                     user_password: this.user.user_password,
                 };
-                this.$store.dispatch('login', loginData)
+                this.$store.dispatch('user/login', loginData)
                 .then(response => {
                     if (response.status == 200) {
                         this.$router.push('/');

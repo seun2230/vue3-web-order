@@ -9,7 +9,7 @@
                     type="email"
                     id="email"
                     class="input"
-                    v-model="loginUser"
+                    v-model="loginUserEmail"
                     disabled>
                 <span class="error-message"></span>
                 <svg class="icon icon-success hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
@@ -31,8 +31,7 @@
                     type="text"
                     id="username"
                     class="input"
-                    placeholder="이름을 입력하세요."
-                    v-model="user.user_name">
+                    v-model="loginUserName">
                 <span class="error-message"></span>
                 <svg class="icon icon-success hidden hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
@@ -100,23 +99,28 @@ import { mapState } from 'vuex';
 import http from '../api/interceptor';
 
 export default {
+    created() {
+            http
+            .get('/api/users/mypage')
+            .then((response) => {
+            const userInfo = response.data[0];
+            console.log(userInfo);
+            })
+        },
     methods: {
         submitForm() {
             try {
-                http.get('/api/users/mypage').then((response) => {
-                    const userInfo = response.data[0].user_email;
-                    const userData = {
-                        user_email: userInfo,
-                        user_name: this.user.user_name,
-                        user_password: this.user.user_password,
-                    };
-                    this.$axios.post('api/users/update', userData)
-                    .then(response => {
-                        if (response.status == 200) {
-                            alert('변경 사항이 저장되었습니다.')
-                            this.$router.push('/');
-                        }
-                    })
+                const userData = {
+                    user_email: this.loginUserEmail,
+                    user_name: this.user.user_name,
+                    user_password: this.user.user_password,
+                };
+                this.$axios.post('api/users/update', userData)
+                .then(response => {
+                    if (response.status == 200) {
+                        alert('변경 사항이 저장되었습니다.')
+                        this.$router.push('/');
+                    }
                 })
             } catch (error) {
                 console.log('error on Front: ', error.res);
@@ -134,9 +138,9 @@ export default {
         };
     },
     computed: {
-        ...mapState({
-            updateUser: state => state.loginUser,
-        })
+        ...mapState('user', [
+            'loginUserEmail', 'loginUserName'
+        ]),
     },
 };
 </script>
