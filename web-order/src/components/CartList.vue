@@ -54,7 +54,7 @@ export default {
     methods: {
       submitCart(carts, totalprice) {
         const list = [carts, totalprice]
-         this.$store.commit('food/orderList', list)
+         this.$store.commit('food/orderList')
        //  this.$store.state.order.push(list);
         axios.post("http://localhost:3000/foods/post", 
           JSON.stringify(list),
@@ -65,9 +65,7 @@ export default {
           })
         .then((res) => {
           console.log("submit res.data :", res.data)
-          this.$store.commit('food/resetCart')
-
-          
+          // this.$store.commit('food/resetCart')          
         })
         .catch(err => {
           console.error(err);

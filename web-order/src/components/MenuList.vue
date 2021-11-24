@@ -27,7 +27,7 @@ export default {
             'foods'
         ]),
         ...mapActions('food', [
-        'getState',
+            'getState',
       ])
     }
 }

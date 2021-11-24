@@ -26,8 +26,19 @@ export default {
 				state.foods = payload
 			},
 
-      orderList(state, payload) {
-        state.order = payload;
+      checkOrder(state, payload) {
+        state.order = payload
+      },
+            
+      orderList(state) {
+        axios.get('http://localhost:3000/order')
+        .then((res) => {
+         state.order = res.data 
+         console.log("jjj",res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
       },
 
       fail() {
@@ -92,6 +103,7 @@ export default {
           commit('food/fail', res, { root: true })
         })
       },
+
       addCart({ commit }, food) {
         commit('food/addToCart', food, { root: true });
       },

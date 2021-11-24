@@ -93,13 +93,14 @@ app.post('/foods/post', async(req, res) => {
       
       let date = new Date(); 
       let params = [ req.body[1], 'hong', date ]
-
+      console.log(params);
       await connection.beginTransaction();
 
       await connection.query(sql, params)
 
-      const [test] = await connection.query('SELECT max(id_order_num) From order_num')
+      const [test] = await connection.query('SELECT max(id_order_num) FROM order_num')
       console.log("order_num Table: ", test);
+
 
       for (let i = 0; i < req.body[0].length; i++) { 
         console.log("상품 수량: ", req.body[0][i].quantity); 
@@ -109,25 +110,13 @@ app.post('/foods/post', async(req, res) => {
           req.body[0][i].quantity,
           req.body[0][i].food_id,
           test[0]['max(id_order_num)']
-        ];8
+        ];
+        console.log('test2', params);
 
         let sql = 'INSERT INTO order_list(order_quantity, food_items_food_id, order_num_id_order_num) VALUES (?, ?, ?)';
-        await connection.query(sql, params)
+        await connection.query(sql, params) 
       } 
 
-      let sqls = `select a.order_num_id_order_num, a.id_order_list, b.users_user_id, f.food_name, a.order_quantity,
-                   b.order_total_price, b.order_date
-                  from order_list as a left join order_num as b on b.id_order_num = a.order_num_id_order_num
-                  left join food_items as f  on a.food_items_food_id = f.food_id
-                  WHERE order_date BETWEEN '2021-11-19' AND '2021-11-20'`;
-
-      const [rows] = await connection.query(sqls)
-      console.log(rows);
-      
-      await connection.commit();
-      connection.release();
-      res.send(rows);
-    
     } catch (err) {  
       connection.release();
       console.log(err);
@@ -139,17 +128,17 @@ app.post('/foods/post', async(req, res) => {
   }
 })
 
-app.post('foods/orderList', async (req, res) => {
+app.get('/order', async (req, res) => {
   const connection = await pool.getConnection(async conn => conn);
    
   await connection.beginTransaction();
-
-  const [rows] = await connection.query('UPDATE order_num SET order_status = 0 WHERE id_order_num = 1')
-  console.log(rows);
+  let sqls = 'select * from order_list as A LEFT JOIN order_num as B ON A.order_num_id_order_num = B.id_order_num LEFT JOIN food_items as F ON F.food_id = A.food_items_food_id';
+  const [rows] = await connection.query(sqls)
+  console.log("assa",rows);
       
   await connection.commit();
   connection.release();
-  res.send(rows);
+  res.send(rows)
 
 })
 module.exports = app;
