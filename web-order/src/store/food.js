@@ -22,6 +22,7 @@ export default {
       getState(state) {
         axios.get('http://localhost:3000/foods')
         .then((res) => {
+          console.log(res.data)
           state.foods = res.data
         })
         .catch((res) => {

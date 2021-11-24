@@ -16,7 +16,7 @@ export default {
   },
   mutations: {
     user_orders(state, payload) {
-      console.log("mutation_user_order_payload", payload)
+      state.user_orders = []
       state.user_orders = payload
     },
     loginToken(state, payload) {
@@ -52,14 +52,15 @@ export default {
         commit('logoutToken')
       },
       user_orders({ commit }, state) {
-        console.log("state", state)
-        axios.get('http://localhost:3000/myorder', JSON.stringify(state),
-        { 
-          headers: {
-            "Content-Type" : "application/json" 
-          },
-          withCredentials: true
-        }).then(res => {
+        console.log(state)
+        axios.post('http://localhost:3000/myorder', 
+          state,
+          { 
+            headers: {
+              "Content-Type" : "application/json" 
+            }
+          })
+        .then(res => {
           commit('user_orders', res.data)
         }).catch(err => {
           console.log(err)

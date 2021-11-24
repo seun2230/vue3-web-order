@@ -61,8 +61,7 @@ export default {
           {
             headers: {
               "Content-Type": "application/json"
-            },
-            withCredentials: true
+            }
           })
         .then((res) => {
           console.log("server res :", res.data)

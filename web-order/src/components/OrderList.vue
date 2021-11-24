@@ -9,7 +9,6 @@
       </div>
     </div>
   </div>
-  {{ order.data }}
 </template>
 
 <script>

@@ -41,14 +41,14 @@ export default {
     ])
   },
   methods: {
-    userOrder() {
+    userAllOrder() {
       this.$store.dispatch("user/user_orders")
     },
     userAlreadyOrder() {
-      this.$store.dispatch("user/user_orders", JSON.stringify(1))
+      this.$store.dispatch("user/user_orders", JSON.stringify({ num: 1}))
     },
     userNotReadyOrder() {
-      this.$store.dispatch("user/user_orders", JSON.stringify(0))
+      this.$store.dispatch("user/user_orders", JSON.stringify({ num: 0 }))
     }
   },
   components: {
