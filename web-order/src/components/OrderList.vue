@@ -32,7 +32,7 @@
         </tr>
       </tbody>
     </table>
-    <!-- {{ order[0][0].qunatity}} -->
+    {{ order[0].qunatity}}
     </div>
   </div>
 </template>

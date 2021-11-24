@@ -1,10 +1,15 @@
+require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const multer  = require('multer')
+
+const passport = require('passport')
+const passportConfig = require('./config/passport')
+const authRouter = require('./routes/authRouter')
 const pool = require('./db/index');
-const { default: axios } = require('axios');
+const { verifyToken } = require('./middleware/auth');
 
 const app = express();
 
@@ -25,8 +30,12 @@ var port = "3000";
 app.set('port', port);
 app.set('view engine', 'pug');
 
-app.use(cors())
+// 서로 다른 도메인끼리 주고 받음.
+app.use(cors({ credentials: true, origin: true}))
 app.use(express.json())
+app.use(passport.initialize())
+app.use(authRouter)
+passportConfig();
 app.use('/upload', express.static('uploads'));
 
 
@@ -80,10 +89,11 @@ app.get('/foods', async (req, res) => {
   const connection = await pool.getConnection(async conn => conn);
   const [rows] = await connection.query('SELECT * from food_items')
   connection.release();
+
   res.send(rows);
 });
 
-app.post('/foods/post', async(req, res) => {
+app.post('/foods/post', verifyToken, async(req, res) => {
   try {
     const connection = await pool.getConnection(async conn => conn);
     try {
@@ -92,7 +102,7 @@ app.post('/foods/post', async(req, res) => {
       let sql = 'INSERT INTO order_num (order_total_price, users_user_id, order_date) VALUES(?, ?, ?)';
       
       let date = new Date(); 
-      let params = [ req.body[1], 'hong', date ]
+      let params = [ req.body[1], req.decoded.user_id, date ]
       console.log(params);
       await connection.beginTransaction();
 
@@ -115,7 +125,9 @@ app.post('/foods/post', async(req, res) => {
 
         let sql = 'INSERT INTO order_list(order_quantity, food_items_food_id, order_num_id_order_num) VALUES (?, ?, ?)';
         await connection.query(sql, params) 
-      } 
+      }
+      await connection.commit();
+      connection.release();
 
     } catch (err) {  
       connection.release();

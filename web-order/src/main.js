@@ -1,9 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import store from './store'
-// import axios from 'axios'
-
-// App.config.globalProperties.$axios = axios;
+import axios from 'axios'
+axios.defaults.withCredentials = true;
 
 createApp(App)
   .use(store)
