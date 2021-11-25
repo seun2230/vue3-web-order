@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 let mysql = require('mysql');
 
@@ -46,6 +47,29 @@ router.get('/', function (req, res) {
   });
 });
 
+router.get('/getUserName', verifyToken, function(req, res) {
+  jwt.verify(req.token, process.env.VUE_APP_JWT_KEY, err => {
+    if (err) {
+      console.log('Unauthrized');
+      res.sendStatus(401);
+    } else {
+      const base64Payload = req.token.split('.')[1];
+      const payload = Buffer.from(base64Payload, 'base64');
+      const result = JSON.parse(payload.toString());
+
+      connection.query('SELECT user_name FROM web_order.users WHERE user_email = ?',
+      result.user, function(err, row) {
+        if (err) {
+          throw err;
+        } else {
+          res.send(row);
+          console.log('row on getUserName!:', row);
+        }
+      })
+    }
+  })
+})
+
 router.get('/orderHistory', verifyToken, function (req, res) {
   jwt.verify(req.token, process.env.VUE_APP_JWT_KEY, err => {
     if (err) {
@@ -65,6 +89,7 @@ router.get('/orderHistory', verifyToken, function (req, res) {
           } else {
             connection.query
             (query2, row[0].user_id, function (err, row2) {
+              console.log('row2~~~', row2);
               if (err) {
                 throw err;
               } else {
@@ -116,9 +141,18 @@ router.post('/update', function(req, res, next) {
       if (err) {
         throw err;
       } else {
-        res.sendStatus(200);
-      }
-    });
+        connection.query('SELECT user_name FROM web_order.users WHERE user_email = ?',
+        user.user_email, function(err, row) {
+          if (err) {
+            throw err;
+          } else {
+            res.send(row);
+            console.log('row on update!:', row);
+          // res.sendStatus(200);
+        }
+      });
+    };
+  })
 });
 
 router.post('/signup', function (req, res) {

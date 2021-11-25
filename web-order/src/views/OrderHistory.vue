@@ -1,5 +1,6 @@
 <template>
     <div class='histories'>
+        <h2>주문 내역</h2>
         <template v-if='!isEmpty'>
             <History v-for='history in histories'
             :key='history.order_index'
@@ -19,19 +20,22 @@ export default {
         History
     },
     data() {
-    return {
-        isEmpty: true,
-        histories: [],
-    }
+        return {
+            isEmpty: true,
+            histories: [],
+        }
     },
     created () {
         http.get('/api/users/orderHistory')
         .then((response) => {
-            console.log('response on history', response.data);
-            this.histories = response.data;
-            console.log('histories:', this.histories);
-            this.isEmpty = false;
-        })
+            console.log('res---', response.data);
+            if (response.data < 1) {
+                this.isEmpty = true;
+            } else {
+                this.histories = response.data;
+                this.isEmpty = false;
+            }
+        });
     },
-}
+};
 </script>

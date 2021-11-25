@@ -31,7 +31,7 @@
                     type="text"
                     id="username"
                     class="input"
-                    v-model="loginUserName">
+                    v-model="user.user_name">
                 <span class="error-message"></span>
                 <svg class="icon icon-success hidden hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
@@ -97,6 +97,7 @@
 <script>
 import { mapState } from 'vuex';
 import http from '../api/interceptor';
+// import user from '../store/user';
 
 export default {
     created() {
@@ -115,13 +116,20 @@ export default {
                     user_name: this.user.user_name,
                     user_password: this.user.user_password,
                 };
-                this.$axios.post('api/users/update', userData)
+                this.$store.dispatch('user/updateUser', userData)
                 .then(response => {
                     if (response.status == 200) {
-                        alert('변경 사항이 저장되었습니다.')
                         this.$router.push('/');
                     }
                 })
+                // this.$axios.post('api/users/update', userData)
+                // .then(response => {
+                //     console.log('res on update front', response);
+                //     if (response.status == 200) {
+                //         alert('변경 사항이 저장되었습니다.')
+                //         this.$router.push('/');
+                //     }
+                // })
             } catch (error) {
                 console.log('error on Front: ', error.res);
             }
@@ -139,7 +147,7 @@ export default {
     },
     computed: {
         ...mapState('user', [
-            'loginUserEmail', 'loginUserName'
+            'loginUserEmail'
         ]),
     },
 };

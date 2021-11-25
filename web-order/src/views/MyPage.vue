@@ -1,5 +1,6 @@
 <template>
     <div class='container'>
+        <h2>마이페이지</h2>
         <router-link to='/modify' v-slot='{href, route, navigate}'>
             <button :href='href' @click='navigate' class='button'>
                 {{ route.ModifyForm }} 회원 정보 수정

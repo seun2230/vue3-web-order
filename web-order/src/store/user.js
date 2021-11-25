@@ -31,17 +31,41 @@ export default {
             state.isAuthenticated = true;
             jwt.saveToken(bearerToken);
         },
-        loginUser: function(state, payload = {}) {
+        loginUserEmail: function(state, payload = {}) {
             console.log('payload:', payload);
             const userEmail = payload.userEmail;
-            const userName = payload.userName;
             state.loginUserEmail = userEmail;
-            state.loginUserName = userName;
             console.log('state:', state.loginUserEmail);
+        },
+        loginUserName: function(state, payload = {}) {
+            console.log('payload:', payload);
+            const userName = payload.updatedUserName;
+            state.loginUserName = userName;
             console.log('state:', state.loginUserName);
         },
     },
     actions: {
+        updateUser: function (context, payload) {
+            return new Promise((resolve, reject) => {
+                console.log('payapy:', payload);
+                http
+                .post('api/users/update', payload)
+                .then(response => {
+                    const updatedUserName = response.data[0].user_name;
+                    console.log('resrsersr', updatedUserName);
+                    if (response.status == 200) {
+                        alert('변경 사항이 저장되었습니다.');
+                        context.commit('loginUserName', {
+                            updatedUserName
+                        })
+                    }
+                    resolve(response);
+                })
+                .catch(error => {
+                    reject(error);
+                })
+            })
+        },
         signup: function (context, payload) {
             const userData = {
                 user_email: payload.user_email,
@@ -59,9 +83,11 @@ export default {
                             success: data.success,
                             accessToken: data.token,
                         });
-                        context.commit('loginUser', {
-                            userEmail: userData.user_email,
-                            userName: userData.user_name,
+                        context.commit('loginUserEmail', {
+                            userEmail: response.data.user_email
+                        });
+                        context.commit('loginUserName', {
+                            userName: response.data.user_name,
                         });
                         resolve(response);
                     } else {
@@ -92,8 +118,10 @@ export default {
                             })
                             resolve(response);
                             console.log('loginusername:', response.data.user_name);
-                            context.commit('loginUser', {
-                                userEmail: loginData.user_email,
+                            context.commit('loginUserEmail', {
+                                userEmail: loginData.user_email
+                            });
+                            context.commit('loginUserName', {
                                 userName: response.data.user_name,
                             });
                         }
