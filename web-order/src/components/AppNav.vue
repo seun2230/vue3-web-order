@@ -3,6 +3,9 @@
         <router-link to="/">
             Home
         </router-link>
+        <router-link to="/validate">
+            validate
+        </router-link>
         <router-link v-if='!isAuthenticated' to="/login">
             Login
         </router-link>

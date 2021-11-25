@@ -76,6 +76,7 @@ export default {
                 http
                 .post('/api/users/signup', userData)
                 .then(response => {
+                    console.log('userData on signup actions', response);
                     const { data } = response;
                     if (data.success === true) {
                         alert('환영합니다!');
