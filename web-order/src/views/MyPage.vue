@@ -13,10 +13,6 @@
         :order="user_order" />
     </div>
     <button
-      @click="userAllOrder()">
-      주문내역 전체 보기
-    </button>
-    <button
       @click="userAlreadyOrder()">
       준비완료 내역 보기
     </button>
@@ -41,9 +37,6 @@ export default {
     ])
   },
   methods: {
-    userAllOrder() {
-      this.$store.dispatch("user/user_orders")
-    },
     userAlreadyOrder() {
       this.$store.dispatch("user/user_orders", JSON.stringify({ num: 1}))
     },

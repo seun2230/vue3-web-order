@@ -16,12 +16,6 @@
       </div>
     </div>
   </button>
-  <div class="depthinfos">
-    <router-link to="foodinfos">
-      상세보기
-    </router-link>  
-    <router-view />
-  </div>
 </template>
 
 <script>
