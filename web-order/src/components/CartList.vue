@@ -23,19 +23,13 @@
         </div>
       </div>
     </div>
-    <button
-      class="submit-btn"
-      @click="submitCart(this.carts, this.totalPrice)">
-      결제
-    </button>
   </div>
 </template>
 
 <script>
 import CartItem from './CartItem.vue'
 import TotalPrice from './TotalPrice.vue'
-import { mapState, mapGetters } from 'vuex'
-import axios from 'axios'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -47,31 +41,7 @@ export default {
       ...mapState('food', [
         'carts'
       ]),
-      ...mapGetters('food', [
-        'totalPrice'
-      ])
     },
-    methods: {
-      submitCart(carts, totalprice) {
-        const list = [carts, totalprice]
-         this.$store.commit('food/orderList')
-       //  this.$store.state.order.push(list);
-        axios.post("http://localhost:3000/foods/post", 
-          JSON.stringify(list),
-          {
-            headers: {
-              "Content-Type": "application/json"
-            }
-          })
-        .then((res) => {
-          console.log("submit res.data :", res.data)
-          // this.$store.commit('food/resetCart')          
-        })
-        .catch(err => {
-          console.error(err);
-        })
-      }
-    }
   }
 </script>
 
@@ -94,10 +64,6 @@ export default {
         border-radius: 5px;
         height: 150px;
         overflow-y: scroll;
-
-      .btn-group {
-        padding: 10px;
-      }
     }
   }
 }
