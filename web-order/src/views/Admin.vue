@@ -2,17 +2,17 @@
   <h1>
     관리자 페이지임
   </h1>
-  <AddFood />
+  <ImageUpload/>
   <OrderList />
 </template>
 
 <script>
-import AddFood from '../components/AddFood.vue'
+import ImageUpload from '../components/ImageUpload.vue'
 import OrderList from '../components/OrderList.vue'
 
 export default {
   components: {
-    AddFood,
+    ImageUpload,
     OrderList
   }
 }
