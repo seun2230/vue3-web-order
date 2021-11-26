@@ -13,21 +13,19 @@
 
 <script>
 import MenuItem from './MenuItem.vue'
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
     components: {
         MenuItem
     },
     created() {
-      this.$store.dispatch("food/getState");
+      this.$store.commit("food/getState");
+      this.$store.commit("food/getOrder")
     },
     computed: {
-        ...mapState('food', [
-            'foods'
-        ]),
-        ...mapActions('food', [
-            'getState',
+      ...mapState('food', [
+          'foods'
       ])
     }
 }

@@ -19,6 +19,25 @@ export default {
       }
     },
     mutations: {
+      getState(state) {
+        axios.get('http://localhost:3000/foods')
+        .then((res) => {
+          console.log(res.data)
+          state.foods = res.data
+        })
+        .catch((res) => {
+          console.log(res)
+        })
+      },
+      getOrder(state) {
+        axios.get('http://localhost:3000/orderlist')
+        .then((res) => {
+          state.order = res.data
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      },
       resetCart(state) {
         state.carts = []
       },
@@ -58,15 +77,11 @@ export default {
         let copiedFood = Object.assign({
           quantity : 1,
           user_id : 1,
-          // order_num: num + 1,
-          // order_time: date.toDateString()
         }, food)
 
         state.carts.push(copiedFood)
        //  state.order.push(copiedFood)
       },
-
-      // 수량 추가 버튼 
       increaseToCount(state,food) {
         let addItem = state.carts.find(item => item.id == food.id);
         addItem.count++;
@@ -89,7 +104,7 @@ export default {
       realRemoveCart(state, food) {
         const filteredCarts = state.carts.filter(item => item.food_id !== food.food_id);
         state.carts = filteredCarts
-      }
+      },
     },
 
     actions: {

@@ -22,12 +22,10 @@
       <button type="submit" @click="clickFile()">Upload</button>
       <button type="button" @click="removeFile()">Remove</button>
     </div>
-    <!-- <Search /> -->
   </div>
 </template>
 
 <script>
-//import Search from './Search.vue'
 import axios from 'axios'
 export default {
   data() {

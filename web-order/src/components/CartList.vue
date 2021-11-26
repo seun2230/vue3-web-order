@@ -29,18 +29,21 @@
 <script>
 import CartItem from './CartItem.vue'
 import TotalPrice from './TotalPrice.vue'
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   components: {
     CartItem,
     TotalPrice
     },
-
+    
     computed: {
       ...mapState('food', [
         'carts'
       ]),
+      ...mapGetters('food', [
+        'totalPrice'
+      ])
     },
   }
 </script>

@@ -41,7 +41,6 @@
       </tbody>
     </table>
     </div>
-
   </div>
 </template>
 
@@ -77,10 +76,6 @@ export default {
         .catch((err) => {
           console.log(err);
         })
-      
-      // event.preventDefault();
-      // 기본 태그의 이벤트 속성을 제한하는 메서드
-      
     },
     test(object) {
       console.log(object.value);
@@ -105,9 +100,6 @@ export default {
       padding: 8px;
       border: 1px solid #ccc;
     }
-    
   }
- 
 }
-
 </style>

@@ -23,25 +23,12 @@
           :key="price"
           v-model="price" />
       </label>
-      <label>info
+      <label>게시글
         <textarea
           type="text"
-          :key="info"
-          v-model="info"></textarea>
+          :key="text"
+          v-model="text"></textarea>
       </label>
-      <select
-        v-model="category"
-        :key="category">
-        <option value="main">
-          메인요리
-        </option>
-        <option value="side">
-          사이드
-        </option>
-        <option value="baverage">
-          음료
-        </option>
-      </select>
     </div>
     <div class="large-12 medium-12 small-12 cell">
       <div class="grid-x">
@@ -73,6 +60,7 @@
 
 <script>
 	import axios from 'axios';
+  import { mapState } from 'vuex'
 	
 	export default {
 		data(){
@@ -80,6 +68,9 @@
 				files: []
 			}
 		},
+    computed: {
+      ...mapState('user', ['user_infos'])
+    },
 		methods: {
 			addFiles() {
         console.log("addFiles clicked!")
@@ -94,12 +85,12 @@
 					formData.append('files', file);
 				}
 
-          formData.append('name', this.name)
-          formData.append('price', this.price)
-          formData.append('info', this.info)
-          formData.append('category', this.category)
+          formData.append('text', this.name)
+          formData.append('ratings', this.price)
+          formData.append('food_id', this.info)
+          formData.append('user_id', this.user_infos.user_id)
 
-				axios.post( 'http://localhost:3000/uploads',
+				axios.post( 'http://localhost:3000/comments',
 					formData,
 					{
 						headers: {

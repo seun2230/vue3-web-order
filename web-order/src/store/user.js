@@ -1,5 +1,6 @@
 import axios from 'axios'
 import VueCookies from 'vue-cookies'
+
 export default {
   namespaced: true,
   state: () => {
@@ -10,6 +11,7 @@ export default {
     }
   },
   getters: {
+
   },
   mutations: {
     user_orders(state, payload) {
@@ -33,10 +35,10 @@ export default {
   actions: {
     login({ commit }, state) {
       console.log("action_login_state", state)
-        axios.post('http://localhost:3000/login', state,
+        axios.post('http://localhost:3000/login', state, 
         {
-          headers: {
-            'Content-Type' : "application/json"
+					headers: {
+						'Content-Type' : "application/json"
           }
         }).then(async(res) => {
           await commit('loginToken', res.data)
@@ -50,11 +52,12 @@ export default {
       },
       user_orders({ commit }, state) {
         console.log(state)
-        axios.post('http://localhost:3000/myorder',
+
+        axios.post('http://localhost:3000/myorder', 
           state,
-          {
+          { 
             headers: {
-              "Content-Type" : "application/json"
+              "Content-Type" : "application/json" 
             }
           })
         .then(res => {
