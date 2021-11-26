@@ -6,16 +6,47 @@
     <div class="price">
       {{ totalPrice }} 원
     </div>  
+    <div class="btn-group">
+        <button
+        class="submit-btn"
+        @click="submitCart(this.carts, this.totalPrice)">
+        결제
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import axios from 'axios'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
     computed: {
+      ... mapState ('food', ['carts']),
       ... mapGetters('food', ['totalPrice'])
     },
+    
+    methods: {
+      submitCart(carts, totalprice) {
+        const list = [carts, totalprice]
+         this.$store.commit('food/orderList')
+       //  this.$store.state.order.push(list);
+        axios.post("http://localhost:3000/foods/post", 
+          JSON.stringify(list),
+          {
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
+        .then((res) => {
+          console.log("submit res.data :", res.data)
+          // this.$store.commit('food/resetCart')          
+        })
+        .catch(err => {
+          console.error(err);
+        })
+      }
+    }
 }
 </script>
 

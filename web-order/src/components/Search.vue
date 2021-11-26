@@ -1,8 +1,8 @@
 <template>
   <div>
-    <input type="date" value="" id="startDate" min="yyy" max="zzz" /> 
+    <input type="date" value="" id="startDate" /> 
     ~
-    <input type="date" id="endDate"  min="yyy" max="zzz" /> 
+    <input type="date" id="endDate"/> 
     <input type="submit" value="search" @click="searchInfo()" />
   </div>
 </template>

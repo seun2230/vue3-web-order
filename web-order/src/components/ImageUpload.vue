@@ -22,12 +22,12 @@
       <button type="submit" @click="clickFile()">Upload</button>
       <button type="button" @click="removeFile()">Remove</button>
     </div>
-    <Search />
+    <!-- <Search /> -->
   </div>
 </template>
 
 <script>
-import Search from './Search.vue'
+//import Search from './Search.vue'
 import axios from 'axios'
 export default {
   data() {
@@ -38,7 +38,7 @@ export default {
   },
 
   components: {
-    Search
+   // Search
   },
   methods: { 
     addFile() {    
@@ -93,7 +93,7 @@ export default {
 
   .container {
     display: grid;
-    background-color: lightgoldenrodyellow;
+    background-color: #fafafa;
     border-radius: 10px;
     margin-top: 30px;
     border: 1px; 

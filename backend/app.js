@@ -153,4 +153,21 @@ app.get('/order', async (req, res) => {
   res.send(rows)
 
 })
+
+app.post('/orderDate', async(req, res) => {
+  console.log(req.body);
+  const connection = await pool.getConnection(async conn => conn);
+
+  let value = [
+    req.body[0],
+    req.body[1]
+  ]
+  let sqls = 'select * from order_list as A LEFT JOIN order_num as B ON A.order_num_id_order_num = B.id_order_num '
+      + 'LEFT JOIN food_items as F ON F.food_id = A.food_items_food_id '
+      + 'WHERE order_date between ? AND ?';
+  
+  const [rows] = await connection.query(sqls, value)
+  connection.release();
+  res.send(rows);
+})
 module.exports = app;
