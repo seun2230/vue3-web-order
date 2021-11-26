@@ -41,9 +41,9 @@
       </tbody>
     </table>
     </div>
+
   </div>
 </template>
-
 <script>
 import axios from 'axios'
 import { mapState  } from 'vuex'
@@ -57,25 +57,25 @@ export default {
   },
   
   methods: {
-      searchInfo() {
-        let startDate = document.getElementById("startDate").value;
-        let endDate = document.getElementById("endDate").value;
-        
-        
-        let orderDate = [ startDate, endDate];
-        console.log(orderDate);
-        axios.post('http://localhost:3000/orderDate', JSON.stringify(orderDate),
-          {
-            headers: {
-              "Content-Type": "application/json"
-            }
-          })
-        .then((res) => {
-          console.log(res);
+    searchInfo() {
+      let startDate = document.getElementById("startDate").value;
+      let endDate = document.getElementById("endDate").value;
+      
+      
+      let orderDate = [ startDate, endDate];
+      console.log(orderDate);
+      axios.post('http://localhost:3000/orderDate', JSON.stringify(orderDate),
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
         })
-        .catch((err) => {
-          console.log(err);
-        })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     },
     test(object) {
       console.log(object.value);

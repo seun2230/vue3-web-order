@@ -23,27 +23,38 @@
 
 <script>
 export default {
-	data() {
-		return {
-			
-		}
-	},
+  data() {
+      return {
+          
+      }
+  },
   setup() {
   },
   mounted() {
   },
-
-	methods: {
-		login() {
-			const login_user = {
-				user_id : this.user_id,
-				user_password : this.user_password
-			}
+  methods: {
+    login() {
+      const login_user = {
+        user_id : this.user_id,
+        user_password : this.user_password
+      }
       this.$store.dispatch('user/login', login_user)
-		},
+    },
     logout() {
       this.$store.dispatch('user/logout')
     }
-	}
+  }
 }
 </script>
+
+<style lang="scss" scoped>
+.login_form {
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+}
+</style>
