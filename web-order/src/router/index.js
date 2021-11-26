@@ -46,11 +46,6 @@ const routes = [
     component: () => import('../views/OrderHistory.vue'),
     beforeEnter: beforeAuth(true),
   },
-  {
-    path: '/validate',
-    name: 'Validate',
-    component: () => import('../components/FormBase.vue'),
-  },
 ];
 
 const router = createRouter({
