@@ -59,10 +59,12 @@ export default {
   methods: {
     searchInfo() {
       let startDate = document.getElementById("startDate").value;
-      let endDate = document.getElementById("endDate").value;
-      
-      
+      let endDate = document.getElementById("endDate").value ;
+      let day= new Date()
+      let test= day.setDate(day.getDate(endDate) + 1);
+      console.log(test);
       let orderDate = [ startDate, endDate];
+      
       console.log(orderDate);
       axios.post('http://localhost:3000/orderDate', JSON.stringify(orderDate),
         {

@@ -1,5 +1,10 @@
 <template>
   <div class="infos">
+    <button
+      class="remove-btn"
+      @click="realRemoveCart(this.cart)">
+      X
+    </button>
     <div class="name">
       {{ cart.food_name }}
     </div>
@@ -13,11 +18,6 @@
       class="remove-btn"
       @click="removeCart(this.cart)">
       -
-    </button>
-    <button
-      class="remove-btn"
-      @click="realRemoveCart(this.cart)">
-      X
     </button>
     <button
       class="remove-btn"

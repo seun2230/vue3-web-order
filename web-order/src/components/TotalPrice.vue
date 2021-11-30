@@ -54,6 +54,6 @@ export default {
 @import '../scss/main.scss';
 
 .total {
-    text-align: center;
+  text-align: center;
 }
 </style>
