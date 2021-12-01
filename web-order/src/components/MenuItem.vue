@@ -1,6 +1,6 @@
 <template>
   <button
-    class="btn btn-primay"
+    class="btn btn-primary"
     @click="addCart()">
     <div class="image">
       <img 
@@ -38,7 +38,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../scss/main.scss';
-.btn-primay {
+.btn-primary {
   padding: 0;
   margin: 0;
 }

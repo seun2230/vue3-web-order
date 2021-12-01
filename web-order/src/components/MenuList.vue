@@ -3,7 +3,7 @@
     <div class="inner">
       <div
         class="foods">
-        <MenuCard
+        <MenuItem
           class="menuCard"
           v-for="food in foods"
           :key="food.food_name"
@@ -14,14 +14,12 @@
 </template>
 
 <script>
-// import MenuItem from './MenuItem.vue'
-import MenuCard from './MenuCard.vue'
+import MenuItem from './MenuItem.vue'
 import { mapState } from 'vuex'
 
 export default {
     components: {
-        // MenuItem,
-        MenuCard
+        MenuItem,
     },
     created() {
       this.$store.commit("food/getState");
@@ -36,28 +34,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// @import "../scss/main.scss";
+@import "../scss/main.scss";
 
 .container {
   margin-top: 30px;
-//   .inner{
-//     background-color: $gray-200;
-//     padding: 10px 0;
-//     border-radius: 4px;
-//     text-align: center;
-//     &.no-result {
-//       padding: 70px 0;
-//     }
-//   }
-//   .foods {
-//     display: flex;
-//     flex-wrap: wrap;
-//     justify-content: center;
-//     .menuCard {
-//     height: 230px;
-//     }
-//   }
-  
+  .inner{
+    background-color: $gray-200;
+    padding: 10px 0;
+    border-radius: 4px;
+    text-align: center;
+    &.no-result {
+      padding: 70px 0;
+    }
+  }
+  .foods {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
 </style>

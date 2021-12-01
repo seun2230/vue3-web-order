@@ -1,12 +1,10 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import store from './store'
-import vuetify from './plugins/vuetify'
-import { loadFonts } from './plugins/webfontloader'
-
-loadFonts()
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 
 createApp(App)
   .use(store)
-  .use(vuetify)
+  .use(ElementPlus)
   .mount('#app')
