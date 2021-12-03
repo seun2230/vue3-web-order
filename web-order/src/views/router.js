@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import AddFood from '../components/AddFood.vue'
 import Admin from '../views/Admin.vue'
 import MyPage from '../views/MyPage.vue'
+import Menu from '../views/Menu.vue'
+import Board from '../views/Board.vue'
 
 const routes = [
   {
@@ -30,8 +32,17 @@ const routes = [
     path: '/MyPage',
     name: 'MyPage',
     component: MyPage
+  },
+  {
+    path: '/menu',
+    name: "menu",
+    component: Menu
+  },
+  {
+    path: '/board',
+    name: "board",
+    component: Board
   }
-  
 ]
 
 const router = createRouter({

@@ -144,7 +144,6 @@
 </script>
 
 <style lang="scss" scoped>
-@import "../scss/main.scss";
 
 .container {
   margin-top: 30px;

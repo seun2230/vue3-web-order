@@ -37,7 +37,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../scss/main.scss';
 .btn-primary {
   padding: 0;
   margin: 0;
