@@ -67,10 +67,12 @@ export default {
             })
         },
         signup: function (context, payload) {
+            console.log('payload:', payload)
+            console.log('name:' , payload.firstName)
             const userData = {
-                user_email: payload.user_email,
-                user_name: payload.user_name,
-                user_password: payload.user_password,
+                user_email: payload.email,
+                user_name: payload.firstName,
+                user_password: payload.password,
             }
             return new Promise((resolve, reject) => {
                 http
