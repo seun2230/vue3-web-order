@@ -1,37 +1,138 @@
 <template>
-  <div>
-    <b-card
-      class="card"
-      no-body>
-      <b-row no-gutters>
-        <b-col md="6">
-          <b-card-img
-            src="https://picsum.photos/400/400/?image=20"
-            alt="Image"
-            class="rounded-0" />
-        </b-col>
-        <b-col md="6">
-          <b-card-body title="Horizontal Card">
-            <b-card-text>
-              This is a wider card with supporting text as a natural lead-in to additional content.
-              This content is a little bit longer.
-            </b-card-text>
-          </b-card-body>
-        </b-col>
-      </b-row>
-    </b-card>
-  </div>
+  <el-row class="tac">
+    <el-col :span="12">
+      <h5>Default colors</h5>
+      <el-menu
+        default-active="2"
+        class="el-menu-vertical-demo"
+        @open="handleOpen"
+        @close="handleClose">
+        <el-sub-menu index="1">
+          <template #title>
+            <el-icon><location /></el-icon>
+            <span>Navigator One</span>
+          </template>
+          <el-menu-item-group title="Group One">
+            <el-menu-item index="1-1">
+              item one
+            </el-menu-item>
+            <el-menu-item index="1-2">
+              item one
+            </el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group title="Group Two">
+            <el-menu-item index="1-3">
+              item three
+            </el-menu-item>
+          </el-menu-item-group>
+          <el-sub-menu index="1-4">
+            <template #title>
+              item four
+            </template>
+            <el-menu-item index="1-4-1">
+              item one
+            </el-menu-item>
+          </el-sub-menu>
+        </el-sub-menu>
+        <el-menu-item index="2">
+          <el-icon><icon-menu /></el-icon>
+          <span>Navigator Two</span>
+        </el-menu-item>
+        <el-menu-item
+          index="3"
+          disabled>
+          <el-icon><document /></el-icon>
+          <span>Navigator Three</span>
+        </el-menu-item>
+        <el-menu-item index="4">
+          <el-icon><setting /></el-icon>
+          <span>Navigator Four</span>
+        </el-menu-item>
+      </el-menu>
+    </el-col>
+    <el-col :span="12">
+      <h5>Custom colors</h5>
+      <el-menu
+        active-text-color="#ffd04b"
+        background-color="#545c64"
+        class="el-menu-vertical-demo"
+        default-active="2"
+        text-color="#fff"
+        @open="handleOpen"
+        @close="handleClose">
+        <el-sub-menu index="1">
+          <template #title>
+            <el-icon><location /></el-icon>
+            <span>Navigator One</span>
+          </template>
+          <el-menu-item-group title="Group One">
+            <el-menu-item index="1-1">
+              item one
+            </el-menu-item>
+            <el-menu-item index="1-2">
+              item one
+            </el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group title="Group Two">
+            <el-menu-item index="1-3">
+              item three
+            </el-menu-item>
+          </el-menu-item-group>
+          <el-sub-menu index="1-4">
+            <template #title>
+              item four
+            </template>
+            <el-menu-item index="1-4-1">
+              item one
+            </el-menu-item>
+          </el-sub-menu>
+        </el-sub-menu>
+        <el-menu-item index="2">
+          <el-icon><icon-menu /></el-icon>
+          <span>Navigator Two</span>
+        </el-menu-item>
+        <el-menu-item
+          index="3"
+          disabled>
+          <el-icon><document /></el-icon>
+          <span>Navigator Three</span>
+        </el-menu-item>
+        <el-menu-item index="4">
+          <el-icon><setting /></el-icon>
+          <span>Navigator Four</span>
+        </el-menu-item>
+      </el-menu>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
-export default {
-  
-}
+import { defineComponent } from 'vue'
+import {
+  Location,
+  Document,
+  Menu as IconMenu,
+  Setting,
+} from '@element-plus/icons'
+
+export default defineComponent({
+  components: {
+    Location,
+    Document,
+    Setting,
+    IconMenu,
+  },
+  setup() {
+    const handleOpen = (key, keyPath) => {
+      console.log(key, keyPath)
+    }
+    const handleClose = (key, keyPath) => {
+      console.log(key, keyPath)
+    }
+    return {
+      handleOpen,
+      handleClose,
+    }
+  },
+})
 </script>
-
-<style lang="scss" scoped>
-@import '../scss/main.scss';
-
-.card {
-}
-</style>

@@ -1,24 +1,14 @@
 <template>
-  <v-app>
-    <v-main>
-      <router-view />
-      <BottomNav />
-    </v-main>
-  </v-app>
+  <router-view />
 </template>
 
 <script>
-// import Menulist from './components/MenuList.vue'
-// import AddFood from './components/AddFood.vue'
-import BottomNav from './components/BottomNav.vue'
 
 export default {
   name: 'App',
 
   components: {
-    // Menulist,
-    // AddFood,
-    BottomNav
+    
   },
 
   data: () => ({
@@ -26,3 +16,9 @@ export default {
   }),
 }
 </script>
+
+<style lang="scss" scoped>
+body {
+  margin: 0px;
+}
+</style>
