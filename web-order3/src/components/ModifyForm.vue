@@ -4,12 +4,12 @@
         <form class="form" @submit.prevent="submitForm">
 
             <div class="input-group">
-                <label for="email" class="label">이메일</label>
+                <label for="id" class="label">아이디</label>
                 <input
-                    type="email"
-                    id="email"
+                    type="text"
+                    id="acc"
                     class="input"
-                    v-model="loginUserEmail"
+                    v-model="loginUserId"
                     disabled>
                 <span class="error-message"></span>
                 <svg class="icon icon-success hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
@@ -112,7 +112,7 @@ export default {
         submitForm() {
             try {
                 const userData = {
-                    user_email: this.loginUserEmail,
+                    user_acc: this.loginUserId,
                     user_name: this.user.user_name,
                     user_password: this.user.user_password,
                 };
@@ -138,7 +138,7 @@ export default {
     data() {
         return {
             user: {
-                user_email: '',
+                user_acc: '',
                 user_name: '',
                 user_password: '',
                 user_passwordConfirmation: '',
@@ -147,7 +147,7 @@ export default {
     },
     computed: {
         ...mapState('user', [
-            'loginUserEmail'
+            'loginUserId'
         ]),
     },
 };
@@ -192,11 +192,11 @@ body {
 
 .container {
     max-width: 460px;
-    margin: 3rem auto;
+    /* margin: 3rem auto; */
     padding: 3rem;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     border-radius: .25rem;
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0.04);
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
         0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }

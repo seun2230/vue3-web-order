@@ -4,16 +4,17 @@
         <Form class="form" @submit="OnSubmit">
 
             <div class="input-group">
-                <label for="email" class="label">이메일</label>
+                <label for="acc" class="label">아이디</label>
                 <Field
-                    type="email"
-                    name="email"
-                    id="email"
+                    type="text"
+                    name="acc"
+                    id="acc"
                     class="input"
-                    placeholder="이메일을 입력하세요."
-                    :rules="validateEmail">
+                    maxlength="20"
+                    placeholder="아이디를 입력하세요."
+                    :rules="validateAcc">
                 </Field>
-                <ErrorMessage class="error-message" name="email" />
+                <ErrorMessage class="error-message" name="acc" />
             </div>
 
             <div class="input-group">
@@ -119,13 +120,13 @@ export default {
                 console.log('error on signup page:', error.response);
             }
         },
-        validateEmail(value) {
+        validateAcc(value) {
             if (!value) {
-                return '이메일 주소를 입력하세요.';
+                return '아이디를 입력하세요.';
             }
-            const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+            const regex = /^[a-zA-Z0-9]{6,20}/g;
             if (!regex.test(value)) {
-                return '올바른 이메일 주소를 입력하세요.';
+                return '6~20자의 영문과 숫자만 입력할 수 있습니다.';
             }
             return true;
         },
@@ -234,11 +235,11 @@ body {
 
 .container {
     max-width: 460px;
-    margin: 3rem auto;
+    /* margin: 3rem auto; */
     padding: 3rem;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     border-radius: .25rem;
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0.04);
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
         0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }

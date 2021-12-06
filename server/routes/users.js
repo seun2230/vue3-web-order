@@ -57,7 +57,7 @@ router.get('/getUserName', verifyToken, function(req, res) {
       const payload = Buffer.from(base64Payload, 'base64');
       const result = JSON.parse(payload.toString());
 
-      connection.query('SELECT user_name FROM web_order.users WHERE user_email = ?',
+      connection.query('SELECT user_name FROM web_order.users WHERE user_id = ?',
       result.user, function(err, row) {
         if (err) {
           throw err;
@@ -80,13 +80,14 @@ router.get('/orderHistory', verifyToken, function (req, res) {
         const payload = Buffer.from(base64Payload, 'base64');
         const result = JSON.parse(payload.toString());
 
-        const query1 = 'SELECT user_id FROM web_order.users WHERE user_email = ?';
+        const query1 = 'SELECT user_id FROM web_order.users WHERE user_acc = ?';
         const query2 = 'SELECT * FROM web_order.orders WHERE user_id = ?';
         connection.query
         (query1, result.user, function (err, row) {
           if (err) {
             throw err
           } else {
+            console.log('row~~:', row);
             connection.query
             (query2, row[0].user_id, function (err, row2) {
               console.log('row2~~~', row2);
@@ -114,7 +115,7 @@ router.get('/mypage', verifyToken, function (req, res) {
         const payload = Buffer.from(base64Payload, 'base64');
         const result = JSON.parse(payload.toString());
         connection.query
-        ('SELECT * FROM web_order.users WHERE user_email = ?',
+        ('SELECT * FROM web_order.users WHERE user_acc = ?',
         result.user, function (err, row) {
           console.log('result.user:', result.user);
           if (err) throw err;
@@ -128,21 +129,21 @@ router.get('/mypage', verifyToken, function (req, res) {
 router.post('/update', function(req, res, next) {
   console.log('update user data', req.body);
   const user = {
-    'user_email': req.body.user_email,
+    'user_acc': req.body.user_acc,
     'user_name': req.body.user_name,
     'user_password': req.body.user_password
   };
   const salt = bcrypt.genSaltSync();
   const encryptedPassword = bcrypt.hashSync(user.user_password, salt);
   connection.query
-    ('UPDATE web_order.users SET user_name = ? , user_password = ? WHERE user_email = ?',
-    [user.user_name, encryptedPassword, user.user_email],
+    ('UPDATE web_order.users SET user_name = ? , user_password = ? WHERE user_acc = ?',
+    [user.user_name, encryptedPassword, user.user_acc],
     function (err, row) {
       if (err) {
         throw err;
       } else {
-        connection.query('SELECT user_name FROM web_order.users WHERE user_email = ?',
-        user.user_email, function(err, row) {
+        connection.query('SELECT user_name FROM web_order.users WHERE user_acc = ?',
+        user.user_acc, function(err, row) {
           if (err) {
             throw err;
           } else {
@@ -158,25 +159,27 @@ router.post('/update', function(req, res, next) {
 router.post('/signup', function (req, res) {
   console.log('req.body on Back: ', req.body);
   const user = {
-    'user_email': req.body.user_email,
+    'user_acc': req.body.user_acc,
     'user_name': req.body.user_name,
     'user_password': req.body.user_password,
+    'user_phone': req.body.user_phone,
+    'user_age': req.body.user_age,
   };
-  if (user.user_email)
+  if (user.user_acc)
   console.log('user to MySQL: ', user);
-  connection.query('SELECT user_email FROM web_order.users WHERE user_email = ?',
-  user.user_email,
+  connection.query('SELECT user_acc FROM web_order.users WHERE user_acc = ?',
+  user.user_acc,
     function (err, row) {
       if (row[0] === undefined) {
         const salt = bcrypt.genSaltSync();
         const encryptedPassword = bcrypt.hashSync(user.user_password, salt);
         connection.query
-          ('INSERT INTO web_order.users (user_email, user_name, user_password) VALUES (?, ?, ?)',
-          [user.user_email, user.user_name, encryptedPassword],
+          ('INSERT INTO web_order.users (user_acc, user_name, user_password, user_phone, user_age) VALUES (?, ?, ?, ?, ?)',
+          [user.user_acc, user.user_name, encryptedPassword, user.user_phone, user.user_age],
           function (err, row2) {
               if (err) throw err;
             });
-            const token = jwt.sign({ user: user.user_email }, process.env.VUE_APP_JWT_KEY);
+            const token = jwt.sign({ user: user.user_acc }, process.env.VUE_APP_JWT_KEY);
             res.json({
               token,
               success: true,
@@ -185,7 +188,7 @@ router.post('/signup', function (req, res) {
       } else {
         res.json({
           success: false,
-          // message: '이미 등록된 이메일 주소입니다!'
+          // message: '이미 등록된 아아디 입니다!'
         })
       }
     });
@@ -193,22 +196,22 @@ router.post('/signup', function (req, res) {
 
 router.post('/login', function (req, res) {
   const user = {
-    'user_email': req.body.user_email,
+    'user_acc': req.body.user_acc,
     'user_password': req.body.user_password
   };
-  connection.query('SELECT user_email, user_name, user_password FROM web_order.users WHERE user_email = ?',
-  [user.user_email],
+  connection.query('SELECT user_acc, user_name, user_password FROM web_order.users WHERE user_acc = ?',
+  [user.user_acc],
   function (err, row) {
     if (err) {
       res.json({  //  아이디 없음
         success: false,
-        // message: '아이디 또는 이메일 주소를 확인해주세요!'
+        // message: '아이디를 확인해주세요!'
       })
     }
-    if (row[0] !== undefined && row[0].user_email === user.user_email) {
+    if (row[0] !== undefined && row[0].user_acc === user.user_acc) {
       bcrypt.compare(user.user_password, row[0].user_password, function (err, res2) {
         if (res2) {
-          const token = jwt.sign({ user: user.user_email }, `${process.env.VUE_APP_JWT_KEY}`);
+          const token = jwt.sign({ user: user.user_acc }, `${process.env.VUE_APP_JWT_KEY}`);
           const user_name = row[0].user_name;
           res.json({
             token,

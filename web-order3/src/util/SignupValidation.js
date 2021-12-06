@@ -46,7 +46,7 @@ export default class FormValidator {
         }
 
         //  이메일 주소 유효성 검사
-        if (field.type === "email") {
+        if (field.type === "id") {
             const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
             if (re.test(field.value)) {
@@ -98,7 +98,7 @@ export default class FormValidator {
 }
 
 const form = document.querySelector('.form');
-const fields = ["username", "email", "password", "password_confirmation"];
+const fields = ["username", "id", "password", "password_confirmation"];
 
 const validator = new FormValidator(form, fields)
 

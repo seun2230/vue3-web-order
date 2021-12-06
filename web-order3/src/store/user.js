@@ -8,7 +8,7 @@ export default {
     namespaced: true,
     state: {
         count: 0,
-        loginUserEmail: '',
+        loginUserId: '',
         loginUserName: '',
         token: {
             accessToken: jwt.getToken(),
@@ -19,7 +19,7 @@ export default {
         logout: function(state = {}) {
             state.token.accessToken = '';
             state.isAuthenticated = false;
-            state.loginUserEmail = '';
+            state.loginUserId = '';
             state.loginUserName = '';
             jwt.destroyToken();
             // location.reload();
@@ -31,11 +31,11 @@ export default {
             state.isAuthenticated = true;
             jwt.saveToken(bearerToken);
         },
-        loginUserEmail: function(state, payload = {}) {
+        loginUserId: function(state, payload = {}) {
             console.log('payload:', payload);
-            const userEmail = payload.userEmail;
-            state.loginUserEmail = userEmail;
-            console.log('state:', state.loginUserEmail);
+            const userAcc = payload.userAcc;
+            state.loginUserId = userAcc;
+            console.log('state:', state.loginUserId);
         },
         loginUserName: function(state, payload = {}) {
             console.log('payload:', payload);
@@ -70,9 +70,11 @@ export default {
             console.log('payload:', payload)
             console.log('name:' , payload.firstName)
             const userData = {
-                user_email: payload.email,
+                user_acc: payload.acc,
                 user_name: payload.firstName,
                 user_password: payload.password,
+                user_phone: payload.phoneNumber,
+                user_age: payload.birthDay,
             }
             return new Promise((resolve, reject) => {
                 http
@@ -86,15 +88,15 @@ export default {
                             success: data.success,
                             accessToken: data.token,
                         });
-                        context.commit('loginUserEmail', {
-                            userEmail: response.data.user_email
+                        context.commit('loginUserId', {
+                            userAcc: response.data.user_acc
                         });
                         context.commit('loginUserName', {
                             userName: response.data.user_name,
                         });
                         resolve(response);
                     } else {
-                        alert('이미 등록된 이메일 주소입니다!');
+                        alert('이미 등록된 아이디 입니다!');
                     }
                 })
                 .catch(error => {
@@ -104,7 +106,7 @@ export default {
         },
         login: function(context, payload) {
             let loginData = {
-                user_email: payload.user_email,
+                user_acc: payload.user_acc,
                 user_password: payload.user_password,
             }
             return new Promise((resolve, reject) => {
@@ -113,7 +115,7 @@ export default {
                     .then(response => {
                         const { data } = response;
                         if (data.success === false) {
-                            alert('이메일 또는 비밀번호가 잘못 입력되었습니다.');
+                            alert('아이디 또는 비밀번호가 잘못 입력되었습니다.');
                         } else {
                             context.commit('login', {
                                 success: data.success,
@@ -121,8 +123,8 @@ export default {
                             })
                             resolve(response);
                             console.log('loginusername:', response.data.user_name);
-                            context.commit('loginUserEmail', {
-                                userEmail: loginData.user_email
+                            context.commit('loginUserId', {
+                                userAcc: loginData.user_acc
                             });
                             context.commit('loginUserName', {
                                 userName: response.data.user_name,
