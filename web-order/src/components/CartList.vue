@@ -51,7 +51,6 @@ export default {
 <style lang="scss" scoped>
 @import "../scss/main.scss";
 
-
 .container {
   margin-top: 30px;
    .inner {
@@ -66,8 +65,9 @@ export default {
         background-color: white;
         border-radius: 5px;
         height: 150px;
-        overflow-y: scroll;
+        // overflow-y: scroll;
     }
   }
+
 }
 </style>

@@ -1,21 +1,23 @@
 <template>
-  <button
-    class="btn btn-primay"
-    @click="addCart()">
-    <div class="image">
-      <img 
-        :src="`${food.food_image1}`" 
-        :alt="`${food.food_name}`" />
-      <div class="infos">
-        <div class="name">
-          {{ food.food_name }}
-        </div>
-        <div class="price">
-          {{ food.food_price }}
+  <div class="menu-item">
+    <button
+      class="btn btn-primay"
+      @click="addCart()">
+      <div class="image">
+        <img 
+          :src="`${food.food_image1}`" 
+          :alt="`${food.food_name}`" />
+        <div class="infos">
+          <div class="name">
+            {{ food.food_name }}
+          </div>
+          <div class="price">
+          ￦ {{ food.food_price }}
+          </div>
         </div>
       </div>
-    </div>
-  </button>
+    </button>
+  </div>
 </template>
 
 <script>
@@ -68,15 +70,15 @@ export default {
     position: absolute;
     left: 0;
     bottom: 0;
-    backdrop-filter: blur(10px);
+    // backdrop-filter: blur(10px);
     .price {
-      color: $primary;
+      color: $black;
     }
     .name {
       color: $white;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      // white-space: nowrap;
+      // overflow: hidden;
+      // text-overflow: ellipsis;
     }
     .info {
       color: $primary;

@@ -1,19 +1,19 @@
 <template>
-  <div class="total">
-    <h1 class="message">
-      총 금액 :
-    </h1>
-    <div class="price">
-      {{ totalPrice }} 원
-    </div>  
-    <div class="btn-group">
+    <div class="total">
+      <h1 class="message">
+        총 금액 :
+      </h1>
+      <div class="price">
+        {{ totalPrice }} 원
+      </div>  
+      <div class="btn-group">
         <button
-        class="submit-btn"
-        @click="submitCart(this.carts, this.totalPrice)">
+          class="submit-btn"
+          @click="submitCart(this.carts, this.totalPrice)">
         결제
-      </button>
+        </button>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>

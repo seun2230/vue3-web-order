@@ -1,26 +1,56 @@
 <template>
   <div class="container">
     <h2>Image File Upload</h2>
-    <hr/>
+    <hr />
     <div class="form-group">
       <!-- ref: 자식 객체에 접근하는 속성 -->
       <select v-model="category">
-        <option disabled value="">Category</option>
+        <option
+          disabled
+          value="">
+          Category
+        </option>
         <option>덮밥</option>
         <option>라멘</option>
         <option>음료수</option>
         <option>기타</option>
       </select>
-      <br/>
-        Menu: <input type="text" name="name" ref="name" value="" placeholder="Menu Write"/>
-        Info: <input type="text" name="info" ref="info" value="" />
-        Price: <input type="text" name="price" ref="price" value="" />
+      <br />
+      Menu: <input
+        type="text"
+        name="name"
+        ref="name"
+        value=""
+        placeholder="Menu Write" />
+      Info: <input
+        type="text"
+        name="info"
+        ref="info"
+        value="" />
+      Price: <input
+        type="text"
+        name="price"
+        ref="price"
+        value="" />
     </div>  
      
     <div class="form-group">
-      file: <input type="file" name="file" ref="file" @change="addFile()" multiple />
-      <button type="submit" @click="clickFile()">Upload</button>
-      <button type="button" @click="removeFile()">Remove</button>
+      file: <input
+        type="file"
+        name="file"
+        ref="file"
+        @change="addFile()"
+        multiple />
+      <button
+        type="submit"
+        @click="clickFile()">
+        Upload
+      </button>
+      <button
+        type="button"
+        @click="removeFile()">
+        Remove
+      </button>
     </div>
   </div>
 </template>

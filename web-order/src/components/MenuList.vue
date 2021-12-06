@@ -17,7 +17,7 @@ import { mapState } from 'vuex'
 
 export default {
     components: {
-        MenuItem
+      MenuItem
     },
     created() {
       this.$store.commit("food/getState");
