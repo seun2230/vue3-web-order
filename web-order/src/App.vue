@@ -3,14 +3,11 @@
 </template>
 
 <script>
-
 export default {
   name: 'App',
-
   components: {
     
   },
-
   data: () => ({
     //
   }),
@@ -20,5 +17,7 @@ export default {
 <style lang="scss" scoped>
 body {
   margin: 0px;
+  padding: 0px;
 }
+
 </style>

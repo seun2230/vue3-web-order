@@ -81,7 +81,6 @@ export default {
 .container {
   margin-top: 30px;
   .inner {
-    background-color: $gray-200;
     padding: 20px;
     border-radius: 4px;
     text-align: center;

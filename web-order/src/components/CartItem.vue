@@ -56,7 +56,6 @@ export default {
 
 .infos:not(.remove-btn) {
   display: flex;
-  background-color: $white;
   border-radius: 5px;
 }
 </style>

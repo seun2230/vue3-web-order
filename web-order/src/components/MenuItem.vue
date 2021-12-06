@@ -47,7 +47,6 @@ export default {
   height: $width;
   margin: 10px;
   border-radius: 4px;
-  background-color: $gray-400;
   background-size: cover;
   overflow: hidden;
   position: relative;
@@ -58,10 +57,8 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    border: 6px solid $primary;
   }
   .infos {
-    background-color: rgba($black, .3);
     width: 100%;
     padding: 14px;
     font-size: 14px;
@@ -71,16 +68,13 @@ export default {
     bottom: 0;
     backdrop-filter: blur(10px);
     .price {
-      color: $primary;
     }
     .name {
-      color: $white;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
     .info {
-      color: $primary;
     }
   }
 }

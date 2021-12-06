@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import MenuItem from './Practice.vue'
+import MenuItem from './MenuItem.vue'
 import { mapState } from 'vuex'
 
 export default {

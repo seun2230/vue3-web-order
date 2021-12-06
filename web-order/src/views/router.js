@@ -8,6 +8,7 @@ import Menu from '../views/Menu.vue'
 import Board from '../views/Board.vue'
 import DashBoard from '../views/admin/page/DashBoard.vue'
 import Edit from '../views/admin/page/Edit.vue'
+import Diary from '../views/Practice.vue'
 
 const routes = [
   {
@@ -26,19 +27,24 @@ const routes = [
     component: AddFood
   },
   {
-    path: '/Admin',
+    path: '/admin',
     name: 'admin',
     component: Admin,
     children: [
       {
-        path: '/DashBoard',
+        path: 'dashBoard',
         name: "DashBoard",
         component: DashBoard,
       },
       {
-        path: '/Edit',
+        path: 'edit',
         name: 'Edit',
-        component: Edit
+        component: Edit,
+      },
+      {
+        path: 'diary',
+        name: 'diary',
+        component: Diary,
       }
     ]
   },
