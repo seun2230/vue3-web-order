@@ -18,19 +18,6 @@
             </div>
 
             <div class="input-group">
-                <label for="username" class="label">이름</label>
-                <Field
-                    type="text"
-                    name="firstName"
-                    id="username"
-                    class="input"
-                    placeholder="이름을 입력하세요."
-                    :rules="validateName">
-                </Field>
-                <ErrorMessage class="error-message" name="firstName" />
-            </div>
-
-            <div class="input-group">
                 <label for="password" class="label">비밀번호</label>
                 <Field
                     type="password"
@@ -52,6 +39,19 @@
                     rules="confirmed:@password">
                 </Field>
                 <ErrorMessage class="error-message" name="confirmPassword" />
+            </div>
+
+            <div class="input-group">
+                <label for="username" class="label">이름</label>
+                <Field
+                    type="text"
+                    name="firstName"
+                    id="username"
+                    class="input"
+                    placeholder="이름을 입력하세요."
+                    :rules="validateName">
+                </Field>
+                <ErrorMessage class="error-message" name="firstName" />
             </div>
 
             <div class="input-group">
@@ -83,7 +83,7 @@
 
             <button class="button">회원 가입</button>
 
-        </form>
+        </Form>
     </div>
 </template>
 

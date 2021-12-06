@@ -48,11 +48,18 @@ export default {
         updateUser: function (context, payload) {
             return new Promise((resolve, reject) => {
                 console.log('payapy:', payload);
+                const updateData = {
+                    user_acc: payload.acc,
+                    user_name: payload.firstName,
+                    user_password: payload.password,
+                    user_phone: payload.phoneNumber,
+                    user_age: payload.birthDay,
+                }
                 http
-                .post('api/users/update', payload)
+                .post('api/users/update', updateData)
                 .then(response => {
                     const updatedUserName = response.data[0].user_name;
-                    console.log('resrsersr', updatedUserName);
+                    console.log('updatedUserName', updatedUserName);
                     if (response.status == 200) {
                         alert('변경 사항이 저장되었습니다.');
                         context.commit('loginUserName', {
@@ -152,5 +159,11 @@ export default {
         isAuthenticated: function(state) {
             return state.isAuthenticated;
         },
+        getUserId: function(state) {
+            return state.loginUserId;
+        },
+        getUserName: function(state) {
+            return state.loginUserName;
+        }
     }
 };

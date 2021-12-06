@@ -1,153 +1,209 @@
 <template>
     <div class="container">
         <h2 class="title">회원 정보 수정</h2>
-        <form class="form" @submit.prevent="submitForm">
+        <Form class="form" @submit="OnSubmit">
 
             <div class="input-group">
                 <label for="id" class="label">아이디</label>
-                <input
+                <Field
                     type="text"
+                    name="acc"
                     id="acc"
                     class="input"
-                    v-model="loginUserId"
-                    disabled>
-                <span class="error-message"></span>
-                <svg class="icon icon-success hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clip-rule="evenodd" />
-                </svg>
-
-                <svg class="icon icon-error hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                        clip-rule="evenodd" />
-                </svg>
-            </div>
-
-            <div class="input-group">
-                <label for="username" class="label">이름</label>
-                <input
-                    type="text"
-                    id="username"
-                    class="input"
-                    v-model="user.user_name">
-                <span class="error-message"></span>
-                <svg class="icon icon-success hidden hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clip-rule="evenodd" />
-                </svg>
-
-                <svg class="icon icon-error hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                        clip-rule="evenodd" />
-                </svg>
+                    v-model="getUserId"
+                    :disabled="validateAcc"
+                    >
+                </Field>
             </div>
 
             <div class="input-group">
                 <label for="password" class="label">비밀번호</label>
-                <input
+                <Field
                     type="password"
+                    name="password"
                     id="password"
                     class="input"
-                    v-model="user.user_password">
-                <span class="error-message"></span>
-                <svg class="icon icon-success hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clip-rule="evenodd" />
-                </svg>
-
-                <svg class="icon icon-error hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                        clip-rule="evenodd" />
-                </svg>
+                    :rules="validatePassword">
+                </Field>
+                <ErrorMessage class="error-message" name="password" />
             </div>
 
             <div class="input-group">
                 <label for="password_confirmation" class="label">비밀번호 확인</label>
-                <input
+                <Field
                     type="password"
+                    name="confirmPassword"
                     id="password_confirmation"
                     class="input"
-                    v-model="user.user_passwordConfirmation">
-                <span class="error-message"></span>
-                <svg class="icon icon-success hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clip-rule="evenodd" />
-                </svg>
-
-                <svg class="icon icon-error hidden" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                        clip-rule="evenodd" />
-                </svg>
+                    rules="confirmed:@password">
+                </Field>
+                <ErrorMessage class="error-message" name="confirmPassword" />
             </div>
 
-            <input type="submit" class="button" value="회원 정보 수정">
+            <div class="input-group">
+                <label for="username" class="label">이름</label>
+                <Field
+                    type="text"
+                    name="firstName"
+                    id="username"
+                    class="input"
+                    :rules="validateName">
+                </Field>
+                <ErrorMessage class="error-message" name="firstName" />
+            </div>
 
-        </form>
+            <div class="input-group">
+                <label for="birthDay" class="label">생년월일</label>
+                <Field
+                    type="text"
+                    name="birthDay"
+                    id="birthDay"
+                    class="input"
+                    maxlength="8"
+                    placeholder="8자리 생년월일을 입력하세요."
+                    :rules="validateBirthDay">
+                </Field>
+                <ErrorMessage class="error-message" name="birthDay" />
+            </div>
+
+            <div class="input-group">
+                <label for="phoneNumber" class="label">휴대전화</label>
+                <Field
+                    type="text"
+                    name="phoneNumber"
+                    maxlength="11"
+                    class="input"
+                    placeholder="- 를 제외하고 입력하세요."
+                    :rules="validatePhoneNumber">
+                </Field>
+                <ErrorMessage class="error-message" name="phoneNumber" />
+            </div>
+
+            <button class="button">회원 정보 수정</button>
+
+        </Form>
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 import http from '../api/interceptor';
+import { Form ,Field, ErrorMessage, defineRule } from 'vee-validate';
 // import user from '../store/user';
 
+    defineRule("confirmed", (value, [password]) => {
+        if (!value) {
+            return '비밀번호를 다시 입력하세요.';
+        }
+        if (value !== password) {
+            return '비밀번호가 일치하지 않습니다.';
+        }
+        return true;
+    })
+
 export default {
+    components: {
+        Form,
+        Field,
+        ErrorMessage,
+    },
     created() {
             http
             .get('/api/users/mypage')
             .then((response) => {
             const userInfo = response.data[0];
-            console.log(userInfo);
+            console.log('userInfo:', userInfo);
             })
         },
     methods: {
-        submitForm() {
+        OnSubmit(values) {
             try {
-                const userData = {
-                    user_acc: this.loginUserId,
-                    user_name: this.user.user_name,
-                    user_password: this.user.user_password,
-                };
-                this.$store.dispatch('user/updateUser', userData)
+                this.$store.dispatch('user/updateUser', values)
                 .then(response => {
                     if (response.status == 200) {
                         this.$router.push('/');
                     }
                 })
-                // this.$axios.post('api/users/update', userData)
-                // .then(response => {
-                //     console.log('res on update front', response);
-                //     if (response.status == 200) {
-                //         alert('변경 사항이 저장되었습니다.')
-                //         this.$router.push('/');
-                //     }
-                // })
             } catch (error) {
                 console.log('error on Front: ', error.res);
             }
         },
-    },
-    data() {
-        return {
-            user: {
-                user_acc: '',
-                user_name: '',
-                user_password: '',
-                user_passwordConfirmation: '',
-            },
-        };
+        validateAcc(value) {
+            if (!value) {
+                return '아이디를 입력하세요.';
+            }
+            const regex = /^[a-zA-Z0-9]{6,20}/g;
+            if (!regex.test(value)) {
+                return '6~20자의 영문과 숫자만 입력할 수 있습니다.';
+            }
+            return true;
+        },
+        validateName(value) {
+            if (!value) {
+                return '이름을 입력하세요.';
+            }
+            const regex = /^[가-힣a-zA-z]+$/;
+            if (!regex.test(value)) {
+                return '이름은 한글 또는 영문 대,소문자로 입력하세요.';
+            }
+            return true;
+        },
+        validatePassword(value) {
+            if (!value) {
+                return '비밀번호를 입력하세요.';
+            }
+            if (value.length < 8 || value.length > 16) {
+                return '8~16자 이내로 입력하세요.'
+            }
+            return true;
+        },
+        validatePhoneNumber(value) {
+            if (!value) {
+                return '필수 정보입니다.'
+            }
+            const regex = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
+            if (!regex.test(value)) {
+                return '올바른 전화번호를 입력하세요.'
+            }
+            return true;
+        },
+        validateBirthDay(value) {
+            if (!value) {
+                return '필수 정보입니다.'
+            } else {
+                const year = Number(value.substr(0, 4));
+                const month = Number(value.substr(4, 2));
+                const day = Number(value.substr(6, 2));
+                const thisYear = new Date().getFullYear();
+
+                if (value.length == 8) {
+                    if (1900 > year || year > thisYear) {
+                        return '올바른 년도를 입력하세요.';
+                    } else if (month < 1 || month > 12) {
+                        return '올바른 월을 입력하세요.';
+                    } else if (day < 1 || day > 31) {
+                        return '올바른 날짜를 입력하세요.';
+                    } else if ((month == 4 || month == 6 || month == 9 || month == 11) && day == 31) {
+                        return '올바른 날짜를 입력하세요.';
+                    } else if (month == 2) {
+                        const isLeap = (year % 4 == 0 && (year % 100 == 0 || year % 400 == 0));
+                        if (day > 29 || (day == 29 && !isLeap)) {
+                            return '올바른 날짜를 입력하세요.'
+                        } else {
+                            return true;
+                        }
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return '8자리 생년월일을 입력하세요.'
+                }
+            }
+        }
     },
     computed: {
-        ...mapState('user', [
-            'loginUserId'
+        ...mapGetters('user', [
+            'getUserId'
         ]),
     },
 };

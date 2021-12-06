@@ -47,6 +47,29 @@ router.get('/', function (req, res) {
   });
 });
 
+router.get('/infoUser', verifyToken, function(req, res) {
+  jwt.verify(req.token, process_env.VUE_APP_JWT_KEY, err => {
+    if (err) {
+      console.log('Unauthrized');
+      res.sendStatus(401);
+    } else {
+      const base64Payload = req.token.split('.')[1];
+      const payload = Buffer.from(base64Payload, 'base64');
+      const result = JSON.parse(payload.toString());
+
+      connection.query('SELECT REGEXP_REPLACE(user_age, \'(?<=.{3}).\', '*') AS MASKEDID FROM web_order.users WHERE user_acc = ?',
+      result.user, function(err, row) {
+        if (err) {
+          throw err;
+        } else {
+          res.send(row);
+          console.log('row on masked ID:', row);
+        }
+      })
+    }
+  })
+})
+
 router.get('/getUserName', verifyToken, function(req, res) {
   jwt.verify(req.token, process.env.VUE_APP_JWT_KEY, err => {
     if (err) {
@@ -115,7 +138,7 @@ router.get('/mypage', verifyToken, function (req, res) {
         const payload = Buffer.from(base64Payload, 'base64');
         const result = JSON.parse(payload.toString());
         connection.query
-        ('SELECT * FROM web_order.users WHERE user_acc = ?',
+        ('SELECT user_acc, user_name, user_phone, user_age FROM web_order.users WHERE user_acc = ?',
         result.user, function (err, row) {
           console.log('result.user:', result.user);
           if (err) throw err;
@@ -131,13 +154,15 @@ router.post('/update', function(req, res, next) {
   const user = {
     'user_acc': req.body.user_acc,
     'user_name': req.body.user_name,
-    'user_password': req.body.user_password
+    'user_password': req.body.user_password,
+    'user_phone': req.body.user_phone,
+    'user_age': req.body.user_age,
   };
   const salt = bcrypt.genSaltSync();
   const encryptedPassword = bcrypt.hashSync(user.user_password, salt);
   connection.query
-    ('UPDATE web_order.users SET user_name = ? , user_password = ? WHERE user_acc = ?',
-    [user.user_name, encryptedPassword, user.user_acc],
+    ('UPDATE web_order.users SET user_name = ? , user_password = ? , user_phone = ? , user_age = ? WHERE user_acc = ?',
+    [user.user_name, encryptedPassword, user.user_phone, user.user_age, user.user_acc],
     function (err, row) {
       if (err) {
         throw err;
