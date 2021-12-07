@@ -1,9 +1,9 @@
 <template>
   <el-menu
-    :background-color="$menuBg"
-    :text-color="$menuText"
+    :background-color="variables.$menuBg"
+    :text-color="variables.$menuText"
     :unique-opened="false"
-    :active-text-color="$menuActiveText"
+    :active-text-color="variables.$menuActiveText"
     :collapse-transition="false">
     <el-menu-item
       index="1"
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import variables from '../../../scss/variables.scss';
+import variables from '../../../constants/index'
 
 export default {
   components: {
@@ -58,9 +58,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../scss/variables.scss';
-
 .el-menu {
-  
+  border-right: 0px;
 }
 </style>

@@ -24,9 +24,13 @@ export default {
   components: {
     MenuItem,
   },
-  created() {
-    this.$store.commit("food/getState");
-    this.$store.commit("food/getOrder")
+  created: {
+    getState() {
+      return this.$store.commit("food/getState");
+    },
+    getOrder() {
+      return this.$store.commit("food/getOrder");
+    }
   },
   computed: {
     ...mapState('food', [

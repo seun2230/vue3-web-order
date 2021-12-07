@@ -8,7 +8,6 @@
         <SideBar />
       </el-aside>
       <el-main>
-        <UploadForm />
         <router-view />
       </el-main>
     </el-container>
@@ -17,20 +16,27 @@
 
 <script>
 import SideBar from './components/SIdeBar.vue'
-import UploadForm from '../../components/UploadFrom.vue'
 import Header from './components/Header.vue'
 
 export default {
   components: {
     SideBar,
-    UploadForm,
-    Header
+    Header,
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import "../../scss/variables.scss";
+@import "../../scss/index.scss";
 .el-main {
+  padding: 10px;
+  background-color: $mainBg;
+}
+.el-aside {
+  width: $sideBarWidth;
   padding: 0px;
+  margin-bottom: 0px;
+  background: $menuBg;
 }
 </style>
