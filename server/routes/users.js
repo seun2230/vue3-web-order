@@ -47,8 +47,8 @@ router.get('/', function (req, res) {
   });
 });
 
-router.get('/infoUser', verifyToken, function(req, res) {
-  jwt.verify(req.token, process_env.VUE_APP_JWT_KEY, err => {
+router.get('/maskedUser', verifyToken, function(req, res) {
+  jwt.verify(req.token, process.env.VUE_APP_JWT_KEY, err => {
     if (err) {
       console.log('Unauthrized');
       res.sendStatus(401);
@@ -56,14 +56,21 @@ router.get('/infoUser', verifyToken, function(req, res) {
       const base64Payload = req.token.split('.')[1];
       const payload = Buffer.from(base64Payload, 'base64');
       const result = JSON.parse(payload.toString());
+      console.log('resdfsdf:', result);
 
-      connection.query('SELECT REGEXP_REPLACE(user_age, \'(?<=.{3}).\', '*') AS MASKEDID FROM web_order.users WHERE user_acc = ?',
-      result.user, function(err, row) {
+      const RegAge = '(?<=^.{0,2}).|(?<=^.{4,5}).';
+      const RegPhone = '(?<=^.{3,6}).';
+      const mask = '*';
+      console.log('RegAge: ', RegAge);
+      console.log('RegPhone: ', RegPhone);
+      connection.query('SELECT REGEXP_REPLACE(user_age, ? , ?) AS maskedAge, REGEXP_REPLACE(user_phone, ? , ?) AS maskedPhone FROM web_order.users WHERE user_acc = ?',
+      [RegAge, mask, RegPhone, mask, result.user], function(err, row) {
         if (err) {
           throw err;
         } else {
+          // const maskedUser = row.toString().replace(row[0], )
           res.send(row);
-          console.log('row on masked ID:', row);
+          console.log('row on masked:', row);
         }
       })
     }

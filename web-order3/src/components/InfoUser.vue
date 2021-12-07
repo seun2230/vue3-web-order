@@ -1,7 +1,9 @@
 <template>
     <div class='userInfo'>
         <p>사용자 정보</p>
-        <p>{{ getUserName }}</p>
+        <p>{{ getUserData }}</p>
+        <p>{{ getMaskedUser.maskedAge }}</p>
+        <p>{{ getMaskedUser.maskedPhone }}</p>
             <router-link to='/modify' v-slot='{href, route, navigate}'>
                 <button :href='href' @click='navigate' class='button'>
                     {{ route.ModifyForm }} 수정
@@ -12,6 +14,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+
 export default {
     name: 'UserInfo',
     props: {
@@ -22,9 +25,12 @@ export default {
             },
         },
     },
+    created() {
+        this.$store.dispatch('user/maskedUser')
+    },
     computed: {
         ...mapGetters('user', [
-            'getUserName'
+            'getUserData', 'getMaskedUser'
         ])
     }
 };

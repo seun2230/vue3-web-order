@@ -9,7 +9,11 @@ export default {
     state: {
         count: 0,
         loginUserId: '',
-        loginUserName: '',
+        loginUserData: '',
+        maskedUser: {
+            maskedAge: '',
+            maskedPhone: '',
+        },
         token: {
             accessToken: jwt.getToken(),
         },
@@ -27,27 +31,55 @@ export default {
         },
         login: function(state, payload = {}) {
             const bearerToken = `Bearer ${payload.accessToken}`;
+            console.log('Bearer Token on login mutation:', bearerToken);
             state.token.accessToken = bearerToken;
             state.isAuthenticated = true;
             jwt.saveToken(bearerToken);
         },
         loginUserId: function(state, payload = {}) {
-            console.log('payload:', payload);
+            console.log('payload on loginUserId:', payload);
             const userAcc = payload.userAcc;
             state.loginUserId = userAcc;
-            console.log('state:', state.loginUserId);
+            console.log('state on loginUserId:', state.loginUserId);
         },
-        loginUserName: function(state, payload = {}) {
-            console.log('payload:', payload);
-            const userName = payload.updatedUserName;
-            state.loginUserName = userName;
-            console.log('state:', state.loginUserName);
+        loginUserData: function(state, payload = {}) {
+            console.log('payload on loginUserData:', payload);
+            const userData = payload.userData;
+            state.loginUserData = userData;
+            console.log('state on loginUserData:', state.loginUserData);
         },
+        maskedUser: function(state, payload = {}) {
+            console.log('payload on maskedUser mutation: ', payload);
+            const maskedAge = payload.maskedAge;
+            const maskedPhone = payload.maskedPhone;
+            state.maskedUser.maskedAge = maskedAge;
+            state.maskedUser.maskedPhone = maskedPhone;
+            console.log('state on maskedUser: ', state.maskedUser);
+        }
     },
     actions: {
+        maskedUser: function (context) {
+            return new Promise((resolve, reject) => {
+                http
+                .get('api/users/maskedUser')
+                .then(response => {
+                    console.log('response.data[0] on maskedUser actions: ', response.data[0]);
+                    if (response.status == 200) {
+                        context.commit('maskedUser', {
+                            maskedAge: response.data[0].maskedAge,
+                            maskedPhone: response.data[0].maskedPhone,
+                        });
+                    }
+                    resolve(response);
+                })
+                .catch (error => {
+                    reject(error);
+                })
+            })
+        },
         updateUser: function (context, payload) {
             return new Promise((resolve, reject) => {
-                console.log('payapy:', payload);
+                console.log('payload on updateUser action:', payload);
                 const updateData = {
                     user_acc: payload.acc,
                     user_name: payload.firstName,
@@ -56,14 +88,14 @@ export default {
                     user_age: payload.birthDay,
                 }
                 http
-                .post('api/users/update', updateData)
+                .post('/api/users/update', updateData)
                 .then(response => {
-                    const updatedUserName = response.data[0].user_name;
-                    console.log('updatedUserName', updatedUserName);
+                    const userData = response.data[0].user_name;
+                    console.log('updatedUserName', userData);
                     if (response.status == 200) {
                         alert('변경 사항이 저장되었습니다.');
-                        context.commit('loginUserName', {
-                            updatedUserName
+                        context.commit('loginUserData', {
+                            userData
                         })
                     }
                     resolve(response);
@@ -162,8 +194,11 @@ export default {
         getUserId: function(state) {
             return state.loginUserId;
         },
-        getUserName: function(state) {
-            return state.loginUserName;
+        getUserData: function(state) {
+            return state.loginUserData;
+        },
+        getMaskedUser: function(state) {
+            return state.maskedUser;
         }
     }
 };
