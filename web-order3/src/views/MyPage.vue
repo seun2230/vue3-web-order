@@ -1,6 +1,8 @@
 <template>
     <div class='container'>
-        <h2>마이페이지</h2>
+        <div>
+            <p class='pageTitle'>내 정보</p>
+        </div>
         <info-user />
             <br />
         <info-account />
@@ -33,8 +35,8 @@ a {
 
 .container {
     max-width: 460px;
-    margin: 3rem auto;
-    padding: 3rem;
+    margin: auto;
+    padding: 1rem;
     /* border: 1px solid #ddd; */
     border-radius: .25rem;
     /* box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
@@ -60,4 +62,16 @@ a {
 .button:hover {
     filter: brightness(97%);
 }
+
+.pageTitle {
+    margin: 5px 0px;
+    text-align: left;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.userinfo {
+    text-align: left;
+}
+
 </style>

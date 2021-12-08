@@ -1,6 +1,8 @@
 <template>
     <div class='userInfo'>
-        <p>계정 관리</p>
+        <div class='infoTitle'>
+            <p>계정 정보 &nbsp;&nbsp; ></p>
+        </div>
         <p>{{ getUserId }}</p>
             <router-link to='/modify' v-slot='{href, route, navigate}'>
                 <button :href='href' @click='navigate' class='button'>
@@ -38,6 +40,13 @@ a {
 .userInfo {
     border: 1px solid lightgrey;
     text-align: left;
+    font-size: 1rem;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.infoTitle {
+    font-size: 1.1rem;
+    font-weight: bold;
 }
 
 .button {

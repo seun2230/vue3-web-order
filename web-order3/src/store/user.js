@@ -24,7 +24,9 @@ export default {
             state.token.accessToken = '';
             state.isAuthenticated = false;
             state.loginUserId = '';
-            state.loginUserName = '';
+            state.loginUserData = '';
+            state.maskedUser.maskedAge = '';
+            state.maskedUser.maskedPhone = '';
             jwt.destroyToken();
             // location.reload();
             router.push('/');

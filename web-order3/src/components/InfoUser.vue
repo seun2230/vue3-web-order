@@ -1,14 +1,19 @@
 <template>
     <div class='userInfo'>
-        <p>사용자 정보</p>
-        <p>{{ getUserData }}</p>
-        <p>{{ getMaskedUser.maskedAge }}</p>
-        <p>{{ getMaskedUser.maskedPhone }}</p>
-            <router-link to='/modify' v-slot='{href, route, navigate}'>
-                <button :href='href' @click='navigate' class='button'>
-                    {{ route.ModifyForm }} 수정
-                </button>
-        </router-link>
+        <div class='infoTitle'>
+            <p>사용자 정보 &nbsp; <fa class='fa-title-icon' icon='angle-right' /></p>
+        </div>
+        <div class='infoBody'>
+            <p>{{ getUserData }}</p>
+            <p>{{ getMaskedUser.maskedAge }}</p>
+            <p>{{ getMaskedUser.maskedPhone }}</p>
+                <router-link to='/modify' v-slot='{href, route, navigate}'>
+                    <button :href='href' @click='navigate' class='button'>
+                        {{ route.ModifyForm }}
+                    </button>
+            </router-link>
+            <fa class='fa-body-icon' :icon="['far', 'user']" />
+        </div>
     </div>
 </template>
 
@@ -41,25 +46,49 @@ a {
     text-decoration: none;
 }
 
+.hr {
+    height: 1px;
+    border: 0px;
+    background-color: lightgray;
+}
+
+.infoBody {
+    float: left;
+}
+
+.infoTitle {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
 .userInfo {
     border: 1px solid lightgrey;
     text-align: left;
+    font-size: 1rem;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.fa-body-icon {
+    /* float: right; */
+    position: relative;
+    font-size: 3rem;
+    color: rgba(185, 170, 45, 0.6);
 }
 
 .button {
-    background-color: lightsalmon;
-    position: relative;
-    left: 97px;
-    bottom: 5px;
+    position: absolute;
     margin: auto;
+    top: 50vw;
+    left: 8vw;
     border: none;
     border-radius: .25rem;
-    color: white;
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0);
     font-weight: bold;
-    font-size: 0.9rem;
+    font-size: 1rem;
     display: block;
-    width: 3.5rem;
-    height: 2rem;
+    width: 17rem;
+    height: 7.8rem;
     text-align: center;
     text-decoration-line: none;
     cursor: pointer;
