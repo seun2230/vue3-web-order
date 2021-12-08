@@ -81,7 +81,8 @@ export default {
         }
       })
       .then((res) => {
-        console.log("server res data : ", res.data) 
+        console.log("server res data : ", res.data)
+        this.$router.go('/admin/dashboard')
       })
       .catch(err => {
         console.log(err)
@@ -91,19 +92,6 @@ export default {
       this.modal = true
       let modify_id = this.foods[index]
       this.index = modify_id;
-      // axios.post('http://localhost:3000/admin/modify',
-      // JSON.stringify(modify_id),
-      // {
-      //   header: {
-      //     "Content-Type": "application/json"
-      //   }
-      // })
-      // .then((res) => {
-      //   console.log("server res data : ", res.data)
-      // })
-      // .catch(err => {
-      //   console.log(err)
-      // })
     },
     closeModal() {
       this.modal = false

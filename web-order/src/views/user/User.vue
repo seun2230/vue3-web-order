@@ -1,22 +1,17 @@
 <template>
-  <router-view />
+  <MenuList />
 </template>
 
 <script>
+import MenuList from '../user/components/Menulist.vue'
+
 export default {
-  name: 'App',
   components: {
-  },
-  data: () => ({
-    //
-  }),
+    MenuList
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-body {
-  margin: 0px;
-  padding: 0px;
-}
 
 </style>

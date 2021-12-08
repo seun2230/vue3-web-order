@@ -1,25 +1,23 @@
 <template>
   <el-menu
+    :router="true"
     :background-color="variables.$menuBg"
     :text-color="variables.$menuText"
     :unique-opened="false"
+    :default-active="activeMenu"
     :active-text-color="variables.$menuActiveText"
     :collapse-transition="false">
     <el-menu-item
-      index="1"
-      to="/home">
+      index="/admin/dashboard">
       <el-icon class="fas fa-home" />
       <span>HOME</span>
     </el-menu-item>
     <el-menu-item
-      index="2"
-      to="/order">
+      index="/admin/order">
       <el-icon class="fas fa-bell" />
       <span>ORDER</span>
     </el-menu-item>
-    <el-sub-menu
-      index="3"
-      to="charts">
+    <el-sub-menu>
       <template #title>
         <el-icon class="fas fa-chart-bar" />
         <span>CHART</span>
@@ -35,9 +33,9 @@
       </el-menu-item>
     </el-sub-menu>
     <el-menu-item
-      index="4"
-      to="edit">
-      <el-icon class="fas fa-cogs" />
+      index="/admin/foodManagement">
+      <el-icon
+        class="fas fa-cogs" />
       <span>MANAGEMENT</span>
     </el-menu-item>
   </el-menu>
@@ -52,6 +50,17 @@ export default {
   computed: {
     variables() {
       return variables
+    },
+    activeMenu() {
+      const route = this.$route
+      const { meta, path } = route
+      console.log("meta", meta)
+      console.log("path", path)
+      // if set path, the sidebar will highlight the path you set
+      if(meta.activeMenu) {
+        return meta.activeMenu
+      }
+      return path
     }
   }
 }

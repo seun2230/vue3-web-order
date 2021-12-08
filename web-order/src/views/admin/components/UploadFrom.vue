@@ -111,6 +111,7 @@ export default {
           }
         ).then(res => {
           console.log("server response : ", res.data)
+          this.$router.go()
         }).catch(err => {
           console.log("err", err)
         })

@@ -7,7 +7,7 @@
       <div class="modal-window">
         <div class="modal-content">
           <h3>{{ index.food_name }}</h3>
-          <p>{{ index }}</p>
+          <p>음식의 정보를 수정해주세요.</p>
           <el-form>
             <el-form-item label="음식이름">
               <el-input
@@ -56,7 +56,7 @@
           <el-button
             type="text"
             size="small"
-            @click="submit(this.modifyForm)">
+            @click="submit(this.modifyForm, index.food_id)">
             Modify
           </el-button>
         </footer>
@@ -86,10 +86,10 @@ export default {
     },
   },
   methods: {
-    submit(state) {
-      console.log("modal", state)
+    submit(state, index) {
+      let modifyState = [state, index]
       axios.post("http://localhost:3000/admin/modify",
-      JSON.stringify(state),
+      JSON.stringify(modifyState),
       {
         headers: {
           "Content-Type": "application/json"
@@ -97,6 +97,7 @@ export default {
       })
       .then((res) => {
         console.log("server res", res.data)
+        this.$router.push('/admin/dashboard')
       })
       .catch(err => {
         console.log(err);
@@ -124,20 +125,19 @@ export default {
   }
   &-window {
     padding: 10px;
-    background: #ffffff;
+    background: $mainBg;
     border-radius: 4px;
     overflow: hidden;
   }
   &-content {
-    border: solid;
     border-radius: 4px;
-    background-color: $mainBg;
-    padding: 10px 20px;
+    background-color: #ffffff;
+    padding: 20px;
     width: 500px;
-    height: 600px;
+    height: 500px;
   }
   &-footer {
-    background: #ffffff;
+    background: $mainBg;
     padding: 10px;
     text-align: right;
   }
