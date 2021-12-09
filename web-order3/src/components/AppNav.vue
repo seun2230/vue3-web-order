@@ -6,9 +6,6 @@
         <router-link v-if='!isAuthenticated' to="/login">
             Login
         </router-link>
-        <router-link v-if='!isAuthenticated' to="/validation">
-            Validation
-        </router-link>
         <router-link v-if='isAuthenticated' to="/mypage">
             MyPage
         </router-link>

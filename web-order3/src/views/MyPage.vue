@@ -34,6 +34,7 @@ a {
 }
 
 .container {
+    display: grid;
     max-width: 460px;
     margin: auto;
     padding: 1rem;

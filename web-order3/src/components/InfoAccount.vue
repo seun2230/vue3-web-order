@@ -3,12 +3,15 @@
         <div class='infoTitle'>
             <p>계정 정보 &nbsp;&nbsp; ></p>
         </div>
-        <p>{{ getUserId }}</p>
-            <router-link to='/modify' v-slot='{href, route, navigate}'>
-                <button :href='href' @click='navigate' class='button'>
-                    {{ route.ModifyForm }} 수정
-                </button>
-        </router-link>
+        <div class='infoBody'>
+            <p>{{ getUserId }}</p>
+                <router-link to='/modify' v-slot='{href, route, navigate}'>
+                    <button :href='href' @click='navigate' class='button'>
+                        {{ route.ModifyForm }}
+                            <fa class='fa-body-icon' icon='user-cog' />
+                    </button>
+            </router-link>
+        </div>
     </div>
 </template>
 
@@ -37,11 +40,14 @@ a {
     text-decoration: none;
 }
 
-.userInfo {
-    border: 1px solid lightgrey;
-    text-align: left;
-    font-size: 1rem;
-    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+.hr {
+    height: 1px;
+    border: 0px;
+    background-color: lightgray;
+}
+
+.infoBody {
+    float: left;
 }
 
 .infoTitle {
@@ -49,20 +55,42 @@ a {
     font-weight: bold;
 }
 
-.button {
-    background-color: lightsalmon;
+.userInfo {
+    padding: 0px 5px;
+    border: 1px solid lightgrey;
+    text-align: left;
+    height: 8.5rem;
+    font-size: 1rem;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.userInfo::after {
+    display: block;
+    content: "";
+    clear: both;
+}
+
+.fa-body-icon {
+    float: right;
     position: relative;
-    left: 97px;
-    bottom: 5px;
-    margin: auto;
+    font-size: 3rem;
+    color: rgba(185, 170, 45, 0.6);
+}
+
+.button {
+    position: relative;
+    padding: 0px 10px;
+    top: 50vw;
+    left: 8vw;
     border: none;
     border-radius: .25rem;
-    color: white;
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0);
     font-weight: bold;
-    font-size: 0.9rem;
+    font-size: 1rem;
     display: block;
-    width: 3.5rem;
-    height: 2rem;
+    width: 85vw;
+    height: 40vw;
     text-align: center;
     text-decoration-line: none;
     cursor: pointer;

@@ -18,15 +18,6 @@ export default {
             ['isAuthenticated', 'getUserData']),
     },
     methods: {},
-    // created() {
-    //     http
-    //     .get('api/users/getUserName')
-    //     .then(response => {
-    //         const userName = response.data[0].user_name
-    //         console.log('userName:', userName)
-    //         return userName;
-    //     })
-    // }
 };
 </script>
 

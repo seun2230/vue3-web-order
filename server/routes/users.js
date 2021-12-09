@@ -77,29 +77,6 @@ router.get('/maskedUser', verifyToken, function(req, res) {
   })
 })
 
-router.get('/getUserName', verifyToken, function(req, res) {
-  jwt.verify(req.token, process.env.VUE_APP_JWT_KEY, err => {
-    if (err) {
-      console.log('Unauthrized');
-      res.sendStatus(401);
-    } else {
-      const base64Payload = req.token.split('.')[1];
-      const payload = Buffer.from(base64Payload, 'base64');
-      const result = JSON.parse(payload.toString());
-
-      connection.query('SELECT user_name FROM web_order.users WHERE user_id = ?',
-      result.user, function(err, row) {
-        if (err) {
-          throw err;
-        } else {
-          res.send(row);
-          console.log('row on getUserName!:', row);
-        }
-      })
-    }
-  })
-})
-
 router.get('/orderHistory', verifyToken, function (req, res) {
   jwt.verify(req.token, process.env.VUE_APP_JWT_KEY, err => {
     if (err) {
