@@ -1,7 +1,7 @@
 <template>
   <div class="container-child">
     <div class="message-box">
-      <span class="message">총 금액 :</span>
+      <span class="message">총 금액</span>
     </div>
     <div class="price-box">
       <span class="price">{{ totalPrice }} 원</span>
