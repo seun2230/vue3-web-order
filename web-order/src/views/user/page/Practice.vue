@@ -5,13 +5,11 @@
         <button class="btn">
           <i class="fas fa-cookie"></i>
         </button>
-
         <button
           class="btn"
           @click="clickModal()">
           <i class="fas fa-pizza-slice"></i>
         </button>
-
         <ModalAdd
           @close="closeModal()" 
           v-if="modal" />
@@ -25,7 +23,11 @@
           </p>
         </div>
         <div class="btn-info-icon">
-          <i class="fas fa-clock fa-2x"></i>
+          <div class="btn-info-icon-child">
+            <i
+              class="fas fa-clock fa-2x"
+              id="icon"></i>
+          </div>
         </div>
       </div>
     </div>
@@ -33,7 +35,7 @@
 </template>
 
 <script>
-import ModalAdd from '../components/modal/modal.vue'
+import ModalAdd from '../../admin/components/modal/modal.vue'
 export default {
   data() {
     return {
@@ -73,14 +75,25 @@ export default {
   margin-top: 5px;
   color: white;
   display: flex;
-  
-  h2 {
-    font-size: 20px;
-    color: white;
+  .btn-info-text{
+    width: 100%;
+    h2 {
+      font-size: 20px;
+      color: white;
+    }
   }
   .btn-info-icon {
     width: 100%;
-    text-align: center;
+    display: grid;
+    .btn-info-icon-child {
+      display: inline-flex;
+      justify-content: center;
+      vertical-align: middle;
+    }
+    #icon {
+      justify-content: center;
+      vertical-align: middle;
+    }
   }
 }
 </style>

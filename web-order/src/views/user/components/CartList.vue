@@ -8,12 +8,14 @@
         :cart="cart" />
     </div>
     <TotalPrice />
-    <el-button
-      type="text"
-      class="yellow-btn"
-      @click="submitCart(this.carts, this.totalPrice)">
-      결제
-    </el-button>
+    <div class="btn-container">
+      <el-button
+        type="text"
+        class="menu-btn"
+        @click="submitCart(this.carts, this.totalPrice)">
+        결제
+      </el-button>
+    </div>
   </div>
 </template>
 
@@ -79,7 +81,8 @@ export default {
       display: flex
     }
   }
-  .yellow-btn {
+  .btn-container {
+    display: flex;
     padding: 10px;
   }
 }

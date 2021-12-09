@@ -6,6 +6,7 @@ import Order from '../views/admin/page/Order.vue'
 import Diary from '../views/Practice.vue'
 import foodManagement from '../views/admin/page/FoodManageMent.vue'
 import Menu from '../views/user/page/Menu.vue'
+import Prac from '../views/user/page/Practice.vue'
 
 const routes = [
   {
@@ -17,6 +18,10 @@ const routes = [
         path: 'menu',
         name: 'menu',
         component: Menu
+      },
+      {
+        path: 'prac',
+        component: Prac
       }
     ]
   },

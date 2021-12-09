@@ -13,8 +13,8 @@
       <div class="button">
         <el-button
           type="text"
-          @click="addCart()"
-          color="#ff7b7b9a">
+          class="menu-btn"
+          @click="addCart()">
           <span>추가하기</span>
         </el-button>
       </div>
@@ -42,6 +42,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../../scss/variables.scss';
+@import '../../../scss/btn.scss';
 
 .container {
   padding: 10px;
@@ -49,7 +50,6 @@ export default {
   width:100%;
   height:120px;
   background-color: $menuListBg;
- 
   img {
     border-radius: 9px;
     height: 100px;
@@ -66,22 +66,31 @@ export default {
     font-weight: 800;
     color: #ff7b7b9a;
     .name {
+      display: flex;
+      justify-items: center;
+      width: 100%;
       height: 25px;
       background-color: $menuListInf1;
       margin-bottom: 3px;
       border-radius: 9px;
     }
     .price {
+      display: flex;
+      justify-content: center;
       height: 25px;
       border-radius: 9px;
       background-color: $menuListInf2;
       margin-bottom: 3px;
     }
     .button {
+      display: flex;
       height: 25px;
       background-color: $menuListInf1;
       border-radius: 9px;
       color: #ff7b7b9a;
+    }
+    span {
+      width: 100%;
     }
   }
 }

@@ -1,29 +1,36 @@
 <template>
-  <div class="infos">
-    <div class="name">
-      <span>{{ cart.food_name }}</span>
+  <div class="container">
+    <div class="infos-container">
+      <div class="name-box">
+        {{ cart.food_name }}
+      </div>
+      <div class="quantity-box">
+        <span class="quantity">{{ cart.quantity }} 개</span>
+      </div>
+      <div class="price-box">
+        <span class="price">{{ cart.food_price * cart.quantity }} 원</span>
+      </div>
     </div>
-    <div class="quantity">
-      <span>{{ cart.quantity }}</span>
+    <div class="btn-group">
+      <el-button
+        type="text"
+        class="menu-btn"
+        @click="removeCart(this.cart)">
+        -
+      </el-button>
+      <el-button
+        type="text"
+        class="menu-btn"
+        @click="realRemoveCart(this.cart)">
+        X
+      </el-button>
+      <el-button
+        type="text"
+        class="menu-btn"
+        @click="addCart(this.cart)">
+        +
+      </el-button>
     </div>
-    <div class="total-price">
-      <span>{{ cart.food_price * cart.quantity }}</span>
-    </div>
-    <button
-      class="remove-btn"
-      @click="removeCart(this.cart)">
-      -
-    </button>
-    <button
-      class="remove-btn"
-      @click="realRemoveCart(this.cart)">
-      X
-    </button>
-    <button
-      class="remove-btn"
-      @click="addCart(this.cart)">
-      +
-    </button>
   </div>
 </template>
 
@@ -53,5 +60,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.container {
+  display: flex;
+  height: 34px;
+  width: 100%;
+  padding: 2px;
+  .infos-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    .name-box {
+      width: 20%;
+    }
+    .price-box {
+      flex-grow: 1;
+    }
+    .quantity-box {
+      flex-grow: 1;
+    }
+  }
+  .btn-group {
+    width: 100%;
+    flex-direction: flex-end ;
+    .menu-btn {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
 </style>

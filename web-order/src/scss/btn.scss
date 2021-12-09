@@ -1,14 +1,22 @@
 @import './variables.scss';
 
 @mixin colorBtn($color) {
-  background: $color;
-
+  background: $yellow;
+  height: 50%;
+  width: 100%;
+  min-height: 25px;
+  border-radius: 9px;
+  color: $color;
+  font-weight: 800;
+  justify-content: center;
+  vertical-align: middle;
+  padding: 0px;
   &:hover {
     color: $color;
 
     &:before,
     &:after {
-      background: $color;
+      background: $yellow;
     }
   }
 }
@@ -39,6 +47,9 @@
 
 .yellow-btn {
   @include colorBtn($yellow)
+}
+.menu-btn {
+  @include colorBtn(#ff7b7b9a)
 }
 
 .pan-btn {

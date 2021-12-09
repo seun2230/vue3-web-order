@@ -5,7 +5,7 @@
 
 <script>
 import MenuList from '../components/Menulist.vue'
-import CartList from '../components/CaritList.vue'
+import CartList from '../components/CartList.vue'
 
 export default {
   components: {
