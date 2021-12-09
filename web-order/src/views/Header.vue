@@ -1,6 +1,6 @@
 <template>
  <header>
-   <nav class="nav">
+    <nav class="nav">
      <i class="fas fa-bars fa-2x"></i>
       <div class="navbar__menu">
         <ul>
@@ -61,8 +61,7 @@ header {
 }
 .navbar__menu {
   @include center;
-  display: none;
-  align-items: center;
+  
   ul li {
     list-style: none;
     float: left;
@@ -90,6 +89,7 @@ header {
   } 
 }
 @media screen and (max-width: 768px) {
+    
     .navbar__menu {
      display: none;
    }

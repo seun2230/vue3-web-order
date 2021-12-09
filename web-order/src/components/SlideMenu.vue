@@ -1,94 +1,66 @@
 <template>
- <div class="container">
-    <div class="menu_new">
-      <h1>{{ title }}</h1>
-    </div>
-    <swiper 
-    :slidesPerView="3"
-    :spaceBetween="30" 
-    :pagination='{"clickable": true }' 
-    class="mySwiper">
-    <swiper-slide  v-for="food in foods" 
+    <el-carousel 
+      height="300px" 
+      direction="vertical"
+      :autoplay="true">
+    <el-carousel-item 
+      v-for="food in foods" 
       :key="food.food_name"
       :food="food">
-      <div class="menu__list">
-        <img 
-          :src="`${food.food_image1}`" />
-        <p>{{ food.food_name}}/</p>
-        <p>{{ food.food_price}}</p>
-      <i class="fas fa-heart"></i>
-      </div>
-    </swiper-slide>
-  </swiper>
-</div>
+          
+        <div class="menu_img">
+            <img 
+          :src="`${food.food_image3}`" />
+        </div>
+        <p>{{ food.food_name}}</p>
+        <p>{{ food.food_price}}원</p>
+        <li><i class="fas fa-heart"></i></li>
+    </el-carousel-item>
+  </el-carousel>
 </template>
 
 <script>
-
-import { Swiper, SwiperSlide } from 'swiper/vue';
-
-import 'swiper/swiper.scss';
-import 'swiper/components/pagination/pagination.min.css'
-
-
-import SwiperCore, {
-  Pagination
-} from 'swiper';
-
-// install Swiper modules
-SwiperCore.use([Pagination]);
-
 import { mapState } from 'vuex'
 export default {
-  data() {
-    return {
-      title: 'New Menu'
-    }
-  },
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
- computed: {
-    ...mapState('food', [
-        'foods'
-    ])
-  } 
-  
-  
+
+  computed: {
+    ...mapState('food', ['foods'])
+  }
 }
 </script>
 
-<style scoped lang="scss">
-.swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: #fff;
+<style socped lang="scss">
 
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  align-items: center;
-
-  .menu__list {
-    max-width: 100%;
-    height: 350px;
-    background-color: green;
-  }
+.el-carousel__item p {
+  color: #e8e9eb;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 200px;
+  margin: 0;
+}
+ img {
+  position: relative;
+  margin-bottom: 20px;
+  object-fit: fill;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
 }
 
-
-/* .swiper-slide img {
-  display: none;
+.menu__img  {
   width: 100%;
-  height: 100%;
-} */
+  .image {
+    max-width: 100%;
+    height: auto;
+  }
+}
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+  
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
+  }
+
 </style>
