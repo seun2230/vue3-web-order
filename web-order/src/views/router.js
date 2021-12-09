@@ -5,12 +5,20 @@ import DashBoard from '../views/admin/page/DashBoard.vue'
 import Order from '../views/admin/page/Order.vue'
 import Diary from '../views/Practice.vue'
 import foodManagement from '../views/admin/page/FoodManageMent.vue'
+import Menu from '../views/user/page/Menu.vue'
 
 const routes = [
   {
     path: '/user',
     name: 'user',
     component: User,
+    children: [
+      {
+        path: 'menu',
+        name: 'menu',
+        component: Menu
+      }
+    ]
   },
   {
     path: '/admin',

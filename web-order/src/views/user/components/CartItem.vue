@@ -1,13 +1,13 @@
 <template>
   <div class="infos">
     <div class="name">
-      {{ cart.food_name }}
+      <span>{{ cart.food_name }}</span>
     </div>
     <div class="quantity">
-      수량 {{ cart.quantity }}
+      <span>{{ cart.quantity }}</span>
     </div>
     <div class="total-price">
-      금액 {{ cart.food_price * cart.quantity }}
+      <span>{{ cart.food_price * cart.quantity }}</span>
     </div>
     <button
       class="remove-btn"
@@ -54,8 +54,4 @@ export default {
 
 <style lang="scss" scoped>
 
-.infos:not(.remove-btn) {
-  display: flex;
-  border-radius: 5px;
-}
 </style>

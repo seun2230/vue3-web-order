@@ -1,13 +1,11 @@
 <template>
-  <MenuList />
+  <router-view />
 </template>
 
 <script>
-import MenuList from '../user/components/Menulist.vue'
 
 export default {
   components: {
-    MenuList
   }
 }
 </script>

@@ -1,33 +1,19 @@
 <template>
-  <div class="container show-grid">
-    <div class="inner">
-      <div class="row">
-        <div class="col-md-8">
-          <div
-            class="carts">
-            <CartItem
-              v-for="cart in carts"
-              :key="cart.name"
-              :cart="cart" />
-          </div>
-          <div
-            class="carts-un"
-            메뉴를
-            선택해주세요.>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <TotalPrice />
-        </div>
-        <div class="btn-primary">
-        </div>
-      </div>
+  <div class="container">
+    <div class="cartList">
+      <CartItem
+        class="cart_item"
+        v-for="cart in carts"
+        :key="cart.name"
+        :cart="cart" />
     </div>
-    <button
-      class="submit-btn"
+    <TotalPrice />
+    <el-button
+      type="text"
+      class="yellow-btn"
       @click="submitCart(this.carts, this.totalPrice)">
       결제
-    </button>
+    </el-button>
   </div>
 </template>
 
@@ -77,19 +63,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../../scss/variables.scss';
+@import '../../../scss/btn.scss';
 
 .container {
-  margin-top: 30px;
-  .inner {
-    padding: 20px;
-    border-radius: 4px;
-    text-align: center;
-    .carts {
-    flex-wrap: wrap;
-    justify-content: center;
-    background-color: white;
-    border-radius: 5px;
+  display: grid;
+  background-color: $menuListBg;
+  .cartList {
+    background-color: $menuListCnt;
+    min-height: 100px;
+    padding: 10px;
+    border-radius: 9px;
+    margin: 10px;
+    .cart_item {
+      display: flex
     }
-  }  
+  }
+  .yellow-btn {
+    padding: 10px;
+  }
 }
+
 </style>

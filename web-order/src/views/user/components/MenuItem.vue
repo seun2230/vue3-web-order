@@ -5,16 +5,19 @@
       :alt="food.food_name" />
     <div class="infos">
       <div class="name">
-        {{ food.food_name }}
+        <span>{{ food.food_name }}</span>
       </div>
       <div class="price">
-        {{ food.food_price }}
+        <span>{{ food.food_price }}</span>
       </div>
-      <el-button
-        type="text"
-        @click="addCart()">
-        추가하기
-      </el-button>
+      <div class="button">
+        <el-button
+          type="text"
+          @click="addCart()"
+          color="#ff7b7b9a">
+          <span>추가하기</span>
+        </el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -57,10 +60,8 @@ export default {
     padding: 10px;
     border-radius: 9px;
     background-color: $menuListCnt;
-    flex-direction: row-reverse;
-    flex: 1;
-    text-align: center;
     border-radius: 9px;
+    text-align: center;
     width: 100%;
     font-weight: 800;
     color: #ff7b7b9a;
@@ -69,12 +70,18 @@ export default {
       background-color: $menuListInf1;
       margin-bottom: 3px;
       border-radius: 9px;
-      align-items: center;
     }
     .price {
       height: 25px;
       border-radius: 9px;
       background-color: $menuListInf2;
+      margin-bottom: 3px;
+    }
+    .button {
+      height: 25px;
+      background-color: $menuListInf1;
+      border-radius: 9px;
+      color: #ff7b7b9a;
     }
   }
 }
