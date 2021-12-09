@@ -2,7 +2,6 @@ require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
 const cors = require("cors");
-const multer = require("multer");
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -15,32 +14,32 @@ const adminRouter = require("./routes/adminRouter");
 
 const app = express();
 
-export const { verifyToken } = require('./middleware/auth');
+// module.exports  = const { verifyToken } = require('./middleware/auth');
 
-export const pool = require("./db/index")
+// export const pool = require("./db/index")
 
-export const storage = multer.diskStorage({
-  destination(req, file, callback) {
-    callback(null, path.join('./', '/uploads'))
-  },
-  filename(req, file, callback) {
-    let array = file.originalname.split('.')
-    array[0] = array[0] + "_";
-    array[1] = "." + array[1];
-    array.splice(1, 0, Date.now().toString());
+// export const storage = multer.diskStorage({
+//   destination(req, file, callback) {
+//     callback(null, path.join('./', '/uploads'))
+//   },
+//   filename(req, file, callback) {
+//     let array = file.originalname.split('.')
+//     array[0] = array[0] + "_";
+//     array[1] = "." + array[1];
+//     array.splice(1, 0, Date.now().toString());
 
-    const result = array.join('');
-    callback(null, result)
-  }
-})
+//     const result = array.join('');
+//     callback(null, result)
+//   }
+// })
 
-export const upload = multer({
-  storage,
-  limits: {
-    files: 10,
-    fileSize: 10 * 1024 * 1024
-  }
-})
+// export const upload = multer({
+//   storage,
+//   limits: {
+//     files: 10,
+//     fileSize: 10 * 1024 * 1024
+//   }
+// })
 
 app.set('port', 3000)
 
@@ -53,9 +52,9 @@ app.use(passport.initialize())
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(foodRouter);
-app.use(adminRouter);
-app.use(authRouter);
+app.use('/food', foodRouter);
+app.use('/admin', adminRouter);
+app.use('/auth', authRouter);
 passportConfig();
 
 // catch 404 and forward to error handler

@@ -1,75 +1,77 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db/index')
-const multer = require("multer")
-const path = require('path')
+// const multer = require("multer")
+const { Upload } = require('../api/S3UploadStorage')
+// const path = require('path')
 
 
-const storage = multer.diskStorage({
-    destination(req, file, callback) {
-        callback(null, path.join('./', '/uploads'))
-    },
-    filename(req, file, callback) {
-        let array = file.originalname.split('.')
-        array[0] = array[0] + "_"
-        array[1] = "." + array[1]
-        array.splice(1, 0, Date.now().toString())
+// const storage = multer.diskStorage({
+//     destination(req, file, callback) {
+//         callback(null, path.join('./', '/uploads'))
+//     },
+//     filename(req, file, callback) {
+//         let array = file.originalname.split('.')
+//         array[0] = array[0] + "_"
+//         array[1] = "." + array[1]
+//         array.splice(1, 0, Date.now().toString())
         
-        const result = array.join('')
-        callback(null, result)
-    }
-})
+//         const result = array.join('')
+//         callback(null, result)
+//     }
+// })
 
-const upload = multer({
-  storage,
-    limits: {
-      files: 10,
-      fileSize: 10 * 1024 * 1024
-    }
-  })
+// const upload = multer({
+//   storage,
+//     limits: {
+//       files: 10,
+//       fileSize: 10 * 1024 * 1024
+//     }
+//   })
 
-router.post('/uploads/', upload.array('files'), async function(req, res) {
+router.post('/uploads', Upload.array('files'), async function(req, res) {
     try { 
       console.log("DB Connection! /uploads")
-      const connection = await pool.getConnection(async conn => conn);
+      // const connection = await pool.getConnection(async conn => conn);
       try {
+        console.log(req.file.location)
         const files = req.files
         let image = []
   
-        await connection.beginTransaction();
+        // await connection.beginTransaction();
   
         for (let i = 0; i < req.files.length; i++) {
           image[i] = 'http://localhost:3000/' + files[i].filename
         }
   
-          let sql = "INSERT INTO food_items" + 
-            "(food_name, food_image1, food_image2, food_image3, food_info, food_price, food_category)" +
-            "VALUES(?, ?, ?, ?, ?, ?, ?)"
+          // let sql = "INSERT INTO food_items" + 
+          //   "(food_name, food_image1, food_image2, food_image3, food_info, food_price, food_category)" +
+          //   "VALUES(?, ?, ?, ?, ?, ?, ?)"
   
-          let value = [
-            req.body.name,
-            image[0],
-            image[1],
-            image[2],
-            req.body.info,
-            req.body.price,
-            req.body.category
-          ]
+          // let value = [
+          //   req.body.name,
+          //   image[0],
+          //   image[1],
+          //   image[2],
+          //   req.body.info,
+          //   req.body.price,
+          //   req.body.category
+          // ]
   
-          await connection.query(sql, value)
-          await connection.commit();
-          connection.release();
-          res.send({
-            success: "true"
-          })
+          // await connection.query(sql, value)
+          // await connection.commit();
+          // connection.release();
+          // res.send({
+          //   success: "true"
+          // })
         } catch(err) {
-          console.log("Query Error")
-          await connection.rollback();
-          connection.release();
-          res.send({
-            error: "Query Error",
-            err
-          })
+          // console.log("Query Error")
+          // await connection.rollback();
+          // connection.release();
+          // res.send({
+          //   error: "Query Error",
+          //   err
+          // })
         }
       } catch(err) {
         console.log("DB Error")
@@ -80,7 +82,7 @@ router.post('/uploads/', upload.array('files'), async function(req, res) {
       }
     })
 
-router.post('/order/status', async(req, res) => {
+router.post('/status', async(req, res) => {
   try {
     console.log("DB Connection! /order/status")
     const connection = await pool.getConnection(async conn => conn);
@@ -140,7 +142,7 @@ router.get("/orderlist", async (req, res) => {
   }
 })
 
-router.post('/admin/delete', async(req, res) => {
+router.post('/delete', async(req, res) => {
   try {
     console.log("DB connection /admin/delete")
     const connection = await pool.getConnection(async conn => conn);
@@ -175,7 +177,7 @@ router.post('/admin/delete', async(req, res) => {
   }
 })
 
-router.post('/admin/modify', async(req, res) => {
+router.post('/modify', async(req, res) => {
   try {
     console.log("DB connection /admin/modify")
     const connection = await pool.getConnection(async conn => conn);

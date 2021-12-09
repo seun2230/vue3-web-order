@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     modifyStatus(num) {      
-        axios.post('http://localhost:3000/order/status', 
+        axios.post('http://localhost:3000/admin/status', 
         JSON.stringify(num),
             {
               headers: {

@@ -44,7 +44,7 @@ export default {
       submitCart(carts, totalPrice) {
         let list = [ carts, totalPrice ]
 
-        axios.post("http://localhost:3000/foods/post", 
+        axios.post("http://localhost:3000/food/order", 
           JSON.stringify(list),
           {
             headers: {

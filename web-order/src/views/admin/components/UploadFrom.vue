@@ -105,7 +105,7 @@ export default {
         formData.append('info', this.form.desc)
         formData.append('category', this.form.category)
 
-        axios.post('http://localhost:3000/uploads',
+        axios.post('http://localhost:3000/admin/uploads',
           formData,
           {
             headers: {

@@ -36,7 +36,7 @@ export default {
   actions: {
     login({ commit }, state) {
       console.log("action_login_state", state)
-        axios.post('http://localhost:3000/login', state, 
+        axios.post('http://localhost:3000/auth/login', state, 
         {
 					headers: {
 						'Content-Type' : "application/json"

@@ -4,9 +4,9 @@ const pool = require('../db/index')
 const { verifyToken } = require('../middleware/auth')
 
 
-router.get('/foods', async (req, res) => {
+router.get('/get', async (req, res) => {
     try {
-      console.log("DB Connection! /food")
+      console.log("DB Connection! /get")
       const connection = await pool.getConnection(async conn => conn);
       try {
         const [rows] = await connection.query('SELECT * FROM food_items')
@@ -31,9 +31,9 @@ router.get('/foods', async (req, res) => {
     }
   })
 
-  router.post('/foods/post', verifyToken, async (req, res) => {
+  router.post('/order', verifyToken, async (req, res) => {
     try {
-      console.log("DB Connection! /food/post")
+      console.log("DB Connection! /food/order")
       const connection = await pool.getConnection(async conn => conn);
       try {
         console.log("Query Start")

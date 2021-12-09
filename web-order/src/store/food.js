@@ -20,7 +20,7 @@ export default {
     },
     mutations: {
       getState(state) {
-        axios.get('http://localhost:3000/foods')
+        axios.get('http://localhost:3000/food/get')
         .then((res) => {
           console.log(res.data)
           state.foods = res.data
@@ -30,7 +30,7 @@ export default {
         })
       },
       getOrder(state) {
-        axios.get('http://localhost:3000/orderlist')
+        axios.get('http://localhost:3000/admin/orderlist')
         .then((res) => {
           state.order = res.data
         })
