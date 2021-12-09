@@ -71,10 +71,13 @@ export default {
 .container {
   display: grid;
   background-color: $menuListBg;
+  border-radius: 9px;
   .cartList {
     background-color: $menuListCnt;
-    min-height: 100px;
-    padding: 10px;
+    min-height: 125px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
     border-radius: 9px;
     margin: 10px;
     .cart_item {

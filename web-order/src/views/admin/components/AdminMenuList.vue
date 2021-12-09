@@ -7,6 +7,7 @@
       <el-table-column
         property="food_name"
         label="음식이름"
+        show-overflow-tooltip
         width="120" />
       <el-table-column
         property="food_price"

@@ -91,11 +91,14 @@ export default {
       if(this.files.length >= 4) {
         alert("이미지는 3개만 올려주세요 ㅎㅎ")
         this.files = []
+      } else if(this.form.name.length >= 9) {
+        alert("음식이름은 최대 9글자 까지에요 ㅎㅎ")
+        this.$router.go()
       } else {
-      for(let i = 0; i < this.files.length; i++ ){
-        let file = this.files[i];
-        formData.append('files', file);
-      }
+        for(let i = 0; i < this.files.length; i++ ){
+          let file = this.files[i];
+          formData.append('files', file);
+       }
 
         formData.append('name', this.form.name)
         formData.append('price', this.form.price)

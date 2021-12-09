@@ -2,7 +2,7 @@
   <div class="container">
     <div class="infos-container">
       <div class="name-box">
-        {{ cart.food_name }}
+        <span class="name">{{ cart.food_name }}</span>
       </div>
       <div class="quantity-box">
         <span class="quantity">{{ cart.quantity }} 개</span>
@@ -60,31 +60,55 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../../scss/variables.scss';
+span {
+  width: 100%;
+}
+
 .container {
   display: flex;
-  height: 34px;
+  height: 105px;
   width: 100%;
-  padding: 2px;
+  padding: 10px;
+  margin-bottom: 10px;
   .infos-container {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    text-align: center;
+    font-weight: 800;
+    color: $menuBg;
     width: 100%;
+    border-radius: 9px;
+    margin-right: 10px;
     .name-box {
-      width: 20%;
-    }
-    .price-box {
-      flex-grow: 1;
+      width: 100%;
+      background-color: $menuListInf2;
+      border-radius: 9px;
+      height: 25px;
     }
     .quantity-box {
-      flex-grow: 1;
+      margin-top: 5px;
+      flex-grow: 100%;
+      background-color: $menuListInf1;
+      border-radius: 9px;
+      height: 25px;
+    }
+    .price-box {
+      margin-top: 5px;
+      flex-grow: 100%;
+      background-color: $menuListInf2;
+      border-radius: 9px;
+      height: 25px;
     }
   }
   .btn-group {
-    width: 100%;
-    flex-direction: flex-end ;
+    display: grid;
+    width: 50px;
+    background-color: $menuListCnt;
+    border-radius: 9px;
     .menu-btn {
-      width: 30px;
-      height: 30px;
+      margin: 0px;
+      width: 40px;
+      height: 20px;
     }
   }
 }

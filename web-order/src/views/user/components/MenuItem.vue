@@ -61,10 +61,10 @@ export default {
     border-radius: 9px;
     background-color: $menuListCnt;
     border-radius: 9px;
-    text-align: center;
     width: 100%;
+    text-align: center;
     font-weight: 800;
-    color: #ff7b7b9a;
+    color: $menuBg;
     .name {
       display: flex;
       justify-items: center;
@@ -94,46 +94,4 @@ export default {
     }
   }
 }
-
-// .btn-primary {
-//   padding: 0;
-//   margin: 0;
-// }
-// .image {
-//   $width: 200px;
-//   width: $width;
-//   height: $width;
-//   margin: 10px;
-//   border-radius: 4px;
-//   background-size: cover;
-//   overflow: hidden;
-//   position: relative;
-//   &:hover::after {
-//     content: "";
-//     position: absolute;
-//     top: 0;
-//     bottom: 0;
-//     left: 0;
-//     right: 0;
-//   }
-//   .infos {
-//     width: 100%;
-//     padding: 14px;
-//     font-size: 14px;
-//     text-align: center;
-//     position: absolute;
-//     left: 0;
-//     bottom: 0;
-//     backdrop-filter: blur(10px);
-//     .price {
-//     }
-//     .name {
-//       white-space: nowrap;
-//       overflow: hidden;
-//       text-overflow: ellipsis;
-//     }
-//     .info {
-//     }
-//   }
-// }
 </style>

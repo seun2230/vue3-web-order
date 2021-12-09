@@ -49,7 +49,7 @@
   @include colorBtn($yellow)
 }
 .menu-btn {
-  @include colorBtn(#ff7b7b9a)
+  @include colorBtn($menuBg)
 }
 
 .pan-btn {
