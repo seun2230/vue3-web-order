@@ -1,4 +1,5 @@
 <template>
+  <h1>홈임</h1>
   <router-view />
 </template>
 

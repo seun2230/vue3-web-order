@@ -33,9 +33,9 @@ router.post('/uploads', upload.array('files'), async function(req, res) {
     try { 
       console.log("DB Connection! /uploads")
       console.log("file",req.files)
+      console.log("body",req.body)
       const connection = await pool.getConnection(async conn => conn);
       try {
-        console.log("body",req.body)
         const files = req.files
         let image = []  
   
