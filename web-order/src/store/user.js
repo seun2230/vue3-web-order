@@ -2,7 +2,6 @@ import axios from 'axios'
 import VueCookies from 'vue-cookies'
 
 export default {
-
   namespaced: true,
   state: () => {
     return {
@@ -53,6 +52,7 @@ export default {
       },
       user_orders({ commit }, state) {
         console.log(state)
+
         axios.post('http://localhost:3000/myorder', 
           state,
           { 
