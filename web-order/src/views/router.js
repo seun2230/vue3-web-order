@@ -8,8 +8,20 @@ import Review from '../components/Review'
 import Login from '../components/'
 
 
-const routes = [
 
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: HomePage,
+    children: [
+      {
+        path: 'review',
+        name: 'review',
+        component: Review,
+      }
+    ]
+  },
   {
     path: '/',
     name: 'Homepage',
