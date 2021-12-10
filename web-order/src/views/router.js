@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// import User from '../views/user/User.vue'
 import Admin from '../views/admin/Admin.vue'
 import DashBoard from '../views/admin/page/DashBoard.vue'
 import Order from '../views/admin/page/Order.vue'
@@ -19,7 +18,7 @@ const routes = [
       {
         path: 'login',
         name: 'login',
-        component: Login,
+        component: Login
       },
       {
         path: 'review',
