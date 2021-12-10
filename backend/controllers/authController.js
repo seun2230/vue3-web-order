@@ -4,12 +4,9 @@ const pool = require('../db')
 
 const login = async(req, res, next) => {
   try {
-    console.log("authController func login start")
     const connection = await pool.getConnection(async conn => conn);
     await passport.authenticate('local', { session: false }, (err, user) => {
       if (err || !user) {
-        console.log("error : ", err)
-        console.log('user : ', user)
         return res.status(400).json({ success: false, message: err })
       }
       req.login(user, { session: false }, async (err) => {
@@ -31,22 +28,19 @@ const login = async(req, res, next) => {
 
         const [rows] = await connection.query(sql, value);
   
-        res.json({ token, rows })
+        res.cookie('Auth', token, { maxAge: 60 * 60 * 60, httpOnly: true, sameSite: "lax" })
+        res.send(rows[0].user_id)
+        next();
       })
     }) (req, res)
   } catch (err) {
-    console.log("Error", err, "ㅋㅋ")
+    console.log("Error", err)
     console.error(err)
+    res.send(err)
     return next(err)
   }
 }
 
-const check = (req, res) => {
-  console.log("authController_check : ", req.decode)
-  res.json(req.decoded)
-}
-
 module.exports = {
-  login,
-  check
+  login
 }
