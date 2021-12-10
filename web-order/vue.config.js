@@ -4,8 +4,20 @@ module.exports = {
       '/': {
         target: 'http://localhost:3000/',
         changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
       }
     }
   },
-  outputDir: './server/public',  //  배포 파일 위치
+  outputDir: '../backend/public',
+  configureWebpack: {
+    module: {
+      rules: [{
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: "javascript/auto"
+      }]
+    },
+  },
 }
