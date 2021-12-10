@@ -13,7 +13,6 @@
     Review
     </router-link>
   </div>
-  <router-view />
 </template>
 
 <script>
