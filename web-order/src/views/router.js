@@ -1,27 +1,27 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import User from '../views/user/User.vue'
 import Admin from '../views/admin/Admin.vue'
 import DashBoard from '../views/admin/page/DashBoard.vue'
 import Order from '../views/admin/page/Order.vue'
 import foodManagement from '../views/admin/page/FoodManageMent.vue'
-import Menu from '../views/Home.vue'
+import HomePage from '../views/HomePage.vue'
 import Review from '../components/Review'
+import Login from '../components/'
 
 
 const routes = [
 
   {
-    path: '/user',
-    name: 'user',
-    component: User,
+    path: '/',
+    name: 'Homepage',
+    component: HomePage,
     children: [
       {
-        path: 'menu',
-        name: 'menu',
-        component: Menu
+        path: 'login',
+        name: 'login',
+        component: Login
       },
       {
-        path: '/review',
+        path: 'review',
         name: 'Review',
         component: Review,
       }
