@@ -1,18 +1,32 @@
 <template>
-  <Home />
+  <div id="nav">
+    <router-link to="/">
+      Home
+    </router-link>
+     <router-link to="/login">
+     Login
+    </router-link>
+    <router-link to="/menu">
+     Menu
+    </router-link>
+    <router-link to="/review">
+    Review
+    </router-link>
+  </div>
+  <router-view />
 </template>
 
 <script>
-import Home from './views/Home.vue'
+
 export default {
-  name: 'App',
+  data() {
+    return {
 
-  components: {
-    Home,
+    }
   },
-
-  data: () => ({
-  }),
+  components: {
+   
+  }
 }
 </script>
 <style scoped>

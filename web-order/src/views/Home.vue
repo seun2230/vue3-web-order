@@ -7,10 +7,8 @@
     <section>
       <Category />
     </section>
-    <section>
       <Descript />
-      <Review />
-    </section>
+      <MyPage />
   </div>
 </template>
 
@@ -19,7 +17,7 @@ import Header from './Header.vue'
 import Slide from '../components/Slide.vue'
 import Category from '../components/Category.vue'
 import Descript from '../components/Descript.vue'
-import Review from '../components/Review.vue'
+import MyPage from './MyPage.vue'
 export default {
   data() {
   },
@@ -28,7 +26,7 @@ export default {
     Slide,
     Category,
     Descript,
-    Review
+    MyPage
   }
 }
 </script>
@@ -37,9 +35,6 @@ export default {
 
 body {
   min-height: 100vh;
-}
-section {
-  // padding: 2rem 9%;
 }
 
 </style>

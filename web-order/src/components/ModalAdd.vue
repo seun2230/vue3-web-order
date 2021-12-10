@@ -5,9 +5,10 @@
       <div class="modal-window">
         <div class="modal-header">
             <v-slot name="header">
-              이용 방법
+              이용 방법 안내
             </v-slot>
-          </div>
+            <hr />
+        </div>
         <div class="modal-content">
           <slot>
             우리 가게 이용 안내입니다.
@@ -42,7 +43,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(102, 101, 101, 0.5);
   }
 
   &-window {

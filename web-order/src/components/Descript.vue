@@ -1,29 +1,32 @@
 <template>
-<div>
-  <div class="container">
-    <div class="btn-group">
-      <button class="btn">
-        <i class="fas fa-cookie"></i>
-      </button>
+<div class="container">
+  <div class="btn-group">
+    <button 
+      class="btn"
+      @click="pageReview()">
+      <i class="fas fa-cookie" >
+      </i>
+    </button>
 
-      <button class="btn"
-         @click="clickModal()">
-        <i class="fas fa-pizza-slice"></i>
-      </button>
-    
-      <ModalAdd
-        @close="closeModal()" 
-        v-if="modal" />
+    <button class="btn"
+        @click="clickModal()">
+      <i class="fas fa-pizza-slice"></i>
+    </button>
+  
+    <ModalAdd
+      @close="closeModal()" 
+      v-if="modal" />
+  </div>
+  <div class="btn-info" 
+    id="btn-order" 
+    @click="pageMenu()">
+    <div class="btn-info-text">
+    <h2>패스트 오더 </h2>
+    <p>주문에서 결제<br />
+      까지 한번에 가능한 주문</p>
     </div>
-    <div class="btn-info">
-      <div class="btn-info-text">
-      <h2>패스트 오더 </h2>
-      <p>주문에서 결제<br />
-        까지 한번에 가능한 주문</p>
-      </div>
-      <div class="btn-info-icon">
-      <i class="fas fa-clock fa-2x"></i>
-      </div>
+    <div class="btn-info-icon">
+    <i class="fas fa-clock fa-4x"></i>
     </div>
   </div>
 </div>
@@ -43,6 +46,12 @@ export default {
     },
     closeModal() {
       this.modal = false;
+    },
+    pageMenu() {
+      this.$router.push('menu')
+    },
+    pageReview() {
+      this.$router.push('review')
     }
   },
   components: {
@@ -74,16 +83,21 @@ export default {
   margin-top: 5px;
   color: white;
   display: flex;
-  
 
-  h2 {
-    font-size: 20px;
-    color: white;
+  .btn-info-text {
+    padding: 5px;
+    
+    h2 {
+      font-size: 20px;
+      color: white;
+    }
   }
-
   .btn-info-icon {
     width: 100%;
-    text-align: center;
+    height: 100%;
+    padding-top: 20px;
+    padding-right: 20px;
+    text-align: right;
   }
 }
 

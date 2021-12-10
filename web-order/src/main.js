@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import store from './store'
-import router from './views/router'
+import router from '@/router/';
 import 'normalize.css'; // css 초기화.
 
 import '@fortawesome/fontawesome-free/js/all.js';
