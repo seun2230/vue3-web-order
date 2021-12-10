@@ -1,6 +1,18 @@
 <template>
-  <h1>홈임</h1>
-  <router-view />
+  <div id="nav">
+    <router-link to="/">
+      Home
+    </router-link>
+     <router-link to="/login">
+     Login
+    </router-link>
+    <router-link to="/menu">
+     Menu
+    </router-link>
+    <router-link to="/review">
+    Review
+    </router-link>
+  </div>
 </template>
 
 <script>
@@ -13,6 +25,7 @@ export default {
   }),
 }
 </script>
+
 
 <style lang="scss" scoped>
 body {

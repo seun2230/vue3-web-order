@@ -66,8 +66,15 @@ export default {
         background-color: white;
         border-radius: 5px;
         height: 150px;
+<<<<<<< HEAD
         overflow-y: scroll;
     }
   }
+=======
+        // overflow-y: scroll;
+    }
+  }
+
+>>>>>>> develop
 }
 </style>

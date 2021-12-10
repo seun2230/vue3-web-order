@@ -7,8 +7,16 @@ import Diary from '../views/Practice.vue'
 import foodManagement from '../views/admin/page/FoodManageMent.vue'
 import Menu from '../views/user/page/Menu.vue'
 import Prac from '../views/user/page/Practice.vue'
+import Home from '@/views/Home';
+import Review from '../components/Review'
+
 
 const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
   {
     path: '/user',
     name: 'user',
@@ -22,6 +30,11 @@ const routes = [
       {
         path: 'prac',
         component: Prac
+      },
+      {
+        path: '/review',
+        name: 'Review',
+        component: Review,
       }
     ]
   },

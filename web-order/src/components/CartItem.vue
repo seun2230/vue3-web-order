@@ -16,11 +16,6 @@
     </button>
     <button
       class="remove-btn"
-      @click="realRemoveCart(this.cart)">
-      X
-    </button>
-    <button
-      class="remove-btn"
       @click="addCart(this.cart)">
       +
     </button>

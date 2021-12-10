@@ -1,105 +1,40 @@
 <template>
-  <el-row>
-    <el-col :span="24">
-      <div class="grid-content bg-purple-light">
-        <div class="items">
-          <div class="item">
-            <MenuList />
-          </div>
-        </div>
-      </div>
-    </el-col>
-  </el-row>
-  <el-row>
-    <el-col :span="12">
-      <div class="grid-content bg-purple"></div>
-    </el-col>
-    <el-col :span="12">
-      <div class="grid-content bg-purple-light"></div>
-    </el-col>
-  </el-row>
-  <el-row>
-    <el-col :span="8">
-      <div class="grid-content bg-purple"></div>
-    </el-col>
-    <el-col :span="8">
-      <div class="grid-content bg-purple-light"></div>
-    </el-col>
-    <el-col :span="8">
-      <div class="grid-content bg-purple"></div>
-    </el-col>
-  </el-row>
-  <el-row>
-    <el-col :span="6">
-      <div class="grid-content bg-purple"></div>
-    </el-col>
-    <el-col :span="6">
-      <div class="grid-content bg-purple-light"></div>
-    </el-col>
-    <el-col :span="6">
-      <div class="grid-content bg-purple"></div>
-    </el-col>
-    <el-col :span="6">
-      <div class="grid-content bg-purple-light"></div>
-    </el-col>
-  </el-row>
-  <el-row>
-    <el-col :span="4">
-      <div class="grid-content bg-purple"></div>
-    </el-col>
-    <el-col :span="4">
-      <div class="grid-content bg-purple-light"></div>
-    </el-col>
-    <el-col :span="4">
-      <div class="grid-content bg-purple"></div>
-    </el-col>
-    <el-col :span="4">
-      <div class="grid-content bg-purple-light"></div>
-    </el-col>
-    <el-col :span="4">
-      <div class="grid-content bg-purple"></div>
-    </el-col>
-    <el-col :span="4">
-      <div class="grid-content bg-purple-light"></div>
-    </el-col>
-  </el-row>
+  <div class="contaienr">
+    <Header />
+    <div class="slide">
+     <Slide />
+    </div>
+    <section>
+      <Category />
+    </section>
+      <Descript />
+      <MyPage />
+  </div>
 </template>
 
 <script>
-import MenuList from '../components/MenuList.vue'
+import Header from './Header.vue'
+import Slide from '../components/Slide.vue'
+import Category from '../components/Category.vue'
+import Descript from '../components/Descript.vue'
+import MyPage from './MyPage.vue'
 export default {
+  data() {
+  },
   components: {
-    MenuList
+    Header,
+    Slide,
+    Category,
+    Descript,
+    MyPage
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 
-.el-row {
-  margin-bottom: 20px;
-  &:last-child {
-    margin-bottom: 0;
-  }
+body {
+  min-height: 100vh;
 }
-.el-col {
-  border-radius: 4px;
-}
-.bg-purple-dark {
-  background: #99a9bf;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
-}
+
 </style>
