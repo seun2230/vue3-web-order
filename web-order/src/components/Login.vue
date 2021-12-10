@@ -1,45 +1,49 @@
-
 <template>
-    <div class="container">
-        <h2 class="title">로그인</h2>
-        <form class="form" @submit.prevent="login">
-
-            <div class="input-group">
-                <label for="id" class="label">아이디</label>
-                <input
-                    type="text"
-                    id="acc"
-                    class="input"
-
-                    v-model="user.user_acc">
-            </div>
-
-            <div class="input-group">
-                <label for="password" class="label">비밀번호</label>
-                <input
-                    type="password"
-                    id="password"
-                    class="input"
-                    v-model="user.user_password">
-            </div>
-
-            <input type="submit" class="button" value="로그인">
-
-        </form>
-    </div>
+  <div class="container">
+    <h2 class="title">로그인</h2>
+    <form 
+      class="form" 
+      @submit.prevent="login">
+      <div class="input-group">
+        <label for="id" class="label">아이디</label>
+        <input
+          type="text"
+          id="acc"
+          class="input"
+          v-model="user.user_acc">
+      </div>
+      <div class="input-group">
+        <label 
+          for="password" 
+          class="label">
+            비밀번호
+        </label>
+        <input
+          type="password"
+          id="password"
+          class="input"
+          v-model="user.user_password">
+      </div>
+        <input 
+          type="submit" 
+          class="button" 
+          value="로그인" />
+    </form>
+  </div>
 </template>
+
 <script>
 // import axios from 'axios';
 
 export default {
-    data() {
-        return {
-            user: {
-                user_acc: '',
-                user_password: '',
-            },
-        };
-    },
+  data() {
+    return {
+      user: {
+        user_acc: '',
+        user_password: '',
+      },
+    };
+  },
     methods: {
         login() {
             try {
