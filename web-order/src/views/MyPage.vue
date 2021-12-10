@@ -25,7 +25,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import MyOrderListItem from '../components/MyOrderListItem.vue'
+import MyOrderListItem from './admin/components/MyOrderListItem.vue'
 
 export default {
   computed: {

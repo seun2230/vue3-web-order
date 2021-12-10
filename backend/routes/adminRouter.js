@@ -1,33 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db/index')
-// const multer = require("multer")
 const { upload } = require('../api/S3UploadStorage')
-// const path = require('path')
-
-
-// const storage = multer.diskStorage({
-//     destination(req, file, callback) {
-//         callback(null, path.join('./', '/uploads'))
-//     },
-//     filename(req, file, callback) {
-//         let array = file.originalname.split('.')
-//         array[0] = array[0] + "_"
-//         array[1] = "." + array[1]
-//         array.splice(1, 0, Date.now().toString())
-        
-//         const result = array.join('')
-//         callback(null, result)
-//     }
-// })
-
-// const upload = multer({
-//   storage,
-//     limits: {
-//       files: 10,
-//       fileSize: 10 * 1024 * 1024
-//     }
-//   })
 
 router.post('/uploads', upload.array('files'), async function(req, res) {
     try { 
