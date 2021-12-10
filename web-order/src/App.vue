@@ -12,6 +12,7 @@
     <router-link to="/review">
     Review
     </router-link>
+    <router-view />
   </div>
 </template>
 

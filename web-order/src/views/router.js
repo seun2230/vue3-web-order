@@ -1,22 +1,15 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import User from '../views/user/User.vue'
 import Admin from '../views/admin/Admin.vue'
 import DashBoard from '../views/admin/page/DashBoard.vue'
 import Order from '../views/admin/page/Order.vue'
-import Diary from '../views/Practice.vue'
 import foodManagement from '../views/admin/page/FoodManageMent.vue'
-import Menu from '../views/user/page/Menu.vue'
-import Prac from '../views/user/page/Practice.vue'
-import Home from '@/views/Home';
+import Menu from '../views/Home.vue'
 import Review from '../components/Review'
 
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
+
   {
     path: '/user',
     name: 'user',
@@ -26,10 +19,6 @@ const routes = [
         path: 'menu',
         name: 'menu',
         component: Menu
-      },
-      {
-        path: 'prac',
-        component: Prac
       },
       {
         path: '/review',
@@ -54,11 +43,6 @@ const routes = [
         component: Order,
       },
       {
-        path: 'diary',
-        name: 'diary',
-        component: Diary,
-      },
-      {
         path: 'foodManagement',
         name: 'foodManagement',
         component: foodManagement
@@ -68,7 +52,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 })
 
