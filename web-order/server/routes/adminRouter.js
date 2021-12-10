@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../db/index')
 // const multer = require("multer")
-const { Upload } = require('../api/S3UploadStorage')
+const { upload } = require('../api/S3UploadStorage')
 // const path = require('path')
 
 
@@ -29,49 +29,50 @@ const { Upload } = require('../api/S3UploadStorage')
 //     }
 //   })
 
-router.post('/uploads', Upload.array('files'), async function(req, res) {
+router.post('/uploads', upload.array('files'), async function(req, res) {
     try { 
       console.log("DB Connection! /uploads")
-      // const connection = await pool.getConnection(async conn => conn);
+      console.log("file",req.files)
+      const connection = await pool.getConnection(async conn => conn);
       try {
-        console.log(req.file.location)
+        console.log("body",req.body)
         const files = req.files
-        let image = []
+        let image = []  
   
-        // await connection.beginTransaction();
+        await connection.beginTransaction();
   
         for (let i = 0; i < req.files.length; i++) {
-          image[i] = 'http://localhost:3000/' + files[i].filename
+          image[i] = files[i].location
         }
   
-          // let sql = "INSERT INTO food_items" + 
-          //   "(food_name, food_image1, food_image2, food_image3, food_info, food_price, food_category)" +
-          //   "VALUES(?, ?, ?, ?, ?, ?, ?)"
+          let sql = "INSERT INTO food_items" + 
+            "(food_name, food_image1, food_image2, food_image3, food_info, food_price, food_category)" +
+            "VALUES(?, ?, ?, ?, ?, ?, ?)"
   
-          // let value = [
-          //   req.body.name,
-          //   image[0],
-          //   image[1],
-          //   image[2],
-          //   req.body.info,
-          //   req.body.price,
-          //   req.body.category
-          // ]
+          let value = [
+            req.body.name,
+            image[0],
+            image[1],
+            image[2],
+            req.body.info,
+            req.body.price,
+            req.body.category
+          ]
   
-          // await connection.query(sql, value)
-          // await connection.commit();
-          // connection.release();
-          // res.send({
-          //   success: "true"
-          // })
+          await connection.query(sql, value)
+          await connection.commit();
+          connection.release();
+          res.send({
+            success: "true"
+          })
         } catch(err) {
-          // console.log("Query Error")
-          // await connection.rollback();
-          // connection.release();
-          // res.send({
-          //   error: "Query Error",
-          //   err
-          // })
+          console.log("Query Error")
+          await connection.rollback();
+          connection.release();
+          res.send({
+            error: "Query Error",
+            err
+          })
         }
       } catch(err) {
         console.log("DB Error")

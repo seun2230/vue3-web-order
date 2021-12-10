@@ -1,5 +1,4 @@
 require('dotenv').config();
-const createError = require('http-errors');
 const express = require('express');
 const cors = require("cors");
 const path = require('path');
@@ -56,11 +55,6 @@ app.use('/food', foodRouter);
 app.use('/admin', adminRouter);
 app.use('/auth', authRouter);
 passportConfig();
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
 
 app.listen(app.get("port"), () => {
   console.log("Express Server Listening on port : ", app.get('port'))

@@ -1,16 +1,14 @@
-const aws = require('aws-sdk');
+const AWS = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const path = require('path');
 
-// import fs, { access } from 'fs';
-
-aws.config.region = 'ap-northeast-2';
-
-const s3 = new aws.S3({
-  accessKeyId: process.env.S3KEYID,
+const s3 = new AWS.S3({ 
+  accessKeyId: process.env.S3KEYID, 
   secretAccessKey: process.env.S3SECRETACCKEY, 
+  region: process.env.S3REGION, 
 });
+
 
 const storage = multerS3({
   s3: s3, 
@@ -23,4 +21,4 @@ const storage = multerS3({
   }
 });
 
-exports.Upload = multer({ storage: storage});
+exports.upload = multer({ storage: storage});
