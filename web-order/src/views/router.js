@@ -3,11 +3,13 @@ import Admin from '../views/admin/Admin.vue'
 import DashBoard from '../views/admin/page/DashBoard.vue'
 import Order from '../views/admin/page/Order.vue'
 import foodManagement from '../views/admin/page/FoodManageMent.vue'
-import HomePage from '../views/HomePage.vue';
+import HomePage from '../views/HomePage.vue'
 import Review from '../components/Review.vue'
-import Login from '../components/Login.vue'
-
-
+//import Login from '../components/Login.vue'
+import Slide from '../components/Slide.vue'
+import PageList from '../components/PageList.vue'
+import Category from '../components/Category.vue'
+import Descript from '../components/Descript.vue'
 
 const routes = [
   {
@@ -16,15 +18,31 @@ const routes = [
     component: HomePage,
     children: [
       {
-        path: 'login',
-        name: 'login',
-        component: Login
+        path: 'slide',
+        name: 'slide',
+        component: Slide
+      },
+      {
+        path: 'pageList',
+        name: 'pageList',
+        component: PageList
+      },
+      {
+        path: 'category',
+        name: 'category',
+        component: Category,
+      },
+      {
+        path: 'descript',
+        name: 'descript',
+        component: Descript,
       },
       {
         path: 'review',
         name: 'review',
         component: Review,
-      }
+      },
+
     ]
   },
 

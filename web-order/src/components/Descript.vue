@@ -12,7 +12,6 @@
         @click="clickModal()">
       <i class="fas fa-pizza-slice"></i>
     </button>
-  
     <ModalAdd
       @close="closeModal()" 
       v-if="modal" />
@@ -27,6 +26,14 @@
     </div>
     <div class="btn-info-icon">
     <i class="fas fa-clock fa-4x"></i>
+    </div>
+  </div>
+
+  <div class="notice">
+    <div class="inner">
+      <i class="fas fa-calendar-check"></i>
+      <p>소식</p>
+      <a href="javascript:void(0)">[Table Order] 스마트 오더를 사용해보세요.</a>
     </div>
   </div>
 </div>
@@ -101,4 +108,21 @@ export default {
   }
 }
 
+.notice {
+  margin-top:10px;
+  position: absolute;
+  width: 100%;
+  border-radius: 8px;
+  background-color: #f6f5ef;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+
+  i {
+    color: white;
+  }
+}
 </style>
