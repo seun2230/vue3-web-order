@@ -5,7 +5,8 @@ import Order from '../views/admin/page/Order.vue'
 import foodManagement from '../views/admin/page/FoodManageMent.vue'
 import HomePage from '../views/HomePage.vue'
 import Review from '../components/Review'
-import Login from '../components/'
+import Login from '../components/Login.vue'
+import SignUp from '../components/Signup.vue'
 
 
 
@@ -30,12 +31,17 @@ const routes = [
       {
         path: 'login',
         name: 'login',
-        component: Login
+        component: Login,
       },
       {
         path: 'review',
         name: 'Review',
         component: Review,
+      },
+      {
+        path: '/signup',
+        name: 'SignUp',
+        component: SignUp,
       }
     ]
   },

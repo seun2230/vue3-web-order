@@ -10,7 +10,7 @@
           type="text"
           id="acc"
           class="input"
-          v-model="user.user_acc">
+          v-model="user.user_acc" />
       </div>
       <div class="input-group">
         <label 
@@ -22,7 +22,7 @@
           type="password"
           id="password"
           class="input"
-          v-model="user.user_password">
+          v-model="user.user_password" />
       </div>
         <input 
           type="submit" 
