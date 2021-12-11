@@ -5,11 +5,12 @@ import Order from '../views/admin/page/Order.vue'
 import foodManagement from '../views/admin/page/FoodManageMent.vue'
 import HomePage from '../views/HomePage.vue'
 import Review from '../components/Review.vue'
-//import Login from '../components/Login.vue'
 import Slide from '../components/Slide.vue'
 import PageList from '../components/PageList.vue'
 import Category from '../components/Category.vue'
 import Descript from '../components/Descript.vue'
+import Login from '../components/Login.vue'
+import SignUp from '../components/Signup.vue'
 
 const routes = [
   {
@@ -38,11 +39,20 @@ const routes = [
         component: Descript,
       },
       {
+        path: 'login',
+        name: 'login',
+        component: Login,
+      },
+      {
+        path: '/signup',
+        name: 'SignUp',
+        component: SignUp,
+      },
+      {
         path: 'review',
         name: 'review',
         component: Review,
       },
-
     ]
   },
 
