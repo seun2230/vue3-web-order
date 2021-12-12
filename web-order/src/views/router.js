@@ -18,6 +18,7 @@ const routes = [
       },
     ]
   },
+
   {
     path: '/admin',
     name: 'admin',
