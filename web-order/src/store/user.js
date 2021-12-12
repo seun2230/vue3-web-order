@@ -65,6 +65,9 @@ export default {
         }).catch(err => {
           console.log(err)
         })
+      },
+      signUp(state) {
+        console.log(state)
       }
     }
   }

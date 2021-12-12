@@ -15,12 +15,14 @@ router.post('/register', async(req, res) => {
     const connection = await pool.getConnection(async conn => conn);
     try {
       await connection.beginTransaction();
+      console.log("log", req.body)
       const sign_info = {
         "user_id": req.body.user_id,
         "user_name": req.body.user_name,
         "user_password": req.body.user_password,
-        "user_age": req.body.user_age,
-        "user_phone": req.body.user_phone
+        "user_birthday": req.body.user_birthday,
+        "user_phone": req.body.user_phone,
+        "user_gender": req.body.user_gender
       }
             
       if(sign_info.user_id) {
@@ -35,16 +37,18 @@ router.post('/register', async(req, res) => {
           const encryptedPassword = bcrypt.hashSync(sign_info.user_password, salt);
 
           let sql = 'INSERT INTO users'  +
-            '(user_id, user_name, user_password, user_age, user_phone)' +
-            'VALUES(?, ?, ?, ?, ?)';
+            '(user_id, user_name, user_password, user_birthday, user_phone, user_gender)' +
+            'VALUES(?, ?, ?, ?, ?, ?)';
 
           let value = [
             sign_info.user_id,
             sign_info.user_name,
             encryptedPassword,
-            sign_info.user_age,
-            sign_info.user_phone
+            sign_info.user_birthday,
+            sign_info.user_phone,
+            sign_info.user_gender
           ]
+
           await connection.query(sql, value);
           await connection.commit();
           connection.release();

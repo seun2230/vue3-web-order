@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import store from './store'
 import ElementPlus from 'element-plus'
-import VueRouter from './views/router'
+import VueRouter from './views/router.js'
 
 import 'normalize.css'  //  css 초기화
 

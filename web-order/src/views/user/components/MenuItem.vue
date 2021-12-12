@@ -8,7 +8,7 @@
         <span>{{ food.food_name }}</span>
       </div>
       <div class="price">
-        <span>{{ food.food_price }}</span>
+        <span>{{ food.food_price }} 원</span>
       </div>
       <div class="button">
         <el-button
@@ -26,6 +26,7 @@
 
 
 export default {
+  name: "MenuItem",
   props: {
     food: {
       type: Object,
@@ -70,7 +71,7 @@ export default {
       justify-items: center;
       width: 100%;
       height: 25px;
-      background-color: $menuListInf1;
+      // background-color: $menuListInf1;
       margin-bottom: 3px;
       border-radius: 9px;
     }
@@ -79,13 +80,13 @@ export default {
       justify-content: center;
       height: 25px;
       border-radius: 9px;
-      background-color: $menuListInf2;
+      // background-color: $menuListInf2;
       margin-bottom: 3px;
     }
     .button {
       display: flex;
       height: 25px;
-      background-color: $menuListInf1;
+      // background-color: $menuListInf1;
       border-radius: 9px;
       color: #ff7b7b9a;
     }

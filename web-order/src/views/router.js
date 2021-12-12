@@ -1,42 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Admin from '../views/admin/Admin.vue'
 import DashBoard from '../views/admin/page/DashBoard.vue'
-import Order from '../views/admin/page/Order.vue'
 import foodManagement from '../views/admin/page/FoodManageMent.vue'
-import HomePage from '../views/HomePage.vue'
-import Review from '../components/Review'
-import Login from '../components/'
-
-
+import User from '../views/user/User.vue'
+import Menu from '../views/user/page/SignUpLSW.vue'
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: HomePage,
+    path: '/user',
+    name: 'user',
+    component: Menu,
     children: [
       {
-        path: 'review',
-        name: 'review',
-        component: Review,
-      }
-    ]
-  },
-  {
-    path: '/',
-    name: 'Homepage',
-    component: HomePage,
-    children: [
-      {
-        path: 'login',
-        name: 'login',
-        component: Login
+        path: 'menu',
+        name: 'menu',
+        component: User
       },
-      {
-        path: 'review',
-        name: 'Review',
-        component: Review,
-      }
     ]
   },
   {
@@ -52,7 +31,7 @@ const routes = [
       {
         path: 'order',
         name: 'order',
-        component: Order,
+        component: Menu,
       },
       {
         path: 'foodManagement',
