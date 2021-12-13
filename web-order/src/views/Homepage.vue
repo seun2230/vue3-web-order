@@ -1,17 +1,26 @@
 <template>
   <div class="contaienr">
     <Header />
-      <router-view />
+    <Slide />
+    <Login />
+    <Content />  
+    <PageList />
   </div>
 </template>
 
 <script>
 import Header from './Header.vue'
+import Slide from '../components/Slide.vue'
+import Login from '../components/LoginForm.vue'
+import PageList from '../components/PageList.vue'
 export default {
   data() {
   },
   components: {
-    Header
+    Header,
+    Slide,
+    Login,
+    PageList
   }
 }
 </script>

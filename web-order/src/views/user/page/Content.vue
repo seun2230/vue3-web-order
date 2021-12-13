@@ -1,15 +1,18 @@
 <template>
 <div>
-  <router-link to="/pageList">pageList</router-link>
-  <router-link to="/slide">Slide</router-link>
-  <router-link to="/category">Category</router-link>
-  <router-link to="/descript">Descript</router-link>
+  <Slide />
+  <PageList />
 </div>
 </template>
 
 <script>
+import Slide from '../../../components/Slide.vue'
+import PageList from '../../../components/PageList.vue'
 export default {
-
+  components: {
+    Slide,
+    PageList
+  }
 }
 </script>
 

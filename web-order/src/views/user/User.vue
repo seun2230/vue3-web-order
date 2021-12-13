@@ -1,5 +1,7 @@
 <template>
   <div>
+    <Header />
+    <HomePage />
     <router-view v-slot="{ Component }">
       <transition name="component-transition" mode="out-in">
         <component :is="Component" />
@@ -9,8 +11,14 @@
 </template>
 
 <script>
+import Header from './components/Header.vue'
+
+import HomePage from '../Homepage.vue'
 export default {
-  components: {},
+  components: {
+    Header,
+    HomePage
+  },
 };
 </script>
 

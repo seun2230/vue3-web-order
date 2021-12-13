@@ -19,8 +19,7 @@ export default {
       state.user_orders = payload
     },
     loginToken(state, payload) {
-      console.log("mutation_loginToken_payload_user_info", payload.rows[0])
-      state.user_infos = payload.rows[0]
+      console.log("mutation_loginToken_payload_user_info", payload)
       state.token = payload.token
     },
     logoutToken(state) {
@@ -30,59 +29,63 @@ export default {
       state.user_orders = []
       location.reload;
     },
+    cookie(state) {
+      state.token = VueCookies.get('auth')
+    }
   },
   actions: {
     login({ commit }, state) {
       console.log("action_login_state", state)
-        axios.post('http://localhost:3000/auth/login', state,
-        {
-					headers: {
-						'Content-Type' : "application/json"
-          }
-        }).then(async(res) => {
-          await commit('loginToken', res.data)
-          console.log(res);
-        }).catch(err => {
-          console.log("err", err)
+      axios.post('http://localhost:3000/auth/login',
+      JSON.stringify(state),
+      {
+        headers: {
+          'Content-Type' : "application/json"
+        }
+      }).then(async(res) => {
+        commit('cookie')
+        console.log("server res : ", res);
+      }).catch(err => {
+        console.log("err", err)
+      })
+    },
+    logout({ commit }) {
+      commit('logoutToken')
+    },
+    user_orders({ commit }, state) {
+      console.log(state)
+      axios.post('http://localhost:3000/myorder',
+      JSON.stringify(state),
+      {
+        headers: {
+          "Content-Type" : "application/json"
+        }
+      })
+      .then(res => {
+        console.log("res server : ",res)
+        commit('user_orders', res.data)
+      }).catch(err => {
+        console.log("error", err)
+      })
+    },
+    signUp(context, payload) {
+      console.log('payload on signUp action', payload)
+      return new Promise((resolve, reject) => {
+      axios.post("http://localhost:3000/auth/register", payload)
+      .then((response) => {
+        console.log("server res : ", response)
+        const { data } = response;
+        if (data.success) {
+          alert('success');
+          resolve(response);
+        } else if(data.Error) {
+          alert('이미 등록된 아이디');
+        }
+      })
+      .catch(error => {
+        reject(error);
         })
-      },
-      logout({ commit }) {
-        commit('logoutToken')
-      },
-      user_orders({ commit }, state) {
-        console.log(state)
-
-        axios.post('http://localhost:3000/myorder',
-          state,
-          {
-            headers: {
-              "Content-Type" : "application/json"
-            }
-          })
-        .then(res => {
-          commit('user_orders', res.data)
-        }).catch(err => {
-          console.log(err)
-        })
-      },
-      signUp(context, payload) {
-        console.log('payload on signUp action', payload)
-        return new Promise((resolve, reject) => {
-        axios.post("http://localhost:3000/auth/register", payload)
-        .then((response) => {
-          console.log("server res : ", response)
-          const { data } = response;
-          if (data.success) {
-            alert('success');
-            resolve(response);
-          } else if(data.Error) {
-            alert('이미 등록된 아이디');
-          }
-        })
-        .catch(error => {
-          reject(error);
-          })
-        })
-      }
+      })
     }
   }
+}
