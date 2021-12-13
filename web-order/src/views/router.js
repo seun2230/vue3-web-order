@@ -7,7 +7,6 @@ import User from '../views/user/User.vue'
 import Sign from '../views/user/page/SignUpLSW.vue'
 import Login from '../views/user/page/LoginFormLSW.vue'
 import Menu from '../views/user/page/Menu.vue'
-import Homepage from './Homepage.vue'
 import Review from '../components/Review'
 import ReviewBoard from '../components/ReviewBoard'
 
