@@ -1,33 +1,8 @@
 const express = require('express')
 const router = express.Router();
 const pool = require('../db/index')
-const multer = require("multer")
 const { verifyToken } = require('../middleware/auth')
-const path = require('path')
-
-const storage = multer.diskStorage({
-    destination(req, file, callback) {
-        callback(null, path.join('./', '/uploads'))
-    },
-    filename(req, file, callback) {
-        let array = file.originalname.split('.')
-        array[0] = array[0] + "_"
-        array[1] = "." + array[1]
-        array.splice(1, 0, Date.now().toString())
-        
-        const result = array.join('')
-        callback(null, result)
-    }
-})
-
-const upload = multer({
-  storage,
-    limits: {
-      files: 10,
-      fileSize: 10 * 1024 * 1024
-    }
-  })
-
+const { upload } = require('../api/S3UploadStorage.js')
 
 router.post('/myorder', verifyToken, async(req, res) => {
     try {
@@ -35,7 +10,7 @@ router.post('/myorder', verifyToken, async(req, res) => {
       const connection = await pool.getConnection(async conn => conn);
       try {
         console.log(req.body.num)
-        
+
         if (req.body.num === undefined) {
           let sql = "SELECT * " +
             "FROM order_num LEFT JOIN order_list " +
@@ -45,11 +20,11 @@ router.post('/myorder', verifyToken, async(req, res) => {
             "LEFT JOIN users " +
             "ON users_user_id = user_id " +
             "WHERE user_id = ? "
-          
+
           let value = [req.decoded.user_id]
-  
+
           const [rows] = await connection.query(sql, value)
-  
+
           connection.release();
           res.send(rows)
         } else {
@@ -61,16 +36,16 @@ router.post('/myorder', verifyToken, async(req, res) => {
             "LEFT JOIN users " +
             "ON users_user_id = user_id " +
             "WHERE user_id = ? AND order_status = ?"
-  
+
           let value = [
-            req.decoded.user_id, 
+            req.decoded.user_id,
             req.body.num]
-          
+
           const [rows] = await connection.query(sql, value)
-  
+
           connection.release();
           res.send(rows)
-          
+
         }
       } catch(err) {
         connection.release();

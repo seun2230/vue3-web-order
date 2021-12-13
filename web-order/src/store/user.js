@@ -5,9 +5,9 @@ export default {
   namespaced: true,
   state: () => {
     return {
-      user_infos: [],
       token: [],
-      user_orders: []
+      user_orders: [],
+      isAuth: !!VueCookies.get('Auth')
     }
   },
   getters: {
@@ -20,7 +20,6 @@ export default {
     },
     loginToken(state, payload) {
       console.log("mutation_loginToken_payload_user_info", payload.rows[0])
-      VueCookies.set("Auth", payload.token)
       state.user_infos = payload.rows[0]
       state.token = payload.token
     },
@@ -30,12 +29,12 @@ export default {
       state.token = []
       state.user_orders = []
       location.reload;
-    }
+    },
   },
   actions: {
     login({ commit }, state) {
       console.log("action_login_state", state)
-        axios.post('http://localhost:3000/auth/login', state, 
+        axios.post('http://localhost:3000/auth/login', state,
         {
 					headers: {
 						'Content-Type' : "application/json"
@@ -53,11 +52,11 @@ export default {
       user_orders({ commit }, state) {
         console.log(state)
 
-        axios.post('http://localhost:3000/myorder', 
+        axios.post('http://localhost:3000/myorder',
           state,
-          { 
+          {
             headers: {
-              "Content-Type" : "application/json" 
+              "Content-Type" : "application/json"
             }
           })
         .then(res => {
@@ -66,8 +65,24 @@ export default {
           console.log(err)
         })
       },
-      signUp(state) {
-        console.log(state)
+      signUp(context, payload) {
+        console.log('payload on signUp action', payload)
+        return new Promise((resolve, reject) => {
+        axios.post("http://localhost:3000/auth/register", payload)
+        .then((response) => {
+          console.log("server res : ", response)
+          const { data } = response;
+          if (data.success) {
+            alert('success');
+            resolve(response);
+          } else if(data.Error) {
+            alert('이미 등록된 아이디');
+          }
+        })
+        .catch(error => {
+          reject(error);
+          })
+        })
       }
     }
   }
