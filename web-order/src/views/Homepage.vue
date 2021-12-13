@@ -6,12 +6,12 @@
 </template>
 
 <script>
-import Header from './Header.vue'
+import Header from '../views/Header.vue'
 export default {
   data() {
   },
   components: {
-    Header
+    Header,
   }
 }
 </script>

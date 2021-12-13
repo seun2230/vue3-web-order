@@ -4,6 +4,7 @@
   <router-link to="/slide">Slide</router-link>
   <router-link to="/category">Category</router-link>
   <router-link to="/descript">Descript</router-link>
+  <router-view />
 </div>
 </template>
 
