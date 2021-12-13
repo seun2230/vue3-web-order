@@ -3,12 +3,12 @@ import HomePage from '../views/Homepage'
 import Admin from '../views/admin/Admin.vue'
 import DashBoard from '../views/admin/page/DashBoard.vue'
 import foodManagement from '../views/admin/page/FoodManageMent.vue'
-import User from '../views/user/User.vue'
 import Sign from '../views/user/page/SignUpLSW.vue'
 import Login from '../views/user/page/LoginFormLSW.vue'
-import Menu from '../views/user/page/Menu.vue'
 import Review from '../components/Review'
 import ReviewBoard from '../components/ReviewBoard'
+import MenuPage from '../views/user/page/MenuPage.vue'
+import UserPage from '../views/user/UserPage.vue'
 
 const routes = [
   {
@@ -27,30 +27,25 @@ const routes = [
     component: ReviewBoard
   },
   {
-    path: '/sign',
-    name: 'sign',
-    component: Sign
-  },
-  {
     path: '/user',
     name: 'user',
-    component: User,
+    component: UserPage,
     children: [
       {
         path: 'sign',
-        name: 'sign',
+        name: 'Sign',
         component: Sign
       },
       {
-        path: 'login',
-        name: 'login',
-        component: Login
+        path: 'menu',
+        name: 'Menu',
+        component: MenuPage
       },
       {
-        path: 'menu',
-        name: 'menu',
-        component: Menu
-      }, 
+        path: '/login',
+        name: 'Login',
+        component: Login
+      },
     ]
   },
   {
@@ -62,11 +57,6 @@ const routes = [
         path: 'dashBoard',
         name: "DashBoard",
         component: DashBoard,
-      },
-      {
-        path: 'order',
-        name: 'order',
-        component: Login,
       },
       {
         path: 'foodManagement',
