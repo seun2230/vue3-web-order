@@ -7,7 +7,7 @@ export default {
     return {
       token: [],
       user_orders: [],
-      isAuth: !!VueCookies.get('Auth')
+      isAuth: !!VueCookies.get('Auth'),
     }
   },
   getters: {

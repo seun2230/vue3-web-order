@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import InfoUser from '../components/InfoUser.vue';
-import InfoAccount from '../components/InfoAccount.vue';
+import InfoUser from '../../../components/InfoUser.vue';
+import InfoAccount from '../../../components/InfoAccount.vue';
 
 export default {
     components: {

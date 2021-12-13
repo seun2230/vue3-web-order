@@ -4,7 +4,7 @@
             <p>사용자 정보 &nbsp; <fa class='fa-title-icon' icon='angle-right' /></p>
         </div>
         <div class='infoBody'>
-            <p>{{ getUserData }}</p>
+            <!-- <p>{{ getUserData }}</p> -->
             <p>{{ getMaskedUser.maskedAge }}</p>
             <p>{{ getMaskedUser.maskedPhone }}</p>
                 <router-link to='/modify' v-slot='{href, route, navigate}'>
@@ -34,8 +34,8 @@ export default {
         this.$store.dispatch('user/maskedUser')
     },
     computed: {
-        ...mapGetters('user', [
-            'getUserData', 'getMaskedUser'
+        ...mapGetters('userInfo', [
+            'getMaskedUser'
         ])
     }
 };
