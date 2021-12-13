@@ -3,22 +3,39 @@ import Admin from '../views/admin/Admin.vue'
 import DashBoard from '../views/admin/page/DashBoard.vue'
 import foodManagement from '../views/admin/page/FoodManageMent.vue'
 import User from '../views/user/User.vue'
-import Menu from '../views/user/page/SignUpLSW.vue'
+import Sign from '../views/user/page/SignUpLSW.vue'
+import Login from '../views/user/page/LoginFormLSW.vue'
+import Menu from '../views/user/page/Menu.vue'
+import PageList from '../components/PageList.vue'
 
 const routes = [
   {
+    path: '/',
+    name: 'home',
+    component: PageList
+  },
+  {
     path: '/user',
     name: 'user',
-    component: Menu,
+    component: User,
     children: [
+      {
+        path: 'sign',
+        name: 'sign',
+        component: Sign
+      },
+      {
+        path: 'login',
+        name: 'login',
+        component: Login
+      },
       {
         path: 'menu',
         name: 'menu',
-        component: User
-      },
+        component: Menu
+      }
     ]
   },
-
   {
     path: '/admin',
     name: 'admin',
@@ -32,7 +49,7 @@ const routes = [
       {
         path: 'order',
         name: 'order',
-        component: Menu,
+        component: Login,
       },
       {
         path: 'foodManagement',
