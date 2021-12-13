@@ -126,7 +126,6 @@ export default {
   },
   methods: {
     sendReview() {
-        // FormData(): 페이지 전환없이 폼 데이터 제출 하는 경우
       let formData = new FormData(); 
       for(let i = 0; i < this.files.length; i++) {
         formData.append('file', this.files[i]);
