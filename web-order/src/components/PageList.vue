@@ -51,7 +51,7 @@ export default {
       this.modal = false;
     },
     pageReview() {
-      this.$router.push('/user/login')
+      this.$router.push('/review')
     }
   },
   components: {
@@ -64,6 +64,7 @@ export default {
 
 .inner {
   display: grid;
+  margin-top: 5px;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 80px 80px 40px;
   grid-gap: 5px;
@@ -103,10 +104,6 @@ export default {
     display: flex;
     align-items: center;
     margin-left: 10px;
-
-    i {
-      color: white;
-    }
   }
 }
 </style>

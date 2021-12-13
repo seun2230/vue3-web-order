@@ -28,9 +28,12 @@ export default {
       state.user_orders = []
       location.reload;
     },
+<<<<<<< HEAD
     cookie(state) {
       state.token = VueCookies.get('auth')
     }
+=======
+>>>>>>> f5320509fb97551ad31c9b2c1d3937c52eb56595
   },
   actions: {
     login({ commit }, state) {

@@ -7,7 +7,9 @@
         <el-input v-model="form.user_id" />
       </el-form-item>
       <el-form-item label="비밀번호">
-        <el-input type="password" v-model="form.user_password" />
+        <el-input 
+          type="password" 
+          v-model="form.user_password" />
       </el-form-item>
       <el-button 
         class="button"
