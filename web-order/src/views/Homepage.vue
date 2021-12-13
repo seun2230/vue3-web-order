@@ -3,7 +3,7 @@
     <Header />
     <Slide />
     <Login />
-    <Content />  
+    <Content />
     <PageList />
   </div>
 </template>
