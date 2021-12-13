@@ -6,8 +6,6 @@ const { upload } = require('../api/S3UploadStorage')
 router.post('/uploads', upload.array('files'), async function(req, res) {
     try { 
       console.log("DB Connection! /uploads")
-      console.log("file",req.files)
-      console.log("body",req.body)
       const connection = await pool.getConnection(async conn => conn);
       try {
         const files = req.files
@@ -57,6 +55,76 @@ router.post('/uploads', upload.array('files'), async function(req, res) {
       }
     })
 
+    router.get('/get/slide', async(req, res) => {
+      try {
+        console.log("DB Connection! /get/slide")
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+          const [rows] = await connection.query('SELECT * FROM slide')
+          connection.release();
+          res.send(rows)
+        } catch(err) {
+          console.log("Query Error")
+          connection.release();
+          res.send({
+            error: "Query Error",
+            err
+          })
+        }
+      } catch(err) {
+        console.log("DB Error")
+        res.send({
+          error: "DB Error",
+          err
+        })
+      }
+    })
+
+    router.post('/slide', upload.array('files'), async function(req, res) {
+      try { 
+        console.log("DB Connection! /slide")
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+          const files = req.files
+          let image = []  
+    
+          await connection.beginTransaction();
+    
+          for (let i = 0; i < req.files.length; i++) {
+            image[i] = files[i].location
+          }
+    
+            let sql = "INSERT INTO slide" + 
+              "(slide_image)" +
+              "VALUES(?)"
+    
+            let value = [ image[0] ]
+    
+            await connection.query(sql, value)
+            await connection.commit();
+            connection.release();
+            res.send({
+              success: "true"
+            })
+          } catch(err) {
+            console.log("Query Error")
+            await connection.rollback();
+            connection.release();
+            res.send({
+              error: "Query Error",
+              err
+            })
+          }
+        } catch(err) {
+          console.log("DB Error")
+          res.send({
+            error: "DB Error",
+            err
+          })
+        }
+      })
+  
+    
 router.post('/status', async(req, res) => {
   try {
     console.log("DB Connection! /order/status")
@@ -189,6 +257,8 @@ router.post('/modify', async(req, res) => {
     })
   }
 })
+
+
 
 
 module.exports = router;

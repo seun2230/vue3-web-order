@@ -6,13 +6,13 @@ import User from '../views/user/User.vue'
 import Sign from '../views/user/page/SignUpLSW.vue'
 import Login from '../views/user/page/LoginFormLSW.vue'
 import Menu from '../views/user/page/Menu.vue'
-import PageList from '../components/PageList.vue'
+import Homepage from './Homepage.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: PageList
+    component: Homepage
   },
   {
     path: '/user',

@@ -108,17 +108,6 @@ export default {
     },
 
     actions: {
-      getState({ commit, state }) {
-        axios.get('http://localhost:3000/foods')
-        .then((res) => {
-          commit('food/success', res.data, { root: true });
-          state.carts = []
-        })
-        .catch((res) => {
-          commit('food/fail', res, { root: true })
-        })
-      },
-
       addCart({ commit }, food) {
         commit('food/addToCart', food, { root: true });
       },

@@ -9,9 +9,6 @@ export default {
       user_orders: []
     }
   },
-  mounted() {
-    this.state.token = VueCookies.get('auth')
-  },
   getters: {
 
   },
@@ -21,7 +18,7 @@ export default {
       state.user_orders = payload
     },
     loginToken(state, payload) {
-      console.log("mutation_loginToken_payload_user_info", payload.rows[0])
+      console.log("mutation_loginToken_payload_user_info", payload)
       state.token = payload.token
     },
     logoutToken(state) {
@@ -30,6 +27,9 @@ export default {
       state.token = []
       state.user_orders = []
       location.reload;
+    },
+    cookie(state) {
+      state.token = VueCookies.get('auth')
     }
   },
   actions: {
@@ -42,7 +42,7 @@ export default {
           'Content-Type' : "application/json"
         }
       }).then(async(res) => {
-        commit('loginToken', res.data)
+        commit('cookie')
         console.log("server res : ", res);
       }).catch(err => {
         console.log("err", err)

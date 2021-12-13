@@ -1,16 +1,16 @@
 <template>
   <div>
-    <BottomNavbar />
+    <Header />
     <router-view />
   </div>
 </template>
 
 <script>
-import BottomNavbar from './components/BottomNavbar.vue'
+import Header from './components/Header.vue'
 
 export default {
   components: {
-    BottomNavbar
+    Header
   },
 };
 </script>
