@@ -30,7 +30,7 @@ export default {
       state.token = []
       state.user_orders = []
       location.reload;
-    }
+    },
   },
   actions: {
     login({ commit }, state) {

@@ -1,17 +1,19 @@
 <template>
   <div class="contaienr">
     <Header />
-      <router-view />
+    <Content />  
   </div>
 </template>
 
 <script>
-import Header from '../views/Header.vue'
+import Header from './Header.vue'
+import Content from '../views/user/page/Content.vue'
 export default {
   data() {
   },
   components: {
     Header,
+    Content
   }
 }
 </script>

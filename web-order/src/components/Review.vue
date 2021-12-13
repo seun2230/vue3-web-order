@@ -7,26 +7,35 @@
       <div class="inner-form">
         <el-form 
           ref="form" 
-          :model="form">
+          :model="form"
+          label-width="100px">
           <el-form-item 
             label="사용자">
             <el-input 
               v-model="form.name" />
           </el-form-item>
           <el-form-item 
-            label="제목">
+            label="제목"
+            placeholder="최소 20자 내외로 작성해주세요." >
             <el-input 
-              v-model="form.subject"/>
+              v-model="form.title"/>
           </el-form-item> 
           <el-form-item 
             label="메뉴 이름">
-            <el-input 
-              v-model="form.menu"/>
+            <el-select
+              v-model="form.menu" 
+              placeholder="오늘의 메뉴는?">
+              <el-option
+                v-for="food in foods"
+                :key="food.food_id"
+                :label="food.food_name"
+                :value="food.food_id" />
+            </el-select>
           </el-form-item>
 
           <el-form-item label="평점">
             <el-select 
-              v-model="form.rating"
+              v-model="form.ratings"
               width="30px"
               placeholder="메뉴 만족하셨나요?" >
               <el-option 
@@ -50,19 +59,21 @@
             label="기타 의견">
             <el-input 
               v-model="form.review"
-              placeholder="최소 15자 내외로 작성해주세요." 
+              placeholder="고객님의 의견을 남겨주세요. :)" 
               type="textarea"/>
           </el-form-item>
-          <input 
-            type="file"
-              name="file"
-            ref="file"
-            @change="addFile()"
-            multiple /><br />
+          <el-form-item>
+            <input 
+              type="file"
+                name="file"
+              ref="file"
+              @change="addFile()"
+              multiple />
+          </el-form-item>
           <el-form-item label="리뷰 공개">
-            <el-radio-group v-model="form.check">
-              <el-radio label="동의" />
-              <el-radio label="비동의" />
+            <el-radio-group v-model="form.status">
+              <el-radio label="true">동의</el-radio>
+              <el-radio label="false">비동의</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item>
@@ -81,6 +92,7 @@
 
 <script>
 import axios from 'axios'
+import { mapState} from 'vuex'
 
 export default {
   data() {
@@ -90,12 +102,18 @@ export default {
       files: [],
       form: {
         name: '',
-        subject: '',
+        title: '',
         menu:'',
         review: '',
-        check: '',
+        status: '',
       }
     }
+  },
+  created() {
+    this.$store.commit('food/getState')
+  },
+  computed: {
+    ...mapState('food', ['foods'])
   },
   methods: {
     addFile() {    
@@ -114,17 +132,18 @@ export default {
         console.log("file" , this.files);
       }
       
-      formData.append("name", this.form.name);
-      formData.append("subject", this.form.subject);
-      formData.append("menu", this.form.menu);
-      formData.append("review", this.form.rating);
+      formData.append("name", this.form.name); 
+      formData.append("title", this.form.title);
+      formData.append("menu", this.form.menu); 
+      formData.append("ratings", this.form.ratings); 
       formData.append("review", this.form.review);
+      formData.append('status', this.form.status);
       
 
       for (var value of formData.values()) {
         console.log("value", value);
       }
-      axios.post('http://localhost:3000/review', formData, { 
+      axios.post('http://localhost:3000/user/comments', formData, { 
         headers: {
           'Content-Type': 'multipart/form-data'
         },
@@ -151,6 +170,7 @@ export default {
 <style lang="scss" scoped>
 .container {
   border: 1px solid #ccc;
+  padding: 10px;
 }
 
 .btn-review {

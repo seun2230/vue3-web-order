@@ -7,16 +7,25 @@ import User from '../views/user/User.vue'
 import Sign from '../views/user/page/SignUpLSW.vue'
 import Login from '../views/user/page/LoginFormLSW.vue'
 import Menu from '../views/user/page/Menu.vue'
-import Content from '../views/user/page/Content.vue'
-import PageList from '../components/PageList.vue'
+import Review from '../components/Review'
+import ReviewBoard from '../components/ReviewBoard'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    compoent: HomePage,
+    component: HomePage,
   },
-
+  {
+    path: '/review',
+    name: 'review',
+    component: Review,
+  },
+  {
+    path: '/board',
+    name: 'board',
+    component: ReviewBoard
+  },
   {
     path: '/user',
     name: 'user',
@@ -36,7 +45,7 @@ const routes = [
         path: 'menu',
         name: 'menu',
         component: Menu
-      }
+      }, 
     ]
   },
   {
