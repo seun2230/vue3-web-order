@@ -11,9 +11,9 @@
           label-width="100px">
           <el-form-item 
             label="제목"
-            placeholder="최소 20자 내외로 작성해주세요." >
+            placeholder="최소 15자 내외로 작성해주세요.">
             <el-input 
-              v-model="form.title"/>
+              v-model="form.title" />
           </el-form-item> 
           <el-form-item 
             label="메뉴 이름">

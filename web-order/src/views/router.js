@@ -8,7 +8,7 @@ import Sign from '../views/user/page/SignUpLSW.vue'
 import Login from '../views/user/page/LoginFormLSW.vue'
 import Menu from '../views/user/page/Menu.vue'
 import Review from '../components/Review'
-import ReviewBoard from '../components/ReviewBoard'
+import ReBoard from '../components/ReBoard'
 
 const routes = [
   {
@@ -24,7 +24,7 @@ const routes = [
   {
     path: '/board',
     name: 'board',
-    component: ReviewBoard
+    component: ReBoard
   },
   {
     path: '/user',
