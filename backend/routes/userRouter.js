@@ -1,33 +1,8 @@
 const express = require('express')
 const router = express.Router();
 const pool = require('../db/index')
-const multer = require("multer")
 const { verifyToken } = require('../middleware/auth')
-const path = require('path')
-
-const storage = multer.diskStorage({
-    destination(req, file, callback) {
-        callback(null, path.join('./', '/uploads'))
-    },
-    filename(req, file, callback) {
-        let array = file.originalname.split('.')
-        array[0] = array[0] + "_"
-        array[1] = "." + array[1]
-        array.splice(1, 0, Date.now().toString())
-        
-        const result = array.join('')
-        callback(null, result)
-    }
-})
-
-const upload = multer({
-  storage,
-    limits: {
-      files: 10,
-      fileSize: 10 * 1024 * 1024
-    }
-  })
-
+const { upload } = require('../api/S3UploadStorage.js')
 
 router.post('/myorder', verifyToken, async(req, res) => {
     try {
@@ -90,9 +65,11 @@ router.post('/myorder', verifyToken, async(req, res) => {
     }
   })
 
-router.post('/comments', upload.array('files'), async function(req, res) {
+router.post('/comments', upload.array('file'), verifyToken, async function(req, res) {
 try {
   console.log("DB Connection! /comments")
+  console.log(req.body)
+  console.log(req.decoded)
   const connection = await pool.getConnection(async conn => conn);
   try {
     const files = req.files
@@ -101,18 +78,20 @@ try {
     await connection.beginTransaction();
 
     for (let i = 0; i < req.files.length; i++) {
-        image[i] = 'http://localhost:3000/' + files[i].filename
-  }
+        image[i] = files[i].location
+    }
   let sql = "INSERT INTO comments " +
-    "(comments_image, comments_text, ratings, food_items_food_id, users_user_id)" +
-    "VALUES(?, ?, ?, ?, ?)"
+    "(comments_image, comments_text, ratings, food_items_food_id, users_user_id, comments_title, comments_status)" +
+    "VALUES(?, ?, ?, ?, ?, ?, ?)"
 
   let value = [
       image[0],
-      req.body.text,
+      req.body.review,
       req.body.ratings,
-      req.body.food_id,
-      req.body.user_id
+      req.body.menu,
+      req.decoded.user_id,
+      req.body.title,
+      req.body.status
   ]
 
   console.log(value)

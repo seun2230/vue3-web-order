@@ -2,8 +2,8 @@
   <div class="contaienr">
     <Header />
     <Slide />
-    <Login />
-    <Content />  
+    <Login /> 
+    <PageList />
   </div>
 </template>
 
@@ -11,8 +11,8 @@
 import Header from './Header.vue'
 import Slide from '../components/Slide.vue'
 import Login from '../components/LoginForm.vue'
+import PageList from '../components/PageList.vue'
 
-import Content from '../views/user/page/Content.vue'
 export default {
   data() {
   },
@@ -20,7 +20,7 @@ export default {
     Header,
     Slide,
     Login,
-    Content
+    PageList
   }
 }
 </script>

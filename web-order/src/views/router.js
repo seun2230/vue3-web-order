@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomePage from '../views/HomePage.vue'
+import HomePage from '../views/Homepage'
 import Admin from '../views/admin/Admin.vue'
 import DashBoard from '../views/admin/page/DashBoard.vue'
 import foodManagement from '../views/admin/page/FoodManageMent.vue'
@@ -7,7 +7,6 @@ import User from '../views/user/User.vue'
 import Sign from '../views/user/page/SignUpLSW.vue'
 import Login from '../views/user/page/LoginFormLSW.vue'
 import Menu from '../views/user/page/Menu.vue'
-import Homepage from './Homepage.vue'
 import Review from '../components/Review'
 import ReviewBoard from '../components/ReviewBoard'
 
@@ -26,6 +25,11 @@ const routes = [
     path: '/board',
     name: 'board',
     component: ReviewBoard
+  },
+  {
+    path: '/sign',
+    name: 'sign',
+    component: Sign
   },
   {
     path: '/user',
