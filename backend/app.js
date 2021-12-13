@@ -10,6 +10,7 @@ const passportConfig = require('./config/passport');
 const authRouter = require("./routes/authRouter");
 const foodRouter = require("./routes/foodRouter");
 const adminRouter = require("./routes/adminRouter");
+const userRouter = require('./routes/userRouter');
 
 const app = express();
 
@@ -54,6 +55,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/food', foodRouter);
 app.use('/admin', adminRouter);
 app.use('/auth', authRouter);
+app.use('/user', userRouter);
 passportConfig();
 
 app.listen(app.get("port"), () => {
