@@ -10,11 +10,6 @@
           :model="form"
           label-width="100px">
           <el-form-item 
-            label="사용자">
-            <el-input 
-              v-model="form.name" />
-          </el-form-item>
-          <el-form-item 
             label="제목"
             placeholder="최소 20자 내외로 작성해주세요." >
             <el-input 
@@ -101,7 +96,6 @@ export default {
       title: '리뷰 작성',
       files: [],
       form: {
-        name: '',
         title: '',
         menu:'',
         review: '',
@@ -131,8 +125,7 @@ export default {
         formData.append('file', this.files[i]);
         console.log("file" , this.files);
       }
-      
-      formData.append("name", this.form.name); 
+       
       formData.append("title", this.form.title);
       formData.append("menu", this.form.menu); 
       formData.append("ratings", this.form.ratings); 

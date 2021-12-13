@@ -4,6 +4,7 @@
     <Slide />
     <Login />
     <Content />  
+    <PageList />
   </div>
 </template>
 
@@ -11,8 +12,7 @@
 import Header from './Header.vue'
 import Slide from '../components/Slide.vue'
 import Login from '../components/LoginForm.vue'
-
-import Content from '../views/user/page/Content.vue'
+import PageList from '../components/PageList.vue'
 export default {
   data() {
   },
@@ -20,7 +20,7 @@ export default {
     Header,
     Slide,
     Login,
-    Content
+    PageList
   }
 }
 </script>
