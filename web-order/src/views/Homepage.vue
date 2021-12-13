@@ -1,26 +1,32 @@
 <template>
   <div class="contaienr">
     <Header />
-    <Slide />
-    <Login /> 
-    <PageList />
+    <div class="slide">
+     <Slide />
+    </div>
+    <section>
+      <Category />
+    </section>
+      <Descript />
+      <MyPage />
   </div>
 </template>
 
 <script>
 import Header from './Header.vue'
 import Slide from '../components/Slide.vue'
-import Login from '../components/LoginForm.vue'
-import PageList from '../components/PageList.vue'
-
+import Category from '../components/Category.vue'
+import Descript from '../components/Descript.vue'
+import MyPage from './MyPage.vue'
 export default {
   data() {
   },
   components: {
     Header,
     Slide,
-    Login,
-    PageList
+    Category,
+    Descript,
+    MyPage
   }
 }
 </script>
