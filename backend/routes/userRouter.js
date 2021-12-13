@@ -10,7 +10,7 @@ router.post('/myorder', verifyToken, async(req, res) => {
       const connection = await pool.getConnection(async conn => conn);
       try {
         console.log(req.body.num)
-        
+
         if (req.body.num === undefined) {
           let sql = "SELECT * " +
             "FROM order_num LEFT JOIN order_list " +
@@ -20,11 +20,11 @@ router.post('/myorder', verifyToken, async(req, res) => {
             "LEFT JOIN users " +
             "ON users_user_id = user_id " +
             "WHERE user_id = ? "
-          
+
           let value = [req.decoded.user_id]
-  
+
           const [rows] = await connection.query(sql, value)
-  
+
           connection.release();
           res.send(rows)
         } else {
@@ -36,16 +36,16 @@ router.post('/myorder', verifyToken, async(req, res) => {
             "LEFT JOIN users " +
             "ON users_user_id = user_id " +
             "WHERE user_id = ? AND order_status = ?"
-  
+
           let value = [
-            req.decoded.user_id, 
+            req.decoded.user_id,
             req.body.num]
-          
+
           const [rows] = await connection.query(sql, value)
-  
+
           connection.release();
           res.send(rows)
-          
+
         }
       } catch(err) {
         connection.release();
