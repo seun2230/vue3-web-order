@@ -20,7 +20,7 @@ const routes = [
   {
     path: '/user',
     name: 'user',
-    component: Menu,
+    component: User,
     children: [
       {
         path: 'sign',
@@ -35,22 +35,10 @@ const routes = [
       {
         path: 'menu',
         name: 'menu',
-        component: User
-      },
-      {
-        path: 'content',
-        name: 'content',
-        component: Content
-      },
-      {
-        path: 'page',
-        name: 'page',
-        component: PageList
-      },
-
+        component: Menu
+      }
     ]
   },
-
   {
     path: '/admin',
     name: 'admin',
@@ -64,7 +52,7 @@ const routes = [
       {
         path: 'order',
         name: 'order',
-        component: Menu,
+        component: Login,
       },
       {
         path: 'foodManagement',

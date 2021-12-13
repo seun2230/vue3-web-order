@@ -51,7 +51,7 @@ export default {
       this.modal = false;
     },
     pageReview() {
-      this.$router.push('review')
+      this.$router.push('/user/login')
     }
   },
   components: {

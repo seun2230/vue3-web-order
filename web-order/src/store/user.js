@@ -5,10 +5,12 @@ export default {
   namespaced: true,
   state: () => {
     return {
-      user_infos: [],
       token: [],
       user_orders: []
     }
+  },
+  mounted() {
+    this.state.token = VueCookies.get('auth')
   },
   getters: {
 
@@ -20,8 +22,6 @@ export default {
     },
     loginToken(state, payload) {
       console.log("mutation_loginToken_payload_user_info", payload.rows[0])
-      VueCookies.set("Auth", payload.token)
-      state.user_infos = payload.rows[0]
       state.token = payload.token
     },
     logoutToken(state) {
@@ -35,39 +35,37 @@ export default {
   actions: {
     login({ commit }, state) {
       console.log("action_login_state", state)
-        axios.post('http://localhost:3000/auth/login', state, 
-        {
-					headers: {
-						'Content-Type' : "application/json"
-          }
-        }).then(async(res) => {
-          await commit('loginToken', res.data)
-          console.log(res);
-        }).catch(err => {
-          console.log("err", err)
-        })
-      },
-      logout({ commit }) {
-        commit('logoutToken')
-      },
-      user_orders({ commit }, state) {
-        console.log(state)
-
-        axios.post('http://localhost:3000/myorder', 
-          state,
-          { 
-            headers: {
-              "Content-Type" : "application/json" 
-            }
-          })
-        .then(res => {
-          commit('user_orders', res.data)
-        }).catch(err => {
-          console.log(err)
-        })
-      },
-      signUp(state) {
-        console.log(state)
-      }
-    }
+      axios.post('http://localhost:3000/auth/login', 
+      JSON.stringify(state), 
+      {
+        headers: {
+          'Content-Type' : "application/json"
+        }
+      }).then(async(res) => {
+        commit('loginToken', res.data)
+        console.log("server res : ", res);
+      }).catch(err => {
+        console.log("err", err)
+      })
+    },
+    logout({ commit }) {
+      commit('logoutToken')
+    },
+    user_orders({ commit }, state) {
+      console.log(state)
+      axios.post('http://localhost:3000/myorder', 
+      JSON.stringify(state),
+      { 
+        headers: {
+          "Content-Type" : "application/json" 
+        }
+      })
+      .then(res => {
+        console.log("res server : ",res)
+        commit('user_orders', res.data)
+      }).catch(err => {
+        console.log("error", err)
+      })
+    },
   }
+}
