@@ -135,10 +135,6 @@ export default {
       for(let i = 0; i < this.files.length; i++) {
         formData.append('file', this.files[i]);
       }
-<<<<<<< HEAD
-       
-=======
->>>>>>> 1416853b50d6428ea02665a6e96a3dea79c13885
       formData.append("title", this.form.title);
       formData.append("menu", this.form.menu); 
       formData.append("ratings", this.form.ratings); 

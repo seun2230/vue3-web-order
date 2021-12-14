@@ -7,7 +7,6 @@ import UserInfo from '../store/userInfo'
 import UserModify from '../views/user/page/Modify.vue'
 import Sign from '../views/user/page/SignUpLSW.vue'
 import Login from '../views/user/page/LoginFormLSW.vue'
-import Menu from '../views/user/page/MenuPage.vue'
 import Review from '../components/Review'
 import ReBoard from '../components/ReBoard'
 import MenuPage from '../views/user/page/MenuPage.vue'
@@ -42,7 +41,7 @@ const routes = [
       {
         path: 'board',
         name: 'board',
-        component: ReviewBoard
+        component: ReBoard
       },
       {
         path: 'sign',
