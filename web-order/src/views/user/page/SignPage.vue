@@ -1,19 +1,16 @@
 <template>
   <div class="container">
-    <MenuList />
-    <CartList />
+    <SignForm />
   </div>
 </template>
 
 <script>
-import MenuList from '../components/MenuList.vue'
-import CartList from '../components/CartList.vue'
+import SignForm from '../components/SignUpForm.vue'
 
 export default {
   components: {
-    MenuList,
-    CartList
-  }
+    SignForm
+  }  
 }
 </script>
 

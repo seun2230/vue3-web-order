@@ -5,6 +5,7 @@
       ref="form"
       :rules="rules"
       :model="form"
+      label-position="top"
       label-width="100px">
       <el-form-item 
         label="아이디" 
@@ -70,7 +71,7 @@
 </template>
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 
 export default {
   data() {
@@ -156,32 +157,31 @@ export default {
   },
   methods: {
     submitForm() {
-      console.log("form", this.form)
-      const formData = {
-        user_id: this.form.user_id,
-        user_password: this.form.user_password,
-        user_name: this.form.user_name,
-        user_birthday: this.form.user_birthday,
-        user_phone: this.form.user_phone,
-      }
-      console.log('formData:', formData)
-      try {
-        this.$store.dispatch('user/signUp', formData)
-        .then(response => {
-          if (response.status == 200) {
-            this.$router.push('/');
-          }
-        })
-      } catch (error) {
-        console.log('signup error', error.response);
-      }
+      axios.post('http://localhost:3000/auth/register', 
+      JSON.stringify(this.form),
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(res => {
+        console.log(res)
+        this.$router.push('/user/login')
+      })
+      .catch(err => {
+        console.log(err)
+      })
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+@import "../../../scss/variables.scss";
+
 .container {
   padding: 10px;
+  background-color: $menuListBg;
+  border-radius: 9px;
 }
 </style>

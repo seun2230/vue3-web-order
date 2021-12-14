@@ -26,7 +26,7 @@ const login = async(req, res, next) => {
 
         const [rows] = await connection.query(sql, value);
   
-        res.cookie('auth', token, { maxAge: 600 * 600 * 6000 , sameSite: "lax" })
+        res.cookie('auth', token, { maxAge: 60 * 60 * 60 , sameSite: "lax" , httpOnly: true})
         res.send(rows[0].user_id)
         next();
       })
