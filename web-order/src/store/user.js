@@ -1,5 +1,5 @@
 import axios from 'axios'
-import VueCookies from 'vue-cookies'
+// import Cookies from '../util/Cookies.js';
 
 export default {
   namespaced: true,
@@ -20,8 +20,10 @@ export default {
     },
     login(state, payload) {
       console.log("mutation_loginToken_payload_user_info", payload)
-      state.user_info = payload.data
-      state.token = VueCookies.get('auth')
+      state.user_info = [{
+        "user_id" : payload.data.user_id,
+        "user_name":payload.data.user_name }]
+      state.token = payload.data.token
     },
     logoutToken(state) {
       state.user_infos = []

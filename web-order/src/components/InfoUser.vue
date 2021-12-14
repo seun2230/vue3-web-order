@@ -1,19 +1,19 @@
 <template>
-    <div class='userInfo'>
-        <div class='infoTitle'>
-            <p>사용자 정보 &nbsp; <i class='fa-title-icon' icon='angle-right' ></i></p>
-        </div>
-        <div class='infoBody'>
-            <!-- <p>{{ getUserData }}</p> -->
-            <p>{{ getMaskedUser.maskedAge }}</p>
-            <p>{{ getMaskedUser.maskedPhone }}</p>
-                <router-link to='/modify' v-slot='{href, route, navigate}'>
-                    <button :href='href' @click='navigate' class='button'>
-                        {{ route.ModifyForm }}
-                            <fa class='fa-body-icon' icon='user' />
-                    </button>
-            </router-link>
-        </div>
+ <div class='infoUser'>
+        <router-link to='/modify' v-slot='{href, route, navigate}'>
+            <button :href='href' @click='navigate' class='button'>
+                <div class='infoTitle'>
+                    <p>사용자 정보 &nbsp; <fa class='fa-title-icon' icon='angle-right' /></p>
+                </div>
+                <div class='infoBody'>
+                    <p>{{ getUserData }}</p>
+                    <p>{{ getMaskedUser.maskedAge }}</p>
+                    <p>{{ getMaskedUser.maskedPhone }}</p>
+                </div>
+                    {{ route.ModifyForm }}
+                    <fa class='fa-body-icon' icon='user' />
+            </button>
+        </router-link>
     </div>
 </template>
 
@@ -46,12 +46,6 @@ a {
     text-decoration: none;
 }
 
-.hr {
-    height: 1px;
-    border: 0px;
-    background-color: lightgray;
-}
-
 .infoBody {
     grid-template-rows: 30px;
     grid-template-columns: 10px;
@@ -62,10 +56,9 @@ a {
     font-weight: bold;
 }
 
-.userInfo {
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-columns: 150px;
+.infoUser {
+    display: flex;
+    flex-direction: row;
     padding: 0px 5px;
     border: 1px solid lightgrey;
     text-align: left;
@@ -74,21 +67,12 @@ a {
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
 }
 
-.userInfo::after {
-    display: block;
-    content: "";
-    clear: both;
-}
-
 .fa-body-icon {
     font-size: 3rem;
     color: rgba(185, 170, 45, 0.6);
 }
 
 .button {
-    padding: 0px 10px;
-    grid-template-columns: 100px;
-    grid-template-rows: 100px;
     border: none;
     border-radius: .25rem;
     opacity: 1;
@@ -96,10 +80,10 @@ a {
     font-weight: bold;
     font-size: 1rem;
     display: block;
-    width: 85vw;
+    width: 80vw;
     height: 40vw;
-    text-align: center;
-    text-decoration-line: none;
+    font-weight: bold;
+    font-size: 1rem;
     cursor: pointer;
 }
 </style>

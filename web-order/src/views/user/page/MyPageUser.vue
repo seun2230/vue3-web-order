@@ -2,7 +2,13 @@
     <div class='container'>
         <div>
             <p class='pageTitle'>내 정보</p>
-            <p>{{ token ? "로그인 됨" : "로그안 안 됨" }}</p>
+            <!-- <p>{{ token ? "로그인 됨" : "로그인 안 됨" }}</p> -->
+            <button class='logout' @click='logout'>
+                LogOut
+            </button>
+            <button class='logout' @click='verfiyToken'>
+                LogOuta
+            </button>
         </div>
         <info-user />
             <br />
@@ -19,7 +25,8 @@
 <script>
 import InfoUser from '../../../components/InfoUser.vue';
 import InfoAccount from '../../../components/InfoAccount.vue';
-import { mapState } from 'vuex';
+import { mapState } from 'vuex'
+import * as jose from 'jose'
 
 export default {
     components: {
@@ -30,7 +37,20 @@ export default {
     computed: {
         ...mapState('user',
         ['token']),
+
     },
+    methods: {
+        logout() {
+            this.$store.dispatch('user/logout');
+        },
+        verfiyToken() {
+          const key = {"secret": "0012 0300 1485 023 0as0 0460 aas0 0101"}
+          const recoded = jose.jwtVerify(this.token, key)
+          console.log("res",this.token)
+          console.log(recoded);
+
+        }
+    }
 }
 </script>
 
@@ -40,7 +60,8 @@ a {
 }
 
 .container {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     max-width: 460px;
     margin: auto;
     padding: 1rem;

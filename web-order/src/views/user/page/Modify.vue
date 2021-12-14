@@ -1,10 +1,21 @@
 <template>
-  <ModifyForm />
+  <div class="container">
+    <ModifyForm />
+  </div>
 </template>
+
 <script>
-import ModifyForm from '../../../components/ModifyForm.vue';
+import ModifyForm from '../components/ModifyForm.vue';
 
 export default {
-  component: ModifyForm,
+  components: {
+    ModifyForm
+  }
 }
 </script>
+
+<style lang="scss" scoped>
+.container {
+  padding: 10px;
+}
+</style>

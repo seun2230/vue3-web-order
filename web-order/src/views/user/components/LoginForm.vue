@@ -8,23 +8,29 @@
         <el-input v-model="form.user_id" />
       </el-form-item>
       <el-form-item label="비밀번호">
-        <el-input 
-          type="password" 
+        <el-input
+          type="password"
           v-model="form.user_password" />
       </el-form-item>
     </el-form>
     <div class="btn-group">
-      <el-button 
+      <el-button
         class="button"
         type="text"
         @click="login">
           로그인
       </el-button>
-      <el-button 
+      <el-button
         class="button"
         type="text"
         @click="sign">
           회원가입
+      </el-button>
+      <el-button
+        class="button"
+        type="text"
+        @click="view">
+          회원dasd가입
       </el-button>
     </div>
   </div>
@@ -46,7 +52,10 @@ export default {
     },
     sign() {
       this.$router.push('/user/sign');
-    }
+    },
+    // view() {
+    //   console.log(process.env.VUE_APP_UUID_SECRET)
+    // }
   }
 }
 </script>
