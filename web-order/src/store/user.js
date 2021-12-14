@@ -65,24 +65,5 @@ export default {
         console.log("error", err)
       })
     },
-    signUp(context, payload) {
-      console.log('payload on signUp action', payload)
-      return new Promise((resolve, reject) => {
-      axios.post("http://localhost:3000/auth/register", payload)
-      .then((response) => {
-        console.log("server res : ", response)
-        const { data } = response;
-        if (data.success) {
-          alert('success');
-          resolve(response);
-        } else if(data.Error) {
-          alert('이미 등록된 아이디');
-        }
-      })
-      .catch(error => {
-        reject(error);
-        })
-      })
-    }
   }
 }

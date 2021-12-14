@@ -1,19 +1,19 @@
 <template>
-  <div>
-    <h2>header</h2>
-    <div>
-      <router-view />
-    </div>
+  <div class="container">
+
   </div>
 </template>
 
 <script>
-
 export default {
-  components: {
-  },
-};
+  data() {
+    return {
+      orderList: [],
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
+
 </style>

@@ -5,6 +5,7 @@ export default {
   state: () => {
     return {
       slide: [],
+      comments: [],
     }
   },
   getters: {
@@ -20,7 +21,17 @@ export default {
       .catch(err => {
         console.log("Error", err)
       })
-    }
+    },
+    getComments(state) {
+      axios.get('http://localhost:3000/admin/get/comments')
+      .then(res => {
+        console.log(res.data)
+        state.comments = res.data
+      })
+      .catch(err => {
+        console.log("Error", err)
+      })
+    },
   },
   actions: {
 

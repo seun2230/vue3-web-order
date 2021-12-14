@@ -195,7 +195,9 @@ router.post('/delete', async(req, res) => {
       let value = req.body.food_id
       
       await connection.beginTransaction();
+      await connection.query("SET foreign_key_checks = 0");
       await connection.query(sql, value);
+      await connection.query("SET foreign_key_checks = 1");
       await connection.commit();
       res.send({
         message: "Delete Success!"
@@ -258,7 +260,61 @@ router.post('/modify', async(req, res) => {
   }
 })
 
+router.get("/get/comments", async (req, res) => {
+  try {
+    console.log("DB Connection! /get/board")
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      let sql = "SELECT comments_text as text, comments_title as title, ratings, food_name, user_id as id, user_name as name, user_gender as gender, comments_image as image ,comments_id " +
+        "FROM comments " +
+        "LEFT JOIN food_items ON food_items_food_id = food_id " +
+        "LEFT JOIN users ON users_user_id = user_id"
+      const [rows] = await connection.query(sql)
+      connection.release();
+      res.send(rows)
+    } catch(err) {
+      console.log(err)
+    }
+  } catch(err) {
+    console.log(err)
+  }
+})
 
-
+router.post('/delete/comments', async(req, res) => {
+  try {
+    console.log("DB connection /admin/delete/comments")
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      console.log("Query Start / admin / delete / comments")
+      let sql = "DELETE FROM comments WHERE comments_id = ?"
+      let value = req.body.comments_id
+      
+      await connection.beginTransaction();
+      await connection.query("SET foreign_key_checks = 0");
+      await connection.query(sql, value);
+      await connection.query("SET foreign_key_checks = 1");
+      await connection.commit();
+      res.send({
+        message: "Delete Success!"
+      })
+      connection.release();
+      } catch(err) {
+      console.log("Query Error");
+      console.log("Err : ", err)
+      await connection.rollback();
+      connection.release();
+      res.send({
+        error: "Query Error",
+        err
+      })
+    }
+  } catch(err) {
+    console.log("DB Error")
+    res.send({
+      error: "DB error",
+      err
+    })
+  }
+})
 
 module.exports = router;

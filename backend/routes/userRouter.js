@@ -76,25 +76,22 @@ try {
     const files = req.files
     let image = []
 
-    await connection.beginTransaction();
-
     for (let i = 0; i < req.files.length; i++) {
       image[i] = files[i].location
-  }
-  let sql = "INSERT INTO comments " +
+    }
+    let sql = "INSERT INTO comments " +
     "(comments_image, comments_text, ratings, food_items_food_id, users_user_id, comments_title, comments_status)" +
     "VALUES(?, ?, ?, ?, ?, ?, ?)"
 
-  
-  let value = [
-    image[0],
-    req.body.review,
-    req.body.ratings,
-    req.body.menu,
-    req.decoded.user_id,
-    req.body.title,
-    req.body.status
-  ]
+    let value = [
+      image[0],
+      req.body.review,
+      req.body.ratings,
+      req.body.menu,
+      req.decoded.user_id,
+      req.body.title,
+      req.body.status
+    ]
 
   console.log(value)
   await connection.query(sql, value);
@@ -128,6 +125,24 @@ router.get('/comments/get', async(req, res) => {
 
     try {
       const [row] = await connection.query('SELECT * FROM comments WHERE comments_status = 0')
+      connection.release();
+      res.send(row);
+    } catch (err) {
+      console.log("error 확인", err);
+      connection.release();
+    }
+  } catch (err) {
+    console.log("DB Error", err)
+  }
+})
+
+router.get('/comments/get', async(req, res) => {
+  try {
+    console.log('DB 연결 성공!');
+    const connection = await pool.getConnection(async conn => conn);
+
+    try {
+      const [row] = await connection.query('SELECT * FROM comments')
       connection.release();
       res.send(row);
     } catch (err) {
