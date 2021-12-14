@@ -5,6 +5,7 @@
       ref="form"
       :rules="rules"
       :model="form"
+      label-position="top"
       label-width="100px">
       <el-form-item
         label="아이디"
@@ -198,19 +199,19 @@ export default {
   },
   methods: {
     submitForm() {
-      console.log("test", this.form)
-      axios.post("http://localhost:3000/auth/register",
-      JSON.stringify(this.form), {
+      axios.post('http://localhost:3000/auth/register',
+      JSON.stringify(this.form),
+      {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         }
       })
-      .then((res) => {
-        console.log("server res : ", res)
-        this.$router.push('/');
+      .then(res => {
+        console.log(res)
+        this.$router.push('/user/login')
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(err => {
+        console.log(err)
       })
     },
   },
@@ -218,7 +219,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../../scss/variables.scss";
+
 .container {
   padding: 10px;
+  background-color: $menuListBg;
+  border-radius: 9px;
 }
 </style>

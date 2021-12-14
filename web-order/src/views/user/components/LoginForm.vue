@@ -2,6 +2,7 @@
   <div class="container">
     <el-form
       :model="form"
+      label-position="top"
       label-width="100px">
       <el-form-item label="아이디">
         <el-input v-model="form.user_id" />
@@ -11,13 +12,21 @@
           type="password" 
           v-model="form.user_password" />
       </el-form-item>
+    </el-form>
+    <div class="btn-group">
       <el-button 
         class="button"
         type="text"
         @click="login">
           로그인
       </el-button>
-    </el-form>
+      <el-button 
+        class="button"
+        type="text"
+        @click="sign">
+          회원가입
+      </el-button>
+    </div>
   </div>
 </template>
 
@@ -33,15 +42,24 @@ export default {
   },
   methods: {
     login() {
-      console.log(this.form)
       this.$store.dispatch('user/login', this.form)
     },
+    sign() {
+      this.$router.push('/user/sign');
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import "../../../scss/variables.scss";
+
 .container {
   padding: 10px;
+  background-color: $menuListBg;
+  border-radius: 9px;
+  .btn-group {
+    display: grid;
+  }
 }
 </style>

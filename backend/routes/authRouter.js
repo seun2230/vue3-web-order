@@ -12,6 +12,7 @@ router.post('/logout', (req, res) => {
 
 router.post('/register', async(req, res) => {
   try {
+    console.log("DB connection /auth/register")
     const connection = await pool.getConnection(async conn => conn);
     try {
       await connection.beginTransaction();

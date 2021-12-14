@@ -1,12 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '../views/Homepage.vue'
 import Admin from '../views/admin/Admin.vue'
-import DashBoard from '../views/admin/page/DashBoard.vue'
-import foodManagement from '../views/admin/page/FoodManageMent.vue'
+import FoodManagePage from '../views/admin/page/FoodManagePage.vue'
 import UserInfo from '../views/user/page/MyPageUser.vue'
 import UserModify from '../views/user/page/Modify.vue'
-import Sign from '../views/user/page/SignUpLSW.vue'
-import Login from '../views/user/page/LoginFormLSW.vue'
+import SignPage from '../views/user/page/SignPage.vue'
+import LoginPage from '../views/user/page/LoginPage.vue'
 import Review from '../components/Review'
 import ReBoard from '../components/ReBoard'
 import MenuPage from '../views/user/page/MenuPage.vue'
@@ -46,12 +45,12 @@ const routes = [
       {
         path: 'sign',
         name: 'Sign',
-        component: Sign
+        component: SignPage
       },
       {
         path: 'login',
         name: 'login',
-        component: Login
+        component: LoginPage
       },
       {
         path: 'menu',
@@ -75,15 +74,15 @@ const routes = [
     name: 'admin',
     component: Admin,
     children: [
-      {
-        path: 'dashBoard',
-        name: "DashBoard",
-        component: DashBoard,
-      },
+      // {
+      //   path: 'dashBoard',
+      //   name: "DashBoard",
+      //   component: DashBoard,
+      // },
       {
         path: 'foodManagement',
         name: 'foodManagement',
-        component: foodManagement
+        component: FoodManagePage
       }
     ]
   },

@@ -31,8 +31,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../../scss/variables.scss";
+
 .container {
   display: flex;
+  background-color: $menuListBg;
+  border-radius: 9px;
+  margin-bottom: 10px;
   .foods {
     display: grid;
     width: 100%;
