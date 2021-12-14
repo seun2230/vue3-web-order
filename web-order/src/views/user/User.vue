@@ -1,23 +1,15 @@
 <template>
   <div>
     <Header />
-    <HomePage />
-    <router-view v-slot="{ Component }">
-      <transition name="component-transition" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </router-view>
+    <router-view />
   </div>
 </template>
 
 <script>
 import Header from './components/Header.vue'
-
-import HomePage from '../Homepage.vue'
 export default {
   components: {
-    Header,
-    HomePage
+    Header
   },
 };
 </script>

@@ -10,7 +10,7 @@ const passportConfig = require('./config/passport');
 const authRouter = require("./routes/authRouter");
 const foodRouter = require("./routes/foodRouter");
 const adminRouter = require("./routes/adminRouter");
-const userRouter = require("./routes/userRouter")
+const userRouter = require('./routes/userRouter');
 
 const app = express();
 

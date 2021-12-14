@@ -12,9 +12,9 @@
           label-width="100px">
           <el-form-item 
             label="제목"
-            placeholder="최소 20자 내외로 작성해주세요." >
+            placeholder="최소 15자 내외로 작성해주세요.">
             <el-input 
-              v-model="form.title"/>
+              v-model="form.title" />
           </el-form-item> 
           <el-form-item 
             label="메뉴 이름">
@@ -28,7 +28,6 @@
                 :value="food.food_id" />
             </el-select>
           </el-form-item>
-
           <el-form-item label="평점">
             <el-select 
               v-model="form.ratings"
@@ -82,8 +81,14 @@
           </el-form-item>
           <el-form-item label="리뷰 공개">
             <el-radio-group v-model="form.status">
-              <el-radio label="true">동의</el-radio>
-              <el-radio label="false">비동의</el-radio>
+              <el-radio 
+                label="true">
+                동의
+              </el-radio>
+              <el-radio 
+                label="false">
+                비동의
+              </el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item>
@@ -130,7 +135,10 @@ export default {
       for(let i = 0; i < this.files.length; i++) {
         formData.append('file', this.files[i]);
       }
+<<<<<<< HEAD
        
+=======
+>>>>>>> 1416853b50d6428ea02665a6e96a3dea79c13885
       formData.append("title", this.form.title);
       formData.append("menu", this.form.menu); 
       formData.append("ratings", this.form.ratings); 
@@ -165,7 +173,7 @@ export default {
       for (let i = 0; i < uploadedFiles.length; i++) {
         this.files.push(uploadedFiles[i]);
       }
-      //  메서드 안에서는 메서드를 호출한 객체를 가르킨다.
+  
       this.getImagePreviews();
     },
     getImagePreviews() {

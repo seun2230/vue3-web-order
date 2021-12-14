@@ -9,7 +9,6 @@ const s3 = new AWS.S3({
   region: process.env.S3REGION, 
 });
 
-
 const storage = multerS3({
   s3: s3, 
   bucket: process.env.BUCKETNAME, //bucket 이름 

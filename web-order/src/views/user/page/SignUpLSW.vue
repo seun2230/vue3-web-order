@@ -6,41 +6,64 @@
       :rules="rules"
       :model="form"
       label-width="100px">
-        <el-form-item label="아이디" prop="user_id">
-          <el-input v-model="form.user_id" />
-        </el-form-item>
-        <el-form-item label="비밀번호" prop="user_password">
-          <el-input type="password" v-model="form.user_password" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="비밀번호 확인" prop="user_passwordCheck">
-          <el-input type="password" v-model="form.user_passwordCheck" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="이름" prop="user_name">
-          <el-input v-model="form.user_name" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="생년월일">
-          <el-input type="date" v-model="form.user_birthday"/>
-        </el-form-item>
-        <el-form-item label="휴대전화" prop="user_phone">
-          <el-input v-model="form.user_phone" maxlength="11" placeholder="- 를 제외하고 입력하세요."/>
-        </el-form-item>
-        <el-form-item label="성별">
-          <el-radio
-            v-model="form.user_gender"
-            label="male">
-            남자
-          </el-radio>
-          <el-radio
-            v-model="form.user_gender"
-            label="female">
-            여자
-          </el-radio>
-        </el-form-item>
+      <el-form-item 
+        label="아이디" 
+        prop="user_id">
+        <el-input v-model="form.user_id" />
+      </el-form-item>
+      <el-form-item 
+        label="비밀번호" 
+        prop="user_password">
+        <el-input 
+          type="password" 
+          v-model="form.user_password" 
+          autocomplete="off" />
+      </el-form-item>
+      <el-form-item 
+        label="비밀번호 확인"
+        prop="user_passwordCheck">
+        <el-input 
+          type="password" 
+          v-model="form.user_passwordCheck" 
+          autocomplete="off" />
+      </el-form-item>
+      <el-form-item 
+        label="이름" 
+        prop="user_name">
+        <el-input 
+          v-model="form.user_name" 
+          autocomplete="off" />
+      </el-form-item>
+      <el-form-item label="생년월일">
+        <el-input 
+          type="date" 
+          v-model="form.user_birthday"/>
+      </el-form-item>
+      <el-form-item 
+        label="휴대전화" 
+        prop="user_phone">
+        <el-input 
+          v-model="form.user_phone" 
+          maxlength="11" 
+          placeholder="- 를 제외하고 입력하세요."/>
+      </el-form-item>
+      <el-form-item label="성별">
+        <el-radio
+          v-model="form.user_gender"
+          label="male">
+          남자
+        </el-radio>
+        <el-radio
+          v-model="form.user_gender"
+          label="female">
+          여자
+        </el-radio>
+      </el-form-item>
       <el-button
         class="button"
         type="text"
         @click="submitForm">
-          회원 가입
+        회원 가입
       </el-button>
     </el-form>
   </div>
