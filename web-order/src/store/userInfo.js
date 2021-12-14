@@ -32,7 +32,7 @@ export default {
         maskedUser: function (context) {
             return new Promise((resolve, reject) => {
                 axios
-                .get('http://localhost:3000/maskedUser')
+                .get('http://localhost:3000/userinfo/maskedUser')
                 .then(response => {
                     console.log('response.data[0] on maskedUser actions: ', response.data[0]);
                     if (response.status == 200) {

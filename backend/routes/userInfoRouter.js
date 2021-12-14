@@ -4,7 +4,7 @@ const pool = require('../db/index')
 const { verifyToken } = require('../middleware/auth')
 const { upload } = require('../api/S3UploadStorage.js')
 
-router.get('/maskedUser', verifyToken, function(req, res) {
+router.get('/maskedUser', verifyToken, async(req, res) => {
     try {
         const RegAge = '(?<=^.{0,2}).|(?<=^.{4,5}).';
         const RegPhone = '(?<=^.{3,6}).';
@@ -14,9 +14,9 @@ router.get('/maskedUser', verifyToken, function(req, res) {
 
         const connection = await pool.getConnection(async conn => conn);
         try {
-            let sql = "SELECT REGEXP_REPLACE(user_age, ? , ?) " +
+            let sql = "SELECT REGEXP_REPLACE(user_birthday, ? , ?) " +
                 "AS maskedAge, REGEXP_REPLACE(user_phone, ? , ?) " +
-                "AS maskedPhone FROM web_order.users WHERE user_id = ?"
+                "AS maskedPhone FROM users WHERE user_id = ?"
             let value = [RegAge, mask, RegPhone, mask, req.decoded.user_id]
 
             const [row] = await connection.query(sql, value);
@@ -41,8 +41,8 @@ router.get('/maskedUser', verifyToken, function(req, res) {
 });
 
 //  이거 왜 정보 받아오더라? 확인 필요
-//  update, updateUser 이식할 차례일 듯
-router.get('/mypage', verifyToken, function (req, res) {
+
+router.get('/mypage', verifyToken, async(req, res) => {
     try {
         const connection = await pool.getConnection(async conn => conn);
         try {
@@ -70,3 +70,5 @@ router.get('/mypage', verifyToken, function (req, res) {
         })
     }
 })
+
+module.exports = router;

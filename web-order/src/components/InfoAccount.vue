@@ -4,7 +4,7 @@
             <p>계정 정보 &nbsp;&nbsp; ></p>
         </div>
         <div class='infoBody'>
-            <p>{{ getUserId }}</p>
+            <p>{{ user_info.userId }}</p>
                 <router-link to='/modify' v-slot='{href, route, navigate}'>
                     <button :href='href' @click='navigate' class='button'>
                         {{ route.ModifyForm }}
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 export default {
     name: 'UserInfo',
     props: {
@@ -28,8 +28,8 @@ export default {
         },
     },
     computed: {
-        ...mapGetters('user', [
-            'getUserId'
+        ...mapState('user', [
+            'user_info'
         ])
     }
 };

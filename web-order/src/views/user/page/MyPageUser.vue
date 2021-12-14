@@ -2,6 +2,7 @@
     <div class='container'>
         <div>
             <p class='pageTitle'>내 정보</p>
+            <p>{{ token ? "로그인 됨" : "로그안 안 됨" }}</p>
         </div>
         <info-user />
             <br />
@@ -18,6 +19,7 @@
 <script>
 import InfoUser from '../../../components/InfoUser.vue';
 import InfoAccount from '../../../components/InfoAccount.vue';
+import { mapState } from 'vuex';
 
 export default {
     components: {
@@ -25,6 +27,10 @@ export default {
         InfoAccount,
     },
     name: 'MyPage',
+    computed: {
+        ...mapState('user',
+        ['token']),
+    },
 }
 </script>
 

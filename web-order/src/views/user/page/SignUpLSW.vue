@@ -6,45 +6,53 @@
       :rules="rules"
       :model="form"
       label-width="100px">
-      <el-form-item 
-        label="아이디" 
+      <el-form-item
+        label="아이디"
         prop="user_id">
         <el-input v-model="form.user_id" />
       </el-form-item>
-      <el-form-item 
-        label="비밀번호" 
+      <el-form-item
+        label="비밀번호"
         prop="user_password">
-        <el-input 
-          type="password" 
-          v-model="form.user_password" 
+        <el-input
+          type="password"
+          v-model="form.user_password"
           autocomplete="off" />
       </el-form-item>
-      <el-form-item 
+      <el-form-item
         label="비밀번호 확인"
         prop="user_passwordCheck">
-        <el-input 
-          type="password" 
-          v-model="form.user_passwordCheck" 
+        <el-input
+          type="password"
+          v-model="form.user_passwordCheck"
           autocomplete="off" />
       </el-form-item>
-      <el-form-item 
-        label="이름" 
+      <el-form-item
+        label="이름"
         prop="user_name">
-        <el-input 
-          v-model="form.user_name" 
+        <el-input
+          v-model="form.user_name"
           autocomplete="off" />
       </el-form-item>
-      <el-form-item label="생년월일">
-        <el-input 
-          type="date" 
+      <!-- <el-form-item label="생년월일">
+        <el-input
+          type="date"
           v-model="form.user_birthday"/>
+      </el-form-item> -->
+      <el-form-item
+        label="생년월일"
+        prop="user_birthday">
+        <el-input
+          v-model="form.user_birthday"
+          maxlength="8"
+          placeholder="8자리로 입력하세요." />
       </el-form-item>
-      <el-form-item 
-        label="휴대전화" 
+      <el-form-item
+        label="휴대전화"
         prop="user_phone">
-        <el-input 
-          v-model="form.user_phone" 
-          maxlength="11" 
+        <el-input
+          v-model="form.user_phone"
+          maxlength="11"
           placeholder="- 를 제외하고 입력하세요."/>
       </el-form-item>
       <el-form-item label="성별">
@@ -70,7 +78,7 @@
 </template>
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 
 export default {
   data() {
@@ -121,6 +129,39 @@ export default {
         }, 500)
       }
     }
+    const validateBirthDay = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('필수 정보입니다.'));
+            } else {
+                const year = Number(value.substr(0, 4));
+                const month = Number(value.substr(4, 2));
+                const day = Number(value.substr(6, 2));
+                const thisYear = new Date().getFullYear();
+
+                if (value.length == 8) {
+                    if (1900 > year || year > thisYear) {
+                        callback(new Error('올바른 년도를 입력하세요.'));
+                    } else if (month < 1 || month > 12) {
+                        callback(new Error('올바른 월을 입력하세요'));
+                    } else if (day < 1 || day > 31) {
+                        callback(new Error('올바른 날짜를 입력하세요.'));
+                    } else if ((month == 4 || month == 6 || month == 9 || month == 11) && day == 31) {
+                        callback(new Error('올바른 날짜를 입력하세요.'));
+                    } else if (month == 2) {
+                        const isLeap = (year % 4 == 0 && (year % 100 == 0 || year % 400 == 0));
+                        if (day > 29 || (day == 29 && !isLeap)) {
+                            callback(new Error('올바른 날짜를 입력하세요.'));
+                        } else {
+                            return callback();
+                        }
+                    } else {
+                        return callback();
+                    }
+                } else {
+                    callback(new Error('8자리 생년월일을 입력하세요'));
+                }
+            }
+        }
     const validatePhone = (rule, value, callback) => {
       const regex = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
       if (value === '') {
@@ -150,31 +191,27 @@ export default {
         user_password: [{ validator: validatePass, trigger: "blur" }],
         user_passwordCheck: [{ validator: validatePassCheck, trigger: "blur" }],
         user_name: [{ validator: validateName, trigger: "blur" }],
+        user_birthday: [{ validator: validateBirthDay, trigger: "blur" }],
         user_phone: [{ validator: validatePhone, trigger: "blur" }]
       }
     }
   },
   methods: {
     submitForm() {
-      console.log("form", this.form)
-      const formData = {
-        user_id: this.form.user_id,
-        user_password: this.form.user_password,
-        user_name: this.form.user_name,
-        user_birthday: this.form.user_birthday,
-        user_phone: this.form.user_phone,
-      }
-      console.log('formData:', formData)
-      try {
-        this.$store.dispatch('user/signUp', formData)
-        .then(response => {
-          if (response.status == 200) {
-            this.$router.push('/');
-          }
-        })
-      } catch (error) {
-        console.log('signup error', error.response);
-      }
+      console.log("test", this.form)
+      axios.post("http://localhost:3000/auth/register",
+      JSON.stringify(this.form), {
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
+      .then((res) => {
+        console.log("server res : ", res)
+        this.$router.push('/');
+      })
+      .catch((err) => {
+        console.error(err);
+      })
     },
   },
 };

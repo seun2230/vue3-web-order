@@ -7,7 +7,7 @@ export default {
     return {
       token: [],
       user_orders: [],
-      isAuth: !!VueCookies.get('Auth'),
+      user_info: [],
     }
   },
   getters: {
@@ -18,12 +18,12 @@ export default {
       state.user_orders = []
       state.user_orders = payload
     },
-    loginToken(state, payload) {
+    login(state, payload) {
       console.log("mutation_loginToken_payload_user_info", payload)
-      state.token = payload.token
+      state.user_info = payload.data
+      state.token = VueCookies.get('auth')
     },
     logoutToken(state) {
-      VueCookies.remove('Auth')
       state.user_infos = []
       state.token = []
       state.user_orders = []
@@ -39,8 +39,8 @@ export default {
         headers: {
           'Content-Type' : "application/json"
         }
-      }).then(async(res) => {
-        commit('cookie')
+      }).then((res) => {
+        commit('login', res)
         console.log("server res : ", res);
       }).catch(err => {
         console.log("err", err)
@@ -65,24 +65,5 @@ export default {
         console.log("error", err)
       })
     },
-    signUp(context, payload) {
-      console.log('payload on signUp action', payload)
-      return new Promise((resolve, reject) => {
-      axios.post("http://localhost:3000/auth/register", payload)
-      .then((response) => {
-        console.log("server res : ", response)
-        const { data } = response;
-        if (data.success) {
-          alert('success');
-          resolve(response);
-        } else if(data.Error) {
-          alert('이미 등록된 아이디');
-        }
-      })
-      .catch(error => {
-        reject(error);
-        })
-      })
-    }
   }
 }

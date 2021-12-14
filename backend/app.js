@@ -11,6 +11,7 @@ const authRouter = require("./routes/authRouter");
 const foodRouter = require("./routes/foodRouter");
 const adminRouter = require("./routes/adminRouter");
 const userRouter = require('./routes/userRouter');
+const userInfoRouter = require('./routes/userInfoRouter');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use('/food', foodRouter);
 app.use('/admin', adminRouter);
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
+app.use('/userinfo', userInfoRouter);
 passportConfig();
 
 app.listen(app.get("port"), () => {

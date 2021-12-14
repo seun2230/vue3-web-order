@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomePage from '../views/HomePage.vue'
+import HomePage from '../views/Homepage.vue'
 import Admin from '../views/admin/Admin.vue'
 import DashBoard from '../views/admin/page/DashBoard.vue'
 import foodManagement from '../views/admin/page/FoodManageMent.vue'
-import UserInfo from '../store/userInfo'
+import UserInfo from '../views/user/page/MyPageUser.vue'
 import UserModify from '../views/user/page/Modify.vue'
 import Sign from '../views/user/page/SignUpLSW.vue'
 import Login from '../views/user/page/LoginFormLSW.vue'
@@ -59,8 +59,8 @@ const routes = [
         component: MenuPage
       },
       {
-        path: 'userInfo',
-        name: 'userInfo',
+        path: 'userinfo',
+        name: 'userinfo',
         component: UserInfo,
       },
       {

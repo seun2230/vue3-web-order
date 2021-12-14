@@ -55,7 +55,6 @@ router.post('/register', async(req, res) => {
           res.send({
             "success": true
           })
-          console.log('res from server', res);
         }
       }
     } catch(err) {

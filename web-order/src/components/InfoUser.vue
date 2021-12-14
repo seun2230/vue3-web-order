@@ -1,7 +1,7 @@
 <template>
     <div class='userInfo'>
         <div class='infoTitle'>
-            <p>사용자 정보 &nbsp; <fa class='fa-title-icon' icon='angle-right' /></p>
+            <p>사용자 정보 &nbsp; <i class='fa-title-icon' icon='angle-right' ></i></p>
         </div>
         <div class='infoBody'>
             <!-- <p>{{ getUserData }}</p> -->
@@ -31,7 +31,7 @@ export default {
         },
     },
     created() {
-        this.$store.dispatch('user/maskedUser')
+        this.$store.dispatch('userInfo/maskedUser')
     },
     computed: {
         ...mapGetters('userInfo', [
