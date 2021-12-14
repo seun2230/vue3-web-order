@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import ModalAdd from '../components/ModalAdd.vue'
+import ModalAdd from '../views/user/components/ModalAdd.vue'
 export default {
   data() {
     return {
