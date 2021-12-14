@@ -6,7 +6,6 @@
     <PageList />
   </div>
 </template>
-
 <script>
 import Header from './Header.vue'
 import Slide from '../components/Slide.vue'

@@ -28,7 +28,6 @@
                 :value="food.food_id" />
             </el-select>
           </el-form-item>
-
           <el-form-item label="평점">
             <el-select 
               v-model="form.ratings"
