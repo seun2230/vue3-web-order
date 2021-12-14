@@ -71,6 +71,7 @@ try {
   console.log(req.body)
   console.log(req.decoded)
   const connection = await pool.getConnection(async conn => conn);
+ 
   try {
     const files = req.files
     let image = []
@@ -84,6 +85,7 @@ try {
     "(comments_image, comments_text, ratings, food_items_food_id, users_user_id, comments_title, comments_status)" +
     "VALUES(?, ?, ?, ?, ?, ?, ?)"
 
+  
   let value = [
     image[0],
     req.body.review,
@@ -125,7 +127,7 @@ router.get('/comments/get', async(req, res) => {
     const connection = await pool.getConnection(async conn => conn);
 
     try {
-      const [row] = await connection.query('SELECT * FROM comments')
+      const [row] = await connection.query('SELECT * FROM comments WHERE comments_status = 0')
       connection.release();
       res.send(row);
     } catch (err) {

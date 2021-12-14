@@ -32,7 +32,7 @@
             <el-select 
               v-model="form.ratings"
               width="30px"
-              placeholder="메뉴 만족하셨나요?" >
+              placeholder="음식/가격?" >
               <el-option 
                 label="😍: 아주 만족해요" 
                 value="1" />         
@@ -46,7 +46,7 @@
                 label="🙁: 그냥 그래요 " 
                 value="4" />
               <el-option 
-                label="😟: 별로에요" 
+                label="😤: 별로에요" 
                 value="5" />
             </el-select>
           </el-form-item>

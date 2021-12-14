@@ -23,7 +23,9 @@ export default {
     }
   },
   computed: {
-    ...mapState('comment', ['comments'])
+    ...mapState('comment', [
+      'comments'
+    ]),
   }
 }
 </script>
