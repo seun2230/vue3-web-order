@@ -36,7 +36,6 @@
 
 <script>
 export default {
-  name: "CartItem",
   props: {
     cart: {
       type: Object,

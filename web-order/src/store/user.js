@@ -6,7 +6,8 @@ export default {
   state: () => {
     return {
       token: [],
-      user_orders: []
+      user_orders: [],
+      isAuth: !!VueCookies.get('Auth'),
     }
   },
   getters: {
@@ -28,15 +29,12 @@ export default {
       state.user_orders = []
       location.reload;
     },
-    cookie(state) {
-      state.token = VueCookies.get('auth')
-    }
   },
   actions: {
     login({ commit }, state) {
       console.log("action_login_state", state)
-      axios.post('http://localhost:3000/auth/login', 
-      JSON.stringify(state), 
+      axios.post('http://localhost:3000/auth/login',
+      JSON.stringify(state),
       {
         headers: {
           'Content-Type' : "application/json"
@@ -53,11 +51,11 @@ export default {
     },
     user_orders({ commit }, state) {
       console.log(state)
-      axios.post('http://localhost:3000/myorder', 
+      axios.post('http://localhost:3000/myorder',
       JSON.stringify(state),
-      { 
+      {
         headers: {
-          "Content-Type" : "application/json" 
+          "Content-Type" : "application/json"
         }
       })
       .then(res => {
@@ -67,5 +65,24 @@ export default {
         console.log("error", err)
       })
     },
+    signUp(context, payload) {
+      console.log('payload on signUp action', payload)
+      return new Promise((resolve, reject) => {
+      axios.post("http://localhost:3000/auth/register", payload)
+      .then((response) => {
+        console.log("server res : ", response)
+        const { data } = response;
+        if (data.success) {
+          alert('success');
+          resolve(response);
+        } else if(data.Error) {
+          alert('이미 등록된 아이디');
+        }
+      })
+      .catch(error => {
+        reject(error);
+        })
+      })
+    }
   }
 }

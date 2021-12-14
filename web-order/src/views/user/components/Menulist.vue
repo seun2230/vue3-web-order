@@ -14,15 +14,15 @@ import MenuItem from "./MenuItem.vue";
 import { mapState } from "vuex";
 
 export default {
-  name: "MenuList",
+  data() {
+    return {
+    }
+  },
   components: {
     MenuItem,
   },
   created() {
     this.$store.commit("food/getState");
-  },
-  getOrder() {
-    return this.$store.commit("food/getOrder");
   },
   computed: {
     ...mapState("food", ["foods"]),

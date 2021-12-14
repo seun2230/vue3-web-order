@@ -24,12 +24,12 @@ router.post('/register', async(req, res) => {
         "user_phone": req.body.user_phone,
         "user_gender": req.body.user_gender
       }
-            
+
       if(sign_info.user_id) {
         let sql = 'SELECT user_id FROM users ' +
           'WHERE user_id = ?'
         let value = [ sign_info.user_id ]
-        
+
         const [row] = await connection.query(sql, value);
 
         if(row[0] === undefined) {
@@ -52,10 +52,11 @@ router.post('/register', async(req, res) => {
           await connection.query(sql, value);
           await connection.commit();
           connection.release();
-          res.send({ 
+          res.send({
             "success": true
           })
-        }   
+          console.log('res from server', res);
+        }
       }
     } catch(err) {
       console.log("err", err)

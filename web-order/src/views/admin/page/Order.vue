@@ -5,13 +5,11 @@
         <button class="btn">
           <i class="fas fa-cookie"></i>
         </button>
-
         <button
           class="btn"
           @click="clickModal()">
           <i class="fas fa-pizza-slice"></i>
         </button>
-
         <ModalAdd
           @close="closeModal()" 
           v-if="modal" />

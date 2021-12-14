@@ -8,7 +8,8 @@
           height="100" />
       </div>
       <div class="inner_info">
-        <div class="info_id" 
+        <div 
+          class="info_id"
           id="info_id" >
           {{ comment.users_user_id }}
         </div>
@@ -28,7 +29,7 @@ export default {
       type: Object,
       default: function() { return {} }
     }
-  }
+  },
 }
 </script>
 

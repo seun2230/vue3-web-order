@@ -6,62 +6,85 @@
       :rules="rules"
       :model="form"
       label-width="100px">
-        <el-form-item label="아이디" prop="user_id">
-          <el-input v-model="form.user_id" />
-        </el-form-item>
-        <el-form-item label="비밀번호" prop="user_password">
-          <el-input type="password" v-model="form.user_password" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="비밀번호 확인" prop="user_passwordCheck">
-          <el-input type="password" v-model="form.user_passwordCheck" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="이름" prop="user_name">
-          <el-input v-model="form.user_name" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="생년월일">
-          <el-input type="date" v-model="form.user_birthday"/>
-        </el-form-item>
-        <el-form-item label="휴대전화" prop="user_phone">
-          <el-input v-model="form.user_phone"/>
-        </el-form-item>
-        <el-form-item label="성별">
-          <el-radio 
-            v-model="form.user_gender" 
-            label="male">
-            남자
-          </el-radio>
-          <el-radio 
-            v-model="form.user_gender"
-            label="female">
-            여자
-          </el-radio>
-        </el-form-item>
-      <el-button 
+      <el-form-item 
+        label="아이디" 
+        prop="user_id">
+        <el-input v-model="form.user_id" />
+      </el-form-item>
+      <el-form-item 
+        label="비밀번호" 
+        prop="user_password">
+        <el-input 
+          type="password" 
+          v-model="form.user_password" 
+          autocomplete="off" />
+      </el-form-item>
+      <el-form-item 
+        label="비밀번호 확인"
+        prop="user_passwordCheck">
+        <el-input 
+          type="password" 
+          v-model="form.user_passwordCheck" 
+          autocomplete="off" />
+      </el-form-item>
+      <el-form-item 
+        label="이름" 
+        prop="user_name">
+        <el-input 
+          v-model="form.user_name" 
+          autocomplete="off" />
+      </el-form-item>
+      <el-form-item label="생년월일">
+        <el-input 
+          type="date" 
+          v-model="form.user_birthday"/>
+      </el-form-item>
+      <el-form-item 
+        label="휴대전화" 
+        prop="user_phone">
+        <el-input 
+          v-model="form.user_phone" 
+          maxlength="11" 
+          placeholder="- 를 제외하고 입력하세요."/>
+      </el-form-item>
+      <el-form-item label="성별">
+        <el-radio
+          v-model="form.user_gender"
+          label="male">
+          남자
+        </el-radio>
+        <el-radio
+          v-model="form.user_gender"
+          label="female">
+          여자
+        </el-radio>
+      </el-form-item>
+      <el-button
         class="button"
         type="text"
-        @click="onSubmit">
-          회원 가입
+        @click="submitForm">
+        회원 가입
       </el-button>
     </el-form>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
 
 export default {
   data() {
     const validateId = (rule, value, callback) => {
-      const regex = /^[0-9]{1}[A-Za-z0-9]{5,19}$/;
+      const regex = /^[a-zA-Z0-9]{6,20}/g;
       if (value === '') {
         return callback(new Error('아이디를 입력하세요.'));
       } else {
         setTimeout(() => {
           if (!regex.test(value)) {
-            callback(new Error('첫자리는 숫자, 영문 포함 6~20 자리 까지 입력할 수 있습니다.'));
+            callback(new Error('6~20자의 영문과 숫자만 입력할 수 있습니다.'));
           } else {
             callback()
-          } 
+          }
         }, 500)
       }
     }
@@ -85,27 +108,27 @@ export default {
       }
     }
     const validateName = (rule, value, callback) => {
-      const regex = /^[가-힣]{2,4}$/;
+      const regex = /^[가-힣a-zA-z]+$/;
       if (value === '') {
         callback(new Error('이름을 입력하세요.'));
       } else {
         setTimeout(() => {
           if (!regex.test(value)) {
-            callback(new Error('이름은 한글로 2~4 글자 이내로 입력해주세요.'));
+            callback(new Error('이름은 한글 또는 영문 대,소문자로 입력하세요.'));
           } else {
             callback()
-          } 
+          }
         }, 500)
       }
     }
     const validatePhone = (rule, value, callback) => {
-      const regex = /^\d{3}-\d{3,4}-\d{4}$/;
+      const regex = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
       if (value === '') {
         callback(new Error("전화번호를 입력하세요."))
       } else {
         setTimeout(() => {
           if(!regex.test(value)) {
-            callback(new Error("-를 포함해서 입력해주세요."))
+            callback(new Error("올바른 전화번호를 입력하세요."))
           } else {
             callback()
           }
@@ -132,21 +155,26 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
-      console.log("test", this.form)
-      axios.post("http://localhost:3000/auth/register",
-      JSON.stringify(this.form), {
-        headers: {
-          "Content-Type": "application/json",
-        }
-      })
-      .then((res) => {
-        console.log("server res : ", res)
-        this.$router.push('/user');
-      })
-      .catch((err) => {
-        console.error(err);
-      })
+    submitForm() {
+      console.log("form", this.form)
+      const formData = {
+        user_id: this.form.user_id,
+        user_password: this.form.user_password,
+        user_name: this.form.user_name,
+        user_birthday: this.form.user_birthday,
+        user_phone: this.form.user_phone,
+      }
+      console.log('formData:', formData)
+      try {
+        this.$store.dispatch('user/signUp', formData)
+        .then(response => {
+          if (response.status == 200) {
+            this.$router.push('/');
+          }
+        })
+      } catch (error) {
+        console.log('signup error', error.response);
+      }
     },
   },
 };

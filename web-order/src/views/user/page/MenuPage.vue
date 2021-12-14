@@ -1,20 +1,20 @@
 <template>
-  <div class="container">
+  <div>
     <MenuList />
     <CartList />
   </div>
 </template>
 
 <script>
-import MenuList from "../components/Menulist.vue";
-import CartList from "../components/CartList.vue";
+import MenuList from '../components/Menulist.vue'
+import CartList from '../components/CartList.vue'
 
 export default {
   components: {
     MenuList,
-    CartList,
-  },
-};
+    CartList
+  }
+}
 </script>
 
 <style lang="scss" scoped>

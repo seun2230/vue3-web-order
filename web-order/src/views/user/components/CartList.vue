@@ -26,22 +26,24 @@ import { mapGetters, mapState } from "vuex";
 import axios from "axios";
 
 export default {
-  name: "CartList",
+  data() {
+    return {
+    }
+  },
   components: {
-    CartItem: CartItem,
-    TotalPrice: TotalPrice,
+    CartItem,
+    TotalPrice,
   },
   computed: {
     ...mapState("food", ["carts"]),
     ...mapGetters("food", ["totalPrice"]),
-    ...mapState("user", ["token"]),
   },
   methods: {
     submitCart(carts, totalPrice) {
       let list = [carts, totalPrice];
 
-      axios
-        .post("http://localhost:3000/food/order", JSON.stringify(list), {
+      axios.post("http://localhost:3000/food/order", 
+        JSON.stringify(list), {
           headers: {
             "Content-Type": "application/json",
           },

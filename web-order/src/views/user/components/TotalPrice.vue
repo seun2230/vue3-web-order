@@ -13,7 +13,6 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: "TotalPrice",
   computed: {
     ... mapGetters('food', ['totalPrice'])
   },

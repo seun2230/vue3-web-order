@@ -8,6 +8,7 @@
         <el-form 
           ref="form" 
           :model="form"
+          label-position="top"
           label-width="100px">
           <el-form-item 
             label="제목"
@@ -58,17 +59,37 @@
               type="textarea"/>
           </el-form-item>
           <el-form-item>
-            <input 
+            <div
+              class="image-preview"
+              @click="addFiles()">
+              <div
+                class="image-preview-item"
+                v-for="(file, key) in files"
+                :key="'file-' + key">
+                <div class="img-box">
+                  <img
+                    class="image-preview-image"
+                    :id="'image-' + parseInt(key)" />
+                </div>  
+              </div>
+            </div>
+            <input
               type="file"
-                name="file"
-              ref="file"
-              @change="addFile()"
-              multiple />
+              id="multiple-image-input"
+              accept="image/*"
+              multiple
+              @change="handleFileUpload($event)" />
           </el-form-item>
           <el-form-item label="리뷰 공개">
             <el-radio-group v-model="form.status">
-              <el-radio label="true">동의</el-radio>
-              <el-radio label="false">비동의</el-radio>
+              <el-radio 
+                label="true">
+                동의
+              </el-radio>
+              <el-radio 
+                label="false">
+                비동의
+              </el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item>
@@ -110,22 +131,11 @@ export default {
     ...mapState('food', ['foods'])
   },
   methods: {
-    addFile() {    
-      for(let i = 0; i < this.$refs.file.files.length; i++) {
-        this.files[i] = this.$refs.file.files[i];
-      }
-      console.log("this.files", this.files);
-    },
-
     sendReview() {
-        // FormData(): 페이지 전환없이 폼 데이터 제출 하는 경우
       let formData = new FormData(); 
       for(let i = 0; i < this.files.length; i++) {
-        
         formData.append('file', this.files[i]);
-        console.log("file" , this.files);
       }
-       
       formData.append("title", this.form.title);
       formData.append("menu", this.form.menu); 
       formData.append("ratings", this.form.ratings); 
@@ -136,11 +146,11 @@ export default {
       for (var value of formData.values()) {
         console.log("value", value);
       }
-      axios.post('http://localhost:3000/user/comments', formData, { 
+      axios.post('http://localhost:3000/user/comments', 
+      formData, { 
         headers: {
           'Content-Type': 'multipart/form-data'
         },
-  
       })      
       .then((res) => {
         console.log("데이터 전달 성공", res);
@@ -150,7 +160,30 @@ export default {
         console.error("오류 발생함", err);
       });
     },
+    addFiles() {
+      console.log("addFiles Clicked!")
+      document.getElementById('multiple-image-input').click();
+    },
+    handleFileUpload(event) {
+      let uploadedFiles = event.target.files;
+      
+      for (let i = 0; i < uploadedFiles.length; i++) {
+        this.files.push(uploadedFiles[i]);
+      }
+  
+      this.getImagePreviews();
+    },
+    getImagePreviews() {
+      for (let i = 0; i < this.files.length; i++) {
+        let reader = new FileReader();
 
+        reader.addEventListener("load", function() {
+          document.getElementById('image-' + parseInt(i)).src = reader.result;
+        }.bind(this), false);
+
+        reader.readAsDataURL(this.files[i]);
+      }
+    },
     removeFile() {
       this.files = [];
       console.log(this.files);
@@ -161,6 +194,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../scss/variables.scss';
+
 .container {
   border: 1px solid #ccc;
   padding: 10px;
@@ -170,5 +205,29 @@ export default {
   margin-top: 10px;
   color: #fff;
 }
-
+input {
+  display: none;
+}
+.image-preview {
+  display: flex;
+  overflow: hidden;
+  min-width: 200px;
+  max-width: 200px;
+  height:200px;
+  border-radius: 9px;
+  background: $mainBg;
+  justify-content: cover;
+  .image-preview-item {
+    img {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    width: 100px;
+    height: 100px;
+    }
+  }
+}
+.img-box{
+  border: solid;
+}
 </style>
