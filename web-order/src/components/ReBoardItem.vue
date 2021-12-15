@@ -29,17 +29,14 @@
 
 <script>
 export default {
-  data() {
-    return {
-      showNum: 4
-    }
-  },
   props: {
     comment: {
       type: Object,
       default: function() { return {} }
     }
   },
+  methods: {
+  }
 }
 </script>
 
@@ -52,7 +49,7 @@ export default {
   .inner {
     display: flex;
     align-items: center;
-
+   
     img {
       border-radius: 10px;
     }

@@ -8,6 +8,7 @@ import SignPage from '../views/user/page/SignPage.vue'
 import LoginPage from '../views/user/page/LoginPage.vue'
 import Review from '../components/Review'
 import ReBoard from '../components/ReBoard'
+import BoardDetail from '../components/BoardDetail.vue'
 import MenuPage from '../views/user/page/MenuPage.vue'
 import UserPage from '../views/user/UserPage.vue'
 import UserMyPage from '../views/user/page/UserMyPage.vue'
@@ -46,8 +47,8 @@ const routes = [
       },
       {
         path: 'board/:id',
-        name: 'show',
-        component: Show
+        name: 'boardItem',
+        component: BoardDetail
       },
       {
         path: 'sign',
