@@ -7,20 +7,35 @@
        <li><i class="fas fa-hamburger fa-2x"></i></li>
      </div>
 
-     <div class="navbar__info">
-        <el-button type="danger" size="small">주문하기</el-button>
+     <div class="navbar__info" v-if="!isAuth">
+        <button-login />
+     </div>
+     <div class="nav-bar_info" v-if="isAuth">
+       <button-logout />
      </div>
    </nav>
  </header>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
+import ButtonLogin from './user/components/ButtonLogin.vue'
+import ButtonLogout from './user/components/ButtonLogout.vue'
 export default {
   data() {
     return {
     }
   },
-
+  components: {
+    ButtonLogin,
+    ButtonLogout,
+  },
+  computed: {
+    ...mapGetters('user', [
+      'isAuth'
+    ])
+  }
 }
 </script>
 

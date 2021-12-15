@@ -11,6 +11,17 @@ import ReBoard from '../components/ReBoard'
 import MenuPage from '../views/user/page/MenuPage.vue'
 import UserPage from '../views/user/UserPage.vue'
 import UserMyPage from '../views/user/page/UserMyPage.vue'
+import store from '../store'
+
+const beforeAuth = isAuthenticated => (from, to, next) => {
+  const isAuth = store.getters['user/isAuth'];
+  if ((isAuth && isAuthenticated) || (!isAuth && !isAuthenticated)) {
+    return next();
+  } else {
+    alert("로그인이 필요한 메뉴입니다.");
+    next('/user/login');
+  }
+}
 
 const routes = [
   {
@@ -62,6 +73,7 @@ const routes = [
         path: 'userinfo',
         name: 'userinfo',
         component: UserInfo,
+        beforeEnter: beforeAuth(true),
       },
       {
         path: 'modify',

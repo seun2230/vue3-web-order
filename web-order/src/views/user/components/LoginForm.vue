@@ -26,12 +26,6 @@
         @click="sign">
           회원가입
       </el-button>
-      <el-button
-        class="button"
-        type="text"
-        @click="view">
-          회원dasd가입
-      </el-button>
     </div>
   </div>
 </template>
@@ -53,9 +47,6 @@ export default {
     sign() {
       this.$router.push('/user/sign');
     },
-    // view() {
-    //   console.log(process.env.VUE_APP_UUID_SECRET)
-    // }
   }
 }
 </script>

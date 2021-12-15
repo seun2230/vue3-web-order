@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router();
 const pool = require('../db/index')
+const bcrypt = require('bcryptjs')
 const { verifyToken } = require('../middleware/auth')
 
-router.get('/maskedUser', verifyToken, function(req, res) {
+router.get('/get/maskedUser', verifyToken, async (req, res) => {
   try {
     const RegAge = '(?<=^.{0,2}).|(?<=^.{4,5}).';
     const RegPhone = '(?<=^.{3,6}).';
@@ -31,18 +32,25 @@ router.get('/maskedUser', verifyToken, function(req, res) {
         });
       }
   } catch(err) {
-    console.log("DB error");
+    console.log("DB unconnected");
     res.send({
-        error: "DB error",
+        error: "DB unconnected",
         err
     });
   }
 });
 
-router.post('/updateUserInfo', async(req, res) => {
+router.post('/post/updateUserInfo', async(req, res) => {
+  try {
+    console.log("DB connected /userinfo/post/updateUserInfo");
     console.log('update user data', req.body);
-    const update_info = {
-        "user_id": req.body.user_id,
+    console.log('req.header:', req.headers);
+
+    const connection = await pool.getConnection(async conn => conn);
+
+    try {
+      const update_info = {
+        "user_id": req.headers.authuser,
         "user_name": req.body.user_name,
         "user_password": req.body.user_password,
         "user_birthday": req.body.user_birthday,
@@ -50,51 +58,41 @@ router.post('/updateUserInfo', async(req, res) => {
         "user_gender": req.body.user_gender
       }
 
-    const salt = await bcrypt.genSalt(10);
-    const encryptedPassword = bcrypt.hashSync(update_info.user_password, salt);
+      console.log('update info to DB', update_info);
 
-    let sql = "UPDATE web_order.users SET user_name = ? , " +
-        "user_password = ? , user_phone = ? , user_age = ? " +
-        "WHERE user_acc = ?"
+      const salt = await bcrypt.genSalt(10);
+      const encryptedPassword = bcrypt.hashSync(update_info.user_password, salt);
 
-    let value = [
+      let sql = "UPDATE users SET user_name = ? , " +
+        "user_password = ? , user_phone = ? , user_birthday = ? , user_gender = ?" +
+        "WHERE user_id = ?"
+
+      let value = [
         update_info.user_name,
         encryptedPassword,
         update_info.user_phone,
         update_info.user_birthday,
+        update_info.user_gender,
         update_info.user_id
-    ]
+      ]
 
-    await connenction.query(sql, value);
-    await connection.commit();
-    connection.release();
-    res.sendStatus(200)
-
-    connection.query
-      ('UPDATE web_order.users SET user_name = ? , user_password = ? , user_phone = ? , user_age = ? WHERE user_acc = ?',
-      [update_info.user_name, encryptedPassword, update_info.user_phone, update_info.user_birthday, update_info.user_id],
-      function (err, row) {
-        if (err) {
-          throw err;
-        } else {
-          connection.query('SELECT user_name FROM web_order.users WHERE user_acc = ?',
-          user.user_acc, function(err, row) {
-            if (err) {
-              throw err;
-            } else {
-              res.send(row);
-              console.log('row on update!:', row);
-            // res.sendStatus(200);
-          }
-        });
-      };
+      await connection.query(sql, value);
+      await connection.commit();
+      connection.release();
+      res.sendStatus(200)
+    } catch(err) {
+      console.log("SQL error");
+      res.send({
+        "Error": err
+      })
+    }
+  } catch(err) {
+    console.log("DB unconnected")
+    res.send({
+      "Error": err
     })
-  });
-
-
-
-
-
+  }
+});
 
 //  수정 폼 기 정보
 // router.get('/mypage', verifyToken, async(req, res) => {

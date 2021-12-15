@@ -18,6 +18,7 @@ import Slide from '../components/Slide.vue'
 import Login from '../components/LoginForm.vue'
 import PageList from '../components/PageList.vue'
 import NavUnder from '../components/NavUnder.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -28,6 +29,11 @@ export default {
     Login,
     PageList,
     NavUnder,
+  },
+  computed: {
+    ...mapGetters('user',[
+      'isAuth'
+    ])
   }
 }
 </script>

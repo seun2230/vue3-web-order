@@ -70,7 +70,7 @@
       </el-form-item>
       <el-button
         class="button"
-        type="text"
+        type="primary"
         @click="submitForm">
         회원 가입
       </el-button>

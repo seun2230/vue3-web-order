@@ -30,6 +30,7 @@ app.use('/api/food', foodRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
+app.use('/api/userinfo', userInfoRouter);
 passportConfig();
 
 app.listen(app.get("port"), () => {
