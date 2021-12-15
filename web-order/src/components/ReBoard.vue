@@ -2,7 +2,7 @@
   <div>
     <ReBoardItem
       v-for="comment in comments"
-      :key="comment.food_items_food_id"
+      :key="comment.commets_id"
       :comment="comment" />
     <button @click="writeComment()">등록</button>
     <div v-if="comments.length == 0">
