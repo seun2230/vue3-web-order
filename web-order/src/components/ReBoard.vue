@@ -1,10 +1,13 @@
 <template>
   <div>
-    <h1>헤이픽 리뷰</h1>
     <ReBoardItem
       v-for="comment in comments"
       :key="comment.food_items_food_id"
       :comment="comment" />
+    <button @click="writeComment()">등록</button>
+    <div v-if="comments.length == 0">
+      <p>등록된 리뷰가 없습니다.</p>
+    </div>
   </div>
 </template>
 
@@ -26,7 +29,12 @@ export default {
     ...mapState('comment', [
       'comments'
     ]),
-  }
+  },
+  methods: {
+    writeComment() {
+      this.$router.push('/user/review');
+    },
+  },
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="contaienr">
+  <div class="container">
     <Header />
     <Slide />
     <Login />

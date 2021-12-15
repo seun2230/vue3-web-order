@@ -113,7 +113,7 @@ try {
 }
 })
 
-router.get('/get/commentMy', async(req, res) => {
+router.get('/get/comment', async(req, res) => {
   try {
     console.log('DB 연결 성공!');
     const connection = await pool.getConnection(async conn => conn);
@@ -130,22 +130,16 @@ router.get('/get/commentMy', async(req, res) => {
   }
 })
 
-router.get('/get/orderList', verifyToken ,async(req, res) => {
+router.get('/get/comment/:id', async(req, res) => {
   try {
     console.log('connection /get/orderList');
     const connection = await pool.getConnection(async conn => conn);
+    var id = parseInt(req.params.id, 10)
+    console.log("id test", id);
     try {
-      let sql = "SELECT order_date as date, order_quantity as quantity, food_name, user_id " +
-        "FROM order_num " +
-        "LEFT JOIN order_list ON id_order_num = order_num_id_order_num " +
-        "LEFT JOIN food_items ON food_items_food_id = food_id " +
-        "LEFT JOIN users ON users_user_id = user_id " +
-        "WHERE user_id = ?";
-      let value = [ req.decoded.user_id ];
-
-      const [rows] = await connection.query(sql, value);
+      const [row] = await connection.query('SELECT * FROM comments WHERE comments_id = ?', id)
       connection.release();
-      res.send(rows);
+      res.send(row);
     } catch (err) {
       console.log("Error", err);
       connection.release();

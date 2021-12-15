@@ -92,7 +92,7 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item>
-            <el-button @click="$router.push('/pageList')">취소</el-button>
+            <el-button @click="returnBoard()">취소</el-button>
             <el-button 
               color="black" 
               class="btn-review"
@@ -130,6 +130,9 @@ export default {
     ...mapState('food', ['foods'])
   },
   methods: {
+    returnBoard() {
+      this.$router.push('/user/board');
+    },
     sendReview() {
       let formData = new FormData(); 
       for(let i = 0; i < this.files.length; i++) {
@@ -154,6 +157,8 @@ export default {
       .then((res) => {
         console.log("데이터 전달 성공", res);
         console.log(formData);
+        alert('고객님의 리뷰가 등록되었습니다.')
+        this.$router.push('/user/board')
       })
       .catch((err) => {
         console.error("오류 발생함", err);
