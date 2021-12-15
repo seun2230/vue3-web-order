@@ -2,13 +2,10 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import store from './store'
 import ElementPlus from 'element-plus'
-import VueRouter from './views/router'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import { far } from '@fortawesome/free-regular-svg-icons'
+import VueRouter from './views/router.js'
+import axios from 'axios'
 
-library.add(fas, far);
+axios.defaults.withCredentials = true;
 
 import 'normalize.css'  //  css 초기화
 
@@ -21,5 +18,4 @@ createApp(App)
   .use(store)
   .use(ElementPlus)
   .use(VueRouter)
-  .component('fa', FontAwesomeIcon)
   .mount('#app')

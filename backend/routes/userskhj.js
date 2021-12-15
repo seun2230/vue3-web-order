@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 
 let mysql = require('mysql');
 

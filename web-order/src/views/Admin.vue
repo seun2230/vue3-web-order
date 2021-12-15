@@ -4,7 +4,7 @@
     관리자 페이지임
   </h1>
   
-  <ImageUpload/>
+  <ImageUpload />
   <OrderList />
 </div>
 </template>

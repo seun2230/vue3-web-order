@@ -22,7 +22,7 @@
         type="text"
         class="menu-btn"
         @click="realRemoveCart(this.cart)">
-        X
+        x
       </el-button>
       <el-button
         type="text"
@@ -45,17 +45,16 @@ export default {
     }
   },
   methods: {
-      removeCart(food) {
-        this.$store.dispatch('food/removeCart', food)
-      },
-      realRemoveCart(food) {
-        this.$store.dispatch('food/realRemoveCart', food)
-      },
-      addCart(food) {
-        this.$store.dispatch('food/addCart', food)
-      }
+    removeCart(food) {
+      this.$store.dispatch('food/removeCart', food)
+    },
+    realRemoveCart(food) {
+      this.$store.dispatch('food/realRemoveCart', food)
+    },
+    addCart(food) {
+      this.$store.dispatch('food/addCart', food)
+    }
   }
-
 }
 </script>
 
@@ -103,7 +102,7 @@ span {
   .btn-group {
     display: grid;
     width: 50px;
-    background-color: $menuListCnt;
+    // background-color: $menuListCnt;
     border-radius: 9px;
     .menu-btn {
       margin: 0px;

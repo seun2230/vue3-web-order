@@ -20,53 +20,49 @@
 </template>
 
 <script>
-import CartItem from './CartItem.vue'
-import TotalPrice from './TotalPrice.vue'
-import { mapGetters, mapState } from 'vuex'
-import axios from 'axios'
+import CartItem from "./CartItem.vue";
+import TotalPrice from "./TotalPrice.vue";
+import { mapGetters, mapState } from "vuex";
+import axios from "axios";
 
 export default {
+  data() {
+    return {
+    }
+  },
   components: {
     CartItem,
-    TotalPrice
-    },
-    computed: {
-      ...mapState('food', [
-        'carts'
-      ]),
-      ...mapGetters('food', [
-        'totalPrice'
-      ]),
-      ...mapState('user', [
-        'token'])
-    },
-    methods: {
-      submitCart(carts, totalPrice) {
-        let list = [ carts, totalPrice ]
+    TotalPrice,
+  },
+  computed: {
+    ...mapState("food", ["carts"]),
+    ...mapGetters("food", ["totalPrice"]),
+  },
+  methods: {
+    submitCart(carts, totalPrice) {
+      let list = [carts, totalPrice];
 
-        axios.post("http://localhost:3000/food/order", 
-          JSON.stringify(list),
-          {
-            headers: {
-              "Content-Type": "application/json"
-            }
-          })
+      axios.post("http://localhost:3000/api/food/post/foodOrder", 
+        JSON.stringify(list), {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
         .then((res) => {
-          console.log("server res :", res.data)
-          this.$store.commit('food/resetCart')
+          console.log("server res :", res.data);
+          this.$store.commit("food/resetCart");
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
-        })
-
-      }
-    }
-  }
+        });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import '../../../scss/variables.scss';
-@import '../../../scss/btn.scss';
+@import "../../../scss/variables.scss";
+@import "../../../scss/btn.scss";
 
 .container {
   display: grid;
@@ -81,7 +77,7 @@ export default {
     border-radius: 9px;
     margin: 10px;
     .cart_item {
-      display: flex
+      display: flex;
     }
   }
   .btn-container {
@@ -89,5 +85,4 @@ export default {
     padding: 10px;
   }
 }
-
 </style>

@@ -12,8 +12,7 @@
                     class="input"
                     maxlength="20"
                     placeholder="아이디를 입력하세요."
-                    :rules="validateAcc">
-                </Field>
+                    :rules="validateAcc" />
                 <ErrorMessage class="error-message" name="acc" />
             </div>
 
@@ -24,8 +23,7 @@
                     name="password"
                     id="password"
                     class="input"
-                    :rules="validatePassword">
-                </Field>
+                    :rules="validatePassword" />
                 <ErrorMessage class="error-message" name="password" />
             </div>
 
@@ -36,8 +34,7 @@
                     name="confirmPassword"
                     id="password_confirmation"
                     class="input"
-                    rules="confirmed:@password">
-                </Field>
+                    rules="confirmed:@password" />
                 <ErrorMessage class="error-message" name="confirmPassword" />
             </div>
 
@@ -49,8 +46,7 @@
                     id="username"
                     class="input"
                     placeholder="이름을 입력하세요."
-                    :rules="validateName">
-                </Field>
+                    :rules="validateName" />
                 <ErrorMessage class="error-message" name="firstName" />
             </div>
 
@@ -63,8 +59,7 @@
                     class="input"
                     maxlength="8"
                     placeholder="8자리 생년월일을 입력하세요."
-                    :rules="validateBirthDay">
-                </Field>
+                    :rules="validateBirthDay" />
                 <ErrorMessage class="error-message" name="birthDay" />
             </div>
 
@@ -76,8 +71,7 @@
                     maxlength="11"
                     class="input"
                     placeholder="- 를 제외하고 입력하세요."
-                    :rules="validatePhoneNumber">
-                </Field>
+                    :rules="validatePhoneNumber" />
                 <ErrorMessage class="error-message" name="phoneNumber" />
             </div>
 

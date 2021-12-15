@@ -22,13 +22,11 @@ const login = async(req, res, next) => {
         )
 
         const sql = "SELECT * FROM users WHERE user_id=?"
-        const value = [
-          user.user_id
-        ]
+        const value = [ user.user_id ]
 
         const [rows] = await connection.query(sql, value);
   
-        res.cookie('Auth', token, { maxAge: 60 * 60 * 60, httpOnly: true, sameSite: "lax" })
+        res.cookie('auth', token, { maxAge: 60 * 60 * 60 , sameSite: "lax" , httpOnly: true})
         res.send(rows[0].user_id)
         next();
       })

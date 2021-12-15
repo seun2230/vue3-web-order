@@ -11,9 +11,7 @@
                     id="acc"
                     class="input"
                     v-model="getUserId"
-                    :disabled="validateAcc"
-                    >
-                </Field>
+                    :disabled="validateAcc" />
             </div>
 
             <div class="input-group">
@@ -23,8 +21,7 @@
                     name="password"
                     id="password"
                     class="input"
-                    :rules="validatePassword">
-                </Field>
+                    :rules="validatePassword" />
                 <ErrorMessage class="error-message" name="password" />
             </div>
 
@@ -35,8 +32,7 @@
                     name="confirmPassword"
                     id="password_confirmation"
                     class="input"
-                    rules="confirmed:@password">
-                </Field>
+                    rules="confirmed:@password" />
                 <ErrorMessage class="error-message" name="confirmPassword" />
             </div>
 
@@ -47,8 +43,7 @@
                     name="firstName"
                     id="username"
                     class="input"
-                    :rules="validateName">
-                </Field>
+                    :rules="validateName" />
                 <ErrorMessage class="error-message" name="firstName" />
             </div>
 
@@ -61,8 +56,7 @@
                     class="input"
                     maxlength="8"
                     placeholder="8자리 생년월일을 입력하세요."
-                    :rules="validateBirthDay">
-                </Field>
+                    :rules="validateBirthDay" />
                 <ErrorMessage class="error-message" name="birthDay" />
             </div>
 
@@ -74,8 +68,7 @@
                     maxlength="11"
                     class="input"
                     placeholder="- 를 제외하고 입력하세요."
-                    :rules="validatePhoneNumber">
-                </Field>
+                    :rules="validatePhoneNumber" />
                 <ErrorMessage class="error-message" name="phoneNumber" />
             </div>
 
@@ -87,7 +80,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import http from '../api/interceptor';
+import axios from 'axios'
 import { Form ,Field, ErrorMessage, defineRule } from 'vee-validate';
 // import user from '../store/user';
 
@@ -108,8 +101,8 @@ export default {
         ErrorMessage,
     },
     created() {
-            http
-            .get('/api/users/mypage')
+            axios
+            .get('/mypage')
             .then((response) => {
             const userInfo = response.data[0];
             console.log('userInfo:', userInfo);

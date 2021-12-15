@@ -1,39 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db/index')
-// const multer = require("multer")
 const { upload } = require('../api/S3UploadStorage')
-// const path = require('path')
 
-
-// const storage = multer.diskStorage({
-//     destination(req, file, callback) {
-//         callback(null, path.join('./', '/uploads'))
-//     },
-//     filename(req, file, callback) {
-//         let array = file.originalname.split('.')
-//         array[0] = array[0] + "_"
-//         array[1] = "." + array[1]
-//         array.splice(1, 0, Date.now().toString())
-        
-//         const result = array.join('')
-//         callback(null, result)
-//     }
-// })
-
-// const upload = multer({
-//   storage,
-//     limits: {
-//       files: 10,
-//       fileSize: 10 * 1024 * 1024
-//     }
-//   })
-
-router.post('/uploads', upload.array('files'), async function(req, res) {
+router.post('/post/foodUpload', upload.array('files'), async function(req, res) {
     try { 
-      console.log("DB Connection! /uploads")
-      console.log("file",req.files)
-      console.log("body",req.body)
+      console.log("DB Connection! /post/foodUpload")
       const connection = await pool.getConnection(async conn => conn);
       try {
         const files = req.files
@@ -83,6 +55,76 @@ router.post('/uploads', upload.array('files'), async function(req, res) {
       }
     })
 
+    router.get('/get/slides', async(req, res) => {
+      try {
+        console.log("DB Connection! /get/slide")
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+          const [rows] = await connection.query('SELECT * FROM slide')
+          connection.release();
+          res.send(rows)
+        } catch(err) {
+          console.log("Query Error")
+          connection.release();
+          res.send({
+            error: "Query Error",
+            err
+          })
+        }
+      } catch(err) {
+        console.log("DB Error")
+        res.send({
+          error: "DB Error",
+          err
+        })
+      }
+    })
+
+    router.post('/post/slideUpload', upload.array('files'), async function(req, res) {
+      try { 
+        console.log("DB Connection! /post/slideUpload")
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+          const files = req.files
+          let image = []  
+    
+          await connection.beginTransaction();
+    
+          for (let i = 0; i < req.files.length; i++) {
+            image[i] = files[i].location
+          }
+    
+            let sql = "INSERT INTO slide" + 
+              "(slide_image)" +
+              "VALUES(?)"
+    
+            let value = [ image[0] ]
+    
+            await connection.query(sql, value)
+            await connection.commit();
+            connection.release();
+            res.send({
+              success: "true"
+            })
+          } catch(err) {
+            console.log("Query Error")
+            await connection.rollback();
+            connection.release();
+            res.send({
+              error: "Query Error",
+              err
+            })
+          }
+        } catch(err) {
+          console.log("DB Error")
+          res.send({
+            error: "DB Error",
+            err
+          })
+        }
+      })
+  
+    
 router.post('/status', async(req, res) => {
   try {
     console.log("DB Connection! /order/status")
@@ -143,7 +185,7 @@ router.get("/orderlist", async (req, res) => {
   }
 })
 
-router.post('/delete', async(req, res) => {
+router.post('/post/foodDelete', async(req, res) => {
   try {
     console.log("DB connection /admin/delete")
     const connection = await pool.getConnection(async conn => conn);
@@ -153,7 +195,9 @@ router.post('/delete', async(req, res) => {
       let value = req.body.food_id
       
       await connection.beginTransaction();
+      await connection.query("SET foreign_key_checks = 0");
       await connection.query(sql, value);
+      await connection.query("SET foreign_key_checks = 1");
       await connection.commit();
       res.send({
         message: "Delete Success!"
@@ -178,13 +222,11 @@ router.post('/delete', async(req, res) => {
   }
 })
 
-router.post('/modify', async(req, res) => {
+router.post('/post/foodModify', async(req, res) => {
   try {
-    console.log("DB connection /admin/modify")
+    console.log("DB connection /post/foodModify")
     const connection = await pool.getConnection(async conn => conn);
     try {
-      console.log("Query Start /admin/modify")
-
       let value = [req.body[0].name, req.body[0].price, req.body[0].category, req.body[0].desc, req.body[1]];
       let sql = "UPDATE food_items " +
         "SET food_name = ?, food_price = ?, food_category = ?, food_info =  ? "+
@@ -216,5 +258,63 @@ router.post('/modify', async(req, res) => {
   }
 })
 
+router.get("/get/comments", async (req, res) => {
+  try {
+    console.log("DB Connection! /get/comments")
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      let sql = "SELECT comments_text as text, comments_title as title," +
+        "ratings, food_name, user_id as id, user_name as name," +
+        "user_gender as gender, comments_image as image ,comments_id " +
+        "FROM comments " +
+        "LEFT JOIN food_items ON food_items_food_id = food_id " +
+        "LEFT JOIN users ON users_user_id = user_id"
+      const [rows] = await connection.query(sql)
+      connection.release();
+      res.send(rows)
+    } catch(err) {
+      console.log(err)
+    }
+  } catch(err) {
+    console.log(err)
+  }
+})
+
+router.post('/post/commentDelete', async(req, res) => {
+  try {
+    console.log("DB connection /post/commentDelete")
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      console.log("Query Start / admin / delete / comments")
+      let sql = "DELETE FROM comments WHERE comments_id = ?"
+      let value = req.body.comments_id
+      
+      await connection.beginTransaction();
+      await connection.query("SET foreign_key_checks = 0");
+      await connection.query(sql, value);
+      await connection.query("SET foreign_key_checks = 1");
+      await connection.commit();
+      res.send({
+        message: "Delete Success!"
+      })
+      connection.release();
+      } catch(err) {
+      console.log("Query Error");
+      console.log("Err : ", err)
+      await connection.rollback();
+      connection.release();
+      res.send({
+        error: "Query Error",
+        err
+      })
+    }
+  } catch(err) {
+    console.log("DB Error")
+    res.send({
+      error: "DB error",
+      err
+    })
+  }
+})
 
 module.exports = router;

@@ -20,7 +20,7 @@ export default {
     },
     mutations: {
       getState(state) {
-        axios.get('http://localhost:3000/food/get')
+        axios.get('http://localhost:3000/api/food/get/foods')
         .then((res) => {
           console.log(res.data)
           state.foods = res.data
@@ -30,7 +30,7 @@ export default {
         })
       },
       getOrder(state) {
-        axios.get('http://localhost:3000/admin/orderlist')
+        axios.get('http://localhost:3000/api/admin/orderlist')
         .then((res) => {
           state.order = res.data
         })
@@ -50,7 +50,7 @@ export default {
       },
             
       orderList(state) {
-        axios.get('http://localhost:3000/order')
+        axios.get('http://localhost:3000/api/admin/order')
         .then((res) => {
          state.order = res.data 
          console.log("jjj",res.data);
@@ -108,17 +108,6 @@ export default {
     },
 
     actions: {
-      getState({ commit, state }) {
-        axios.get('http://localhost:3000/foods')
-        .then((res) => {
-          commit('food/success', res.data, { root: true });
-          state.carts = []
-        })
-        .catch((res) => {
-          commit('food/fail', res, { root: true })
-        })
-      },
-
       addCart({ commit }, food) {
         commit('food/addToCart', food, { root: true });
       },

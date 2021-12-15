@@ -10,35 +10,9 @@ const passportConfig = require('./config/passport');
 const authRouter = require("./routes/authRouter");
 const foodRouter = require("./routes/foodRouter");
 const adminRouter = require("./routes/adminRouter");
+const userRouter = require('./routes/userRouter');
 
 const app = express();
-
-// module.exports  = const { verifyToken } = require('./middleware/auth');
-
-// export const pool = require("./db/index")
-
-// export const storage = multer.diskStorage({
-//   destination(req, file, callback) {
-//     callback(null, path.join('./', '/uploads'))
-//   },
-//   filename(req, file, callback) {
-//     let array = file.originalname.split('.')
-//     array[0] = array[0] + "_";
-//     array[1] = "." + array[1];
-//     array.splice(1, 0, Date.now().toString());
-
-//     const result = array.join('');
-//     callback(null, result)
-//   }
-// })
-
-// export const upload = multer({
-//   storage,
-//   limits: {
-//     files: 10,
-//     fileSize: 10 * 1024 * 1024
-//   }
-// })
 
 app.set('port', 3000)
 
@@ -51,9 +25,10 @@ app.use(passport.initialize())
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/food', foodRouter);
-app.use('/admin', adminRouter);
-app.use('/auth', authRouter);
+app.use('/api/food', foodRouter);
+app.use('/api/admin', adminRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/user', userRouter);
 passportConfig();
 
 app.listen(app.get("port"), () => {
