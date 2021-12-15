@@ -8,14 +8,17 @@
           height="100" />
       </div>
       <div class="inner_info">
-        <div 
-          class="info_id"
-          id="info_id" >
-          {{ comment.users_user_id }}
-        </div>
-        {{ comment.comments_title}}
+
+        {{ comment.users_user_id }}
+        {{ comment.ratings}}
+        <p>{{ comment.comments_title}}</p>
+        <div class="info_text">
         {{ comment.comments_text }}
-        {{ comment.comments_rating}}
+        <el-button style="small">
+          <i class="fas fa-caret-down"></i>
+          더보기
+        </el-button>
+        </div>
       </div>
     </div>
   </div>
@@ -23,6 +26,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      showNum: 4
+    }
+  },
   props: {
     comment: {
       type: Object,
@@ -37,5 +45,27 @@ export default {
   border: 2px solid #ccc;
   border-radius: 5px;
   padding: 10px;
+
+  .inner {
+    display: flex;
+    align-items: center;
+
+    img {
+      border-radius: 10px;
+    }
+  }
 }
+
+.info_text {
+  border: 2px solid navajowhite;
+  display: -webkit-box;
+  word-wrap: break-word;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  // text가 많은 경우 생략 기호 보여주기
+  text-overflow: ellipsis;
+}
+
+
 </style>

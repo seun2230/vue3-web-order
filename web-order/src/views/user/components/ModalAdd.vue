@@ -1,6 +1,9 @@
 <template>
-   <transition name="modal" appear>
-    <div class="modal modal-overlay"
+   <transition 
+    name="modal" 
+    appear>
+    <div 
+      class="modal modal-overlay"
        @click.self="$emit('close')">
       <div class="modal-window">
         <div class="modal-header">
@@ -17,7 +20,8 @@
         <div class="modal-footer">
           <slot name="footer">
             <button 
-              @click="$emit('close')">Close</button>
+              @click="$emit('close')">Close
+            </button>
           </slot>
         </div>
       </div>

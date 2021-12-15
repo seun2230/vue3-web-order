@@ -47,7 +47,7 @@ export default {
         let file = this.files[i];
         formData.append('files', file);
       }
-      axios.post('http://localhost:3000/admin/slide',
+      axios.post('http://localhost:3000/api/admin/post/slideUpload',
       formData,
       {
         headers: {

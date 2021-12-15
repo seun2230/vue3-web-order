@@ -10,6 +10,7 @@ import Review from '../components/Review'
 import ReBoard from '../components/ReBoard'
 import MenuPage from '../views/user/page/MenuPage.vue'
 import UserPage from '../views/user/UserPage.vue'
+import UserMyPage from '../views/user/page/UserMyPage.vue'
 
 const routes = [
   {
@@ -67,6 +68,11 @@ const routes = [
         name: 'modify',
         component: UserModify,
       },
+      {
+        path: 'mypage',
+        name: 'mypage',
+        component: UserMyPage
+      }
     ]
   },
   {

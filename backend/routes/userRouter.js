@@ -65,11 +65,9 @@ router.post('/myorder', verifyToken, async(req, res) => {
     }
   })
 
-router.post('/comments', upload.array('file'), verifyToken, async function(req, res) {
+router.post('/post/comment', upload.array('file'), verifyToken, async function(req, res) {
 try {
-  console.log("DB Connection! /comments")
-  console.log(req.body)
-  console.log(req.decoded)
+  console.log("DB Connection! /post/comment")
   const connection = await pool.getConnection(async conn => conn);
   try {
     const files = req.files
@@ -81,6 +79,7 @@ try {
     let sql = "INSERT INTO comments " +
     "(comments_image, comments_text, ratings, food_items_food_id, users_user_id, comments_title, comments_status)" +
     "VALUES(?, ?, ?, ?, ?, ?, ?)"
+
     let value = [
       image[0],
       req.body.review,
@@ -88,10 +87,8 @@ try {
       req.body.menu,
       req.decoded.user_id,
       req.body.title,
-      req.body.status,
-      ]
-
-  console.log(value)
+      req.body.status
+    ]
   await connection.query(sql, value);
   await connection.commit();
   connection.release();
@@ -116,13 +113,12 @@ try {
 }
 })
 
-router.get('/comments/get', async(req, res) => {
+router.get('/get/commentMy', async(req, res) => {
   try {
     console.log('DB 연결 성공!');
     const connection = await pool.getConnection(async conn => conn);
-
     try {
-      const [row] = await connection.query('SELECT * FROM comments')
+      const [row] = await connection.query('SELECT * FROM comments WHERE comments_status = 0')
       connection.release();
       res.send(row);
     } catch (err) {
@@ -134,17 +130,24 @@ router.get('/comments/get', async(req, res) => {
   }
 })
 
-router.get('/comments/get', async(req, res) => {
+router.get('/get/orderList', verifyToken ,async(req, res) => {
   try {
-    console.log('DB 연결 성공!');
+    console.log('connection /get/orderList');
     const connection = await pool.getConnection(async conn => conn);
-
     try {
-      const [row] = await connection.query('SELECT * FROM comments')
+      let sql = "SELECT order_date as date, order_quantity as quantity, food_name, user_id " +
+        "FROM order_num " +
+        "LEFT JOIN order_list ON id_order_num = order_num_id_order_num " +
+        "LEFT JOIN food_items ON food_items_food_id = food_id " +
+        "LEFT JOIN users ON users_user_id = user_id " +
+        "WHERE user_id = ?";
+      let value = [ req.decoded.user_id ];
+
+      const [rows] = await connection.query(sql, value);
       connection.release();
-      res.send(row);
+      res.send(rows);
     } catch (err) {
-      console.log("error 확인", err);
+      console.log("Error", err);
       connection.release();
     }
   } catch (err) {

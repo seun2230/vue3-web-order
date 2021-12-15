@@ -26,11 +26,10 @@ app.use(passport.initialize())
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/food', foodRouter);
-app.use('/admin', adminRouter);
-app.use('/auth', authRouter);
-app.use('/user', userRouter);
-app.use('/userinfo', userInfoRouter);
+app.use('/api/food', foodRouter);
+app.use('/api/admin', adminRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/user', userRouter);
 passportConfig();
 
 app.listen(app.get("port"), () => {
