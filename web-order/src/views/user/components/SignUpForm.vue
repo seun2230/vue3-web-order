@@ -157,7 +157,7 @@ export default {
   },
   methods: {
     submitForm() {
-      axios.post('http://localhost:3000/auth/register', 
+      axios.post('http://localhost:3000/api/auth/register', 
       JSON.stringify(this.form),
       {
         headers: {

@@ -15,7 +15,7 @@ export default {
   created() {
     var id = this.$route.params.id;
     console.log("id", id);
-    axios.get('http://localhost:3000/user/comments/get/' + id)
+    axios.get('http://localhost:3000/api/user/get/comment/' + id)
     .then(res => {
       console.log("성공", res.data)
       this.reviewInfo = res.data

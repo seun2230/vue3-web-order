@@ -3,9 +3,9 @@ const router = express.Router();
 const pool = require('../db/index')
 const { upload } = require('../api/S3UploadStorage')
 
-router.post('/uploads', upload.array('files'), async function(req, res) {
+router.post('/post/foodUpload', upload.array('files'), async function(req, res) {
     try { 
-      console.log("DB Connection! /uploads")
+      console.log("DB Connection! /post/foodUpload")
       const connection = await pool.getConnection(async conn => conn);
       try {
         const files = req.files
@@ -55,7 +55,7 @@ router.post('/uploads', upload.array('files'), async function(req, res) {
       }
     })
 
-    router.get('/get/slide', async(req, res) => {
+    router.get('/get/slides', async(req, res) => {
       try {
         console.log("DB Connection! /get/slide")
         const connection = await pool.getConnection(async conn => conn);
@@ -80,9 +80,9 @@ router.post('/uploads', upload.array('files'), async function(req, res) {
       }
     })
 
-    router.post('/slide', upload.array('files'), async function(req, res) {
+    router.post('/post/slideUpload', upload.array('files'), async function(req, res) {
       try { 
-        console.log("DB Connection! /slide")
+        console.log("DB Connection! /post/slideUpload")
         const connection = await pool.getConnection(async conn => conn);
         try {
           const files = req.files
@@ -185,7 +185,7 @@ router.get("/orderlist", async (req, res) => {
   }
 })
 
-router.post('/delete', async(req, res) => {
+router.post('/post/foodDelete', async(req, res) => {
   try {
     console.log("DB connection /admin/delete")
     const connection = await pool.getConnection(async conn => conn);
@@ -222,13 +222,11 @@ router.post('/delete', async(req, res) => {
   }
 })
 
-router.post('/modify', async(req, res) => {
+router.post('/post/foodModify', async(req, res) => {
   try {
-    console.log("DB connection /admin/modify")
+    console.log("DB connection /post/foodModify")
     const connection = await pool.getConnection(async conn => conn);
     try {
-      console.log("Query Start /admin/modify")
-
       let value = [req.body[0].name, req.body[0].price, req.body[0].category, req.body[0].desc, req.body[1]];
       let sql = "UPDATE food_items " +
         "SET food_name = ?, food_price = ?, food_category = ?, food_info =  ? "+
@@ -262,10 +260,12 @@ router.post('/modify', async(req, res) => {
 
 router.get("/get/comments", async (req, res) => {
   try {
-    console.log("DB Connection! /get/board")
+    console.log("DB Connection! /get/comments")
     const connection = await pool.getConnection(async conn => conn);
     try {
-      let sql = "SELECT comments_text as text, comments_title as title, ratings, food_name, user_id as id, user_name as name, user_gender as gender, comments_image as image ,comments_id " +
+      let sql = "SELECT comments_text as text, comments_title as title," +
+        "ratings, food_name, user_id as id, user_name as name," +
+        "user_gender as gender, comments_image as image ,comments_id " +
         "FROM comments " +
         "LEFT JOIN food_items ON food_items_food_id = food_id " +
         "LEFT JOIN users ON users_user_id = user_id"
@@ -280,9 +280,9 @@ router.get("/get/comments", async (req, res) => {
   }
 })
 
-router.post('/delete/comments', async(req, res) => {
+router.post('/post/commentDelete', async(req, res) => {
   try {
-    console.log("DB connection /admin/delete/comments")
+    console.log("DB connection /post/commentDelete")
     const connection = await pool.getConnection(async conn => conn);
     try {
       console.log("Query Start / admin / delete / comments")
