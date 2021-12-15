@@ -10,7 +10,8 @@
       <el-form-item
         label="아이디"
         prop="user_id">
-        <el-input v-model="form.user_id" />
+        <el-input v-model="user_info[0].user_id"
+        disabled />
       </el-form-item>
       <el-form-item
         label="비밀번호"
@@ -72,7 +73,7 @@
         class="button"
         type="primary"
         @click="submitForm">
-        회원 가입
+        저장
       </el-button>
     </el-form>
   </div>
@@ -80,6 +81,7 @@
 
 <script>
 import axios from 'axios';
+import { mapState } from 'vuex';
 
 export default {
   data() {
@@ -199,21 +201,30 @@ export default {
   },
   methods: {
     submitForm() {
-      axios.post('http://localhost:3000/api/auth/register',
+      const authUser = this.user_info[0].user_id;
+      console.log('user', authUser);
+      axios.post('http://localhost:3000/api/userinfo/post/updateUserInfo',
       JSON.stringify(this.form),
       {
         headers: {
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+          "authUser": authUser,
+        },
       })
       .then(res => {
         console.log(res)
-        this.$router.push('/user/login')
+        alert("success");
+        this.$router.push('/')
       })
       .catch(err => {
         console.log(err)
       })
     },
+  },
+  computed: {
+    ...mapState('user',[
+      'user_info'
+    ])
   },
 };
 </script>

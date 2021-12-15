@@ -1,27 +1,23 @@
 <template>
- <div class='infoUser'>
-        <router-link to='/user/modify' v-slot='{href, navigate}'
+    <div class='infoAccount'>
+        <div class='router'>
+            <router-link to='/user/review' v-slot='{href, navigate}'
             :href='href' @click='navigate'
             class='routerBtn'>
             <div>
-                <span class='infoTitle'>회원정보 수정</span><br />
-                <span class="infoBody">내 개인정보를 수정하세요.</span>
+                <span class='infoTitle'>리뷰 남기기</span><br />
+                <span class="infoBody">메뉴에 대한 평가를 남겨보세요.</span>
             </div>
-            <!-- <div class='infoBody'>
-                <p>{{ getUserData }}</p>
-                <p>{{ getMaskedUser.maskedAge }}</p>
-                <p>{{ getMaskedUser.maskedPhone }}</p>
-            </div> -->
             <div class="routericon">
                 <i class="fas fa-arrow-right fa-2x"></i>
             </div>
         </router-link>
+        </div>
     </div>
 </template>
 
 <script>
-// import { mapGetters } from 'vuex';
-
+import { mapState } from 'vuex';
 export default {
     name: 'UserInfo',
     props: {
@@ -32,14 +28,11 @@ export default {
             },
         },
     },
-    // created() {
-    //     this.$store.dispatch('userInfo/maskedUser')
-    // },
-    // computed: {
-    //     ...mapGetters('userInfo', [
-    //         'getMaskedUser'
-    //     ])
-    // }
+    computed: {
+        ...mapState('user', [
+            'user_info'
+        ])
+    }
 };
 </script>
 
