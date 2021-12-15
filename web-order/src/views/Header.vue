@@ -6,7 +6,7 @@
      <div class="navbar__logo">
        <li><i class="fas fa-hamburger fa-2x"></i></li>
      </div>
-     
+
      <div class="navbar__info">
         <el-button type="danger" size="small">주문하기</el-button>
      </div>
@@ -20,7 +20,7 @@ export default {
     return {
     }
   },
-  
+
 }
 </script>
 
@@ -35,10 +35,10 @@ header {
   padding: 20px;
   margin-top: 0;
   border: 1px solid #bcbcbc;
-  
+
   .nav {
   @include center;
-  
+
   }
 }
 
@@ -56,10 +56,10 @@ header {
 .navbar__info {
    li {
     color: red;
-  } 
+  }
 }
 @media screen and (max-width: 768px) {
-    
+
   .navbar__menu {
     display: none;
 

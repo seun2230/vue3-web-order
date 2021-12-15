@@ -91,6 +91,11 @@ router.post('/updateUserInfo', async(req, res) => {
     })
   });
 
+
+
+
+
+
 //  수정 폼 기 정보
 // router.get('/mypage', verifyToken, async(req, res) => {
 //     try {
