@@ -74,7 +74,7 @@ export default {
   methods: {
     deleteRow(index) {
       let delete_id = this.foods[index]
-      axios.post('http://localhost:3000/admin/delete',
+      axios.post('http://localhost:3000/api/admin/post/foodDelete',
       JSON.stringify(delete_id),
       {
         headers: {

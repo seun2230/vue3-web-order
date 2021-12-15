@@ -1,39 +1,40 @@
 import axios from 'axios'
-import VueCookies from 'vue-cookies'
 
 export default {
   namespaced: true,
   state: () => {
     return {
       token: [],
-      user_orders: [],
-      isAuth: !!VueCookies.get('Auth'),
+      orderList: [],
     }
   },
   getters: {
 
   },
   mutations: {
-    user_orders(state, payload) {
-      state.user_orders = []
-      state.user_orders = payload
+    getOrderList() {
+      axios.get('http://localhost:3000/api/user/get/orderList')
+      .then(res => {
+        console.log(res.data);
+        this.state.orderList = res.data;
+      }).catch(err => {
+        console.log("Error", err);
+      })
     },
     loginToken(state, payload) {
       console.log("mutation_loginToken_payload_user_info", payload)
       state.token = payload.token
     },
     logoutToken(state) {
-      VueCookies.remove('Auth')
-      state.user_infos = []
       state.token = []
-      state.user_orders = []
+      state.orderList = []
       location.reload;
     },
   },
   actions: {
     login({ commit }, state) {
       console.log("action_login_state", state)
-      axios.post('http://localhost:3000/auth/login',
+      axios.post('http://localhost:3000/api/auth/login',
       JSON.stringify(state),
       {
         headers: {
@@ -48,22 +49,6 @@ export default {
     },
     logout({ commit }) {
       commit('logoutToken')
-    },
-    user_orders({ commit }, state) {
-      console.log(state)
-      axios.post('http://localhost:3000/myorder',
-      JSON.stringify(state),
-      {
-        headers: {
-          "Content-Type" : "application/json"
-        }
-      })
-      .then(res => {
-        console.log("res server : ",res)
-        commit('user_orders', res.data)
-      }).catch(err => {
-        console.log("error", err)
-      })
     },
   }
 }

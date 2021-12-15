@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import Admin from '../views/admin/Admin.vue'
 import FoodManagePage from '../views/admin/page/FoodManagePage.vue'
-import UserInfo from '../store/userInfo'
+import UserInfo from '../views/user/page/MyPageUser.vue'
 import UserModify from '../views/user/page/Modify.vue'
 import SignPage from '../views/user/page/SignPage.vue'
 import LoginPage from '../views/user/page/LoginPage.vue'
@@ -10,6 +10,7 @@ import Review from '../components/Review'
 import ReBoard from '../components/ReBoard'
 import MenuPage from '../views/user/page/MenuPage.vue'
 import UserPage from '../views/user/UserPage.vue'
+import UserMyPage from '../views/user/page/UserMyPage.vue'
 
 const routes = [
   {
@@ -67,6 +68,11 @@ const routes = [
         name: 'modify',
         component: UserModify,
       },
+      {
+        path: 'mypage',
+        name: 'mypage',
+        component: UserMyPage
+      }
     ]
   },
   {
