@@ -1,42 +1,36 @@
 <template>
-  <div class="container">
-    <div class="inner">
-      <div class="inner__img">
-        <img 
-          :src="comment.comments_image"
-          width="100"
-          height="100" />
-      </div>
-      <div class="inner_info">
-
-        {{ comment.users_user_id }}
-        {{ comment.ratings}}
-        <p>{{ comment.comments_title}}</p>
-        <div class="info_text">
-        {{ comment.comments_text }}
-        <el-button style="small">
-          <i class="fas fa-caret-down"></i>
-          더보기
-        </el-button>
+  <router-link :to="{name: 'boardItem', params: { id: comment.comments_id }}">
+    <div class="container">
+        <div class="inner">
+          <div class="inner__img">
+            <img 
+              :src="comment.comments_image"
+              width="100"
+              height="100" />
+          </div>
+          <div class="inner_info">
+            {{ comment.users_user_id }}
+            {{ comment.ratings}}
+            <p>{{ comment.comments_title}}</p>
+            <div class="info_text">
+            {{ comment.comments_text }}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      showNum: 4
-    }
-  },
   props: {
     comment: {
       type: Object,
       default: function() { return {} }
     }
   },
+  methods: {
+  }
 }
 </script>
 
@@ -49,7 +43,7 @@ export default {
   .inner {
     display: flex;
     align-items: center;
-
+   
     img {
       border-radius: 10px;
     }

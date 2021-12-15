@@ -65,6 +65,7 @@ router.post('/myorder', verifyToken, async(req, res) => {
     }
   })
 
+// 작성
 router.post('/comments', upload.array('file'), verifyToken, async function(req, res) {
 try {
   console.log("DB Connection! /comments")
@@ -118,6 +119,7 @@ try {
 }
 })
 
+// 작성 게시판 불러옴
 router.get('/comments/get', async(req, res) => {
   try {
     console.log('DB 연결 성공!');
@@ -136,13 +138,14 @@ router.get('/comments/get', async(req, res) => {
   }
 })
 
-router.get('/comments/get', async(req, res) => {
+router.get('/comments/get/:id', async(req, res) => {
   try {
     console.log('DB 연결 성공!');
     const connection = await pool.getConnection(async conn => conn);
-
+    var id = parseInt(req.params.id, 10)
+    console.log("id test", id);
     try {
-      const [row] = await connection.query('SELECT * FROM comments')
+      const [row] = await connection.query('SELECT * FROM comments WHERE comments_id = ?', id)
       connection.release();
       res.send(row);
     } catch (err) {
