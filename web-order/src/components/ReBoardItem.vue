@@ -1,27 +1,30 @@
 <template>
-  <div class="container">
-    <div class="inner">
-      <div class="inner__img">
-        <img 
-          :src="comment.comments_image"
-          width="100"
-          height="100" />
-      </div>
-      <div class="inner_info">
+  <router-link 
+    :to="{name: 'show', params: { id: comment.comments_id }}">
+    <div class="container">
+      <div class="inner">
+        <div class="inner__img">
+          <img 
+            :src="comment.comments_image"
+            width="100"
+            height="100" />
+        </div>
+        <div class="inner_info">
 
-        {{ comment.users_user_id }}
-        {{ comment.ratings}}
-        <p>{{ comment.comments_title}}</p>
-        <div class="info_text">
-        {{ comment.comments_text }}
-        <el-button style="small">
-          <i class="fas fa-caret-down"></i>
-          더보기
-        </el-button>
+          {{ comment.users_user_id }}
+          {{ comment.ratings}}
+          <p>{{ comment.comments_title}}</p>
+          <div class="info_text">
+          {{ comment.comments_text }}
+          <el-button style="small">
+            <i class="fas fa-caret-down"></i>
+            더보기
+          </el-button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>

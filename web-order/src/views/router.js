@@ -11,6 +11,7 @@ import ReBoard from '../components/ReBoard'
 import MenuPage from '../views/user/page/MenuPage.vue'
 import UserPage from '../views/user/UserPage.vue'
 import UserMyPage from '../views/user/page/UserMyPage.vue'
+import Show from './Show.vue' 
 
 const routes = [
   {
@@ -42,6 +43,11 @@ const routes = [
         path: 'board',
         name: 'board',
         component: ReBoard
+      },
+      {
+        path: 'board/:id',
+        name: 'show',
+        component: Show
       },
       {
         path: 'sign',

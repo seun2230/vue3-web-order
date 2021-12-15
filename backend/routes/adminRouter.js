@@ -265,7 +265,31 @@ router.get("/get/comments", async (req, res) => {
     try {
       let sql = "SELECT comments_text as text, comments_title as title," +
         "ratings, food_name, user_id as id, user_name as name," +
-        "user_gender as gender, comments_image as image ,comments_id " +
+        "user_gender as gender, comments_image as image ,comments_id, food_category as category " +
+        "FROM comments " +
+        "LEFT JOIN food_items ON food_items_food_id = food_id " +
+        "LEFT JOIN users ON users_user_id = user_id"
+      const [rows] = await connection.query(sql)
+      connection.release();
+      res.send(rows)
+    } catch(err) {
+      console.log(err)
+    }
+  } catch(err) {
+    console.log(err)
+  }
+})
+
+router.get("/get/comments/:id", async (req, res) => {
+  try {
+    console.log("DB Connection! /get/comments")
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+
+      param
+      let sql = "SELECT comments_text as text, comments_title as title," +
+        "ratings, food_name, user_id as id, user_name as name," +
+        "user_gender as gender, comments_image as image ,comments_id, food_category as category " +
         "FROM comments " +
         "LEFT JOIN food_items ON food_items_food_id = food_id " +
         "LEFT JOIN users ON users_user_id = user_id"

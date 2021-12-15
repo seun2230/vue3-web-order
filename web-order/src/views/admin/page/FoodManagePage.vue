@@ -11,6 +11,7 @@
         <br/>
       </el-col>
     </el-row>  
+    <PAGE />
     <AdminBoardList />
   </div>
 </template>
@@ -20,13 +21,15 @@ import UploadForm from '../components/UploadFrom.vue'
 import AdminMenuList from '../components/AdminMenuList.vue'
 import SlideUploadForm from '../components/SlideUploadForm.vue'
 import AdminBoardList from '../components/AdminBoardList.vue'
+import PAGE from '../components/List.vue'
 
 export default {
   components: {
     UploadForm,
     AdminMenuList,
     SlideUploadForm,
-    AdminBoardList
+    AdminBoardList,
+    PAGE,
   }
 }
 </script>
