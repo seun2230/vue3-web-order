@@ -35,7 +35,7 @@ export default {
 
 .container {
   display: flex;
-  background-color: $menuListBg;
+  background-color: rgb(241, 237, 220);
   border-radius: 9px;
   margin-bottom: 10px;
   .foods {

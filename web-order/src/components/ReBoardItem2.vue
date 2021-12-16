@@ -1,21 +1,17 @@
 <template>
   <div class="container">
     <img
-      :src="food.food_image1" 
-      :alt="food.food_name" />
+      src="https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/66FB/image/f8zuhswPGHoGlOL4gcFS4yQOyHk.jpeg" 
+      alt="food.food_name" />
     <div class="infos">
       <div class="name">
-        <span>{{ food.food_name }}</span>
+        제목ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
       </div>
       <div class="price">
-        <span>{{ food.food_price }} 원</span>
+        <span>내용</span>
       </div>
       <div class="button">
-        <el-button
-          type="text"
-          @click="addCart()">
-          <span>추가하기</span>
-        </el-button>
+        <span>평점</span>
       </div>
     </div>
   </div>
@@ -40,40 +36,41 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../scss/variables.scss';
-// @import '../../../scss/btn.scss';
+@import '../scss/variables.scss';
+@import '../scss/btn.scss';
 
 .container {
   padding: 10px;
   display: flex;
   width:100%;
   height:120px;
-  background-color: #bb4646;
-  box-shadow: black;
+  background-color: $menuListBg;
   img {
     border-radius: 9px;
     height: 100px;
     width: 100px;
-    box-shadow: 2px 2px rgba(160, 160, 160, 0.445);
+    opacity: 1;
   }
   .infos {
     margin-left: 5px;
     padding: 10px;
     border-radius: 9px;
-    background-color: #ffffffa6;
+    background-color: $menuListCnt;
     border-radius: 9px;
     width: 100%;
     text-align: center;
     font-weight: 800;
     color: $menuBg;
-    box-shadow: 2px 2px rgba(160, 160, 160, 0.445);
     .name {
       display: flex;
       justify-items: center;
       width: 100%;
-      height: 25px;
+      height: 20px;
       margin-bottom: 3px;
       border-radius: 9px;
+      word-wrap: break-word;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .price {
       display: flex;
@@ -81,12 +78,16 @@ export default {
       height: 25px;
       border-radius: 9px;
       margin-bottom: 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .button {
       display: flex;
       height: 25px;
       border-radius: 9px;
-      color: #5e85da9a;
+      color: #ff7b7b9a;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     span {
       width: 100%;

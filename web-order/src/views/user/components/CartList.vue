@@ -42,7 +42,7 @@ export default {
     submitCart(carts, totalPrice) {
       let list = [carts, totalPrice];
 
-      axios.post("http://localhost:3000/api/food/post/foodOrder", 
+      axios.post(`${process.env.VUE_APP_URL}/api/food/post/foodOrder`, 
         JSON.stringify(list), {
           headers: {
             "Content-Type": "application/json",

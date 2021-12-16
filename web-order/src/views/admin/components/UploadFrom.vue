@@ -105,7 +105,7 @@ export default {
         formData.append('info', this.form.desc)
         formData.append('category', this.form.category)
 
-        axios.post('http://localhost:3000/api/admin/post/foodUpload',
+        axios.post(`${process.env.VUE_APP_URL}/api/admin/post/foodUpload`,
           formData,
           {
             headers: {

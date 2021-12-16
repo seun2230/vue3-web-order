@@ -314,9 +314,7 @@ router.post('/post/commentDelete', async(req, res) => {
       let value = req.body.comments_id
       
       await connection.beginTransaction();
-      await connection.query("SET foreign_key_checks = 0");
       await connection.query(sql, value);
-      await connection.query("SET foreign_key_checks = 1");
       await connection.commit();
       res.send({
         message: "Delete Success!"

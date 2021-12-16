@@ -47,7 +47,7 @@ export default {
         let file = this.files[i];
         formData.append('files', file);
       }
-      axios.post('http://localhost:3000/api/admin/post/slideUpload',
+      axios.post(`${process.env.VUE_APP_URL}/api/admin/post/slideUpload`,
       formData,
       {
         headers: {

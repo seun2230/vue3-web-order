@@ -88,7 +88,7 @@ export default {
   methods: {
     submit(state, index) {
       let modifyState = [state, index]
-      axios.post("http://localhost:3000/api/admin/post/foodModify",
+      axios.post(process.env.VUE_APP_URL + "/api/admin/post/foodModify",
       JSON.stringify(modifyState),
       {
         headers: {

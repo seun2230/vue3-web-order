@@ -148,7 +148,7 @@ export default {
       for (var value of formData.values()) {
         console.log("value", value);
       }
-      axios.post('http://localhost:3000/api/user/post/comment', 
+      axios.post(`${process.env.VUE_APP_URL}/api/user/post/comment`, 
       formData, { 
         headers: {
           'Content-Type': 'multipart/form-data'

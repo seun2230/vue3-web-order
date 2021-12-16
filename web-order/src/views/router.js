@@ -12,7 +12,6 @@ import BoardDetail from '../components/BoardDetail.vue'
 import MenuPage from '../views/user/page/MenuPage.vue'
 import UserPage from '../views/user/UserPage.vue'
 import UserMyPage from '../views/user/page/UserMyPage.vue'
-import Show from './Show.vue' 
 
 const routes = [
   {

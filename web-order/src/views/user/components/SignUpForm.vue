@@ -157,7 +157,7 @@ export default {
   },
   methods: {
     submitForm() {
-      axios.post('http://localhost:3000/api/auth/register', 
+      axios.post(`${process.env.VUE_APP_URL}/api/auth/register`, 
       JSON.stringify(this.form),
       {
         headers: {

@@ -88,7 +88,7 @@ export default {
   methods: {
     deleteRow(index) {
       let delete_id = this.comments[index]
-      axios.post('http://localhost:3000/api/admin/post/commentDelete',
+      axios.post(`${process.env.VUE_APP_URL}/api/admin/post/commentDelete`,
       JSON.stringify(delete_id),
       {
         headers: {

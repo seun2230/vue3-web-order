@@ -20,7 +20,7 @@ export default {
     },
     mutations: {
       getState(state) {
-        axios.get('http://localhost:3000/api/food/get/foods')
+        axios.get(`${process.env.VUE_APP_URL}/api/food/get/foods`)
         .then((res) => {
           console.log(res.data)
           state.foods = res.data
@@ -30,7 +30,7 @@ export default {
         })
       },
       getOrder(state) {
-        axios.get('http://localhost:3000/api/admin/orderlist')
+        axios.get(`${process.env.VUE_APP_URL}/api/admin/orderlist`)
         .then((res) => {
           state.order = res.data
         })
@@ -50,7 +50,7 @@ export default {
       },
             
       orderList(state) {
-        axios.get('http://localhost:3000/api/admin/order')
+        axios.get(`${process.env.VUE_APP_URL}/api/admin/order`)
         .then((res) => {
          state.order = res.data 
          console.log("jjj",res.data);
