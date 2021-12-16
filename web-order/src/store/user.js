@@ -12,11 +12,18 @@ export default {
   },
   getters: {
     isAuth: function(state) {
-      console.log('state', state.token);
+      console.log('isAuth state', state.token);
       if (state.token.length < 1) {
         return false;
       } else {
         return true;
+      }
+    },
+    getUserName: function(state) {
+      if (state.user_info.length > 0) {
+        return state.user_info[0].user_name;
+      } else {
+        return null;
       }
     }
   },
@@ -37,12 +44,19 @@ export default {
         "user_name":payload.data.user_name }]
       state.token = payload.data.token
     },
-    logoutToken(state) {
+    logout(state) {
+      console.log("adf", process.env.VUE_APP_URL)
       state.token = [],
       state.orderList = [],
       state.user_info = [],
       location.reload;
       router.push('/');
+      axios.post(`http://localhost:3000/api/auth/logout`)
+      .then(res => {
+        console.log(res);
+      }).catch(err => {
+        console.log(err)
+      })
     },
   },
   actions: {
@@ -63,9 +77,6 @@ export default {
       }).catch(err => {
         console.log("err", err)
       })
-    },
-    logout({ commit }) {
-      commit('logoutToken')
     },
   }
 }

@@ -1,14 +1,8 @@
 <template>
     <div class='container'>
         <div class="pageTitle">
-            <p>내 정보</p>
             <div class='logout'>
-                <button @click='logout'>
-                    로그아웃
-                </button>
-                 <button @click='check'>
-                    check
-                </button>
+                <button-logout />
             </div>
         </div>
         <info-user />
@@ -24,15 +18,16 @@
 </template>
 
 <script>
+import ButtonLogout from '../components/ButtonLogout.vue'
 import InfoUser from '../../../components/InfoUser.vue';
 import ReviewButton from '../../../components/ReviewButton.vue';
 import { mapGetters, mapState } from 'vuex'
-// import * as jose from 'jose'
 
 export default {
     components: {
         InfoUser,
         ReviewButton,
+        ButtonLogout,
     },
     name: 'MyPage',
     computed: {
@@ -42,14 +37,6 @@ export default {
             'isAuth'
         ]),
     },
-    methods: {
-        logout() {
-            this.$store.dispatch('user/logout');
-        },
-        check() {
-            console.log('isAuth', this.isAuth)
-        }
-    }
 }
 </script>
 
@@ -76,18 +63,15 @@ a {
 
 .logout {
     display: flex;
-    flex-direction: row-reverse;
-    margin: 15px 0px;
-    font-size: 1rem;
-    border: 1px solid black;;
     border-radius: 0.25rem;
+    height: 12vw;
 }
 
 .pageTitle {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     justify-content: space-between;
-    margin: 5px 0px;
+    margin: 20px 0px;
     text-align: left;
     font-size: 1.5rem;
     font-weight: bold;
