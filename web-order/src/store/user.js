@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from '../views/router';
 
 export default {
   namespaced: true,
@@ -6,10 +7,18 @@ export default {
     return {
       token: [],
       orderList: [],
+      user_info: [],
     }
   },
   getters: {
-
+    isAuth: function(state) {
+      console.log('state', state.token);
+      if (state.token.length < 1) {
+        return false;
+      } else {
+        return true;
+      }
+    }
   },
   mutations: {
     getOrderList() {
@@ -21,14 +30,19 @@ export default {
         console.log("Error", err);
       })
     },
-    loginToken(state, payload) {
+    login(state, payload) {
       console.log("mutation_loginToken_payload_user_info", payload)
-      state.token = payload.token
+      state.user_info = [{
+        "user_id" : payload.data.user_id,
+        "user_name":payload.data.user_name }]
+      state.token = payload.data.token
     },
     logoutToken(state) {
-      state.token = []
-      state.orderList = []
+      state.token = [],
+      state.orderList = [],
+      state.user_info = [],
       location.reload;
+      router.push('/');
     },
   },
   actions: {
@@ -40,9 +54,12 @@ export default {
         headers: {
           'Content-Type' : "application/json"
         }
-      }).then(async(res) => {
-        commit('cookie')
+      }).then((res) => {
+        commit('login', res)
         console.log("server res : ", res);
+        if (res.status == 200) {
+          router.push('/');
+        }
       }).catch(err => {
         console.log("err", err)
       })
