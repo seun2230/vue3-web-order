@@ -42,6 +42,7 @@ export default {
   },
   methods: {
     login() {
+      console.log("ㅠㅠ",process.env.VUE_APP_URL)
       this.$store.dispatch('user/login', this.form)
     },
     sign() {
