@@ -1,18 +1,18 @@
 <template>
   <div class="container">
-    <img
-      src="https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/66FB/image/f8zuhswPGHoGlOL4gcFS4yQOyHk.jpeg" 
-      alt="food.food_name" />
-    <div class="infos">
-      <div class="name">
-        제목ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
-      </div>
-      <div class="price">
-        <span>내용</span>
-      </div>
-      <div class="button">
-        <span>평점</span>
-      </div>
+    <button class="accordion">Section 1</button>
+    <div class="panel">
+      <p>Lorem ipsum...</p>
+    </div>
+
+    <button class="accordion">Section 2</button>
+    <div class="panel">
+      <p>Lorem ipsum...</p>
+    </div>
+
+    <button class="accordion">Section 3</button>
+    <div class="panel">
+      <p>Lorem ipsum...</p>
     </div>
   </div>
 </template>
@@ -21,6 +21,11 @@
 
 
 export default {
+  data() {
+    return {
+      
+    }
+  },
   props: {
     food: {
       type: Object,
@@ -30,7 +35,7 @@ export default {
   methods: {
     addCart() {
       this.$store.dispatch('food/addCart', this.food)
-    }
+    },
   }
 }
 </script>

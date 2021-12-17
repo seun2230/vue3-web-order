@@ -72,14 +72,34 @@ try {
   try {
     const files = req.files
     let image = []
-
+    
     for (let i = 0; i < req.files.length; i++) {
       image[i] = files[i].location
     }
+    console.log(image[0])
     let sql = "INSERT INTO comments " +
     "(comments_image, comments_text, ratings, food_items_food_id, users_user_id, comments_title, comments_status)" +
     "VALUES(?, ?, ?, ?, ?, ?, ?)"
+    if (image[0] === undefined) {
+      const [row] = await connection.query("SELECT * FROM null_image");
+      image[0] = [row][0][0].null_image
 
+      let value = [
+        image[0],
+        req.body.review,
+        req.body.ratings,
+        req.body.menu,
+        req.decoded.user_id,
+        req.body.title,
+        req.body.status
+      ]
+      await connection.query(sql, value);
+      await connection.commit();
+      connection.release();
+      res.send({
+          success: "true"
+        })
+    }
     let value = [
       image[0],
       req.body.review,
@@ -89,6 +109,8 @@ try {
       req.body.title,
       req.body.status
     ]
+
+    console.log("value", value)
   await connection.query(sql, value);
   await connection.commit();
   connection.release();

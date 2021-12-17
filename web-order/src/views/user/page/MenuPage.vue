@@ -12,13 +12,10 @@ import CartList from '../components/CartList.vue'
 export default {
   components: {
     MenuList,
-    CartList
+    CartList,
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.container {
-  padding: 10px;
-}
 </style>

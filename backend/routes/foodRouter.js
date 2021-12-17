@@ -9,7 +9,7 @@ router.get('/get/foods', async (req, res) => {
       console.log("DB Connection! /get/foods")
       const connection = await pool.getConnection(async conn => conn);
       try {
-        const [rows] = await connection.query('SELECT * FROM food_items')
+        const [rows] = await connection.query('SELECT * FROM food_items');
         connection.release();
         res.send(rows)
       } catch(err) {

@@ -32,11 +32,7 @@ export default {
         maskedUser: function (context) {
             return new Promise((resolve, reject) => {
                 axios
-<<<<<<< HEAD
                 .get(`${process.env.VUE_APP_URL}/maskedUser`)
-=======
-                .get('http://localhost:3000/userinfo/maskedUser')
->>>>>>> 41a1409151208ce2b57e40d8143855411886e8b9
                 .then(response => {
                     console.log('response.data[0] on maskedUser actions: ', response.data[0]);
                     if (response.status == 200) {

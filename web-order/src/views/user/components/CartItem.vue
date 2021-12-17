@@ -12,24 +12,18 @@
       </div>
     </div>
     <div class="btn-group">
-      <el-button
-        type="text"
-        class="menu-btn"
-        @click="removeCart(this.cart)">
-        -
-      </el-button>
-      <el-button
-        type="text"
-        class="menu-btn"
-        @click="realRemoveCart(this.cart)">
-        x
-      </el-button>
-      <el-button
-        type="text"
-        class="menu-btn"
+      <div class="btn-menu"
         @click="addCart(this.cart)">
-        +
-      </el-button>
+        <i class="fas fa-angle-up"></i>
+      </div>
+      <div class="btn-menu"
+        @click="realRemoveCart(this.cart)">
+        <i class="fas fa-ban"></i>
+      </div>
+      <div class="btn-menu"
+        @click="removeCart(this.cart)">
+        <i class="fas fa-angle-down"></i>
+      </div>
     </div>
   </div>
 </template>
@@ -65,46 +59,39 @@ span {
 }
 
 .container {
+  margin-top: 10px;
   display: flex;
-  height: 105px;
-  width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
+  border-radius: 9px;
+  height: 100px;
+  width: 100%;
+  box-shadow: 2px 2px 2px 2px rgba(160, 160, 160, 0.445);
   .infos-container {
     display: grid;
-    text-align: center;
     font-weight: 800;
     color: $menuBg;
     width: 100%;
-    border-radius: 9px;
-    margin-right: 10px;
     .name-box {
       width: 100%;
-      background-color: $menuListInf2;
-      border-radius: 9px;
       height: 25px;
     }
     .quantity-box {
       margin-top: 5px;
       flex-grow: 100%;
-      background-color: $menuListInf1;
-      border-radius: 9px;
       height: 25px;
     }
     .price-box {
       margin-top: 5px;
       flex-grow: 100%;
-      background-color: $menuListInf2;
-      border-radius: 9px;
       height: 25px;
     }
   }
   .btn-group {
     display: grid;
     width: 50px;
-    // background-color: $menuListCnt;
-    border-radius: 9px;
-    .menu-btn {
+    .btn-menu {
+      font-weight: 800;
+      text-align: center;
       margin: 0px;
       width: 40px;
       height: 20px;

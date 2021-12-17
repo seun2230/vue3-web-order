@@ -4,7 +4,7 @@ import store from './store'
 import ElementPlus from 'element-plus'
 import VueRouter from './views/router.js'
 import axios from 'axios'
-import * as jose from 'jose'
+// import * as jose from 'jose'
 
 // require('dotenv').config();
 axios.defaults.withCredentials = true;
@@ -17,7 +17,6 @@ import './scss/index.scss';  //  글로벌 css
 import '@fortawesome/fontawesome-free/js/all.js'
 
 createApp(App)
-  .use(jose)
   .use(store)
   .use(ElementPlus)
   .use(VueRouter)

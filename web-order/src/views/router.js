@@ -6,8 +6,8 @@ import UserInfo from '../views/user/page/MyPageUser.vue'
 import UserModify from '../views/user/page/Modify.vue'
 import SignPage from '../views/user/page/SignPage.vue'
 import LoginPage from '../views/user/page/LoginPage.vue'
-import Review from '../components/Review'
-import ReBoard from '../components/ReBoard'
+import Review from '../components/Review.vue'
+import ReBoard from '../components/ReBoard.vue'
 import BoardDetail from '../components/BoardDetail.vue'
 import MenuPage from '../views/user/page/MenuPage.vue'
 import UserPage from '../views/user/UserPage.vue'
@@ -72,8 +72,8 @@ const routes = [
       },
       {
         path: 'menu',
-        name: 'Menu',
-        component: MenuPage
+        name: 'menu',
+        component: MenuPage,
       },
       {
         path: 'userinfo',

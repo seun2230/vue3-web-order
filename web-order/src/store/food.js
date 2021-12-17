@@ -6,7 +6,10 @@ export default {
       return {
         carts: [],
         foods: [],
-        order: []
+        order: [],
+        food_main: [],
+        food_side: [],
+        food_beverage: [],
       }  
     },
     getters: {
@@ -20,7 +23,7 @@ export default {
     },
     mutations: {
       getState(state) {
-        axios.get(`${process.env.VUE_APP_URL}/api/food/get/foods`)
+        axios.get(`${process.env.VUE_APP_URL}/api/food/get/foods/`)
         .then((res) => {
           console.log(res.data)
           state.foods = res.data

@@ -9,12 +9,12 @@
     </div>
     <TotalPrice />
     <div class="btn-container">
-      <el-button
+      <div
+        class="btn-order"
         type="text"
-        class="menu-btn"
         @click="submitCart(this.carts, this.totalPrice)">
         결제
-      </el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -42,11 +42,7 @@ export default {
     submitCart(carts, totalPrice) {
       let list = [carts, totalPrice];
 
-<<<<<<< HEAD
       axios.post(`${process.env.VUE_APP_URL}/api/food/post/foodOrder`, 
-=======
-      axios.post("http://localhost:3000/api/food/post/foodOrder",
->>>>>>> 41a1409151208ce2b57e40d8143855411886e8b9
         JSON.stringify(list), {
           headers: {
             "Content-Type": "application/json",
@@ -70,23 +66,28 @@ export default {
 
 .container {
   display: grid;
-  background-color: $menuListBg;
-  border-radius: 9px;
+  width: 100%;
   .cartList {
-    background-color: $menuListCnt;
-    min-height: 125px;
-    padding-right: 10px;
-    padding-left: 10px;
-    padding-top: 10px;
-    border-radius: 9px;
-    margin: 10px;
+    min-height: 100px;
+    // border-radius: 9px;
+    padding: 5px;
+    // box-shadow: 2px 2px 2px 2px rgba(160, 160, 160, 0.445);
     .cart_item {
       display: flex;
     }
   }
   .btn-container {
-    display: flex;
-    padding: 10px;
+    padding: 5px;
+    width: 100%;
+    text-align: center;
+    .btn-order {
+      padding: 5px;
+      border-radius: 9px;
+      width: 100%;
+      color: $menuBg;
+      box-shadow: 2px 2px 2px 2px rgba(160, 160, 160, 0.445);
+      font-weight: 800;
+    }
   }
 }
 </style>

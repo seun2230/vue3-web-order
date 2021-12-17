@@ -3,6 +3,7 @@
     class="el-form"
     ref="form"
     :model="form"
+    label-position="top"
     label-width="100px">
     <el-form-item label="음식 이름">
       <el-input v-model="form.name" />
@@ -39,28 +40,28 @@
         v-model="form.desc"
         type="textarea" />
     </el-form-item>
-    <el-form-item 
-      id="image-upload"
-      label="이미지 업로드">
+      <div class="image-upload-container">
+        <div> 오른쪽 </div>
       <div
         class="image-preview"
         @click="addFiles()">
-        <div
-          class="image-preview-item"
-          v-for="(file, key) in files"
-          :key="'file-' + key">
-          <img
-            class="image-preview-image"
-            :id="'image-' + parseInt(key)" />
-        </div>
+          <div
+            class="image-preview-item"
+            v-for="(file, key) in files"
+            :key="'file-' + key">
+            <img
+              class="image-preview-image"
+              :id="'image-' + parseInt(key)" />
+          </div>
       </div>
+        <div> 오른쪽 </div>
       <input
         type="file"
         id="multiple-image-input"
         accept="image/*"
         multiple
         @change="handleFileUpload($event)" />
-    </el-form-item>
+      </div>
     <el-button
       type="primary"
       @click="onSubmit">
@@ -136,11 +137,9 @@ export default {
     getImagePreviews() {
       for (let i = 0; i < this.files.length; i++) {
         let reader = new FileReader();
-
         reader.addEventListener("load", function() {
           document.getElementById('image-' + parseInt(i)).src = reader.result;
         }.bind(this), false);
-
         reader.readAsDataURL(this.files[i]);
       }
     },
@@ -157,7 +156,6 @@ export default {
 #multiple-image-input {
   display: none;
 }
-
 .el-form {
   padding: 20px;
   background: #ffffff;
@@ -166,18 +164,23 @@ export default {
     align-items: center;
     margin: 0px;
   }
+  .image-upload-container {
+    align-items: center;
+    vertical-align: middle;
+  }
   .image-preview {
-    display: inline-flex;
-    overflow: hidden;
-    min-width: 100px;
-    max-width: 300px;
-    height:100px;
+    display: flex;
+    flex-wrap: wrap;
+    height: 300px;
+    width: 300px;
     border-radius: 9px;
     background: $mainBg;
     .image-preview-item {
+      width:200px;
+      height:200px;
       img {
-        width: 100px;
-        height: 100px;
+        width: 200px;
+        height: 200px;
       }
     }
   }
