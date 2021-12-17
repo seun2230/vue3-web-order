@@ -30,8 +30,6 @@ export default {
   },
   setup() {
   },
-  mounted() {
-  },
   methods: {
     login() {
       const login_user = {

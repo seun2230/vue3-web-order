@@ -1,107 +1,36 @@
 <template>
-<swiper 
-  :spaceBetween="3" 
-  :pagination='{ "clickable": true }' 
-   class="mySwiper">
-  <swiper-slide>
-    <img 
-    src="https://news.hmgjournal.com/images_n/contents/cons/2020/201214_christmas_01.jpg" 
-    alt="present" />
-  </swiper-slide>
-  <swiper-slide>
-    <img
-     src="data:image/jpeg;base64,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" 
-     alt="cafe" /></swiper-slide>
-  <swiper-slide>
-    <img 
-     src="https://img.hankyung.com/photo/202105/01.26386608.1.jpg"
-     alt="hamburger" />
-  </swiper-slide>
-  <swiper-slide>
-   오늘 슬라이드 끝낸다
-  </swiper-slide>
-  </swiper>
+  <div class="block">
+    <el-carousel height="200px">
+      <el-carousel-item 
+        v-for="item in slide" 
+        :key="item">
+        <img 
+          :src="item.slide_image"
+          :alt="item.slide_image" />
+      </el-carousel-item>
+    </el-carousel>
+  </div>
 </template>
+
 <script>
-// Import Swiper Vue.js components
-import { Swiper, SwiperSlide } from 'swiper/vue';
-
-// Import Swiper styles
-import 'swiper/swiper.scss';
-
-import 'swiper/components/pagination/pagination.min.css'
-
-
-
-// import Swiper core and required modules
-import SwiperCore, {
-  Pagination
-} from 'swiper';
-
-// install Swiper modules
-SwiperCore.use([ Pagination ]);
-
+import { mapState } from 'vuex';
 
 export default {
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
-  data() {
-    return {
-        
-        
-    };
-  },
   methods: {
     
+  },
+  created() {
+    this.$store.commit('admin/getSlide');
+  },
+  computed: {
+    ...mapState('admin',['slide'])
   }
   
 }
 </script>
 <style lang="scss" scoped>
-.swiper {
-  top: 0;
-  max-width: 100%;
-  height: auto;
-}
-
-.swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: #fff;
-
-  /* Center slide text vertically */
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;                                                           
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;  
-  -webkit-align-items: center;
-  align-items: center;
-}
-
-.swiper-slide img {
-  width: 100%;
-  height: 300px;
-  border-radius: 5px;
-  // object-fit: cover;
-}
-
-  .swiper-pagination-bullet {
-  width: 20px;
-  height: 20px;
-  text-align: center;
-  line-height: 20px;
-  font-size: 12px;
-  color: #000;
-  opacity: 1;
-  background: rgba(0, 0, 0, 0.2);
+img {
+  object-fit: cover;
 }
 </style>
 

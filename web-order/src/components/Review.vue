@@ -1,34 +1,36 @@
 <template>
   <div class="container">
-    <h1>{{ title }}</h1>
-    <hr />
     <div class="inner">
       <p> * 고객님의 솔직한 리뷰를 남겨주세요. </p>
       <div class="inner-form">
         <el-form 
           ref="form" 
-          :model="form">
+          :model="form"
+          label-position="top"
+          label-width="100px">
           <el-form-item 
-            label="사용자">
+            label="제목"
+            placeholder="최소 15자 내외로 작성해주세요.">
             <el-input 
-              v-model="form.name" />
-          </el-form-item>
-          <el-form-item 
-            label="제목">
-            <el-input 
-              v-model="form.subject"/>
+              v-model="form.title" />
           </el-form-item> 
           <el-form-item 
             label="메뉴 이름">
-            <el-input 
-              v-model="form.menu"/>
+            <el-select
+              v-model="form.menu" 
+              placeholder="오늘의 메뉴는?">
+              <el-option
+                v-for="food in foods"
+                :key="food.food_id"
+                :label="food.food_name"
+                :value="food.food_id" />
+            </el-select>
           </el-form-item>
-
           <el-form-item label="평점">
             <el-select 
-              v-model="form.rating"
+              v-model="form.ratings"
               width="30px"
-              placeholder="메뉴 만족하셨나요?" >
+              placeholder="음식/가격?" >
               <el-option 
                 label="😍: 아주 만족해요" 
                 value="1" />         
@@ -42,7 +44,7 @@
                 label="🙁: 그냥 그래요 " 
                 value="4" />
               <el-option 
-                label="😟: 별로에요" 
+                label="😤: 별로에요" 
                 value="5" />
             </el-select>
           </el-form-item>
@@ -50,28 +52,50 @@
             label="기타 의견">
             <el-input 
               v-model="form.review"
-              placeholder="최소 15자 내외로 작성해주세요." 
+              placeholder="고객님의 의견을 남겨주세요. :)" 
               type="textarea"/>
           </el-form-item>
-          <input 
-            type="file"
-              name="file"
-            ref="file"
-            @change="addFile()"
-            multiple /><br />
+          <el-form-item>
+            <div
+              class="image-preview"
+              @click="addFiles()">
+              <div
+                class="image-preview-item"
+                v-for="(file, key) in files"
+                :key="'file-' + key">
+                <div class="img-box">
+                  <img
+                    class="image-preview-image"
+                    :id="'image-' + parseInt(key)" />
+                </div>  
+              </div>
+            </div>
+            <input
+              type="file"
+              id="multiple-image-input"
+              accept="image/*"
+              multiple
+              @change="handleFileUpload($event)" />
+          </el-form-item>
           <el-form-item label="리뷰 공개">
-            <el-radio-group v-model="form.check">
-              <el-radio label="동의" />
-              <el-radio label="비동의" />
+            <el-radio-group v-model="form.status">
+              <el-radio 
+                label="true">
+                동의
+              </el-radio>
+              <el-radio 
+                label="false">
+                비동의
+              </el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item>
-            <el-button @click="$router.push('/pageList')">취소</el-button>
-            <el-button 
-              color="black" 
+            <el-button  
+              type="text"
               class="btn-review"
-              @click="sendReview()">리뷰 등록
+              @click="sendReview()">리뷰 작성
             </el-button>
+            <el-button @click="returnBoard()">취소</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -81,64 +105,86 @@
 
 <script>
 import axios from 'axios'
+import { mapState} from 'vuex'
 
 export default {
   data() {
     return {
       active: false,
-      title: '리뷰 작성',
       files: [],
       form: {
-        name: '',
-        subject: '',
+        title: '',
         menu:'',
         review: '',
-        check: '',
+        status: '',
       }
     }
   },
+  created() {
+    this.$store.commit('food/getState')
+  },
+  computed: {
+    ...mapState('food', ['foods'])
+  },
   methods: {
-    addFile() {    
-      for(let i = 0; i < this.$refs.file.files.length; i++) {
-        this.files[i] = this.$refs.file.files[i];
-      }
-      console.log("this.files", this.files);
+    returnBoard() {
+      this.$router.push('/user/board');
     },
-
     sendReview() {
-        // FormData(): 페이지 전환없이 폼 데이터 제출 하는 경우
       let formData = new FormData(); 
       for(let i = 0; i < this.files.length; i++) {
-        
         formData.append('file', this.files[i]);
-        console.log("file" , this.files);
       }
-      
-      formData.append("name", this.form.name);
-      formData.append("subject", this.form.subject);
-      formData.append("menu", this.form.menu);
-      formData.append("review", this.form.rating);
+      formData.append("title", this.form.title);
+      formData.append("menu", this.form.menu); 
+      formData.append("ratings", this.form.ratings); 
       formData.append("review", this.form.review);
+      formData.append('status', this.form.status);
       
 
       for (var value of formData.values()) {
         console.log("value", value);
       }
-      axios.post('http://localhost:3000/review', formData, { 
+      axios.post(`${process.env.VUE_APP_URL}/api/user/post/comment`, 
+      formData, { 
         headers: {
           'Content-Type': 'multipart/form-data'
         },
-  
       })      
       .then((res) => {
         console.log("데이터 전달 성공", res);
         console.log(formData);
+        alert('고객님의 리뷰가 등록되었습니다.')
+        this.$router.push('/api/user/board')
       })
       .catch((err) => {
         console.error("오류 발생함", err);
       });
     },
+    addFiles() {
+      console.log("addFiles Clicked!")
+      document.getElementById('multiple-image-input').click();
+    },
+    handleFileUpload(event) {
+      let uploadedFiles = event.target.files;
+      
+      for (let i = 0; i < uploadedFiles.length; i++) {
+        this.files.push(uploadedFiles[i]);
+      }
+  
+      this.getImagePreviews();
+    },
+    getImagePreviews() {
+      for (let i = 0; i < this.files.length; i++) {
+        let reader = new FileReader();
 
+        reader.addEventListener("load", function() {
+          document.getElementById('image-' + parseInt(i)).src = reader.result;
+        }.bind(this), false);
+
+        reader.readAsDataURL(this.files[i]);
+      }
+    },
     removeFile() {
       this.files = [];
       console.log(this.files);
@@ -149,13 +195,43 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../scss/variables.scss';
+
 .container {
   border: 1px solid #ccc;
+  padding: 10px;
 }
 
 .btn-review {
-  margin-top: 10px;
-  color: #fff;
+  // margin-top: 10px;
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  font-size: 20px;
 }
-
+input {
+  display: none;
+}
+.image-preview {
+  display: flex;
+  overflow: hidden;
+  min-width: 200px;
+  max-width: 200px;
+  height:200px;
+  border-radius: 9px;
+  background: $mainBg;
+  justify-content: cover;
+  .image-preview-item {
+    img {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    width: 100px;
+    height: 100px;
+    }
+  }
+}
+.img-box{
+  border: solid;
+}
 </style>

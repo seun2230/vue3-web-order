@@ -1,5 +1,3 @@
-// import { response } from 'express';
-// import axios from 'axios';
 import http from '../api/interceptor';
 import jwt from '../util/jwt';
 import router from '../router/index'

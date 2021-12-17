@@ -1,70 +1,71 @@
 import axios from 'axios'
-import VueCookies from 'vue-cookies'
+import router from '../views/router';
 
 export default {
   namespaced: true,
   state: () => {
     return {
-      user_infos: [],
       token: [],
-      user_orders: []
+      orderList: [],
+      user_info: [],
     }
   },
   getters: {
-
+    isAuth: function(state) {
+      console.log('state', state.token);
+      if (state.token.length < 1) {
+        return false;
+      } else {
+        return true;
+      }
+    }
   },
   mutations: {
-    user_orders(state, payload) {
-      state.user_orders = []
-      state.user_orders = payload
+    getOrderList() {
+      axios.get(`${process.env.VUE_APP_URL}/api/user/get/orderList`)
+      .then(res => {
+        console.log(res.data);
+        this.state.orderList = res.data;
+      }).catch(err => {
+        console.log("Error", err);
+      })
     },
-    loginToken(state, payload) {
-      console.log("mutation_loginToken_payload_user_info", payload.rows[0])
-      VueCookies.set("Auth", payload.token)
-      state.user_infos = payload.rows[0]
-      state.token = payload.token
+    login(state, payload) {
+      console.log("mutation_loginToken_payload_user_info", payload)
+      state.user_info = [{
+        "user_id" : payload.data.user_id,
+        "user_name":payload.data.user_name }]
+      state.token = payload.data.token
     },
     logoutToken(state) {
-      VueCookies.remove('Auth')
-      state.user_infos = []
-      state.token = []
-      state.user_orders = []
+      state.token = [],
+      state.orderList = [],
+      state.user_info = [],
       location.reload;
-    }
+      router.push('/');
+    },
   },
   actions: {
     login({ commit }, state) {
       console.log("action_login_state", state)
-        axios.post('http://localhost:3000/auth/login', state, 
-        {
-					headers: {
-						'Content-Type' : "application/json"
-          }
-        }).then(async(res) => {
-          await commit('loginToken', res.data)
-          console.log(res);
-        }).catch(err => {
-          console.log("err", err)
-        })
-      },
-      logout({ commit }) {
-        commit('logoutToken')
-      },
-      user_orders({ commit }, state) {
-        console.log(state)
-
-        axios.post('http://localhost:3000/myorder', 
-          state,
-          { 
-            headers: {
-              "Content-Type" : "application/json" 
-            }
-          })
-        .then(res => {
-          commit('user_orders', res.data)
-        }).catch(err => {
-          console.log(err)
-        })
-      }
-    }
+      axios.post(`${process.env.VUE_APP_URL}/api/auth/login`,
+      JSON.stringify(state),
+      {
+        headers: {
+          'Content-Type' : "application/json"
+        }
+      }).then((res) => {
+        commit('login', res)
+        console.log("server res : ", res);
+        if (res.status == 200) {
+          router.push('/');
+        }
+      }).catch(err => {
+        console.log("err", err)
+      })
+    },
+    logout({ commit }) {
+      commit('logoutToken')
+    },
   }
+}

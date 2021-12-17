@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     modifyStatus(num) {      
-        axios.post('http://localhost:3000/admin/status', 
+        axios.post(`${process.env.VUE_APP_URL}/api/admin/status`, 
         JSON.stringify(num),
             {
               headers: {

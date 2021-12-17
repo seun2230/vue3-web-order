@@ -19,13 +19,13 @@ async function localVerify(user_id, user_password, done) {
     const connection = await pool.getConnection(conn => conn);
     try {
       const sql = 'SELECT * FROM users WHERE user_id = ?'
-      console.log(user_id)
-      console.log(user_password)
+      console.log("localVerify", user_id)
+      console.log("localVerify", user_password)
       const value = [ user_id ]
 
       const [rows] = await connection.query(sql, value)
       
-      console.log(rows[0])
+      console.log("localVerify", rows[0])
       let user = rows[0]
               
       //  아이디가 존재 하지 않을 경우
@@ -34,7 +34,7 @@ async function localVerify(user_id, user_password, done) {
         }
 
       const checkPassword = await bcrypt.compare(user_password, user.user_password)
-      console.log(checkPassword)
+      console.log("localVerify", checkPassword)
 
       if (!checkPassword) {
         return done("비밀번호가 틀렸습니다.", false);
@@ -72,7 +72,7 @@ async function jwtVerify(payload, done) {
           return done(null, false)
         }
         userInfo = rows[0]
-
+        console.log("jwtVerify", rows[0])
         return done(null, userInfo)
       })
     } catch(err) {

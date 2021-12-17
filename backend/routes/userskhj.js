@@ -47,7 +47,7 @@ router.get('/', function (req, res) {
 });
 
 router.get('/maskedUser', verifyToken, function(req, res) {
-  jwt.verify(req.token, process.env.VUE_APP_JWT_KEY, err => {
+  jwt.verify(req.token, process.env.JWT_KEY, err => {
     if (err) {
       console.log('Unauthrized');
       res.sendStatus(401);
@@ -77,7 +77,7 @@ router.get('/maskedUser', verifyToken, function(req, res) {
 })
 
 router.get('/orderHistory', verifyToken, function (req, res) {
-  jwt.verify(req.token, process.env.VUE_APP_JWT_KEY, err => {
+  jwt.verify(req.token, process.env.JWT_KEY, err => {
     if (err) {
       console.log('Unauthorized');
       res.sendStatus(401);
@@ -112,7 +112,7 @@ router.get('/orderHistory', verifyToken, function (req, res) {
 
 router.get('/mypage', verifyToken, function (req, res) {
   console.log('update token:', req.token);
-  jwt.verify(req.token, process.env.VUE_APP_JWT_KEY, err => {
+  jwt.verify(req.token, process.env.JWT_KEY, err => {
     if (err) {
       console.log('Unauthorized');
       res.sendStatus(401);
@@ -187,7 +187,7 @@ router.post('/signup', function (req, res) {
           function (err, row2) {
               if (err) throw err;
             });
-            const token = jwt.sign({ user: user.user_acc }, process.env.VUE_APP_JWT_KEY);
+            const token = jwt.sign({ user: user.user_acc }, process.env.JWT_KEY);
             res.json({
               token,
               success: true,
@@ -219,7 +219,7 @@ router.post('/login', function (req, res) {
     if (row[0] !== undefined && row[0].user_acc === user.user_acc) {
       bcrypt.compare(user.user_password, row[0].user_password, function (err, res2) {
         if (res2) {
-          const token = jwt.sign({ user: user.user_acc }, `${process.env.VUE_APP_JWT_KEY}`);
+          const token = jwt.sign({ user: user.user_acc }, `${process.env.JWT_KEY}`);
           const user_name = row[0].user_name;
           res.json({
             token,

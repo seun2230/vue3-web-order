@@ -9,85 +9,85 @@
     </div>
     <TotalPrice />
     <div class="btn-container">
-      <el-button
+      <div
+        class="btn-order"
         type="text"
-        class="menu-btn"
         @click="submitCart(this.carts, this.totalPrice)">
         결제
-      </el-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import CartItem from './CartItem.vue'
-import TotalPrice from './TotalPrice.vue'
-import { mapGetters, mapState } from 'vuex'
-import axios from 'axios'
+import CartItem from "./CartItem.vue";
+import TotalPrice from "./TotalPrice.vue";
+import { mapGetters, mapState } from "vuex";
+import axios from "axios";
 
 export default {
+  data() {
+    return {
+    }
+  },
   components: {
     CartItem,
-    TotalPrice
-    },
-    computed: {
-      ...mapState('food', [
-        'carts'
-      ]),
-      ...mapGetters('food', [
-        'totalPrice'
-      ]),
-      ...mapState('user', [
-        'token'])
-    },
-    methods: {
-      submitCart(carts, totalPrice) {
-        let list = [ carts, totalPrice ]
+    TotalPrice,
+  },
+  computed: {
+    ...mapState("food", ["carts"]),
+    ...mapGetters("food", ["totalPrice"]),
+  },
+  methods: {
+    submitCart(carts, totalPrice) {
+      let list = [carts, totalPrice];
 
-        axios.post("http://localhost:3000/food/order", 
-          JSON.stringify(list),
-          {
-            headers: {
-              "Content-Type": "application/json"
-            }
-          })
+      axios.post(`${process.env.VUE_APP_URL}/api/food/post/foodOrder`, 
+        JSON.stringify(list), {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
         .then((res) => {
-          console.log("server res :", res.data)
-          this.$store.commit('food/resetCart')
+          console.log("server res :", res.data);
+          this.$store.commit("food/resetCart");
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
-        })
-
-      }
-    }
-  }
+        });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import '../../../scss/variables.scss';
-@import '../../../scss/btn.scss';
+@import "../../../scss/variables.scss";
+@import "../../../scss/btn.scss";
 
 .container {
   display: grid;
-  background-color: $menuListBg;
-  border-radius: 9px;
+  width: 100%;
   .cartList {
-    background-color: $menuListCnt;
-    min-height: 125px;
-    padding-right: 10px;
-    padding-left: 10px;
-    padding-top: 10px;
-    border-radius: 9px;
-    margin: 10px;
+    min-height: 100px;
+    // border-radius: 9px;
+    padding: 5px;
+    // box-shadow: 2px 2px 2px 2px rgba(160, 160, 160, 0.445);
     .cart_item {
-      display: flex
+      display: flex;
     }
   }
   .btn-container {
-    display: flex;
-    padding: 10px;
+    padding: 5px;
+    width: 100%;
+    text-align: center;
+    .btn-order {
+      padding: 5px;
+      border-radius: 9px;
+      width: 100%;
+      color: $menuBg;
+      box-shadow: 2px 2px 2px 2px rgba(160, 160, 160, 0.445);
+      font-weight: 800;
+    }
   }
 }
-
 </style>
