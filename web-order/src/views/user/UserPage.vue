@@ -1,51 +1,54 @@
 <template>
   <div>
-    <button @click="Backward"
-      class="backward"><i class="fas fa-arrow-left"></i>
-    </button>
-      <span class="routerName">&nbsp;{{ currentRouteName }}</span>
-    <div>
-      <router-view />
+    <div class="comp-header">
+      <comp-header />
     </div>
+    <router-view v-slot="{ Component }">
+      <transition name="component-transition" mode="slide">
+        <component :is="Component" />
+      </transition>
+    </router-view>
+    <nav-under />
   </div>
 </template>
 
 <script>
+import NavUnder from '../../components/NavUnder.vue'
+import CompHeader from './components/CompHeader.vue';
 
 export default {
   components: {
+    NavUnder,
+    CompHeader,
   },
-  methods: {
-    Backward() {
-      this.$router.go(-1);
-    }
-  },
-  computed: {
-    currentRouteName() {
-      return this.$route.name;
-    }
-  }
 };
 </script>
 
 <style lang="scss" scoped>
-.backward {
-  font-size: 1.2rem;
-  margin-top: 10px;
-  margin-left: 5px;
+body {
+  overflow-y: hidden;
 }
 
-button {
-  border: none;
-  background-color: white;
+.component-transition-enter-to {
+  position: absolute;
+  right: 0;
 }
-
-button:hover {
-  cursor: pointer;
+.component-transition-enter-from {
+  position: absolute;
+  right: -100%;
 }
-
-.routerName {
-  font-size: 1.2rem;
-  font-weight: bold;
+.component-transition-enter-active {
+  transition: all 0.3s cubic-bezier(0.250, 0.100, 0.250, 1.000);
+}
+.component-transition-leave-to {
+  position: absolute;
+  left: -100%;
+}
+.component-transition-leave-from {
+  position: absolute;
+  left: 0;
+}
+.component-transition-leave-active {
+  transition: all 0.3s cubic-bezier(0.250, 0.100, 0.250, 1.000);
 }
 </style>

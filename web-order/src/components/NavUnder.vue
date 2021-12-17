@@ -28,7 +28,7 @@
       </router-link>
     </li>
     <li>
-      <router-link to='/modify' v-slot='{href, navigate}'>
+      <router-link to='/user/mypage' v-slot='{href, navigate}'>
           <button :href='href' @click='navigate' class='button'>
             <div class="navicon">
                 <i class="fas fa-receipt fa-2x"></i>
@@ -67,7 +67,7 @@ ul {
   width: 100%;
   height: 50px;
   z-index:100;
-  border-top: 1px solid gray;
+  border-top: 1px solid #bcbcbc;
   background-color: white;
 }
 
@@ -100,6 +100,43 @@ li {
 #ordericon {
   color: rgba(255, 0, 0, 0.8);
   font-size: 1.5rem;
+  animation: shake 1.5s infinite;
+}
+
+@keyframes shake {
+	0%{
+		transform: translate(1px, 1px) rotate(0deg);
+	}
+	10%{
+		transform: translate(-1px, -1px) rotate(1deg);
+	}
+	20%{
+		transform: translate(-2px, 1px) rotate(-1deg);
+	}
+	30%{
+		transform: translate(1px, 2px) rotate(0deg);
+	}
+	40%{
+		transform: translate(-1px, 1px) rotate(1deg);
+	}
+	50%{
+		transform: translate(1px, -1px) rotate(-2deg);
+	}
+	60%{
+		transform: translate(2px, 1px) rotate(1deg);
+	}
+	70%{
+		transform: translate(-1px, 2px) rotate(2deg);
+	}
+	80%{
+		transform: translate(2px, -1px) rotate(1deg);
+	}
+	90%{
+		transform: translate(-1px, 2px) rotate(0deg);
+	}
+	100%{
+		transform: translate(2px, 1px) rotate(-1deg);
+	}
 }
 
 #ordericon:hover {
