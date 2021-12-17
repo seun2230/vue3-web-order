@@ -6,11 +6,11 @@
          <i class="fas fa-question-circle fa-2x"></i>
         </button>
         <ModalAdd
-          @close="closeModal()" 
+          @close="closeModal()"
           v-if="modal" />
         <p>사이트 이용 안내</p>
       </div>
-      
+
       <div class="page__order">
          <i class="fas fa-mobile-alt fa-2x"></i>
          <p>테이블 오더</p>
@@ -22,7 +22,7 @@
       <div class="page__comments"
         @click="pageReview()">
         <i class="fas fa-comments fa-2x"></i>
-        <p>나만의 리뷰</p>
+        <p>리뷰 모아보기</p>
       </div>
       <div class="page__notice">
         <div class="inner">
