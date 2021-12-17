@@ -94,7 +94,6 @@ export default {
   align-items: center; 
   .user {
     padding: 5px;
-
     p {
       font-weight: 600;
     }
