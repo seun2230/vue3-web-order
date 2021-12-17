@@ -9,6 +9,7 @@ import LoginPage from '../views/user/page/LoginPage.vue'
 import Review from '../components/Review.vue'
 import ReBoard from '../components/ReBoard.vue'
 import BoardDetail from '../components/BoardDetail.vue'
+import BoardModify from '../components/BoardModify'
 import MenuPage from '../views/user/page/MenuPage.vue'
 import UserPage from '../views/user/UserPage.vue'
 import UserMyPage from '../views/user/page/UserMyPage.vue'
@@ -40,6 +41,7 @@ const routes = [
     name: 'board',
     component: ReBoard
   },
+
   {
     path: '/user',
     name: 'user',
@@ -58,7 +60,13 @@ const routes = [
       {
         path: 'board/:id',
         name: 'boardItem',
-        component: BoardDetail
+        component: BoardDetail,
+      },
+      {
+        path: 'board/modify/:id',
+        name: 'boardModify',
+        component: BoardModify,
+       
       },
       {
         path: 'sign',

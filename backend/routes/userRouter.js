@@ -157,7 +157,7 @@ router.get('/get/comment/:id', async(req, res) => {
     console.log('connection /get/orderList');
     const connection = await pool.getConnection(async conn => conn);
     var id = parseInt(req.params.id, 10)
-    console.log("id test", id);
+
     try {
       const [row] = await connection.query('SELECT * FROM comments WHERE comments_id = ?', id)
       connection.release();
@@ -168,6 +168,92 @@ router.get('/get/comment/:id', async(req, res) => {
     }
   } catch (err) {
     console.log("DB Error", err)
+  }
+})
+
+router.get('/delete/comment/:id', verifyToken, async(req,res) => {
+  try {
+    console.log("DB connection /post/commentDelete")
+    const connection = await pool.getConnection(async conn => conn);
+    var id = parseInt(req.params.id, 10)
+
+    try {
+      let sql = "DELETE FROM comments WHERE comments_id = ? AND users_user_id = ?"
+      let params = [ id, req.decoded.user_id ]
+      await connection.beginTransaction();
+      await connection.query(sql, params);
+      await connection.commit();
+      res.send({
+        message: "Delete Success!"
+      })
+      connection.release();
+      } catch(err) {
+      console.log("Query Error");
+      console.log("Err : ", err)
+      await connection.rollback();
+      connection.release();
+      res.send({
+        error: "Query Error",
+        err
+      })
+    }
+  } catch(err) {
+    console.log("DB Error")
+    res.send({
+      error: "DB error",
+      err
+    })
+  }
+})
+
+router.post('/update/comment/:id', upload.array('file'), verifyToken, async(req,res) => {
+  try {
+    console.log("DB connection /post/commentDelete")
+    const connection = await pool.getConnection(async conn => conn);
+
+    try {
+      const files = req.files
+      let image = []
+
+      for (let i = 0; i < req.files.length; i++) {
+        image[i] = files[i].location
+      }
+      let sql = "UPDATE comments " +
+      "SET comments_image= ?, comments_text = ?, ratings = ?, comments_title = ? "+
+      "WHERE comments_id = ? AND users_user_id = ?"
+      var id = parseInt(req.params.id, 10)
+      let params = [
+        image[0],
+        req.body.review,
+        req.body.ratings,
+        req.body.title,
+        id,
+        req.decoded.user_id,
+      ]
+
+      await connection.beginTransaction();
+      await connection.query(sql, params);
+      await connection.commit();
+      res.send({
+        message: "Delete Success!"
+      })
+      connection.release();
+      } catch(err) {
+      console.log("Query Error");
+      console.log("Err : ", err)
+      await connection.rollback();
+      connection.release();
+      res.send({
+        error: "Query Error",
+        err
+      })
+    }
+  } catch(err) {
+    console.log("DB Error")
+    res.send({
+      error: "DB error",
+      err
+    })
   }
 })
 
