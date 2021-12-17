@@ -12,6 +12,7 @@
       </el-col>
     </el-row>  
     <AdminBoardList />
+    <NullImageUploadForm />
   </div>
 </template>
 
@@ -20,13 +21,15 @@ import UploadForm from '../components/UploadFrom.vue'
 import AdminMenuList from '../components/AdminMenuList.vue'
 import SlideUploadForm from '../components/SlideUploadForm.vue'
 import AdminBoardList from '../components/AdminBoardList.vue'
+import NullImageUploadForm from '../components/NullImageUploadForm.vue';
 
 export default {
   components: {
     UploadForm,
     AdminMenuList,
     SlideUploadForm,
-    AdminBoardList
+    AdminBoardList,
+    NullImageUploadForm,
   }
 }
 </script>

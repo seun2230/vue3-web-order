@@ -1,5 +1,6 @@
 <template>
   <el-form>
+  <h2>Null Image</h2>
     <el-form-item 
       id="image-upload"
       label="이미지 업로드">
@@ -47,7 +48,7 @@ export default {
         let file = this.files[i];
         formData.append('files', file);
       }
-      axios.post(`${process.env.VUE_APP_URL}/api/admin/post/slideUpload`,
+      axios.post(`${process.env.VUE_APP_URL}/api/admin/post/nullImageUpload`,
       formData,
       {
         headers: {

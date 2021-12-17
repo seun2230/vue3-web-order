@@ -35,11 +35,6 @@
           v-model="form.user_name"
           autocomplete="off" />
       </el-form-item>
-      <!-- <el-form-item label="생년월일">
-        <el-input
-          type="date"
-          v-model="form.user_birthday"/>
-      </el-form-item> -->
       <el-form-item
         label="생년월일"
         prop="user_birthday">
@@ -199,7 +194,7 @@ export default {
   },
   methods: {
     submitForm() {
-      axios.post('http://localhost:3000/api/auth/register',
+      axios.post(`${process.env.VUE_APP_URL}/api/auth/register`, 
       JSON.stringify(this.form),
       {
         headers: {

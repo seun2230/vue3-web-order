@@ -6,9 +6,10 @@ import UserInfo from '../views/user/page/UserInfoPage.vue'
 import UserModify from '../views/user/page/Modify.vue'
 import SignPage from '../views/user/page/SignPage.vue'
 import LoginPage from '../views/user/page/LoginPage.vue'
-import Review from '../components/Review'
-import ReBoard from '../components/ReBoard'
+import Review from '../components/Review.vue'
+import ReBoard from '../components/ReBoard.vue'
 import BoardDetail from '../components/BoardDetail.vue'
+import BoardModify from '../components/BoardModify'
 import MenuPage from '../views/user/page/MenuPage.vue'
 import UserPage from '../views/user/UserPage.vue'
 import UserMyPage from '../views/user/page/UserMyPage.vue'
@@ -42,6 +43,7 @@ const routes = [
     component: ReBoard,
     meta: { metaName: '게시판'}
   },
+
   {
     path: '/user',
     name: 'user',
@@ -64,6 +66,12 @@ const routes = [
         name: 'boardItem',
         component: BoardDetail,
         meta: { metaName: '리뷰 상세보기'}
+      },
+      {
+        path: 'board/modify/:id',
+        name: 'boardModify',
+        component: BoardModify,
+
       },
       {
         path: 'sign',

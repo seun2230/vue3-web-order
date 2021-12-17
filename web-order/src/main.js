@@ -4,6 +4,7 @@ import store from './store'
 import ElementPlus from 'element-plus'
 import VueRouter from './views/router.js'
 import axios from 'axios'
+// import * as jose from 'jose'
 
 // require('dotenv').config();
 axios.defaults.withCredentials = true;

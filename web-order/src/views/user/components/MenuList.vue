@@ -27,6 +27,8 @@ export default {
   computed: {
     ...mapState("food", ["foods"]),
   },
+  methods: {    
+  }
 };
 </script>
 
@@ -35,8 +37,7 @@ export default {
 
 .container {
   display: flex;
-  background-color: $menuListBg;
-  border-radius: 9px;
+  margin-top: 10px;
   margin-bottom: 10px;
   .foods {
     display: grid;

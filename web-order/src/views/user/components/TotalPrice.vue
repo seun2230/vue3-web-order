@@ -25,16 +25,14 @@ export default {
 .container-child {
   text-align: center;
   display: grid;
-  background-color: $menuListCnt;
-  height: 150px;
-  margin: 10px;
-  padding: 10px;
+    margin: 5px;
+  padding: 5px;
   border-radius: 9px;
+  box-shadow: 2px 2px 2px 2px rgba(160, 160, 160, 0.445);
   .message-box {
     width: 100%;
-    padding: 10px;
-    background-color: $menuListInf1;
-    border-radius: 9px;
+    height: 35px;
+    padding: 5px;
     .message {
       font-size: x-large;
       font-weight: 800;
@@ -43,10 +41,11 @@ export default {
   }
   .price-box {
     margin-top: 10px;
-    padding: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
     width: 100%;
-    background-color: $menuListInf2;
     border-radius: 9px;
+    box-shadow: 2px 2px 2px 2px rgba(160, 160, 160, 0.445);
     .price {
       font-size: xx-large;
       font-weight: 800;

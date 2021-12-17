@@ -13,7 +13,7 @@ export default {
   },
   mutations: {
     getSlide(state) {
-      axios.get('http://localhost:3000/api/admin/get/slides')
+      axios.get(`${process.env.VUE_APP_URL}/api/admin/get/slides`)
       .then(res => {
         console.log(res.data)
         state.slide = res.data
@@ -23,7 +23,7 @@ export default {
       })
     },
     getComments(state) {
-      axios.get('http://localhost:3000/api/admin/get/comments')
+      axios.get(`${process.env.VUE_APP_URL}/api/admin/get/comments`)
       .then(res => {
         console.log(res.data)
         state.comments = res.data

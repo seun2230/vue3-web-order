@@ -29,7 +29,7 @@ export default {
   },
   mutations: {
     getOrderList() {
-      axios.get('http://localhost:3000/api/user/get/orderList')
+      axios.get(`${process.env.VUE_APP_URL}/api/user/get/orderList`)
       .then(res => {
         console.log(res.data);
         this.state.orderList = res.data;
@@ -62,7 +62,7 @@ export default {
   actions: {
     login({ commit }, state) {
       console.log("action_login_state", state)
-      axios.post('http://localhost:3000/api/auth/login',
+      axios.post(`${process.env.VUE_APP_URL}/api/auth/login`,
       JSON.stringify(state),
       {
         headers: {

@@ -1,25 +1,22 @@
 <template>
-  <div class="container">
-    <img
-      :src="food.food_image1" 
-      :alt="food.food_name" />
-    <div class="infos">
-      <div class="name">
-        <span>{{ food.food_name }}</span>
-      </div>
-      <div class="price">
-        <span>{{ food.food_price }} 원</span>
-      </div>
-      <div class="button">
-        <el-button
-          type="text"
-          class="menu-btn"
-          @click="addCart()">
-          <span>추가하기</span>
-        </el-button>
+    <div class="container"
+      @click="addCart()">
+      <div class="infos">
+      <img
+        :src="food.food_image1" 
+        :alt="food.food_name" />
+        <div class="detail">
+          <div class="name">
+            <span>{{ food.food_name }}</span>
+          </div>
+          <div class="description">
+          </div>
+          <div class="price">
+            <span>{{ food.food_price }} 원</span>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -42,53 +39,53 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../../scss/variables.scss';
-@import '../../../scss/btn.scss';
 
 .container {
-  padding: 10px;
   display: flex;
-  width:100%;
-  height:120px;
-  background-color: $menuListBg;
+  width: 100%;
+  height: 100px;
+  padding: 5px;
   img {
     border-radius: 9px;
     height: 100px;
     width: 100px;
   }
   .infos {
+    display: flex;
     margin-left: 5px;
-    padding: 10px;
+    background-color: #ffffffa6;
     border-radius: 9px;
-    background-color: $menuListCnt;
-    border-radius: 9px;
+    height: 100px;
     width: 100%;
-    text-align: center;
     font-weight: 800;
     color: $menuBg;
-    .name {
-      display: flex;
-      justify-items: center;
+    box-shadow: 2px 2px 2px 2px rgba(160, 160, 160, 0.445);
+    .detail {
+      padding: 10px;
+      margin-left: 10px;
+      height: 100%;
       width: 100%;
-      height: 25px;
-      margin-bottom: 3px;
-      border-radius: 9px;
+      .name {
+        text-align: left;
+        width: 100%;
+        height: 30%;
+      }
+      .description {
+        width: 100%;
+        height: 24px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .price {
+        text-align: right;
+        width: 100%;
+        height: 30%;
+      }
     }
-    .price {
-      display: flex;
-      justify-content: center;
-      height: 25px;
-      border-radius: 9px;
-      margin-bottom: 3px;
-    }
-    .button {
-      display: flex;
-      height: 25px;
-      border-radius: 9px;
-      color: #ff7b7b9a;
-    }
-    span {
-      width: 100%;
-    }
+  }
+  span {
+    height: 100%;
   }
 }
 </style>
