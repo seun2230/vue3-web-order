@@ -53,7 +53,7 @@ export default {
     .catch(err => {
       console.error("실패", err)
     })
-    axios.get('http://localhost:3000/api/admin/get/nullImage')
+    axios.get(`${process.env.VUE_APP_URL}/api/admin/get/nullImage`)
     .then(res => {
       console.log("null", res.data)
       this.nullImage = res.data[0].null_image
@@ -68,7 +68,7 @@ export default {
     deleteComment() {
       var id = this.$route.params.id; 
       console.log("id", id);
-      axios.get('http://localhost:3000/api/user/delete/comment/' + id)
+      axios.get(`${process.env.VUE_APP_URL}/api/user/delete/comment/` + id)
       .then(({data},) => {
         console.log("성공", data)
         this.deleteMessage = "삭제됐습니다."

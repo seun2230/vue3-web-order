@@ -339,6 +339,23 @@ router.post('/post/commentDelete', async(req, res) => {
   }
 })
 
+router.get("/get/nullImage", async (req, res) => {
+  try {
+    console.log("DB Connection! /get/comments")
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      let sql = "SELECT * FROM null_image"
+      const [rows] = await connection.query(sql)
+      connection.release();
+      res.send(rows)
+    } catch(err) {
+      console.log(err)
+    }
+  } catch(err) {
+    console.log(err)
+  }
+})
+
 router.post('/post/nullImageUpload', upload.array('files'), async function(req, res) {
   try { 
     console.log("DB Connection! /post/nullImageUpload")

@@ -203,7 +203,7 @@ export default {
     submitForm() {
       const authUser = this.user_info[0].user_id;
       console.log('user', authUser);
-      axios.post('http://localhost:3000/api/userinfo/post/updateUserInfo',
+      axios.post(`${process.env.VUE_APP_URL}/api/userinfo/post/updateUserInfo`,
       JSON.stringify(this.form),
       {
         headers: {

@@ -13,6 +13,7 @@
     </el-row>  
     <AdminBoardList />
     <NullImageUploadForm />
+    <imagePreveiw />
   </div>
 </template>
 
@@ -22,6 +23,7 @@ import AdminMenuList from '../components/AdminMenuList.vue'
 import SlideUploadForm from '../components/SlideUploadForm.vue'
 import AdminBoardList from '../components/AdminBoardList.vue'
 import NullImageUploadForm from '../components/NullImageUploadForm.vue';
+import ImagePreveiw from '../../../components/ImagePreview.vue'
 
 export default {
   components: {
@@ -30,6 +32,7 @@ export default {
     SlideUploadForm,
     AdminBoardList,
     NullImageUploadForm,
+    ImagePreveiw,
   }
 }
 </script>
