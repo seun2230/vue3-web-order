@@ -4,7 +4,7 @@
       <comp-header />
     </div>
     <router-view v-slot="{ Component }">
-      <transition name="component-transition" mode="slide">
+      <transition name="component-transition" mode="out-in">
         <component :is="Component" />
       </transition>
     </router-view>
@@ -28,27 +28,39 @@ export default {
 body {
   overflow-y: hidden;
 }
-
-.component-transition-enter-to {
-  position: absolute;
-  right: 0;
-}
-.component-transition-enter-from {
-  position: absolute;
-  right: -100%;
-}
-.component-transition-enter-active {
-  transition: all 0.3s cubic-bezier(0.250, 0.100, 0.250, 1.000);
-}
-.component-transition-leave-to {
-  position: absolute;
-  left: -100%;
-}
-.component-transition-leave-from {
-  position: absolute;
-  left: 0;
-}
+.component-transition-enter-active,
 .component-transition-leave-active {
-  transition: all 0.3s cubic-bezier(0.250, 0.100, 0.250, 1.000);
+  transition-duration: 0.2s;
+  transition-property: opacity;
+  transition-timing-function: ease;
 }
+
+.component-transition-enter,
+.component-transition-leave-active {
+  opacity: 0
+}
+
+// .component-transition-enter-to {
+//   position: absolute;
+//   right: 0;
+// }
+// .component-transition-enter-from {
+//   // position: absolute;
+//   right: -100%;
+// }
+// .component-transition-enter-active {
+//   transition: 0.3s ease;
+//   transition: all 0.3s cubic-bezier(0.250, 0.100, 0.250, 1.000);
+// }
+// .component-transition-leave-to {
+//   position: absolute;
+//   left: -100%;
+// }
+// .component-transition-leave-from {
+//   // position: absolute;
+//   left: 0;
+// }
+// .component-transition-leave-active {
+//   transition: all 0.3s cubic-bezier(0.250, 0.100, 0.250, 1.000);
+// }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="block">
-    <el-carousel height="200px">
+    <el-carousel height="60vw">
       <el-carousel-item 
         v-for="item in slide" 
         :key="item">

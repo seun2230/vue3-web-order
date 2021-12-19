@@ -1,5 +1,12 @@
 <template>
   <div class="container">
+    <div class="page__notice">
+        <div class="inner">
+          <i class="fas fa-bullhorn"></i>
+          <p>소식</p>
+          <a href="javascript:void(0)">[Table Order] 스마트 오더 사용 안내</a>
+        </div>
+      </div>
     <div class="inner">
       <div class="page__inquiry">
        <button @click="clickModal()">
@@ -10,7 +17,6 @@
           v-if="modal" />
         <p>사이트 이용 안내</p>
       </div>
-
       <div class="page__order">
          <i class="fas fa-mobile-alt fa-2x"></i>
          <p>테이블 오더</p>
@@ -23,13 +29,6 @@
         @click="pageReview()">
         <i class="fas fa-comments fa-2x"></i>
         <p>리뷰 모아보기</p>
-      </div>
-      <div class="page__notice">
-        <div class="inner">
-          <i class="fas fa-bullhorn"></i>
-          <p>소식</p>
-          <a href="javascript:void(0)">[Table Order] 스마트 오더 사용 안내</a>
-        </div>
       </div>
     </div>
   </div>
@@ -65,32 +64,40 @@ export default {
 .inner {
   display: grid;
   margin-top: 5px;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 80px 80px 40px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 150px 150px 60px;
   grid-gap: 5px;
 }
 
 .page__inquiry {
-  background-color: hsl(333, 73%, 88%);
+  // background-color: hsl(333, 73%, 88%);
+  border: 1px solid lightgrey;
   border-radius: 5px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
   text-align: center;
 }
 
 .page__order {
-  background-color: beige;
+  // background-color: beige;
+  border: 1px solid lightgrey;
   border-radius: 5px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
   text-align: center;
 }
 
 .page__event {
-  background-color: #e6cbf7;
+  // background-color: #e6cbf7;
+  border: 1px solid lightgrey;
   border-radius: 5px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
   text-align: center;
 }
 
 .page__comments {
-  background-color: #e4f7cb;
+  // background-color: #e4f7cb;
+  border: 1px solid lightgrey;
   border-radius: 5px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
   text-align: center;
 }
 
