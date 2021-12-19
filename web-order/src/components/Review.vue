@@ -141,10 +141,6 @@ export default {
       formData.append("review", this.form.review);
       formData.append('status', this.form.status);
       
-
-      for (var value of formData.values()) {
-        console.log("value", value);
-      }
       axios.post(`${process.env.VUE_APP_URL}/api/user/post/comment`, 
       formData, { 
         headers: {

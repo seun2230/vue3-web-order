@@ -78,7 +78,7 @@ try {
     }
     console.log(image[0])
     let sql = "INSERT INTO comments " +
-    "(comments_image, comments_text, ratings, food_items_food_id, users_user_id, comments_title, comments_status)" +
+    "(comments_image, comments_text, ratings, food_items_food_id, comments_user_id, comments_title, comments_status)" +
     "VALUES(?, ?, ?, ?, ?, ?, ?)"
     if (image[0] === undefined) {
       const [row] = await connection.query("SELECT * FROM null_image");
@@ -159,7 +159,7 @@ router.get('/get/comment/:id', async(req, res) => {
     var id = parseInt(req.params.id, 10)
 
     try {
-      const [row] = await connection.query('SELECT * FROM comments WHERE comments_id = ?', id)
+      const [row] = await connection.query('SELECT * FROM comments LEFT JOIN food_items ON food_items_food_id = food_id WHERE comments_id = ?', id)
       connection.release();
       res.send(row);
     } catch (err) {
@@ -178,7 +178,7 @@ router.get('/delete/comment/:id', verifyToken, async(req,res) => {
     var id = parseInt(req.params.id, 10)
 
     try {
-      let sql = "DELETE FROM comments WHERE comments_id = ? AND users_user_id = ?"
+      let sql = "DELETE FROM comments WHERE comments_id = ? AND comments_user_id = ?"
       let params = [ id, req.decoded.user_id ]
       await connection.beginTransaction();
       await connection.query(sql, params);
@@ -220,10 +220,10 @@ router.post('/update/comment/:id', upload.array('file'), verifyToken, async(req,
       }
       let sql = "UPDATE comments " +
       "SET comments_image= ?, comments_text = ?, ratings = ?, comments_title = ? "+
-      "WHERE comments_id = ? AND users_user_id = ?"
+      "WHERE comments_id = ? AND comments_user_id = ?"
       var id = parseInt(req.params.id, 10)
       let params = [
-        image[0],
+        image[0], 
         req.body.review,
         req.body.ratings,
         req.body.title,
@@ -256,5 +256,78 @@ router.post('/update/comment/:id', upload.array('file'), verifyToken, async(req,
     })
   }
 })
+router.get('/get/reply/:id', async(req, res) => {
+  console.log("req.body", req.body);
 
+  try {
+    console.log("DB Connection /get/reply")
+    const connection = await pool.getConnection(async conn => conn);
+    
+    try {
+      let sql = "SELECT * FROM reply WHERE comments_comments_id = ? "
+      let value = [ parseInt(req.params.id, 10) ]
+      const [row] = await connection.query(sql, value);
+      res.send(row)
+      connection.release();
+      } catch(err) {
+      console.log("Query Error");
+      console.log("Err : ", err)
+      connection.release();
+      res.send({
+        error: "Query Error",
+        err
+      })
+    }
+  } catch(err) {
+    console.log("DB Error")
+    res.send({
+      error: "DB error",
+      err
+    })
+  }
+})
+
+router.post('/reply/:id', verifyToken, async(req,res) => {
+  console.log("req.body", req.body);
+  try {
+    console.log("DB connection /post/commentDelete")
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      let sql = "INSERT INTO reply " +
+                "(reply_text, comments_comments_id, users_user_id, food_items_food_id)"
+                + "VALUES (?, ?, ?, ?)"
+
+      const pageId = parseInt(req.params.id, 10)
+      let params = [ 
+        req.body[0].comment_text,
+        pageId,
+        req.decoded.user_id,
+        req.body[0].food_id
+      ]
+
+      await connection.beginTransaction();
+      await connection.query(sql, params);
+      await connection.commit();
+      res.send({
+        message: "Delete Success!"
+      })
+      connection.release();
+      } catch(err) {
+      console.log("Query Error");
+      console.log("Err : ", err)
+      await connection.rollback();
+      connection.release();
+      res.send({
+        error: "Query Error",
+        err
+      })
+    }
+  } catch(err) {
+    console.log("DB Error")
+    res.send({
+      error: "DB error",
+      err
+    })
+  }
+})
 module.exports = router;

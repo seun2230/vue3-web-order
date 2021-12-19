@@ -110,7 +110,7 @@ export default {
       formData.append("review", this.form.review);
 
 
-      axios.post('http://localhost:3000/api/user/update/comment/' + id,
+      axios.post(`${process.env.VUE_APP_URL}/api/user/update/comment/` + id,
       formData, { 
         headers: {
           'Content-Type': 'multipart/form-data'
