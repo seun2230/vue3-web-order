@@ -50,7 +50,7 @@ export default {
       this.modal = false;
     },
     pageReview() {
-      this.$router.push('/review')
+      this.$router.push('/user/board')
     }
   },
   components: {
@@ -65,7 +65,7 @@ export default {
   display: grid;
   margin-top: 5px;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 150px 150px 60px;
+  grid-template-rows: 150px 150px;
   grid-gap: 5px;
 }
 
@@ -73,7 +73,7 @@ export default {
   // background-color: hsl(333, 73%, 88%);
   border: 1px solid lightgrey;
   border-radius: 5px;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
@@ -81,7 +81,7 @@ export default {
   // background-color: beige;
   border: 1px solid lightgrey;
   border-radius: 5px;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
@@ -89,7 +89,7 @@ export default {
   // background-color: #e6cbf7;
   border: 1px solid lightgrey;
   border-radius: 5px;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
@@ -97,7 +97,7 @@ export default {
   // background-color: #e4f7cb;
   border: 1px solid lightgrey;
   border-radius: 5px;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 

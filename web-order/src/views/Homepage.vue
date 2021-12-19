@@ -5,11 +5,6 @@
     <!-- <Login /> -->
     <PageList />
     <NavUnder />
-    <router-link to="/user/login"> login </router-link>
-    <router-link to="/user/sign"> sign </router-link>
-    <router-link to="/user/menu"> menu </router-link>
-    <router-link to="/admin/foodManagement"> admin </router-link>
-    <router-link to="/user/board"> board </router-link>
   </div>
 </template>
 <script>
@@ -37,3 +32,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  * {
+    max-height: 100vh;
+  }
+</style>

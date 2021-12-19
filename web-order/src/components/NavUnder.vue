@@ -4,7 +4,9 @@
       <router-link to='/' v-slot='{href, navigate}'>
           <button :href='href' @click='navigate' class='button'>
             <div class="navicon">
-                <i class="fas fa-home fa-2x"></i>
+                <icon-base icon-name="IconHome">
+                  <icon-home />
+                </icon-base>
             </div>
           </button>
       </router-link>
@@ -31,7 +33,9 @@
       <router-link to='/user/mypage' v-slot='{href, navigate}'>
           <button :href='href' @click='navigate' class='button'>
             <div class="navicon">
-                <i class="fas fa-receipt fa-2x"></i>
+                <!-- <icon-base icon-name="IconWrite">
+                  <icon-write />
+                </icon-base> -->
             </div>
           </button>
       </router-link>
@@ -40,7 +44,9 @@
       <router-link to='/user/userinfo' v-slot='{href, navigate}'>
           <button :href='href' @click='navigate' class='button'>
             <div class="navicon">
-                <i class="fas fa-user fa-2x"></i>
+                <icon-base icon-name="IconInfo">
+                  <icon-info />
+                </icon-base>
             </div>
           </button>
       </router-link>
@@ -49,12 +55,23 @@
 </template>
 
 <script>
-export default {
+import IconBase from "../assets/navicons/IconBase.vue"
+import IconHome from '../assets/navicons/IconHome.vue'
+import IconInfo from '../assets/navicons/IconInfo.vue'
 
+export default {
+  components: {
+    IconBase,
+    IconHome,
+    IconInfo,
+  }
 }
 </script>
 
 <style scoped>
+icon-base {
+  width: 30px;
+}
 ul {
   list-style: none;
   position: fixed;

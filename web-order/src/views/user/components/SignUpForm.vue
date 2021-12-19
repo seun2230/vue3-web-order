@@ -63,12 +63,14 @@
           여자
         </el-radio>
       </el-form-item>
-      <el-button
-        class="button"
-        type="primary"
-        @click="submitForm">
-        회원 가입
-      </el-button>
+      <div class="btn-area">
+        <el-button
+          class="button"
+          type="default"
+          @click="submitForm">
+          회원 가입
+        </el-button>
+      </div>
     </el-form>
   </div>
 </template>
@@ -215,10 +217,22 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../../scss/variables.scss";
+.btn-area {
+  display: flex;
+  justify-content: right;
+  .button {
+    background-color: rgba($color: #000000, $alpha: 0.9);
+    color: white;
+  }
+}
 
 .container {
   padding: 10px;
-  background-color: $menuListBg;
+  // background-color: $menuListBg;
   border-radius: 9px;
+}
+
+.el-form-item__label {
+  line-height: 0px;
 }
 </style>

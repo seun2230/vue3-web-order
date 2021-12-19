@@ -3,11 +3,9 @@
     <div class="comp-header">
       <comp-header />
     </div>
-    <router-view v-slot="{ Component }">
-      <transition name="component-transition" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </router-view>
+    <div class="comp-body">
+      <router-view />
+    </div>
     <nav-under />
   </div>
 </template>
@@ -28,16 +26,16 @@ export default {
 body {
   overflow-y: hidden;
 }
-.component-transition-enter-active,
-.component-transition-leave-active {
-  transition-duration: 0.2s;
-  transition-property: opacity;
-  transition-timing-function: ease;
+
+.comp-header {
+  display: block;
+  height: 50px;
+  z-index: 100;
 }
 
-.component-transition-enter,
-.component-transition-leave-active {
-  opacity: 0
+.comp-body {
+  // margin-bottom: 60px;
+  padding-bottom: 70px;
 }
 
 // .component-transition-enter-to {

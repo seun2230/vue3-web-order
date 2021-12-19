@@ -91,9 +91,9 @@
           </el-form-item>
           <el-form-item>
             <el-button  
-              type="text"
+              type="default"
               class="btn-review"
-              @click="sendReview()">리뷰 작성
+              @click="sendReview()">저장
             </el-button>
             <el-button @click="returnBoard()">취소</el-button>
           </el-form-item>
@@ -194,8 +194,7 @@ export default {
 @import '../scss/variables.scss';
 
 .container {
-  border: 1px solid #ccc;
-  padding: 10px;
+  padding: 0px 15px;
 }
 
 .btn-review {
@@ -203,7 +202,9 @@ export default {
   position: absolute;
   top: 0px;
   right: 10px;
-  font-size: 20px;
+  font-size: 0.8rem;
+  color: white;
+  background-color: rgba($color: #000000, $alpha: 0.8);
 }
 input {
   display: none;
@@ -229,5 +230,9 @@ input {
 }
 .img-box{
   border: solid;
+}
+
+p {
+  margin: 10px 0px;
 }
 </style>

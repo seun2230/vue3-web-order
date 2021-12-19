@@ -37,7 +37,7 @@ export default {
 
 .container {
   display: flex;
-  margin-top: 10px;
+  // margin-top: 10px;
   margin-bottom: 10px;
   .foods {
     display: grid;

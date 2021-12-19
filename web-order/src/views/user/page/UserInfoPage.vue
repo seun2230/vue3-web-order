@@ -50,7 +50,7 @@ a {
     flex-direction: column;
     max-width: 460px;
     margin: auto;
-    padding: 1rem;
+    padding: 0 1rem;
     /* border: 1px solid #ddd; */
     border-radius: .25rem;
     /* box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
