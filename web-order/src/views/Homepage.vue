@@ -2,7 +2,7 @@
   <div class="container">
     <Header />
     <Slide />
-    <Login />
+    <!-- <Login /> -->
     <PageList />
     <NavUnder />
     <router-link to="/user/login"> login </router-link>
@@ -15,7 +15,7 @@
 <script>
 import Header from './Header.vue'
 import Slide from '../components/Slide.vue'
-import Login from '../components/LoginForm.vue'
+// import Login from '../components/LoginForm.vue'
 import PageList from '../components/PageList.vue'
 import NavUnder from '../components/NavUnder.vue'
 import { mapGetters } from 'vuex'
@@ -26,7 +26,7 @@ export default {
   components: {
     Header,
     Slide,
-    Login,
+    // Login,
     PageList,
     NavUnder,
   },

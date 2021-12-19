@@ -1,18 +1,14 @@
 <template>
  <header>
     <nav class="nav">
-     <i class="fas fa-bars fa-2x"></i>
-
-     <div class="navbar__logo">
-       <li><i class="fas fa-hamburger fa-2x"></i></li>
-     </div>
-
-     <div class="navbar__info" v-if="!isAuth">
-        <button-login />
-     </div>
-     <div class="nav-bar_info" v-if="isAuth">
-       <button-logout />
-     </div>
+      <div class="navbar__logo">
+        <li><i class="fas fa-hamburger fa-2x"></i></li>
+      </div>
+      <div v-if="isAuth" class="login__user">
+        {{ getUserName }}님 어서오세요!
+      </div>
+      <div v-if="!isAuth">
+      </div>
    </nav>
  </header>
 </template>
@@ -20,22 +16,25 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import ButtonLogin from './user/components/ButtonLogin.vue'
-import ButtonLogout from './user/components/ButtonLogout.vue'
 export default {
   data() {
     return {
     }
   },
   components: {
-    ButtonLogin,
-    ButtonLogout,
+  },
+  created() {
+    console.log("sss",this.isAuth)
+    if(!this.isAuth) {
+      this.$store.commit('user/logout')
+    }
+    console.log('user', this.getUserName);
   },
   computed: {
     ...mapGetters('user', [
-      'isAuth'
-    ])
-  }
+      'isAuth', 'getUserName'
+    ]),
+  },
 }
 </script>
 
@@ -47,9 +46,9 @@ export default {
 }
 
 header {
-  padding: 20px;
+  padding: 10px;
   margin-top: 0;
-  border: 1px solid #bcbcbc;
+  border-bottom: 1px solid #bcbcbc;
 
   .nav {
   @include center;
@@ -68,11 +67,6 @@ header {
   }
 }
 
-.navbar__info {
-   li {
-    color: red;
-  }
-}
 @media screen and (max-width: 768px) {
 
   .navbar__menu {

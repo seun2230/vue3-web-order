@@ -361,43 +361,16 @@ router.post('/post/nullImageUpload', upload.array('files'), async function(req, 
     console.log("DB Connection! /post/nullImageUpload")
     const connection = await pool.getConnection(async conn => conn);
     try {
-      const files = req.files
-      let image = []  
-
-      await connection.beginTransaction();
-
-      for (let i = 0; i < req.files.length; i++) {
-        image[i] = files[i].location
-      }
-
-        let sql = "INSERT INTO null_image" + 
-          "(null_image)" +
-          "VALUES(?)"
-
-        let value = [ image[0] ]
-
-        await connection.query(sql, value)
-        await connection.commit();
-        connection.release();
-        res.send({
-          success: "true"
-        })
-      } catch(err) {
-        console.log("Query Error")
-        await connection.rollback();
-        connection.release();
-        res.send({
-          error: "Query Error",
-          err
-        })
-      }
+      let sql = "SELECT * FROM null_image"
+      const [rows] = await connection.query(sql)
+      connection.release();
+      res.send(rows)
     } catch(err) {
-      console.log("DB Error")
-      res.send({
-        error: "DB Error",
-        err
-      })
+      console.log(err)
     }
-  })
+  } catch(err) {
+    console.log(err)
+  }
+})
 
 module.exports = router;

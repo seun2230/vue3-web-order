@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '../views/Homepage.vue'
 import Admin from '../views/admin/Admin.vue'
 import FoodManagePage from '../views/admin/page/FoodManagePage.vue'
-import UserInfo from '../views/user/page/MyPageUser.vue'
+import UserInfo from '../views/user/page/UserInfoPage.vue'
 import UserModify from '../views/user/page/Modify.vue'
 import SignPage from '../views/user/page/SignPage.vue'
 import LoginPage from '../views/user/page/LoginPage.vue'
@@ -35,11 +35,13 @@ const routes = [
     path: '/review',
     name: 'review',
     component: Review,
+    meta: { metaName: '리뷰'}
   },
   {
     path: '/board',
     name: 'board',
-    component: ReBoard
+    component: ReBoard,
+    meta: { metaName: '게시판'}
   },
 
   {
@@ -51,53 +53,62 @@ const routes = [
         path: 'review',
         name: 'review',
         component: Review,
+        meta: { metaName: '리뷰 작성'}
       },
       {
         path: 'board',
         name: 'board',
-        component: ReBoard
+        component: ReBoard,
+        meta: { metaName: '리뷰'}
       },
       {
         path: 'board/:id',
         name: 'boardItem',
         component: BoardDetail,
+        meta: { metaName: '리뷰 상세보기'}
       },
       {
         path: 'board/modify/:id',
         name: 'boardModify',
         component: BoardModify,
-       
+
       },
       {
         path: 'sign',
         name: 'Sign',
-        component: SignPage
+        component: SignPage,
+        meta: { metaName: '회원가입'}
       },
       {
         path: 'login',
         name: 'login',
-        component: LoginPage
+        component: LoginPage,
+        meta: { metaName: '로그인'}
       },
       {
         path: 'menu',
-        name: 'menu',
+        name: 'Menu',
         component: MenuPage,
+        meta: { metaName: '메뉴'}
       },
       {
         path: 'userinfo',
         name: 'userinfo',
         component: UserInfo,
         beforeEnter: beforeAuth(true),
+        meta: { metaName: '내 정보'}
       },
       {
         path: 'modify',
         name: 'modify',
         component: UserModify,
+        meta: { metaName: '내 정보 수정'}
       },
       {
         path: 'mypage',
         name: 'mypage',
-        component: UserMyPage
+        component: UserMyPage,
+        meta: { metaName: '주문 내역'}
       }
     ]
   },

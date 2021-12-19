@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const { login } = require('../controllers/authController');
 const pool = require('../db');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 
 router.post('/login', login);
 
 router.post('/logout', (req, res) => {
-  res.cookie('Auth','',{ maxAge: 0 }).status(200).json({"message": "OK"})
+  res.cookie('auth','',{ maxAge: 0 }).status(200).json({"message": "OK"})
 })
 
 router.post('/register', async(req, res) => {
