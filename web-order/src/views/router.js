@@ -89,7 +89,7 @@ const routes = [
         path: 'menu',
         name: 'Menu',
         component: MenuPage,
-        meta: { metaName: '메뉴'}
+        meta: { metaName: '주문하기'}
       },
       {
         path: 'userinfo',
@@ -116,16 +116,23 @@ const routes = [
     path: '/admin',
     name: 'admin',
     component: Admin,
+    meta: { RootName: 'admin' },
+    //  admin 부모 아래에 meta를 공통속성 넣어주면 하단 nav 안 생김
+    //  Homepage를 비롯해서 초기 접근하는 view가 user보다 상위이므로,
+    //  nav가 어디에 포함되어야 할 지가 애매해짐.
+    //  -> app.js 수준에서 라우터의 meta data를 읽어와서 선택적 렌더링
     children: [
       // {
       //   path: 'dashBoard',
       //   name: "DashBoard",
       //   component: DashBoard,
+      //   meta: { RootName: 'admin' },
       // },
       {
         path: 'foodManagement',
         name: 'foodManagement',
-        component: FoodManagePage
+        component: FoodManagePage,
+        meta: { RootName: 'admin' },
       }
     ]
   },

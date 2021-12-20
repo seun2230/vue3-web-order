@@ -1,8 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 24.3.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="레이어_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-	 y="0px" viewBox="0 0 200 200" style="enable-background:new 0 0 200 200;" xml:space="preserve">
-<g>
+<template>
+  <g>
 	<g>
 		<g>
 			<path d="M96.6,200.49l-19.47-35.85H15.35c-11.83,0-21.43-9.61-21.43-21.41V21.9c0-11.8,9.61-21.41,21.43-21.41h163.12
@@ -23,4 +20,4 @@
 		</g>
 	</g>
 </g>
-</svg>
+</template>
