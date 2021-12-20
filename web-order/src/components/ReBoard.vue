@@ -15,18 +15,15 @@
     <el-button @click="nextPage" type="text" :disabled="pageNum >= pageCount -1">
       다음
     </el-button>
-  <ReBoardItem2 />
   </div>
 </template>
 
 <script>
-import ReBoardItem2 from './ReBoardItem2.vue'
 import ReBoardItem from './ReBoardItem.vue'
 import { mapState } from 'vuex';
 export default {
   components: {
     ReBoardItem,
-    ReBoardItem2,
   },
   props: {
     pageSize: {

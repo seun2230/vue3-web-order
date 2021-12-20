@@ -1,17 +1,30 @@
 const pool = require('../db/index');
-const passport = require('passport')
-const passportJWT = require('passport-jwt')
-const bcrypt = require('bcryptjs')
+const passport = require('passport');
+const passportJWT = require('passport-jwt');
+const bcrypt = require('bcryptjs');
 
 const { ExtractJwt } = passportJWT;
 
 const JWTStrategy = passportJWT.Strategy;
+const KaKaoStrategy = require('passport-kakao').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
+
+const KaKaoStrategyOption = {
+  clientID: process.env.KAKAORESTAPIKEY,
+  clientSecret: process.env.KAKAOSECRETCLIENT,
+  callbackURL: process.env.KAKAOCALLBACKURL,
+}
 
 const LocalStrategyOption = {
   usernameField: "user_id",
   passwordField: "user_password"
 }
+
+async function kakaoVerify (accessToken, refreshToken, profile, done) { 
+  console.log(accessToken); 
+  console.log(profile);
+  return done();
+};
 
 async function localVerify(user_id, user_password, done) {
   try {
@@ -19,34 +32,25 @@ async function localVerify(user_id, user_password, done) {
     const connection = await pool.getConnection(conn => conn);
     try {
       const sql = 'SELECT * FROM users WHERE user_id = ?'
-      console.log("localVerify", user_id)
-      console.log("localVerify", user_password)
       const value = [ user_id ]
-
       const [rows] = await connection.query(sql, value)
-      
-      console.log("localVerify", rows[0])
       let user = rows[0]
-              
+            
       //  아이디가 존재 하지 않을 경우
       if(rows[0] === undefined) {
-          return done("아이디가 존재 하지 않습니다.", false)
-        }
-
-      const checkPassword = await bcrypt.compare(user_password, user.user_password)
-      console.log("localVerify", checkPassword)
-
+        return done("아이디가 존재 하지 않습니다.", false)
+      }
+      const checkPassword = await bcrypt.compare(user_password, user.user_password);
       if (!checkPassword) {
         return done("비밀번호가 틀렸습니다.", false);
-      }
-      
+      }    
       return done(null, user);
     } catch(err) {
       console.log("Query Error")
       console.log(err)
       return done(err);
     } 
-   } catch(err) {
+  } catch(err) {
     console.log("DB Error")
     console.log(err)
     return done(err);
@@ -60,8 +64,6 @@ const JWTStrategyOption = {
 
 async function jwtVerify(payload, done) {
   try {
-    console.log("payload : ", payload)
-    console.log("done : ", done)
     const connection = await pool.getConnection(async conn => conn);
     let userInfo;
     try {
@@ -90,4 +92,5 @@ async function jwtVerify(payload, done) {
 module.exports = () => {
   passport.use(new LocalStrategy(LocalStrategyOption, localVerify))
   passport.use(new JWTStrategy(JWTStrategyOption, jwtVerify))
+  passport.use('kakao', new KaKaoStrategy(KaKaoStrategyOption, kakaoVerify));
 }

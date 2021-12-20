@@ -74,7 +74,7 @@ try {
     let image = []
     
     for (let i = 0; i < req.files.length; i++) {
-      image[i] = files[i].location
+      image[i] = files[i].transforms[0].location
     }
     console.log(image[0])
     let sql = "INSERT INTO comments " +
@@ -216,7 +216,7 @@ router.post('/update/comment/:id', upload.array('file'), verifyToken, async(req,
       let image = []
 
       for (let i = 0; i < req.files.length; i++) {
-        image[i] = files[i].location
+        image[i] = files[i].transforms[0].location
       }
       let sql = "UPDATE comments " +
       "SET comments_image= ?, comments_text = ?, ratings = ?, comments_title = ? "+

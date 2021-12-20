@@ -21,19 +21,11 @@
       <el-table-column
         property="id"
         label="ID"
-        width="60px"
+        width="120px"
         show-overflow-tooltip />
-      <el-table-column
-        property="name"
-        label="이름"
-        width="80px" />
       <el-table-column
         property="ratings"
         label="평점"
-        width="50px" />
-      <el-table-column
-        property="gender"
-        label="성별"
         width="50px" />
       <el-table-column
         fixed="right"
@@ -46,34 +38,21 @@
             @click.prevent="deleteRow(scope.$index)">
             Remove
           </el-button>
-          <el-button
-            type="text"
-            size="small"
-            @click.prevent="viewRow(scope.$index)">
-            View
-          </el-button>
         </template>
       </el-table-column>
     </el-table>
-    <BoardListModal 
-      @close="closeModal()"
-      :index="index"
-      v-if="modal"/>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import axios from 'axios'
-import BoardListModal from '../components/modal/BoardListModal.vue';
 
 export default {
   components: {
-    BoardListModal,
   },
   data() {
     return {
-      modal: false,
       index: [],
     }
   },
@@ -103,15 +82,6 @@ export default {
         console.log(err)
       })
     },
-    viewRow(index) {
-      this.modal = true
-      let view_index = this.comments[index]
-      this.index = view_index;
-    },
-    closeModal() {
-      this.modal = false
-      this.index = []
-    }
   },
 }
 </script>

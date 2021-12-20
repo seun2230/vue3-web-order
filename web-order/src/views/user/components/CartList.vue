@@ -49,6 +49,7 @@ export default {
           },
         })
         .then((res) => {
+          console.log("res, res")
           console.log("server res :", res.data);
           this.$store.commit("food/resetCart");
         })
@@ -69,9 +70,7 @@ export default {
   width: 100%;
   .cartList {
     min-height: 100px;
-    // border-radius: 9px;
     padding: 5px;
-    // box-shadow: 2px 2px 2px 2px rgba(160, 160, 160, 0.445);
     .cart_item {
       display: flex;
     }
