@@ -28,7 +28,7 @@ export default {
     margin: 5px;
   padding: 5px;
   border-radius: 9px;
-  box-shadow: 2px 2px 2px 2px rgba(160, 160, 160, 0.445);
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
   .message-box {
     width: 100%;
     height: 35px;
@@ -45,7 +45,7 @@ export default {
     padding: 5px;
     width: 100%;
     border-radius: 9px;
-    box-shadow: 2px 2px 2px 2px rgba(160, 160, 160, 0.445);
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
     .price {
       font-size: xx-large;
       font-weight: 800;

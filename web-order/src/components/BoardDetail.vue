@@ -6,20 +6,35 @@
           <el-avatar> user </el-avatar>
         </div>
         <div class="user">
-        <p>{{ reviewInfo.users_user_id}}</p>
+          <p>{{ reviewInfo.comments_user_id}}</p>
+          <div class="star-ratings">
+            <div 
+              class="star-ratings-fill"
+              :style="{ width: reviewInfo.ratings }">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <div class="star-ratings-base">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+          </div>
+            <span class="user_date">{{ date }}</span>
         </div>
       </div>
+      <div class="btn_go">
+        <i class="fas fa-angle-down"></i>
+      </div>
       <div class="image-box">
-        <img v-if="reviewInfo.comments_image !== this.nullImage"
+        <img 
+          v-if="reviewInfo.comments_image !== this.nullImage"
           :src="reviewInfo.comments_image" />
       </div>
       <div class="user_order">
-       주문 메뉴 {{ reviewInfo.food_name}}
+       {{ reviewInfo.food_name}}
       </div>
       <div class="user_text">
         <p>{{ reviewInfo.comments_text}}</p>
       </div>
-      <div class="btn-group">
+      <div class="btn_group">
         <el-button 
           type="text" 
           @click="deleteComment()">삭제
@@ -31,29 +46,26 @@
         </el-button>
       </div>
     </div>
-    <hr />
-    <div>
-      <form>
-        <div class="form-group">
-          <label>댓글</label>
-          <el-input
-              v-model="textarea"
-              maxlength="50"
-              placeholder="댓글 달기 ..."
-              show-word-limit
-              type="textarea" />
-        </div>
-        <ReplyList
-          v-for="reply in reply"
-         :reply="reply"
-         :key="reply.id_reply" />
-        <div class="btn-submit">
-        <el-button 
+    <form>
+      <div class="form_group">
+        <label>댓글 목록</label>
+        <el-input
+          style="border-radius: 5rem"
+          v-model="textarea"
+          maxlength="50"
+          placeholder="댓글 달기 ..."
+          show-word-limitcd
+          type="textarea" />
+          <el-button 
           type="text"
+          class="btn_write"
           @click="writeReply()">등록</el-button>
-        </div>
+      </div>
+      <ReplyList
+        v-for="reply in reply"
+        :reply="reply"
+        :key="reply.id_reply" />
     </form>
-    </div>
   </div>
 </template>
 
@@ -67,7 +79,8 @@ export default {
       deleteMessage:"",
       nullImage: "",
       textarea: '',
-      reply: []
+      reply: [],
+      date: '2021.12.20'
     }
   },
   created() {
@@ -115,7 +128,6 @@ export default {
       })
     },
     writeReply() {
-
       const id = this.$route.params.id;
       const foodId =  this.reviewInfo.food_id;
       const text = this.textarea;
@@ -136,6 +148,10 @@ export default {
       })
     },
   },
+  ratingToPercent() {
+    const score = this.reviewInfo.ratings;
+    return score;
+  },
   components: {
     ReplyList,
   }
@@ -143,43 +159,89 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.container {
+  position: absolute;
+  top: 40px;
 
-.inner {
-  border: 2px solid rgba(110, 108, 108, 0.329);
-}
-.user_info {
-  display: flex;
-  align-items: center; 
-  .user {
-    padding: 5px;
-    p {
-      font-weight: 600;
+  .inner {
+    border: 2px solid rgba(247, 246, 246, 0.562);
+    padding: 10px;
+    width: 100%;
+    display: inline-block;
+
+    .user_info {
+      display: flex;
+      align-items: center; 
+      .user {
+        padding: 5px;
+        p {
+          margin: 0px;
+          font-weight: 600;
+        }
+
+        .user_date {
+          color:rgb(138, 134, 134);
+        }
+      }
     }
   }
 }
+.btn_go {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
 .user_order {
-  width: 120px;
+  width: 50px;
   padding: 5px; 
   background-color: rgb(247, 239, 239);
-
   border-radius: 2rem;
   font-size: 15px;
+  align-items: center;
 }
 .user_text {
-  padding: 5px;
   width: 100%;
-  min-height: 150px;
+  min-height: 50px;
 }
 
-.btn-submit {
+.btn_write {
   position: absolute;
-  bottom: -30px;
-  right: 10px;
+  right: 30px;
 }
 
 img {
-  width: 370px;
+  border-radius: .4rem;
+  width: 350px;
   height: 300px;
 }
 
+.el-input__inner {
+  border-radius: 8rem;
+}
+.star-ratings {
+  color: #aaa9a9; 
+  position: relative;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 1.3px;
+  -webkit-text-stroke-color: #2b2a29;
+}
+ 
+.star-ratings-fill {
+  color: #fff58c;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-text-fill-color: gold;
+}
+ 
+.star-ratings-base {
+  z-index: 0;
+  padding: 0;
+}
 </style>

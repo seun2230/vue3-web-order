@@ -65,7 +65,7 @@ span {
   border-radius: 9px;
   height: 100px;
   width: 100%;
-  box-shadow: 2px 2px 2px 2px rgba(160, 160, 160, 0.445);
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
   .infos-container {
     display: grid;
     font-weight: 800;

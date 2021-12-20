@@ -20,7 +20,7 @@ import { mapState } from 'vuex';
 
 export default {
   methods: {
-    
+
   },
   created() {
     this.$store.commit('admin/getSlide');
@@ -28,7 +28,7 @@ export default {
   computed: {
     ...mapState('admin',['slide'])
   }
-  
+
 }
 </script>
 <style lang="scss" scoped>
@@ -45,4 +45,3 @@ img {
   height: 100%;
 }
 </style>
-

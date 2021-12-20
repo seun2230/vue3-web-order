@@ -84,7 +84,7 @@ export default {
       border-radius: 9px;
       width: 100%;
       color: $menuBg;
-      box-shadow: 2px 2px 2px 2px rgba(160, 160, 160, 0.445);
+      box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
       font-weight: 800;
     }
   }

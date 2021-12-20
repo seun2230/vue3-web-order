@@ -91,9 +91,9 @@
           </el-form-item>
           <el-form-item>
             <el-button  
-              type="text"
+              type="default"
               class="btn-review"
-              @click="sendReview()">리뷰 작성
+              @click="sendReview()">저장
             </el-button>
             <el-button @click="returnBoard()">취소</el-button>
           </el-form-item>
@@ -151,7 +151,7 @@ export default {
         console.log("데이터 전달 성공", res);
         console.log(formData);
         alert('고객님의 리뷰가 등록되었습니다.')
-        this.$router.push('/api/user/board')
+        this.$router.push('/user/board')
       })
       .catch((err) => {
         console.error("오류 발생함", err);
@@ -194,8 +194,7 @@ export default {
 @import '../scss/variables.scss';
 
 .container {
-  border: 1px solid #ccc;
-  padding: 10px;
+  padding: 0px 15px;
 }
 
 .btn-review {
@@ -203,7 +202,9 @@ export default {
   position: absolute;
   top: 0px;
   right: 10px;
-  font-size: 20px;
+  font-size: 0.8rem;
+  color: white;
+  background-color: rgba($color: #000000, $alpha: 0.8);
 }
 input {
   display: none;
@@ -229,5 +230,9 @@ input {
 }
 .img-box{
   border: solid;
+}
+
+p {
+  margin: 10px 0px;
 }
 </style>
