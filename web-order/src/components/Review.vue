@@ -151,7 +151,7 @@ export default {
         console.log("데이터 전달 성공", res);
         console.log(formData);
         alert('고객님의 리뷰가 등록되었습니다.')
-        this.$router.push('/api/user/board')
+        this.$router.push('/user/board')
       })
       .catch((err) => {
         console.error("오류 발생함", err);

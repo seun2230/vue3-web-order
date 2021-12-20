@@ -1,14 +1,18 @@
 <template>
-  <div>
+  <div class="container">
     <div class="comp-header">
       <comp-header />
     </div>
-    <router-view v-slot="{ Component }">
+    <div >
+    <router-view v-slot="{ Component }" style="padding-bottom: 50px">
       <transition name="component-transition" mode="slide">
         <component :is="Component" />
       </transition>
     </router-view>
+    </div>
+    <div class="com-navbar">
     <nav-under />
+    </div>
   </div>
 </template>
 
@@ -26,9 +30,11 @@ export default {
 
 <style lang="scss" scoped>
 body {
-  overflow-y: hidden;
+  // overflow-y: hidden;
 }
-
+.comp-main {
+  padding-bottom: 80px;
+}
 .component-transition-enter-to {
   position: absolute;
   right: 0;
