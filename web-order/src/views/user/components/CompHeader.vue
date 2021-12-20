@@ -1,5 +1,4 @@
 <template>
-
   <div class="title">
     <div class="arrow">
       <button @click="Backward"
@@ -56,12 +55,10 @@ button:hover {
   display: flex;
   justify-content: row;
   align-items: center;
-  padding: 5px;
-  margin-bottom: 5px;
+  // padding: 5px;
   position: fixed;
   width: 100%;
   height: 12vw;
   border-bottom: 1px solid #bcbcbc;
-  z-index: 100;
 }
 </style>

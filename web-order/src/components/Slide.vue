@@ -1,12 +1,14 @@
 <template>
   <div class="block">
-    <el-carousel height="200px">
-      <el-carousel-item 
-        v-for="item in slide" 
+    <el-carousel height="50vh">
+      <el-carousel-item
+        v-for="item in slide"
         :key="item">
-        <img 
+        <div class="img-box">
+        <img class="img"
           :src="item.slide_image"
           :alt="item.slide_image" />
+        </div>
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -17,7 +19,7 @@ import { mapState } from 'vuex';
 
 export default {
   methods: {
-    
+
   },
   created() {
     this.$store.commit('admin/getSlide');
@@ -25,12 +27,17 @@ export default {
   computed: {
     ...mapState('admin',['slide'])
   }
-  
+
 }
 </script>
 <style lang="scss" scoped>
 img {
-  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+.img-box {
+  width: 100%;
+  height: 100%;
 }
 </style>
-

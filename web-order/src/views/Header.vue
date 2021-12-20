@@ -1,27 +1,23 @@
 <template>
- <header>
-    <nav class="nav">
-      <div class="navbar__logo">
-        <li><i class="fas fa-hamburger fa-2x"></i></li>
-      </div>
-      <div v-if="isAuth" class="login__user">
-        {{ getUserName }}님 어서오세요!
-      </div>
-      <div v-if="!isAuth">
-      </div>
-   </nav>
- </header>
+  <div class="header">
+    <div class="logo-area">
+      <icon-base icon-name="Logo" class="icon-logo"
+        width="90" height="40">
+        <logo />
+      </icon-base>
+    </div>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import IconBase from '../assets/navicons/IconBase.vue';
+import Logo from '../assets/navicons/Logo.vue';
 
 export default {
-  data() {
-    return {
-    }
-  },
   components: {
+    IconBase,
+    Logo,
   },
   created() {
     console.log("sss",this.isAuth)
@@ -39,40 +35,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@mixin center {
+.header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-header {
+  justify-content: start;
+  height: 1vh;
   padding: 10px;
   margin-top: 0;
   border-bottom: 1px solid #bcbcbc;
+}
 
-  .nav {
-  @include center;
-
+@media screen and (min-width: 767px) {
+  .header {
+    display: flex;
+  }
+  .icon-logo {
+    height: 60px;
+    width: 60px;
   }
 }
 
-.navbar__logo {
-  li {
-    padding: 0 5px;
-    list-style-type: none;
-    &:hover {
-      color: red;
-      cursor: pointer;
-    }
-  }
-}
-
-@media screen and (max-width: 768px) {
-
-  .navbar__menu {
-    display: none;
-
-  }
+.logo-area {
+    z-index: 50;
 }
 
 

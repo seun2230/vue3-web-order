@@ -1,6 +1,10 @@
 <template>
     <div class='container'>
         <div class="pageTitle">
+            <div class="login__user">
+                {{ getUserName }}님 안녕하세요,<br />
+                즐거운 하루 보내고 계신가요?
+            </div>
             <div class='logout'>
                 <button-logout />
             </div>
@@ -34,7 +38,7 @@ export default {
         ...mapState('user',
         ['token']),
         ...mapGetters('user',[
-            'isAuth'
+            'getUserName'
         ]),
     },
 }
@@ -50,7 +54,7 @@ a {
     flex-direction: column;
     max-width: 460px;
     margin: auto;
-    padding: 1rem;
+    padding: 0 1rem;
     /* border: 1px solid #ddd; */
     border-radius: .25rem;
     /* box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
@@ -69,12 +73,12 @@ a {
 
 .pageTitle {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     margin: 20px 0px;
     text-align: left;
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 0.9rem;
 }
 
 .userinfo {

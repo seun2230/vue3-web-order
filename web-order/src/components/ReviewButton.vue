@@ -69,7 +69,7 @@ export default {
     height: 6.5rem;
     width: 100%;
     font-size: 1rem;
-    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
 }
 
 .routericon{
