@@ -41,7 +41,7 @@ export default {
 @import '../scss/variables.scss';
 
 img {
-  border-radius: 10px;
+  border-radius: 5px;
   width: 100px;
   height: 100px;
 }
@@ -50,18 +50,18 @@ span {
   text-overflow: ellipsis;
 }
 .container {
-  padding: 10px;
   width: 100%;
+  height : 20vh;
+  padding: 10px;
   display: flex;
-  border-radius: 10px;
-  height : 120px;
-  background-color: $menuListBg;
-  margin-bottom: 10px;
+  border-radius: 3px;
+  border: 1px solid lightgrey;
+  box-shadow: 0 4px 4px -4px rgb(197, 193, 193);
   .infos {
     .title {
       overflow: hidden;
       text-overflow: ellipsis;
-      color: red;
+      color: rgba(223, 187, 187, 0.918);
     }
     .text {
       display: -webkit-box;

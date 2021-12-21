@@ -17,7 +17,7 @@
               <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
             </div>
           </div>
-            <span class="user_date">{{ reviewInfo.comments_date }}</span>
+            <span class="user_date">{{ reviewInfo.comments_date  }}</span>
         </div>
       </div>
       <div class="btn_go">
