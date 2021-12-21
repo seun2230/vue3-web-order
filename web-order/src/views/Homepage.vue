@@ -1,10 +1,13 @@
 <template>
   <div class="container">
     <!-- <Header /> -->
-    <Slide />
-    <br />
+    <div class="slide-container">
+      <Slide />
+    </div>
     <!-- <Login /> -->
-    <PageList />
+    <div class="pagelist-container">
+      <PageList />
+    </div>
     <!-- <NavUnder /> -->
   </div>
 </template>
@@ -34,7 +37,14 @@ export default {
 </script>
 
 <style scoped>
-  * {
-    max-height: 100vh;
-  }
+body {
+  max-height: 100vh;
+  margin: 0px;
+  padding: 0px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
 </style>

@@ -9,18 +9,35 @@
         </div>
       </div>
     <div class="inner">
-      <div class="page__inquiry">
-       <button @click="clickModal()">
+      <div class="page__chef">
+        <div class="inner-title">
+          <span>Chef Profile</span>
+        </div>
+        <div class="inner-body">
+          <img src="../assets/Gordon.png" class="img-chef" />
+       <!-- <button @click="clickModal()">
          <i class="fas fa-question-circle fa-2x"></i>
-        </button>
+        </button> -->
         <ModalAdd
           @close="closeModal()"
           v-if="modal" />
-        <p>사이트 이용 안내</p>
+        </div>
       </div>
-      <div class="page__order">
-         <i class="fas fa-mobile-alt fa-2x"></i>
-         <p>테이블 오더</p>
+      <div class="page__today">
+         <div class="inner-title">
+          <span>오늘의 메뉴</span>
+        </div>
+        <div class="inner-body">
+          <img src="../assets/Pizza.jpg" class="img-today" />
+        </div>
+      </div>
+      <div class="page__guide">
+         <div class="inner-title">
+          <span>어떻게 이용할까요?</span>
+        </div>
+        <div class="inner-body">
+          <img src="../assets/Help.jpg" class="img-guide" />
+        </div>
       </div>
     </div>
   </div>
@@ -28,6 +45,7 @@
 
 <script>
 import ModalAdd from '../views/user/components/ModalAdd.vue'
+
 export default {
   data() {
     return {
@@ -52,43 +70,72 @@ export default {
 </script>
 
 <style scoped lang="scss">
+img {
+  border-radius: 10px;
+  // object-fit: fill;
+}
+
+.img-today, .img-guide {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.container {
+  margin-top: 10px;
+}
 
 .inner {
   display: grid;
-  // margin: 1px 0px 1px 0px;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: 15vh 15vh;
   grid-gap: 0px;
 }
 
-.page__inquiry {
-  // background-color: hsl(333, 73%, 88%);
-  margin: 5px;
-  border: 1px solid lightgrey;
-  border-radius: 10px;
-  height: 13vh;
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+.page__chef {
+  margin: 10px;
   text-align: center;
+
+  .inner-body {
+    height: 13vh;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+  }
 }
 
-.page__order {
-  // background-color: beige;
-  margin: 5px;
-  border: 1px solid lightgrey;
-  border-radius: 10px;
-  height: 18vh;
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+.page__guide {
+  margin: 40px 10px 10px 10px;
   text-align: center;
+
+  .inner-body {
+    height: 10vh;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.page__today {
+  margin: 10px;
+  text-align: center;
+
+  .inner-body {
+    height: 29vh;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+  }
 }
 
 .page__notice {
   display: flex;
-  margin: 5px;
+  margin: 10px;
   border: 1px solid lightgrey;
   border-radius: 10px;
   height: 3vh;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
 
   .inner {
@@ -96,5 +143,12 @@ export default {
     align-items: center;
     margin-left: 10px;
   }
+}
+
+.inner-title {
+  text-align: left;
+  margin: 0px 0px 8px 5px;
+  font-size: 0.85rem;
+  font-weight: bold;
 }
 </style>

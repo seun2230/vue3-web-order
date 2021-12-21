@@ -51,9 +51,11 @@ export default {
   display: grid;
 }
 .order_item {
+  margin: 10px;
   min-height: 150px;
-  border: 2px solid #c0c0c0;
-  border-radius: .5rem;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 </style>

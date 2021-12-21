@@ -6,7 +6,7 @@
           <button :href='href' @click='navigate' class='button'>
             <div class="navicon">
                 <icon-base icon-name="IconHome"
-                  width="40" height="35">
+                  width="33" height="32">
                   <icon-home />
                 </icon-base>
             </div>
@@ -23,7 +23,7 @@
           <button :href='href' @click='navigate' class='button'>
             <div class="navicon">
                 <icon-base icon-name="IconReview"
-                  width="40" height="35">
+                  width="33" height="32">
                   <icon-review />
                 </icon-base>
             </div>
@@ -55,7 +55,7 @@
           <button :href='href' @click='navigate' class='button'>
             <div class="navicon">
                 <icon-base icon-name="IconList"
-                  width="40" height="35">
+                  width="33" height="32">
                   <icon-list />
                 </icon-base>
             </div>
@@ -72,7 +72,7 @@
           <button :href='href' @click='navigate' class='button'>
             <div class="navicon">
                 <icon-base icon-name="IconInfo"
-                  width="40" height="35" >
+                  width="33" height="32" >
                   <icon-info />
                 </icon-base>
             </div>
@@ -126,9 +126,9 @@ ul {
   background-color: white;
 }
 
-@media screen and (max-height: 799px){
+@media screen and (max-height: 799px) {
     ul {
-      min-height: 11%;
+      min-height: 13%;
     }
 }
 

@@ -64,11 +64,12 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    border: 1px solid lightgrey;
     text-align: left;
     height: 6.5rem;
     width: 100%;
     font-size: 1rem;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
 }
 
