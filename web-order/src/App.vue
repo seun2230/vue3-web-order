@@ -36,8 +36,20 @@ body {
 }
 
 .container {
-  height: 100vmin;
+  height: 100vh;
 }
+
+@media screen and (max-width: 1023px) {
+  .container {
+    height: 50vh;
+  }
+}
+
+// @media screen and (min-width: 767px) {
+//   .container {
+//     height: 20vh;
+//   }
+// }
 
 .component-transition-enter-active,
 .component-transition-leave-active {

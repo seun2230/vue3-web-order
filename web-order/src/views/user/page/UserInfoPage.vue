@@ -52,7 +52,7 @@ a {
 .container {
     display: flex;
     flex-direction: column;
-    max-width: 460px;
+    max-width: 500px;
     margin: auto;
     padding: 0 1rem;
     /* border: 1px solid #ddd; */

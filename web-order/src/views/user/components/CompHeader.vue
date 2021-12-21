@@ -60,5 +60,6 @@ button:hover {
   width: 100%;
   height: 12vw;
   border-bottom: 1px solid #bcbcbc;
+  z-index: 1000;
 }
 </style>

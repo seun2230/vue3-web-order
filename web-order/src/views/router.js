@@ -13,6 +13,7 @@ import BoardModify from '../components/BoardModify'
 import MenuPage from '../views/user/page/MenuPage.vue'
 import UserPage from '../views/user/UserPage.vue'
 import UserMyPage from '../views/user/page/UserMyPage.vue'
+import ShopInfo from '../views/user/page/ShopInfo.vue'
 import store from '../store'
 
 const beforeAuth = isAuthenticated => (from, to, next) => {
@@ -23,6 +24,12 @@ const beforeAuth = isAuthenticated => (from, to, next) => {
     alert("로그인이 필요한 메뉴입니다.");
     next('/user/login');
   }
+}
+
+//  라우터 이동 시 스크롤 가장 위로 오도록 하는 기능
+//  왜 안될까
+const scrollBehavior = function () {
+  return { x: 0, y: 0 }
 }
 
 const routes = [
@@ -109,6 +116,12 @@ const routes = [
         name: 'mypage',
         component: UserMyPage,
         meta: { metaName: '주문 내역'}
+      },
+      {
+        path: 'shopinfo',
+        name: 'shopinfo',
+        component: ShopInfo,
+        meta: { metaName: '매장 정보' }
       }
     ]
   },
@@ -140,6 +153,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
+  scrollBehavior,
   routes
 })
 
