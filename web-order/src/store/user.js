@@ -28,11 +28,12 @@ export default {
     }
   },
   mutations: {
-    getOrderList() {
+    getOrderList(state) {
       axios.get(`${process.env.VUE_APP_URL}/api/user/get/orderList`)
       .then(res => {
-        console.log(res.data);
-        this.state.orderList = res.data;
+        console.log("sss", res.data)
+        state.orderList = res.data;
+        console.log("여기", state.orderList)
       }).catch(err => {
         console.log("Error", err);
       })
@@ -45,13 +46,12 @@ export default {
       state.token = payload.data.token
     },
     logout(state) {
-      console.log("adf", process.env.VUE_APP_URL)
       state.token = [],
       state.orderList = [],
       state.user_info = [],
       location.reload;
       router.push('/');
-      axios.post(`http://localhost:3000/api/auth/logout`)
+      axios.post(`${process.env.VUE_APP_URL}/api/auth/logout`)
       .then(res => {
         console.log(res);
       }).catch(err => {
