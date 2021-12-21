@@ -6,7 +6,7 @@
           <el-avatar> {{ reviewInfo.comments_user_id }} </el-avatar>
         </div>
         <div class="user">
-          <p>{{ reviewInfo.comments_user_id}}</p>
+          <p>{{ translatedId}}</p>
           <div class="ratings">
             <div 
               class="ratings-fill"
@@ -93,6 +93,7 @@ export default {
     .then(res => {
       console.log("성공", res.data)
       this.reviewInfo = res.data[0]
+      
     })
     .catch(err => {
       console.error("실패", err)
@@ -109,7 +110,13 @@ export default {
     })
   },
   computed: {
-    
+    translatedId() {
+      const userId= this.reviewInfo.comments_user_id
+      if(typeof userId === 'string') {
+        return userId.replace(/(?<=.).(?=.)/g, "*");
+      }
+      
+    }
   },
   methods: {
     clickReply() {
