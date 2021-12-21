@@ -18,7 +18,6 @@ const app = express();
 app.set('port', 3000)
 
 app.use(cors({ credentials: true, origin: true }))
-app.use(express.static('uploads'))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

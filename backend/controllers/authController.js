@@ -1,6 +1,6 @@
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
-const pool = require('../db')
+const pool = require('../db');
 
 const login = async(req, res, next) => {
   try {
@@ -26,7 +26,7 @@ const login = async(req, res, next) => {
 
         const [rows] = await connection.query(sql, value);
         console.log(rows[0])
-        res.cookie('auth', token, { maxAge: 60 * 60 * 60 , sameSite: "lax" , httpOnly: false})
+        res.cookie('auth', token, { maxAge: 3600000 , sameSite: "lax" , httpOnly: true})
         res.send({
           "user_id":rows[0].user_id,
           "user_name": rows[0].user_name,
@@ -43,5 +43,5 @@ const login = async(req, res, next) => {
 }
 
 module.exports = {
-  login
+  login,
 }

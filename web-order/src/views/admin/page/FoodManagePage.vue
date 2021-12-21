@@ -3,36 +3,34 @@
     <el-row :gutter="10">
       <el-col
         :span="9">
-        <UploadForm />
-        <SlideUploadForm />
+        <FoodUploadForm />
       </el-col>
       <el-col :span="15">
         <AdminMenuList />
-        <br/>
+        <br />
+        <AdminBoardList />
       </el-col>
     </el-row>  
-    <AdminBoardList />
+    <br />
     <NullImageUploadForm />
-    <imagePreveiw />
+    <SlideUploadForm />
   </div>
 </template>
 
 <script>
-import UploadForm from '../components/UploadFrom.vue'
+import FoodUploadForm from '../components/FoodUploadFrom.vue'
 import AdminMenuList from '../components/AdminMenuList.vue'
 import SlideUploadForm from '../components/SlideUploadForm.vue'
 import AdminBoardList from '../components/AdminBoardList.vue'
 import NullImageUploadForm from '../components/NullImageUploadForm.vue';
-import ImagePreveiw from '../../../components/ImagePreview.vue'
 
 export default {
   components: {
-    UploadForm,
+    FoodUploadForm,
     AdminMenuList,
     SlideUploadForm,
     AdminBoardList,
     NullImageUploadForm,
-    ImagePreveiw,
   }
 }
 </script>

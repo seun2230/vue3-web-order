@@ -3,6 +3,16 @@ const router = express.Router();
 const { login } = require('../controllers/authController');
 const pool = require('../db');
 const bcrypt = require('bcryptjs');
+const passport = require('passport')
+
+router.get('/kakao', passport.authenticate('kakao'));
+
+router.get('/kakao/callback',
+  passport.authenticate('kakao', { 
+    failureRedirect: '/', 
+  }), (req, res) => { 
+    res.redirect('/'); 
+  });
 
 router.post('/login', login);
 
@@ -30,7 +40,7 @@ router.post('/register', async(req, res) => {
         let sql = 'SELECT user_id FROM users ' +
           'WHERE user_id = ?'
         let value = [ sign_info.user_id ]
-
+ 
         const [row] = await connection.query(sql, value);
 
         if(row[0] === undefined) {

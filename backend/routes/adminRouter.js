@@ -9,12 +9,12 @@ router.post('/post/foodUpload', upload.array('files'), async function(req, res) 
       const connection = await pool.getConnection(async conn => conn);
       try {
         const files = req.files
-        let image = []  
+        let image = []
   
         await connection.beginTransaction();
   
         for (let i = 0; i < req.files.length; i++) {
-          image[i] = files[i].location
+          image[i] = files[i].transforms[0].location
         }
   
           let sql = "INSERT INTO food_items" + 
@@ -91,7 +91,7 @@ router.post('/post/foodUpload', upload.array('files'), async function(req, res) 
           await connection.beginTransaction();
     
           for (let i = 0; i < req.files.length; i++) {
-            image[i] = files[i].location
+            image[i] = files[i].transforms[0].location
           }
     
             let sql = "INSERT INTO slide" + 
@@ -107,7 +107,7 @@ router.post('/post/foodUpload', upload.array('files'), async function(req, res) 
               success: "true"
             })
           } catch(err) {
-            console.log("Query Error")
+            console.log("Query Error", err)
             await connection.rollback();
             connection.release();
             res.send({
@@ -264,12 +264,10 @@ router.get("/get/comments", async (req, res) => {
     const connection = await pool.getConnection(async conn => conn);
     try {
       let sql = "SELECT comments_text as text, comments_title as title," +
-        "ratings, food_name, user_id as id, user_name as name," +
-        "user_gender as gender, comments_image as image ,comments_id, food_category as category " +
+        "ratings, food_name, comments_user_id as id, comments_id, food_category as category " +
         "FROM comments " +
-        "LEFT JOIN food_items ON food_items_food_id = food_id " +
-        "LEFT JOIN users ON users_user_id = user_id"
-      const [rows] = await connection.query(sql)
+        "LEFT JOIN food_items ON food_items_food_id = food_id " 
+          const [rows] = await connection.query(sql)
       connection.release();
       res.send(rows)
     } catch(err) {

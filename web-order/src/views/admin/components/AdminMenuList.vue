@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <h4 class="title">메뉴 관리</h4>
     <el-table
       ref="multipleTable"
       :data="foods"
@@ -108,6 +109,9 @@ export default {
   padding: 10px;
   background: #ffffff;
   border-radius: 2px;
+  .title {
+    text-align: center;
+  }
 }
 
 </style>

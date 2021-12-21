@@ -2,6 +2,8 @@
   <div class="container">
     <!-- <Header /> -->
     <Slide />
+    <br />
+    <!-- <Login /> -->
     <PageList />
     <!-- <NavUnder /> -->
   </div>
