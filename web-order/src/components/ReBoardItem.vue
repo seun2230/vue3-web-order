@@ -1,20 +1,21 @@
 <template>
   <router-link class="container-exterrior"
     :to="{name: 'boardItem', params: { id: comment.comments_id }}">
-    <div class="container">
-    <img 
-      :src="comment.comments_image"
-      :alt="comment.comments_id" />
-      <div class="infos">
-        <div class="title-box">
-          <h3 class="title">{{ comment.comments_title }}</h3>
-        </div>
-        <div class="ratings-box">
-          <span class="ratings">{{ comment.comments_ratings }}</span>
-        </div>
-        <div class="text-box">
+    <div class="cards">
+      <div class="card-image">
+        <img 
+          :src="comment.comments_image"
+          :alt="comment.comments_id" />
+        {{ comment.food_price }}
+      </div>
+      <div class="card-content">
+         <h3>{{ comment.comments_title }}</h3>
           <span class="text">{{ comment.comments_text }}</span>
-        </div>
+
+          <div class="card-user">
+            <span class="user-id">{{ comment.comments_user_id }}</span> 
+            <span>{{ comment.comments_date }}</span>
+          </div>
       </div>
     </div>
   </router-link>
@@ -30,7 +31,11 @@ export default {
     },
   },
   methods: {
-
+    ratingToPercent() {
+      const score = this.comment.ratings;
+      console.log(score);
+      return score * 20;
+    },
   },
   computed: {
   }
@@ -42,49 +47,35 @@ export default {
 
 img {
   border-radius: 5px;
-  width: 100px;
-  height: 100px;
+  width: 20vh;
+  height: 20vh;
 }
-span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.container {
-  width: 100%;
-  height : 20vh;
-  padding: 10px;
+
+.cards {
   display: flex;
-  border-radius: 3px;
-  border: 1px solid lightgrey;
-  box-shadow: 0 4px 4px -4px rgb(197, 193, 193);
-  .infos {
-    .title {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      color: rgba(223, 187, 187, 0.918);
-    }
-    .text {
-      display: -webkit-box;
-      word-wrap: break-word;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      // text가 많은 경우 생략 기호 보여주기
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+  border: 2px solid rgb(233, 240, 247);
+}
+.card-content {
+  width: 320px;
+  min-height: auto;
+  padding: 15px;
+  text-align: center;
+
+  .user-id {
+    color: lightgray;
+    font-weight: 600;
   }
 }
 
-// .info_text {
-//   border: 2px solid navajowhite;
-//   display: -webkit-box;
-//   word-wrap: break-word;
-//   -webkit-line-clamp: 2;
-//   -webkit-box-orient: vertical;
-//   // text가 많은 경우 생략 기호 보여주기
-//   overflow: hidden;
-//   text-overflow: ellipsis;
-// }
+.text {
+  display: -webkit-box;
+  word-wrap: break-word;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  // text가 많은 경우 생략 기호 보여주기
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 
 </style>

@@ -36,7 +36,7 @@ export default {
     pageSize: {
       type: Number,
       required: false,
-      default: 4
+      default: 6
     },
   },
   beforeCreate() {
@@ -94,12 +94,39 @@ export default {
     width: 20vh;
     color:red;
     background: #fff;
-    border-radius: 1rem;
+    // border-radius: 1rem;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.13);
     overflow: hidden;
   }
 }
 .page-view {
   text-align: center;
+}
+
+.star-ratings {
+  color: #aaa9a9; 
+  position: relative;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-fill-color: transparent; 
+  -webkit-text-stroke-width: 1.3px;
+  -webkit-text-stroke-color: #2b2a29;
+}
+ 
+.star-ratings-fill {
+  color: #fff58c;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-text-fill-color: gold;
+}
+ 
+.star-ratings-base {
+  z-index: 0;
+  padding: 0;
 }
 </style>

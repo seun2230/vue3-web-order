@@ -20,9 +20,6 @@
             <span class="user_date">{{ reviewInfo.comments_date  }}</span>
         </div>
       </div>
-      <div class="btn_go">
-        <i class="fas fa-angle-down"></i>
-      </div>
       <div class="image-box">
         <img 
           v-if="reviewInfo.comments_image !== this.nullImage"
@@ -34,8 +31,12 @@
       <div class="user_text">
         <p>{{ reviewInfo.comments_text}}</p>
       </div>
+      <div class="btn-liked">
+          <i class="far fa-thumbs-up"></i>{{ 17 }}
+          <i class="far fa-comment"></i>{{ 1 }}
+      </div>
       <div class="btn_group">
-        <el-button 
+        <!-- <el-button 
           type="text" 
           @click="deleteComment()">삭제
         </el-button>
@@ -43,13 +44,13 @@
          type="text"
          @click="modifyComment()">
          수정
-        </el-button>
+        </el-button> -->
       </div>
     </div>
     <form>
       <div class="form_group">
-        <label>댓글 목록</label>
-        <el-input
+        <p>댓글 1개 보기<i class="fas fa-angle-down"></i></p>
+        <!-- <el-input
           style="border-radius: 5rem"
           v-model="textarea"
           maxlength="50"
@@ -59,7 +60,7 @@
           <el-button 
           type="text"
           class="btn_write"
-          @click="writeReply()">등록</el-button>
+          @click="writeReply()">등록</el-button> -->
       </div>
       <ReplyList
         v-for="reply in reply"
@@ -187,13 +188,14 @@ export default {
     }
   }
 }
-.btn_go {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-}
+// .btn_go {
+//   position: absolute;
+//   top: 20px;
+//   right: 30px;
+// }
 .user_order {
-  width: 50px;
+  display: inline-block;
+  width: auto;
   padding: 5px; 
   background-color: rgb(247, 239, 239);
   border-radius: 2rem;
@@ -209,7 +211,9 @@ export default {
   position: absolute;
   right: 30px;
 }
-
+.btn-liked {
+  padding: 10px;
+}
 img {
   border-radius: .4rem;
   width: 350px;
