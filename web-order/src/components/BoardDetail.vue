@@ -17,7 +17,7 @@
               <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
             </div>
           </div>
-            <span class="user_date">{{ date }}</span>
+            <span class="user_date">{{ reviewInfo.comments_date }}</span>
         </div>
       </div>
       <div class="btn_go">
@@ -80,16 +80,14 @@ export default {
       nullImage: "",
       textarea: '',
       reply: [],
-      date: '',
     }
   },
   created() {
     const id = this.$route.params.id;
-     axios.get(`${process.env.VUE_APP_URL}/api/user/get/comment/` + id)
+    axios.get(`${process.env.VUE_APP_URL}/api/user/get/comment/` + id)
     .then(res => {
       console.log("성공", res.data)
       this.reviewInfo = res.data[0]
-      this.date = this.reviewInfo.comments_date.split('.')[0]
     })
     .catch(err => {
       console.error("실패", err)
@@ -99,7 +97,6 @@ export default {
       console.log("null", res.data)
       this.nullImage = res.data[0].null_image
     })
-
     axios.get(`${process.env.VUE_APP_URL}/api/user/get/reply/` + id)
     .then(res => {
       console.log("reply", res.data)

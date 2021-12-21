@@ -37,6 +37,8 @@ router.get('/get/orderList', verifyToken, async(req, res) => {
 
 router.post('/post/comment', upload.array('file'), verifyToken, async function(req, res) {
   try {
+    const date = new Date()
+    const splitDate = date.split('.')[0]
     console.log("DB Connection! /post/comment")
     const connection = await pool.getConnection(async conn => conn);
     try {
@@ -48,8 +50,8 @@ router.post('/post/comment', upload.array('file'), verifyToken, async function(r
       }
 
       let sql = "INSERT INTO comments " +
-        "(comments_image, comments_text, ratings, food_items_food_id, comments_user_id, comments_title, comments_status)" +
-        "VALUES(?, ?, ?, ?, ?, ?, ?)"
+        "(comments_image, comments_text, ratings, food_items_food_id, comments_user_id, comments_title, comments_status, comments_date)" +
+        "VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
         
       if (image[0] === undefined) {
         const [row] = await connection.query("SELECT * FROM null_image");
@@ -62,7 +64,8 @@ router.post('/post/comment', upload.array('file'), verifyToken, async function(r
           req.body.menu,
           req.decoded.user_id,
           req.body.title,
-          req.body.status
+          req.body.status,
+          splitDate
         ]
         await connection.query(sql, value);
         await connection.commit();
@@ -78,7 +81,8 @@ router.post('/post/comment', upload.array('file'), verifyToken, async function(r
         req.body.menu,
         req.decoded.user_id,
         req.body.title,
-        req.body.status
+        req.body.status,
+        splitDate
       ]
 
       await connection.query(sql, value);
