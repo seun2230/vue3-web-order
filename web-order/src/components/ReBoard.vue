@@ -1,9 +1,11 @@
 <template>
   <div class="container">
-    <el-button
-      class="btn-comment"
-      type="text"
-      @click="writeComment()">등록</el-button>
+    <div class="btn-fade">
+      <el-button
+        class="btn-comment"
+        type="text"
+        @click="writeComment()"><i class="far fa-edit"></i> 작성하기</el-button>
+    </div>
     <ReBoardItem
       v-for="comment in paginatedData"
       :key="comment.comments_id"
@@ -11,7 +13,7 @@
     <div v-if="comments.length == 0">
       <p>등록된 리뷰가 없습니다.</p>
     </div>
-    <div>
+    <div class="page-view">
       <el-button @click="prevPage" type="text" :disabled="pageNum === 0">
         이전
       </el-button>
@@ -83,4 +85,21 @@ export default {
 </script>
 
 <style lang="scss">
+.btn-fade {
+  position: fixed;
+  bottom: 100px;
+  right: 12px;
+
+  .btn-comment {
+    width: 20vh;
+    color:red;
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.13);
+    overflow: hidden;
+  }
+}
+.page-view {
+  text-align: center;
+}
 </style>
