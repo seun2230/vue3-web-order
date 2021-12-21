@@ -13,36 +13,6 @@ const adminRouter = require("./routes/adminRouter");
 const userRouter = require('./routes/userRouter');
 const userInfoRouter = require('./routes/userInfoRouter');
 
-const mqtt = require('mqtt');
-
-
-// Client 생성 
-const client = mqtt.connect('mqtt://test.mosquitto.org');
-
-let topic = 'topic1'
-let message = '(1)상품 준비중 입니다.'
-
-client.on('connect', function () {
-  console.log('connected!');
-
-  client.subscribe('topic1', function (err) {
-    if (!err) {
-      // Message 전송
-      client.publish(topic, message)
-      console.log(topic, message)
-    }
-  })
-})
-
-// Message 수신부
-client.on('message', function (topic, message) {
-  // message is Buffer 
-  console.log(`topic: ${topic.toString()}, message: ${message.toString()}`)    // result: <Buffer 48 65 6c 6c 6f 57 6f 72 6c 64>
-  console.log(message.toString()) // result: Hello mqtt
-  client.end()
-})
-
-
 const app = express();
 
 app.set('port', 3000)
