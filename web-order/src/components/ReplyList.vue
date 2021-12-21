@@ -1,7 +1,7 @@
 <template>
   <div class="reply-container">
     <div class="reply-content">
-      {{ reply.users_user_id }}
+      <span>{{ reply.users_user_id }}</span>
       <div class="reply-right">
         <p>{{ reply.reply_text }}</p>
       </div>
@@ -107,6 +107,10 @@ export default {
 <style lang="scss" >
 .reply-container {
   padding: 10px;
+
+  span {
+    font-weight: bold;
+  }
 }
 .reply-right{
 	position: relative;

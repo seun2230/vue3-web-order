@@ -25,6 +25,7 @@ const beforeAuth = isAuthenticated => (from, to, next) => {
   }
 }
 
+
 const routes = [
   {
     path: '/',
@@ -140,7 +141,10 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior() {
+    return { top: 0 }
+  }
 })
 
 export default router
