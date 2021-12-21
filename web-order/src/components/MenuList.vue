@@ -50,6 +50,9 @@ export default {
     flex-wrap: wrap;
     justify-content: center;
   }
+<<<<<<< HEAD
  
+=======
+>>>>>>> f3c45962d8c90edc7666242c9a92f3053b5ad50c
 }
 </style>
