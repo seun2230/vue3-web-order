@@ -3,15 +3,15 @@
     <div class="inner">
       <div class="user_info">
         <div class="user">
-          <el-avatar> user </el-avatar>
+          <el-avatar> {{ reviewInfo.comments_user_id }} </el-avatar>
         </div>
         <div class="user">
           <p>{{ reviewInfo.comments_user_id}}</p>
           <div class="star-ratings">
             <div 
               class="star-ratings-fill"
-              :style="{ width: reviewInfo.ratings }">
-              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+              :style="{ width: reviewInfo.ratings * 20 + '%' }">
+                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
             </div>
             <div class="star-ratings-base">
               <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
@@ -80,16 +80,16 @@ export default {
       nullImage: "",
       textarea: '',
       reply: [],
-      date: '2021.12.20'
+      date: '',
     }
   },
   created() {
     const id = this.$route.params.id;
-    console.log("id", id);
-    axios.get(`${process.env.VUE_APP_URL}/api/user/get/comment/` + id)
+     axios.get(`${process.env.VUE_APP_URL}/api/user/get/comment/` + id)
     .then(res => {
       console.log("성공", res.data)
       this.reviewInfo = res.data[0]
+      this.date = this.reviewInfo.comments_date.split('.')[0]
     })
     .catch(err => {
       console.error("실패", err)
@@ -105,6 +105,9 @@ export default {
       console.log("reply", res.data)
       this.reply = res.data
     })
+  },
+  computed: {
+    
   },
   methods: {
     modifyComment() {
@@ -147,10 +150,11 @@ export default {
         console.log("data fail", err);
       })
     },
-  },
-  ratingToPercent() {
-    const score = this.reviewInfo.ratings;
-    return score;
+    ratingToPercent() {
+      const score = this.reviewInfo.ratings;
+      console.log(score);
+      return score * 20;
+    },
   },
   components: {
     ReplyList,
