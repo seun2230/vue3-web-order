@@ -4,86 +4,73 @@ const pool = require('../db/index')
 const { verifyToken } = require('../middleware/auth')
 const { upload } = require('../api/S3UploadStorage')
 
-router.post('/myorder', verifyToken, async(req, res) => {
+router.get('/get/orderList', verifyToken, async(req, res) => {
+  try {
+    const connection = await pool.getConnection(async conn => conn);
     try {
-      console.log("DB Connection! /myorder")
-      const connection = await pool.getConnection(async conn => conn);
-      try {
-        console.log(req.body.num)
-
-        if (req.body.num === undefined) {
-          let sql = "SELECT * " +
-            "FROM order_num LEFT JOIN order_list " +
-            "ON id_order_num = order_num_id_order_num " +
-            "LEFT JOIN food_items " +
-            "ON food_items_food_id = food_id " +
-            "LEFT JOIN users " +
-            "ON users_user_id = user_id " +
-            "WHERE user_id = ? "
-
-          let value = [req.decoded.user_id]
-
-          const [rows] = await connection.query(sql, value)
-
-          connection.release();
-          res.send(rows)
-        } else {
-          let sql = "SELECT * " +
-            "FROM order_num LEFT JOIN order_list " +
-            "ON id_order_num = order_num_id_order_num " +
-            "LEFT JOIN food_items " +
-            "ON food_items_food_id = food_id " +
-            "LEFT JOIN users " +
-            "ON users_user_id = user_id " +
-            "WHERE user_id = ? AND order_status = ?"
-
-          let value = [
-            req.decoded.user_id,
-            req.body.num]
-
-          const [rows] = await connection.query(sql, value)
-
-          connection.release();
-          res.send(rows)
-
-        }
-      } catch(err) {
-        connection.release();
-        console.log("Query Error")
-        console.log("Error", err)
-        res.send({
-          error: "Query Error",
-          err
-        })
-      }
+      let sql = "SELECT id_order_list as id ,id_order_num, order_quantity as quantity, order_date, order_status as status, order_total_price as price, food_name " +
+        "FROM order_list " + 
+        "LEFT JOIN order_num ON order_num_id_order_num = id_order_num " +
+        "LEFT JOIN food_items ON food_items_food_id = food_id " +
+        "WHERE users_user_id = ?";
+      let value = [req.decoded.user_id];
+      const [rows] = await connection.query(sql, value);
+      connection.release();
+      res.send(rows)
     } catch(err) {
-      console.log("DB Error")
+      connection.release();
+      console.log("Query Error")
+      console.log("Error", err)
       res.send({
-        error: "DB Error",
+        error: "Query Error",
         err
       })
     }
-  })
+  } catch(err) {
+    console.log("DB Error")
+    res.send({
+      error: "DB Error",
+      err
+    })
+  }
+})
 
 router.post('/post/comment', upload.array('file'), verifyToken, async function(req, res) {
-try {
-  console.log("DB Connection! /post/comment")
-  const connection = await pool.getConnection(async conn => conn);
   try {
-    const files = req.files
-    let image = []
-    
-    for (let i = 0; i < req.files.length; i++) {
-      image[i] = files[i].transforms[0].location
-    }
-    console.log(image[0])
-    let sql = "INSERT INTO comments " +
-    "(comments_image, comments_text, ratings, food_items_food_id, comments_user_id, comments_title, comments_status)" +
-    "VALUES(?, ?, ?, ?, ?, ?, ?)"
-    if (image[0] === undefined) {
-      const [row] = await connection.query("SELECT * FROM null_image");
-      image[0] = [row][0][0].null_image
+    console.log("DB Connection! /post/comment")
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      const files = req.files
+      let image = []
+      
+      for (let i = 0; i < req.files.length; i++) {
+        image[i] = files[i].transforms[0].location
+      }
 
+      let sql = "INSERT INTO comments " +
+        "(comments_image, comments_text, ratings, food_items_food_id, comments_user_id, comments_title, comments_status)" +
+        "VALUES(?, ?, ?, ?, ?, ?, ?)"
+        
+      if (image[0] === undefined) {
+        const [row] = await connection.query("SELECT * FROM null_image");
+        image[0] = [row][0][0].null_image
+
+        let value = [
+          image[0],
+          req.body.review,
+          req.body.ratings,
+          req.body.menu,
+          req.decoded.user_id,
+          req.body.title,
+          req.body.status
+        ]
+        await connection.query(sql, value);
+        await connection.commit();
+        connection.release();
+        res.send({
+          success: "true"
+        })
+      }
       let value = [
         image[0],
         req.body.review,
@@ -93,46 +80,29 @@ try {
         req.body.title,
         req.body.status
       ]
+
       await connection.query(sql, value);
       await connection.commit();
       connection.release();
       res.send({
-          success: "true"
-        })
+        success: "true"
+      })
+    } catch(err) {
+      await connection.rollback();
+      connection.release();
+      console.log("Error", err)
+      res.send({
+        success: "false",
+        err
+      })
     }
-    let value = [
-      image[0],
-      req.body.review,
-      req.body.ratings,
-      req.body.menu,
-      req.decoded.user_id,
-      req.body.title,
-      req.body.status
-    ]
-
-    console.log("value", value)
-  await connection.query(sql, value);
-  await connection.commit();
-  connection.release();
-  res.send({
-      success: "true"
-    })
   } catch(err) {
-    console.log(err)
+    console.log("DB Error");
     res.send({
-      success: "false",
-      err
+      message: "false",
+      err: err
     })
-    await connection.rollback();
-    connection.release();
   }
-} catch(err) {
-  console.log(err)
-  res.send({
-    DB: "Unconnected",
-    err
-  })
-}
 })
 
 router.get('/get/comment', async(req, res) => {
@@ -288,46 +258,46 @@ router.get('/get/reply/:id', async(req, res) => {
 })
 
 router.post('/reply/:id', verifyToken, async(req,res) => {
-  console.log("req.body", req.body);
   try {
-    console.log("DB connection /post/commentDelete")
+    const date = new Date();
+    const splitDate = date.split('.')[0];
+    console.log("DB connection /reply/:id")
     const connection = await pool.getConnection(async conn => conn);
     try {
+      const pageId = parseInt(req.params.id, 10);
       let sql = "INSERT INTO reply " +
-                "(reply_text, comments_comments_id, users_user_id, food_items_food_id)"
-                + "VALUES (?, ?, ?, ?)"
-
-      const pageId = parseInt(req.params.id, 10)
-      let params = [ 
+        "(reply_text, comments_comments_id, users_user_id, food_items_food_id, reply_date)" +
+        "VALUES (?, ?, ?, ?, ?)"
+      let value = [
         req.body[0].comment_text,
         pageId,
         req.decoded.user_id,
-        req.body[0].food_id
+        req.body[0].food_id,
+        splitDate
       ]
-
       await connection.beginTransaction();
-      await connection.query(sql, params);
+      await connection.query(sql, value);
       await connection.commit();
       res.send({
-        message: "Delete Success!"
+        message: "success"
       })
       connection.release();
-      } catch(err) {
-      console.log("Query Error");
-      console.log("Err : ", err)
+    } catch(err) {
       await connection.rollback();
       connection.release();
+      console.log("Error", err)
       res.send({
-        error: "Query Error",
-        err
+        message: "Query Error",
+        err: err
       })
     }
   } catch(err) {
     console.log("DB Error")
     res.send({
-      error: "DB error",
-      err
+      message: "DB error",
+      err: err
     })
   }
 })
+
 module.exports = router;
