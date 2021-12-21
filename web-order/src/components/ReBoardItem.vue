@@ -77,8 +77,7 @@ export default {
   img {
   border-radius: .2rem;
   width: 200px;
-  min-height: 220px;
-  object-fit: cover;
+  height: 240px;
   }
 }
 .card-content {
