@@ -1,32 +1,34 @@
 <template>
   <div class="container">
+    <el-button
+      class="btn-comment"
+      type="text"
+      @click="writeComment()">등록</el-button>
     <ReBoardItem
       v-for="comment in paginatedData"
       :key="comment.comments_id"
       :comment="comment" />
-    <button @click="writeComment()">등록</button>
     <div v-if="comments.length == 0">
       <p>등록된 리뷰가 없습니다.</p>
     </div>
-    <el-button @click="prevPage" type="text" :disabled="pageNum === 0">
-      이전
-    </el-button>
-    <span class="page-count">{{ pageNum + 1}} / {{ pageCount }}</span>
-    <el-button @click="nextPage" type="text" :disabled="pageNum >= pageCount -1">
-      다음
-    </el-button>
-  <ReBoardItem2 />
+    <div>
+      <el-button @click="prevPage" type="text" :disabled="pageNum === 0">
+        이전
+      </el-button>
+      <span class="page-count">{{ pageNum + 1}} / {{ pageCount }}</span>
+      <el-button @click="nextPage" type="text" :disabled="pageNum >= pageCount -1">
+        다음
+      </el-button>
+    </div>
   </div>
 </template>
 
 <script>
-import ReBoardItem2 from './ReBoardItem2.vue'
 import ReBoardItem from './ReBoardItem.vue'
 import { mapState } from 'vuex';
 export default {
   components: {
-    ReBoardItem,
-    ReBoardItem2,
+    ReBoardItem
   },
   props: {
     pageSize: {
@@ -80,6 +82,5 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss">
 </style>
