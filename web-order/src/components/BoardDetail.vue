@@ -50,17 +50,20 @@
     <form>
       <div class="form_group">
         <p>댓글 1개 보기<i class="fas fa-angle-down"></i></p>
-        <!-- <el-input
+        <el-input
           style="border-radius: 5rem"
           v-model="textarea"
           maxlength="50"
           placeholder="댓글 달기 ..."
-          show-word-limitcd
-          type="textarea" />
-          <el-button 
-          type="text"
-          class="btn_write"
-          @click="writeReply()">등록</el-button> -->
+          show-word-limited
+          type="text">
+          <template #append>
+            <el-button 
+              type="text"
+              class="btn_write"
+              @click="writeReply()">등록</el-button>
+          </template>
+        </el-input>
       </div>
       <ReplyList
         v-for="reply in reply"
@@ -162,15 +165,16 @@ export default {
 
 <style scoped lang="scss">
 .container {
-  position: absolute;
   top: 40px;
-
+  width: 100%;
   .inner {
     border: 2px solid rgba(247, 246, 246, 0.562);
     padding: 10px;
     width: 100%;
     display: inline-block;
-
+    .image-box {
+      justify-content: center;
+    }
     .user_info {
       display: flex;
       align-items: center; 
@@ -188,11 +192,14 @@ export default {
     }
   }
 }
-// .btn_go {
-//   position: absolute;
-//   top: 20px;
-//   right: 30px;
-// }
+.form_group {
+  padding: 5px;
+}
+.btn_go {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
 .user_order {
   display: inline-block;
   width: auto;
@@ -208,8 +215,7 @@ export default {
 }
 
 .btn_write {
-  position: absolute;
-  right: 30px;
+
 }
 .btn-liked {
   padding: 10px;

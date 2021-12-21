@@ -1,4 +1,5 @@
 <template>
+<div class="container">
   <router-view v-slot="{ Component }">
         <transition name="component-transition" mode="out-in">
           <component :is="Component" />
@@ -9,6 +10,7 @@
         <div v-else>
         </div>
       </router-view>
+</div>
 </template>
 
 <script>
@@ -31,6 +33,10 @@ export default {
 body {
   margin: 0px;
   padding: 0px;
+}
+
+.container {
+  height: 100vmin;
 }
 
 .component-transition-enter-active,
