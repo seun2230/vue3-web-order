@@ -26,11 +26,6 @@ const beforeAuth = isAuthenticated => (from, to, next) => {
   }
 }
 
-//  라우터 이동 시 스크롤 가장 위로 오도록 하는 기능
-//  왜 안될까
-const scrollBehavior = function () {
-  return { x: 0, y: 0 }
-}
 
 const routes = [
   {
@@ -153,8 +148,10 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  scrollBehavior,
-  routes
+  routes,
+  scrollBehavior() {
+    return { top: 0 }
+  }
 })
 
 export default router

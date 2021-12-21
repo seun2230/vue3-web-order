@@ -1,9 +1,12 @@
 <template>
   <div class="reply-container">
     <div class="reply-content">
-      {{ reply.users_user_id }}
+      <span>{{ reply.users_user_id }}</span>
       <div class="reply-right">
         <p>{{ reply.reply_text }}</p>
+      </div>
+      <div class="reply-date">
+        <p>{{ reply.reply_date }}</p>
       </div>
       <form>
         <div class="form-hidden">
@@ -15,13 +18,17 @@
               placeholder="댓글 수정 ..."
               show-word-limitcd
               type="textarea" />
-              <el-button 
+            <el-button 
               type="text"
               @click="modifyReply(this.reply.id_reply)">수정
             </el-button>
             <el-button 
               type="text"
               @click="deleteReply(this.reply.id_reply)">삭제
+            </el-button>
+            <el-button
+              type="text"
+              @click="closeToggle()">닫기
             </el-button>
           </div>
           <el-button
@@ -52,6 +59,9 @@ export default {
     }
   },
   methods: {
+    closeToggle() {
+      this.toggle = false;
+    },
     clickToggle() {
       this.toggle = true;
     },
@@ -97,6 +107,10 @@ export default {
 <style lang="scss" >
 .reply-container {
   padding: 10px;
+
+  span {
+    font-weight: bold;
+  }
 }
 .reply-right{
 	position: relative;

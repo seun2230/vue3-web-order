@@ -7,21 +7,18 @@
         </div>
         <div class="user">
           <p>{{ reviewInfo.comments_user_id}}</p>
-          <div class="star-ratings">
+          <div class="ratings">
             <div 
-              class="star-ratings-fill"
+              class="ratings-fill"
               :style="{ width: reviewInfo.ratings * 20 + '%' }">
                 <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
             </div>
-            <div class="star-ratings-base">
+            <div class="ratings-before">
               <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
             </div>
           </div>
             <span class="user_date">{{ reviewInfo.comments_date  }}</span>
         </div>
-      </div>
-      <div class="btn_go">
-        <i class="fas fa-angle-down"></i>
       </div>
       <div class="image-box">
         <img 
@@ -33,6 +30,10 @@
       </div>
       <div class="user_text">
         <p>{{ reviewInfo.comments_text}}</p>
+      </div>
+      <div class="user-click">
+        <p><i class="far fa-thumbs-up fa-2x"></i>{{ 17 }}</p>
+        <p @click="clickReply()"><i class="far fa-comment-dots fa-2x"></i> {{ reply.length }}</p>
       </div>
       <div class="btn_group">
         <el-button 
@@ -46,20 +47,23 @@
         </el-button>
       </div>
     </div>
-    <form>
+    <form v-if="show">
       <div class="form_group">
-        <label>댓글 목록</label>
         <el-input
           style="border-radius: 5rem"
           v-model="textarea"
           maxlength="50"
           placeholder="댓글 달기 ..."
-          show-word-limitcd
-          type="textarea" />
-          <el-button 
-          type="text"
-          class="btn_write"
-          @click="writeReply()">등록</el-button>
+          show-word-limited
+          type="text">
+          <template #append
+             style="text-align: center">
+            <el-button 
+              type="text"
+              class="btn_write"
+              @click="writeReply()">등록</el-button>
+          </template>
+        </el-input>
       </div>
       <ReplyList
         v-for="reply in reply"
@@ -75,6 +79,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      show: '',
       reviewInfo: '',
       deleteMessage:"",
       nullImage: "",
@@ -107,6 +112,9 @@ export default {
     
   },
   methods: {
+    clickReply() {
+      this.show = true;
+    },
     modifyComment() {
       var id = this.$route.params.id; 
       console.log("id", id);
@@ -161,15 +169,16 @@ export default {
 
 <style scoped lang="scss">
 .container {
-  position: absolute;
   top: 40px;
-
+  width: 100%;
   .inner {
     border: 2px solid rgba(247, 246, 246, 0.562);
     padding: 10px;
     width: 100%;
     display: inline-block;
-
+    .image-box {
+      justify-content: center;
+    }
     .user_info {
       display: flex;
       align-items: center; 
@@ -179,35 +188,31 @@ export default {
           margin: 0px;
           font-weight: 600;
         }
-
         .user_date {
           color:rgb(138, 134, 134);
+          position: absolute;
+          top: 70px;
+          right: 20px;
+
         }
       }
     }
+
   }
 }
-.btn_go {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-}
-.user_order {
-  width: 50px;
-  padding: 5px; 
-  background-color: rgb(247, 239, 239);
-  border-radius: 2rem;
-  font-size: 15px;
+.user-click {
+  display: flex;
   align-items: center;
+  padding-right: 10px;
+
+  p {
+    margin: 0px;
+    padding: 10px;
+  }
 }
 .user_text {
   width: 100%;
   min-height: 50px;
-}
-
-.btn_write {
-  position: absolute;
-  right: 30px;
 }
 
 img {
@@ -216,33 +221,22 @@ img {
   height: 300px;
 }
 
-.el-input__inner {
-  border-radius: 8rem;
-}
-.star-ratings {
-  color: #aaa9a9; 
+.ratings {
+  display: inline-block;
   position: relative;
   unicode-bidi: bidi-override;
   width: max-content;
-  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+  -webkit-text-fill-color: transparent; 
   -webkit-text-stroke-width: 1.3px;
-  -webkit-text-stroke-color: #2b2a29;
+  -webkit-text-stroke-color: rgba(255, 255, 255, 0.322);
 }
  
-.star-ratings-fill {
-  color: #fff58c;
-  padding: 0;
+.ratings-fill {
   position: absolute;
-  z-index: 1;
-  display: flex;
   top: 0;
   left: 0;
+  z-index: 1;
   overflow: hidden;
-  -webkit-text-fill-color: gold;
-}
- 
-.star-ratings-base {
-  z-index: 0;
-  padding: 0;
+  -webkit-text-fill-color: rgba(245, 148, 22, 0.842);
 }
 </style>

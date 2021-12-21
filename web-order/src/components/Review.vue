@@ -33,19 +33,19 @@
               placeholder="음식/가격?" >
               <el-option 
                 label="😍: 아주 만족해요" 
-                value="1" />         
+                value="5" />         
               <el-option 
                 label="😊: 만족해요 " 
-                value="2" />
+                value="4" />
               <el-option 
                 label="🙄: 보통이에요 " 
                 value="3" />
               <el-option 
                 label="🙁: 그냥 그래요 " 
-                value="4" />
+                value="2" />
               <el-option 
                 label="😤: 별로에요" 
-                value="5" />
+                value="1" />
             </el-select>
           </el-form-item>
           <el-form-item 
@@ -149,7 +149,6 @@ export default {
       })      
       .then((res) => {
         console.log("데이터 전달 성공", res);
-        console.log(formData);
         alert('고객님의 리뷰가 등록되었습니다.')
         this.$router.push('/user/board')
       })
