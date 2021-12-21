@@ -1,13 +1,23 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import store from './store'
-import router from './views/router'
+import ElementPlus from 'element-plus'
+import VueRouter from './views/router.js'
 import axios from 'axios'
+// import * as jose from 'jose'
+
+// require('dotenv').config();
 axios.defaults.withCredentials = true;
 
-const app = createApp(App) 
+import 'normalize.css'  //  css 초기화
 
-app.use(store)
-app.use(router)
+import 'element-plus/dist/index.css'
+import './scss/index.scss';  //  글로벌 css
 
-app.mount('#app')
+import '@fortawesome/fontawesome-free/js/all.js'
+
+createApp(App)
+  .use(store)
+  .use(ElementPlus)
+  .use(VueRouter)
+  .mount('#app')

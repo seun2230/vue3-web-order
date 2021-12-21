@@ -6,7 +6,10 @@ export default {
       return {
         carts: [],
         foods: [],
-        order: []
+        order: [],
+        food_main: [],
+        food_side: [],
+        food_beverage: [],
       }  
     },
     getters: {
@@ -20,7 +23,7 @@ export default {
     },
     mutations: {
       getState(state) {
-        axios.get('http://localhost:3000/foods')
+        axios.get(`${process.env.VUE_APP_URL}/api/food/get/foods/`)
         .then((res) => {
           console.log(res.data)
           state.foods = res.data
@@ -30,7 +33,7 @@ export default {
         })
       },
       getOrder(state) {
-        axios.get('http://localhost:3000/orderlist')
+        axios.get(`${process.env.VUE_APP_URL}/api/admin/orderlist`)
         .then((res) => {
           state.order = res.data
         })
@@ -50,7 +53,7 @@ export default {
       },
             
       orderList(state) {
-        axios.get('http://localhost:3000/order')
+        axios.get(`${process.env.VUE_APP_URL}/api/admin/order`)
         .then((res) => {
          state.order = res.data 
          console.log("jjj",res.data);
@@ -108,17 +111,6 @@ export default {
     },
 
     actions: {
-      getState({ commit, state }) {
-        axios.get('http://localhost:3000/foods')
-        .then((res) => {
-          commit('food/success', res.data, { root: true });
-          state.carts = []
-        })
-        .catch((res) => {
-          commit('food/fail', res, { root: true })
-        })
-      },
-
       addCart({ commit }, food) {
         commit('food/addToCart', food, { root: true });
       },
