@@ -47,7 +47,7 @@ router.post('/post/foodUpload', upload.array('files'), async function(req, res) 
           })
         }
       } catch(err) {
-        console.log("DB Error")
+        console.log("DB Error", err)
         res.send({
           error: "DB Error",
           err
@@ -72,7 +72,7 @@ router.post('/post/foodUpload', upload.array('files'), async function(req, res) 
           })
         }
       } catch(err) {
-        console.log("DB Error")
+        console.log("DB Error", err)
         res.send({
           error: "DB Error",
           err
@@ -116,7 +116,7 @@ router.post('/post/foodUpload', upload.array('files'), async function(req, res) 
             })
           }
         } catch(err) {
-          console.log("DB Error")
+          console.log("DB Error", err)
           res.send({
             error: "DB Error",
             err
@@ -214,7 +214,7 @@ router.post('/post/foodDelete', async(req, res) => {
       })
     }
   } catch(err) {
-    console.log("DB Error")
+    console.log("DB Error", err)
     res.send({
       error: "DB error",
       err

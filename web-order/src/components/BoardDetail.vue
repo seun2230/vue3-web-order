@@ -54,12 +54,15 @@
           v-model="textarea"
           maxlength="50"
           placeholder="댓글 달기 ..."
-          show-word-limitcd
-          type="textarea" />
-          <el-button 
-          type="text"
-          class="btn_write"
-          @click="writeReply()">등록</el-button>
+          show-word-limited
+          type="text">
+          <template #append>
+            <el-button 
+              type="text"
+              class="btn_write"
+              @click="writeReply()">등록</el-button>
+          </template>
+        </el-input>
       </div>
       <ReplyList
         v-for="reply in reply"
@@ -161,15 +164,16 @@ export default {
 
 <style scoped lang="scss">
 .container {
-  position: absolute;
   top: 40px;
-
+  width: 100%;
   .inner {
     border: 2px solid rgba(247, 246, 246, 0.562);
     padding: 10px;
     width: 100%;
     display: inline-block;
-
+    .image-box {
+      justify-content: center;
+    }
     .user_info {
       display: flex;
       align-items: center; 
@@ -186,6 +190,9 @@ export default {
       }
     }
   }
+}
+.form_group {
+  padding: 5px;
 }
 .btn_go {
   position: absolute;
@@ -206,8 +213,7 @@ export default {
 }
 
 .btn_write {
-  position: absolute;
-  right: 30px;
+
 }
 
 img {

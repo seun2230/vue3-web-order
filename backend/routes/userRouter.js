@@ -3,6 +3,7 @@ const router = express.Router();
 const pool = require('../db/index')
 const { verifyToken } = require('../middleware/auth')
 const { upload } = require('../api/S3UploadStorage')
+const date = require('../utils/DateUtils');
 
 router.get('/get/orderList', verifyToken, async(req, res) => {
   try {
@@ -37,14 +38,15 @@ router.get('/get/orderList', verifyToken, async(req, res) => {
 
 router.post('/post/comment', upload.array('file'), verifyToken, async function(req, res) {
   try {
-    const date = new Date()
-    const splitDate = date.split('.')[0]
     console.log("DB Connection! /post/comment")
     const connection = await pool.getConnection(async conn => conn);
     try {
+      await connection.beginTransaction();
       const files = req.files
       let image = []
       
+      const date = new Date().format('yyyy-MM-dd');
+    
       for (let i = 0; i < req.files.length; i++) {
         image[i] = files[i].transforms[0].location
       }
@@ -65,7 +67,7 @@ router.post('/post/comment', upload.array('file'), verifyToken, async function(r
           req.decoded.user_id,
           req.body.title,
           req.body.status,
-          splitDate
+          date,
         ]
         await connection.query(sql, value);
         await connection.commit();
@@ -82,9 +84,9 @@ router.post('/post/comment', upload.array('file'), verifyToken, async function(r
         req.decoded.user_id,
         req.body.title,
         req.body.status,
-        splitDate
+        date
       ]
-
+      console.log("value", value);
       await connection.query(sql, value);
       await connection.commit();
       connection.release();
@@ -97,21 +99,21 @@ router.post('/post/comment', upload.array('file'), verifyToken, async function(r
       console.log("Error", err)
       res.send({
         success: "false",
-        err
+        message: err
       })
     }
   } catch(err) {
-    console.log("DB Error");
+    console.log("DB Error /post/comment". err);
     res.send({
-      message: "false",
-      err: err
+      success: "false",
+      message: err
     })
   }
 })
 
 router.get('/get/comment', async(req, res) => {
   try {
-    console.log('DB 연결 성공!');
+    console.log('DB connection /get/comment');
     const connection = await pool.getConnection(async conn => conn);
     try {
       const [row] = await connection.query('SELECT * FROM comments WHERE comments_status = 0')
@@ -263,9 +265,8 @@ router.get('/get/reply/:id', async(req, res) => {
 
 router.post('/reply/:id', verifyToken, async(req,res) => {
   try {
-    const date = new Date();
-    const splitDate = date.split('.')[0];
     console.log("DB connection /reply/:id")
+    const date = new Date().format('yyyy-MM-dd hh:mm');
     const connection = await pool.getConnection(async conn => conn);
     try {
       const pageId = parseInt(req.params.id, 10);
@@ -277,7 +278,7 @@ router.post('/reply/:id', verifyToken, async(req,res) => {
         pageId,
         req.decoded.user_id,
         req.body[0].food_id,
-        splitDate
+        date
       ]
       await connection.beginTransaction();
       await connection.query(sql, value);
