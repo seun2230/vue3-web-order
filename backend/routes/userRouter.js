@@ -310,4 +310,112 @@ router.post('/reply/:id', verifyToken, async(req,res) => {
   }
 })
 
+router.get('/get/likeStatus/:id', async(req, res) => {
+  try {
+    console.log("DB connection /get/likeStatus")
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      const pageId = parseInt(req.params.id, 10);
+      let sql = "SELECT users_user_id as user_id FROM user_like " + 
+                "WHERE comments_comments_id = ?";
+      let value = [
+        pageId,
+      ]
+      await connection.beginTransaction();
+      const [row] = await connection.query(sql, value);
+      await connection.commit();
+      res.send(row);
+      connection.release();
+    } catch(err) {
+      await connection.rollback();
+      connection.release();
+      console.log("Error", err)
+      res.send({
+        message: "Query Error",
+        err: err
+      })
+    }
+  } catch(err) {
+    console.log("DB Error")
+    res.send({
+      message: "DB error",
+      err: err
+    })
+  }
+})
+
+router.post('/post/likeUp/:id', verifyToken, async(req, res) => {
+  try {
+    console.log("DB connection /post/likeUp")
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      const pageId = parseInt(req.params.id, 10);
+      let sql = "INSERT INTO user_like " +
+        "(comments_comments_id, users_user_id)" +
+        "VALUES (?, ?)";
+      let value = [
+        pageId,
+        req.decoded.user_id,
+      ]
+      await connection.beginTransaction();
+      await connection.query(sql, value);
+      await connection.commit();
+      res.send({
+        message: "success"
+      })
+      connection.release();
+    } catch(err) {
+      await connection.rollback();
+      connection.release();
+      console.log("Error", err)
+      res.send({
+        message: "Query Error",
+        err: err
+      })
+    }
+  } catch(err) {
+    console.log("DB Error")
+    res.send({
+      message: "DB error",
+      err: err
+    })
+  }
+})
+
+router.post('/post/likeDown/:id', verifyToken, async(req, res) => {
+  try {
+    console.log("DB connection /post/likeDown")
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      const pageId = parseInt(req.params.id, 10);
+      let sql = "DELETE FROM user_like WHERE users_user_id = ? AND comments_comments_id = ?";
+      let value = [
+        req.decoded.user_id,
+        pageId,
+      ]
+      await connection.beginTransaction();
+      await connection.query(sql, value);
+      await connection.commit();
+      res.send({
+        message: "success"
+      })
+      connection.release();
+    } catch(err) {
+      await connection.rollback();
+      connection.release();
+      console.log("Error", err)
+      res.send({
+        message: "Query Error",
+        err: err
+      })
+    }
+  } catch(err) {
+    console.log("DB Error")
+    res.send({
+      message: "DB error",
+      err: err
+    })
+  }
+})
+
 module.exports = router;

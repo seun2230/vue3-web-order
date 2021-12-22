@@ -16,7 +16,7 @@ export default createStore({
   },
   plugins: [
     createdPersistedState({
-      paths: ['user', 'userInfo']
+      paths: ['user']
     })
   ]
 })

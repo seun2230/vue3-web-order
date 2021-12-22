@@ -2,11 +2,11 @@
   <div class="container">
     <el-form>
     <h4 class="title">Null Image</h4>
-      <el-form-item> 
+      <el-form-item class="inner-item"> 
         <AdminImagePreviewOne @setData="setData"/>
       </el-form-item>
       <el-button
-        type="primary"
+        type="text"
         @click="onSubmit">
         만들기
       </el-button>
@@ -60,7 +60,12 @@ export default {
 .container {
   padding: 20px;
   background-color: #ffffff;
+  justify-content: center;
 }
+.inner-item {
+  justify-content: center;
+}
+
 .title {
   text-align: center;
 }

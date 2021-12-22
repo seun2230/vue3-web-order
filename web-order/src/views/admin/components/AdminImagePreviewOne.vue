@@ -68,7 +68,7 @@ export default {
 
 .main-container {
   width: 100%;
-  min-height: 100%;
+  height: 480px;
   margin: 0px;
   .room-file-upload-wrapper {
     border: 1px solid #dddddd;
@@ -122,8 +122,8 @@ export default {
 }
 .file-preview-wrapper>img {
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: 460px;
+  height: 460px;
   z-index: 10;
 }
 .file-preview-container {
@@ -133,6 +133,7 @@ export default {
   flex-wrap: wrap;
   .file-preview-wrapper {
     height: 100%;
+    width: 100%;
     padding: 10px;
     position: relative;
     vertical-align: middle;
@@ -140,13 +141,13 @@ export default {
       position: absolute;
       z-index: 99;
       font-size: 18px;
-      right: 5px;
+      right: 10px;
       top: 10px;
       color: #fff;
       font-weight: bold;
       background-color: #666666;
-      width: 20px;
-      height: 20px;
+      width: 30px;
+      height: 30px;
       text-align: center;
       cursor: pointer;
     }
