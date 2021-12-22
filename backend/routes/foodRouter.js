@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../db/index')
 const { verifyToken } = require('../middleware/auth')
+const { format } = require ('../utils/DateUtils')
 
 
 router.get('/get/foods', async (req, res) => {
@@ -37,7 +38,7 @@ router.get('/get/foods', async (req, res) => {
       const connection = await pool.getConnection(async conn => conn);
       try {
         console.log("Query Start")
-        const date = new Date()
+        const date = new Date().format('yyyy-MM-dd hh:mm:ss')
         let sql = 'INSERT INTO order_num' +
         '(order_total_price, users_user_id, order_date)' +
         'VALUES(?, ?, ?)'

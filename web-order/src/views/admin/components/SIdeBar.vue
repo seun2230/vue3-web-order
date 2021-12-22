@@ -19,25 +19,19 @@
     </el-menu-item>
     <el-sub-menu>
       <template #title>
-        <el-icon class="fas fa-chart-bar" />
-        <span>CHART</span>
+        <el-icon class="fas fa-cogs" />
+        <span>MANAGEMENT</span>
       </template>
-      <el-menu-item index="3-1">
-        MONTH
+      <el-menu-item index="/admin/foodManagement">
+        Food/Review
       </el-menu-item>
-      <el-menu-item index="3-2">
-        WEEK
+      <el-menu-item index="/admin/nullImage">
+        NullImage
       </el-menu-item>
-      <el-menu-item index="3-3">
-        DAY
+      <el-menu-item index="/admin/SlideImage">
+        SlideImages
       </el-menu-item>
     </el-sub-menu>
-    <el-menu-item
-      index="/admin/foodManagement">
-      <el-icon
-        class="fas fa-cogs" />
-      <span>MANAGEMENT</span>
-    </el-menu-item>
   </el-menu>
 </template>
 

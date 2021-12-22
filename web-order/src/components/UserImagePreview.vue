@@ -52,7 +52,7 @@ export default {
             number: i
           }
         ];
-        this.$emit('setData', this.files)
+        this.$emit('child', this.files)
         num = i;
       }
       this.uploadImageIndex = num + 1;
@@ -68,7 +68,7 @@ export default {
             number: i + this.uploadImageIndex
           }
         ];
-        this.$emit('setData', this.files)
+        this.$emit('child', this.files)
       num = i;
       }
       this.uploadImageIndex = this.uploadImageIndex + num + 1;
@@ -76,9 +76,9 @@ export default {
     fileDeleteButton(e) {
       const name = e.target.getAttribute('name');
       this.files = this.files.filter(data => data.number !== Number(name));
-      this.$emit('setData', this.files)
+      this.$emit('child', this.files)
     },
-  }
+  },
 }
 </script>
 
@@ -94,6 +94,7 @@ export default {
   .room-file-upload-wrapper {
     border: 1px solid #dddddd;
     background-color: #f4f4f4;
+    padding: 30px;
     width: 100%;
     min-height: 220px;
     font-size: 15px;
@@ -151,6 +152,7 @@ export default {
 .file-preview-container {
   width: 100%;
   min-height: 220px;
+  max-width: 220px;
   display: flex;
   flex-wrap: wrap;
   .file-preview-wrapper {
