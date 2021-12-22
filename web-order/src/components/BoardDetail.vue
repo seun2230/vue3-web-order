@@ -6,7 +6,7 @@
           <el-avatar> {{ reviewInfo.comments_user_id }} </el-avatar>
         </div>
         <div class="user">
-          <p>{{ translatedId}}</p>
+          <!-- <p>{{ translatedId}}</p> -->
           <div class="ratings">
             <div 
               class="ratings-fill"
@@ -109,15 +109,15 @@ export default {
       this.reply = res.data
     })
   },
-  computed: {
-    translatedId() {
-      const userId= this.reviewInfo.comments_user_id
-      if(typeof userId === 'string') {
-        return userId.replace(/(?<=.).(?=.)/g, "*");
-      }
+  // computed: {
+  //   translatedId() {
+  //     const userId= this.reviewInfo.comments_user_id
+  //     if(typeof userId === 'string') {
+  //       return userId.replace(/(?<=.).(?=.)/g, "*");
+  //     }
       
-    }
-  },
+  //   }
+  // },
   methods: {
     clickReply() {
       this.show = true;
