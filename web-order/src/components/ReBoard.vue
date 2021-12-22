@@ -15,11 +15,11 @@
     </div>
     <div class="page-view">
       <el-button @click="prevPage" type="text" :disabled="pageNum === 0">
-        이전
+        first <i class="fas fa-angle-left"></i>
       </el-button>
       <span class="page-count">{{ pageNum + 1}} / {{ pageCount }}</span>
       <el-button @click="nextPage" type="text" :disabled="pageNum >= pageCount -1">
-        다음
+        last <i class="fas fa-angle-right"></i>
       </el-button>
     </div>
   </div>
@@ -36,7 +36,7 @@ export default {
     pageSize: {
       type: Number,
       required: false,
-      default: 4
+      default: 6
     },
   },
   beforeCreate() {
@@ -87,7 +87,7 @@ export default {
 <style lang="scss">
 .btn-fade {
   position: fixed;
-  bottom: 100px;
+  bottom: 120px;
   right: 12px;
 
   .btn-comment {
@@ -101,5 +101,35 @@ export default {
 }
 .page-view {
   text-align: center;
+}
+
+.page-count {
+  padding: 10px;
+}
+.star-ratings {
+  color: #aaa9a9; 
+  position: relative;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-fill-color: transparent; 
+  -webkit-text-stroke-width: 1.3px;
+  -webkit-text-stroke-color: #2b2a29;
+}
+ 
+.star-ratings-fill {
+  color: #fff58c;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-text-fill-color: gold;
+}
+ 
+.star-ratings-base {
+  z-index: 0;
+  padding: 0;
 }
 </style>

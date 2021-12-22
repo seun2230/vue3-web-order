@@ -13,6 +13,7 @@ import BoardModify from '../components/BoardModify'
 import MenuPage from '../views/user/page/MenuPage.vue'
 import UserPage from '../views/user/UserPage.vue'
 import UserMyPage from '../views/user/page/UserMyPage.vue'
+import ShopInfo from '../views/user/page/ShopInfo.vue'
 import store from '../store'
 import NullImageManagePage from './admin/page/NullImageManagePage';
 
@@ -25,6 +26,7 @@ const beforeAuth = isAuthenticated => (from, to, next) => {
     next('/user/login');
   }
 }
+
 
 const routes = [
   {
@@ -110,6 +112,12 @@ const routes = [
         name: 'mypage',
         component: UserMyPage,
         meta: { metaName: '주문 내역'}
+      },
+      {
+        path: 'shopinfo',
+        name: 'shopinfo',
+        component: ShopInfo,
+        meta: { metaName: '매장 정보' }
       }
     ]
   },
@@ -141,7 +149,10 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior() {
+    return { top: 0 }
+  }
 })
 
 export default router

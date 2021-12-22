@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="nav-container">
   <ul>
     <li>
       <router-link to='/' v-slot='{href, navigate}'>
@@ -44,7 +44,7 @@
                   <icon-order />
                 </icon-base>
             </div>
-            <div class="navdesc">
+            <div class="navdesc" id="order-desc">
               주문하기
             </div>
           </button>
@@ -118,23 +118,23 @@ ul {
   padding: 0px;
   bottom: 0px;
   width: 100%;
-  height: 10vh;
-  max-height: 10vh;
-  z-index:100;
+  height: 11vh;
+  max-height: 11vh;
+  z-index:1000;
   border-top: 1px solid #bcbcbc;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   background-color: white;
 }
 
 @media screen and (max-height: 799px) {
     ul {
-      min-height: 13%;
+      min-height: 14%;
     }
 }
 
 .button {
   border: none;
-  margin-top: 15px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -164,8 +164,13 @@ ul {
   height: 65px;
 }
 
+#order-desc {
+  color: rgb(255, 150, 0);
+  font-weight: bold;
+}
+
 #ordericon {
-  color: rgb(255, 201, 0);
+  color: rgb(255, 150, 0);
   filter: brightness(100%);
   margin-bottom: 3px;
 }

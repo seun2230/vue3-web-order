@@ -1,21 +1,16 @@
 <template>
-  <div class="container">
-    <!-- <Header /> -->
+  <div class="home-container">
     <div class="slide-container">
       <Slide />
     </div>
-    <!-- <Login /> -->
     <div class="pagelist-container">
       <PageList />
     </div>
-    <!-- <NavUnder /> -->
   </div>
 </template>
 <script>
-// import Header from './Header.vue'
 import Slide from '../components/Slide.vue'
 import PageList from '../components/PageList.vue'
-// import NavUnder from '../components/NavUnder.vue'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -46,5 +41,13 @@ body {
 .container {
   display: flex;
   flex-direction: column;
+  height: 78vh;
 }
+
+@media screen and (max-height: 799px) {
+  .home-container {
+    height: 140vh;
+  }
+}
+
 </style>
