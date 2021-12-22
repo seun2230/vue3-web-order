@@ -78,11 +78,7 @@ export default {
   img {
   border-radius: .2rem;
   width: 200px;
-<<<<<<< HEAD
-  height: 240px;
-=======
   min-height: 200px;
->>>>>>> develop
   }
 }
 .card-content {
