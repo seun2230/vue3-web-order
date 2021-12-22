@@ -1,40 +1,27 @@
 <template>
-  <el-form>
-  <h2>Null Image</h2>
-    <el-form-item 
-      id="image-upload"
-      label="이미지 업로드">
-      <div
-        class="image-preview"
-        @click="addFiles()">
-        <div
-          class="image-preview-item"
-          v-for="(file, key) in files"
-          :key="'file-' + key">
-          <img
-            class="image-preview-image"
-            :id="'image-' + parseInt(key)" />
-        </div>
-      </div>
-      <input
-        type="file"
-        id="multiple-image-input"
-        accept="image/*"
-        multiple
-        @change="handleFileUpload($event)" />
-    </el-form-item>
-    <el-button
-      type="primary"
-      @click="onSubmit">
-      만들기
-    </el-button>
-  </el-form>
+  <div class="container">
+    <el-form>
+    <h4 class="title">Null Image</h4>
+      <el-form-item> 
+        <AdminImagePreviewOne @setData="setData"/>
+      </el-form-item>
+      <el-button
+        type="primary"
+        @click="onSubmit">
+        만들기
+      </el-button>
+    </el-form>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
+import AdminImagePreviewOne from './AdminImagePreviewOne.vue'
 
 export default {
+  components: {
+    AdminImagePreviewOne,
+  },
   data() {
     return {
       files: []
@@ -62,32 +49,19 @@ export default {
         alert('다시 시도해주세요.')
       })
     },
-    addFiles() {
-      document.getElementById("multiple-image-input").click();
+    setData(value) {
+      this.files = value
     },
-    handleFileUpload(event) {
-      let uploadedFiles = event.target.files;
-      
-      for (let i = 0; i < uploadedFiles.length; i++) {
-        this.files.push(uploadedFiles[i]);
-      }
-      //  메서드 안에서는 메서드를 호출한 객체를 가르킨다.
-      this.getImagePreviews();
-    },
-    getImagePreviews() {
-      for (let i = 0; i < this.files.length; i++) {
-        let reader = new FileReader();
-
-        reader.addEventListener("load", function() {
-          document.getElementById('image-' + parseInt(i)).src = reader.result;
-        }.bind(this), false);
-
-        reader.readAsDataURL(this.files[i]);
-      }
-    },
-    deleteImg() {
-      this.files = []
-    }
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.container {
+  padding: 20px;
+  background-color: #ffffff;
+}
+.title {
+  text-align: center;
+}
+</style>

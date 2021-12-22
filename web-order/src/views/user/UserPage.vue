@@ -31,7 +31,7 @@ export default {
 <style lang="scss" scoped>
 .comp-header {
   display: block;
-  height: 50px;
+  height: 43.2px;
   z-index: 100;
 }
 

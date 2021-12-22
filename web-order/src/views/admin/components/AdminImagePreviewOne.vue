@@ -17,13 +17,7 @@
               <div class="file-close-button" @click="fileDeleteButton" :name="file.number">
               x
               </div>
-              <img :src="file.preview" />
-            </div>
-            <div v-if="files.length < 3" class="file-preview-wrapper-upload">
-              <div class="image-box">
-              <label for="file">추가 사진 등록</label>
-              <input type="file" id="file" ref="files" @change="imageAddUpload" multiple />
-            </div>
+            <img :src="file.preview" />
           </div>
         </div>
       </div>
@@ -52,26 +46,11 @@ export default {
             number: i
           }
         ];
+        console.log(this.files);
         this.$emit('setData', this.files)
         num = i;
       }
       this.uploadImageIndex = num + 1;
-    },
-    imageAddUpload() {
-      let num = -1;
-      for (let i = 0; i < this.$refs.files.files.length; i++) {
-        this.files = [
-          ...this.files,
-          {
-            file: this.$refs.files.files[i],
-            preview: URL.createObjectURL(this.$refs.files.files[i]),
-            number: i + this.uploadImageIndex
-          }
-        ];
-        this.$emit('setData', this.files)
-      num = i;
-      }
-      this.uploadImageIndex = this.uploadImageIndex + num + 1;
     },
     fileDeleteButton(e) {
       const name = e.target.getAttribute('name');
@@ -89,18 +68,17 @@ export default {
 
 .main-container {
   width: 100%;
-  min-height: 220px;
+  min-height: 100%;
   margin: 0px;
   .room-file-upload-wrapper {
     border: 1px solid #dddddd;
     background-color: #f4f4f4;
-    width: 100%;
-    min-height: 220px;
     font-size: 15px;
     color: #888888;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
     height: 100%;
     .room-file-upload-example-container {
       display: flex;
@@ -120,7 +98,7 @@ export default {
   height: 100%;
 }
 .image-box {
-  margin-top: 70px;
+  margin-top: 100%;
   padding-bottom: 20px;
   text-align: center;
 }
@@ -144,23 +122,22 @@ export default {
 }
 .file-preview-wrapper>img {
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
   z-index: 10;
 }
 .file-preview-container {
   width: 100%;
-  min-height: 220px;
+  min-height: 100%;
   display: flex;
   flex-wrap: wrap;
   .file-preview-wrapper {
-    height: 220px;
+    height: 100%;
     padding: 10px;
     position: relative;
     vertical-align: middle;
     .file-close-button {
       position: absolute;
-      line-height: 18px;
       z-index: 99;
       font-size: 18px;
       right: 5px;
@@ -178,8 +155,8 @@ export default {
     margin: 10px;
     vertical-align: middle;
     background-color: #888888;
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: 100%;
   }
 }
 

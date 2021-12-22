@@ -56,26 +56,7 @@
               type="textarea"/>
           </el-form-item>
           <el-form-item>
-            <div
-              class="image-preview"
-              @click="addFiles()">
-              <div
-                class="image-preview-item"
-                v-for="(file, key) in files"
-                :key="'file-' + key">
-                <div class="img-box">
-                  <img
-                    class="image-preview-image"
-                    :id="'image-' + parseInt(key)" />
-                </div>  
-              </div>
-            </div>
-            <input
-              type="file"
-              id="multiple-image-input"
-              accept="image/*"
-              multiple
-              @change="handleFileUpload($event)" />
+            <UserImagePreview @child="setData"/>
           </el-form-item>
           <el-form-item label="리뷰 공개">
             <el-radio-group v-model="form.status">
@@ -105,12 +86,15 @@
 
 <script>
 import axios from 'axios'
-import { mapState} from 'vuex'
+import { mapState } from 'vuex'
+import UserImagePreview from './UserImagePreview.vue';
 
 export default {
+  components: {
+    UserImagePreview,
+  },
   data() {
     return {
-      active: false,
       files: [],
       form: {
         title: '',
@@ -124,22 +108,34 @@ export default {
     this.$store.commit('food/getState')
   },
   computed: {
-    ...mapState('food', ['foods'])
+    ...mapState('food', ['foods']),
+    
+    setDataWatch() {
+      return console.log(this.files)
+    }
   },
   methods: {
+    setData(e) {
+      console.log(e);
+      this.files = e
+    },
+    thisFilesCheck() {
+      console.log("this.files", this.files)
+    },
     returnBoard() {
       this.$router.push('/user/board');
     },
     sendReview() {
       let formData = new FormData(); 
       for(let i = 0; i < this.files.length; i++) {
-        formData.append('file', this.files[i]);
+        let file = this.files[i].file;
+        formData.append("file", file);
       }
       formData.append("title", this.form.title);
       formData.append("menu", this.form.menu); 
       formData.append("ratings", this.form.ratings); 
       formData.append("review", this.form.review);
-      formData.append('status', this.form.status);
+      formData.append("status", this.form.status);
       
       axios.post(`${process.env.VUE_APP_URL}/api/user/post/comment`, 
       formData, { 
@@ -156,42 +152,12 @@ export default {
         console.error("오류 발생함", err);
       });
     },
-    addFiles() {
-      console.log("addFiles Clicked!")
-      document.getElementById('multiple-image-input').click();
-    },
-    handleFileUpload(event) {
-      let uploadedFiles = event.target.files;
-      
-      for (let i = 0; i < uploadedFiles.length; i++) {
-        this.files.push(uploadedFiles[i]);
-      }
-  
-      this.getImagePreviews();
-    },
-    getImagePreviews() {
-      for (let i = 0; i < this.files.length; i++) {
-        let reader = new FileReader();
-
-        reader.addEventListener("load", function() {
-          document.getElementById('image-' + parseInt(i)).src = reader.result;
-        }.bind(this), false);
-
-        reader.readAsDataURL(this.files[i]);
-      }
-    },
-    removeFile() {
-      this.files = [];
-      console.log(this.files);
-    }
   }
 };
 
 </script>
 
 <style lang="scss" scoped>
-@import '../scss/variables.scss';
-
 .container {
   padding: 0px 15px;
 }
@@ -205,28 +171,7 @@ export default {
   color: white;
   background-color: rgba($color: #000000, $alpha: 0.8);
 }
-input {
-  display: none;
-}
-.image-preview {
-  display: flex;
-  overflow: hidden;
-  min-width: 200px;
-  max-width: 200px;
-  height:200px;
-  border-radius: 9px;
-  background: $mainBg;
-  justify-content: cover;
-  .image-preview-item {
-    img {
-    position: absolute;
-    top: 50px;
-    left: 50px;
-    width: 100px;
-    height: 100px;
-    }
-  }
-}
+
 .img-box{
   border: solid;
 }

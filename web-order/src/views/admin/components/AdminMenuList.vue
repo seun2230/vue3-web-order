@@ -3,7 +3,7 @@
     <h4 class="title">메뉴 관리</h4>
     <el-table
       ref="multipleTable"
-      :data="foods"
+      :data="paginatedData"
       style="width: 100%">
       <el-table-column
         property="food_name"
@@ -46,6 +46,15 @@
       @close="closeModal()"
       :index="index"
       v-if="modal" />
+    <div class="page-view">
+      <el-button @click="prevPage" type="text" :disabled="pageNum === 0">
+        이전
+      </el-button>
+      <span class="page-count">{{ pageNum + 1}} / {{ pageCount }}</span>
+      <el-button @click="nextPage" type="text" :disabled="pageNum >= pageCount -1">
+        다음
+      </el-button>
+    </div>
   </div>
 </template>
 
@@ -55,13 +64,22 @@ import { mapState } from 'vuex'
 import axios from 'axios'
 
 export default {
+  props: {
+    pageSize: {
+      type: Number,
+      required: false,
+      default: 5
+    }
+  },
   components: {
     Modal,
   },
   data() {
     return {
       modal: false,
-      index: ''
+      index: '',
+      pageNum: 0,
+      pageList: [],
     }
   },
   created() {
@@ -71,8 +89,26 @@ export default {
     ...mapState('food', [
       'foods'
     ]),
+    pageCount() {
+      let listLength = this.foods.length,
+          listSize = this.pageSize,
+          page = Math.floor(listLength / listSize);
+      if(listLength % listSize > 0) page += 1;
+      return page;
+    },
+    paginatedData() {
+      const start = this.pageNum * this.pageSize;
+      const end = start + this.pageSize;
+      return this.foods.slice(start, end);
+    }
   },
   methods: {
+    nextPage() {
+      this.pageNum += 1;
+    },
+    prevPage() {
+      this.pageNum -= 1;
+    },
     deleteRow(index) {
       let delete_id = this.foods[index]
       axios.post(`${process.env.VUE_APP_URL}/api/admin/post/foodDelete`,
@@ -103,8 +139,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../scss/variables.scss';
-
 .container {
   padding: 10px;
   background: #ffffff;

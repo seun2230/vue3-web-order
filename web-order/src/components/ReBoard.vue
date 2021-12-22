@@ -79,7 +79,7 @@ export default {
       const start = this.pageNum * this.pageSize;
       const end = start + this.pageSize;
       return this.comments.slice(start, end)
-    }
+    },
   },
 }
 </script>

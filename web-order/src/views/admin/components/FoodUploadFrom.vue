@@ -44,7 +44,7 @@
       </el-form-item>
       <el-form-item
         label="이미지업로드">
-        <ImagePreview @setData="setData"/>
+        <AdminImagePreview @setData="setData"/>
       </el-form-item>
       <el-button
         type="text"
@@ -57,11 +57,11 @@
 
 <script>
 import axios from 'axios';
-import ImagePreview from '../../../components/ImagePreview.vue';
+import AdminImagePreview from '../components/AdminImagePreview.vue';
 
 export default {
   components: { 
-    ImagePreview,
+    AdminImagePreview,
   },
   data() {
     return {
@@ -110,13 +110,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../scss/variables.scss';
 .container {
   padding: 20px;
   background: #ffffff;
-}
-#multiple-image-input {
-  display: none;
 }
 .title {
   text-align: center;
