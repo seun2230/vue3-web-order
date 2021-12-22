@@ -20,11 +20,9 @@
             <span class="user_date">{{ reviewInfo.comments_date  }}</span>
         </div>
       </div>
-      <div class="image-box">
-        <img 
-          v-if="reviewInfo.comments_image !== this.nullImage"
-          :src="reviewInfo.comments_image" />
-      </div>
+      <img 
+        v-if="reviewInfo.comments_image !== this.nullImage"
+        :src="reviewInfo.comments_image" />
       <div class="user_order">
        {{ reviewInfo.food_name}}
       </div>
@@ -213,6 +211,14 @@ export default {
 .user_text {
   width: 100%;
   min-height: 50px;
+}
+.user_order {
+  display: inline-block;
+  width: auto;
+  padding: 5px; 
+  background-color: rgb(236, 230, 230);
+  border-radius: 2rem;
+  font-size: 15px;
 }
 
 img {

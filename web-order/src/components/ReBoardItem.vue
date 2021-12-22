@@ -60,6 +60,7 @@ export default {
   display: flex;
   border: 2px solid rgb(233, 240, 247);
   width: 100%;
+  height: 200px;
 }
 
 .badge-new {
@@ -77,8 +78,7 @@ export default {
   img {
   border-radius: .2rem;
   width: 200px;
-  min-height: 220px;
-  object-fit: cover;
+  min-height: 200px;
   }
 }
 .card-content {
@@ -92,11 +92,12 @@ export default {
     font-weight: 600;
   }
   .review-date {
-    padding-top: 40px;
+    padding-top: 30px;
     float: right;
-    top: -10px;
+    top: -20px;
     bottom: 10px;
-    color: rgb(170, 168, 168);
+    color: rgb(139, 137, 137);
+    position: fixed;
   }
 }
 .text {
