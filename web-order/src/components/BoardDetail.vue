@@ -54,8 +54,7 @@
           v-model="textarea"
           maxlength="50"
           placeholder="댓글 달기 ..."
-          show-word-limited
-          type="text">
+          show-word-limited>
           <template #append>
             <el-button 
               type="text"
@@ -212,14 +211,13 @@ export default {
   min-height: 50px;
 }
 
-.btn_write {
-
-}
-
 img {
   border-radius: .4rem;
-  width: 350px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
+}
+.el-input-group__prepend {
+  background-color: #ffffff;
 }
 
 .el-input__inner {

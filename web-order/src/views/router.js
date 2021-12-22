@@ -14,6 +14,7 @@ import MenuPage from '../views/user/page/MenuPage.vue'
 import UserPage from '../views/user/UserPage.vue'
 import UserMyPage from '../views/user/page/UserMyPage.vue'
 import store from '../store'
+import NullImageManagePage from './admin/page/NullImageManagePage';
 
 const beforeAuth = isAuthenticated => (from, to, next) => {
   const isAuth = store.getters['user/isAuth'];
@@ -122,12 +123,12 @@ const routes = [
     //  nav가 어디에 포함되어야 할 지가 애매해짐.
     //  -> app.js 수준에서 라우터의 meta data를 읽어와서 선택적 렌더링
     children: [
-      // {
-      //   path: 'dashBoard',
-      //   name: "DashBoard",
-      //   component: DashBoard,
-      //   meta: { RootName: 'admin' },
-      // },
+      {
+        path: 'nullImage',
+        name: "nullImage",
+        component: NullImageManagePage,
+        meta: { RootName: 'admin' },
+      },
       {
         path: 'foodManagement',
         name: 'foodManagement',

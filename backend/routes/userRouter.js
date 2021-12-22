@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require('../db/index')
 const { verifyToken } = require('../middleware/auth')
 const { upload } = require('../api/S3UploadStorage')
-const date = require('../utils/DateUtils');
+const { format } = require('../utils/DateUtils')
 
 router.get('/get/orderList', verifyToken, async(req, res) => {
   try {
@@ -44,23 +44,27 @@ router.post('/post/comment', upload.array('file'), verifyToken, async function(r
       await connection.beginTransaction();
       const files = req.files
       let image = []
-      
-      const date = new Date().format('yyyy-MM-dd');
+      console.log("ss", files)
+      const date = new Date().format('yyyy-MM-dd')
     
       for (let i = 0; i < req.files.length; i++) {
         image[i] = files[i].transforms[0].location
+        console.log("imageURL",image[i])
       }
 
       let sql = "INSERT INTO comments " +
-        "(comments_image, comments_text, ratings, food_items_food_id, comments_user_id, comments_title, comments_status, comments_date)" +
-        "VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
+        "(comments_image, comments_image2, comments_image3, comments_text, ratings, food_items_food_id, comments_user_id, comments_title, comments_status, comments_date)" +
+        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         
       if (image[0] === undefined) {
         const [row] = await connection.query("SELECT * FROM null_image");
         image[0] = [row][0][0].null_image
-
+        image[1] = [row][0][0].null_image
+        image[2] = [row][0][0].null_image
         let value = [
           image[0],
+          image[1],
+          image[2],
           req.body.review,
           req.body.ratings,
           req.body.menu,
@@ -75,24 +79,27 @@ router.post('/post/comment', upload.array('file'), verifyToken, async function(r
         res.send({
           success: "true"
         })
+      } else {
+        let value = [
+          image[0],
+          image[1],
+          image[2],
+          req.body.review,
+          req.body.ratings,
+          req.body.menu,
+          req.decoded.user_id,
+          req.body.title,
+          req.body.status,
+          date
+        ]
+        console.log("value", value);
+        await connection.query(sql, value);
+        await connection.commit();
+        connection.release();
+        res.send({
+          success: "true"
+        })
       }
-      let value = [
-        image[0],
-        req.body.review,
-        req.body.ratings,
-        req.body.menu,
-        req.decoded.user_id,
-        req.body.title,
-        req.body.status,
-        date
-      ]
-      console.log("value", value);
-      await connection.query(sql, value);
-      await connection.commit();
-      connection.release();
-      res.send({
-        success: "true"
-      })
     } catch(err) {
       await connection.rollback();
       connection.release();
@@ -233,8 +240,6 @@ router.post('/update/comment/:id', upload.array('file'), verifyToken, async(req,
   }
 })
 router.get('/get/reply/:id', async(req, res) => {
-  console.log("req.body", req.body);
-
   try {
     console.log("DB Connection /get/reply")
     const connection = await pool.getConnection(async conn => conn);
@@ -266,9 +271,9 @@ router.get('/get/reply/:id', async(req, res) => {
 router.post('/reply/:id', verifyToken, async(req,res) => {
   try {
     console.log("DB connection /reply/:id")
-    const date = new Date().format('yyyy-MM-dd hh:mm');
     const connection = await pool.getConnection(async conn => conn);
     try {
+      const date = new Date().format('yyyy-MM-dd hh:mm')
       const pageId = parseInt(req.params.id, 10);
       let sql = "INSERT INTO reply " +
         "(reply_text, comments_comments_id, users_user_id, food_items_food_id, reply_date)" +
