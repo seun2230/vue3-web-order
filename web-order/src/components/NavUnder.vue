@@ -4,7 +4,8 @@
     <li>
       <router-link to='/' v-slot='{href, navigate}'>
           <button :href='href' @click='navigate' class='button'>
-            <div class="navicon">
+            <div class="navicon"
+              :style="{ color: homeColors[this.$route.name] }">
                 <icon-base icon-name="IconHome"
                   width="33" height="32">
                   <icon-home />
@@ -12,7 +13,8 @@
             </div>
             <div class="space">
             </div>
-            <div class="navdesc">
+            <div class="navdesc"
+              :style="{ color: homeColors[this.$route.name] }">
               홈
             </div>
           </button>
@@ -21,7 +23,8 @@
     <li>
       <router-link to='/user/board' v-slot='{href, navigate}'>
           <button :href='href' @click='navigate' class='button'>
-            <div class="navicon">
+            <div class="navicon"
+              :style="{ color: reviewColors[this.$route.name] }">
                 <icon-base icon-name="IconReview"
                   width="33" height="32">
                   <icon-review />
@@ -29,7 +32,8 @@
             </div>
             <div class="space">
             </div>
-            <div class="navdesc">
+            <div class="navdesc"
+              :style="{ color: reviewColors[this.$route.name] }">
               리뷰
             </div>
           </button>
@@ -38,13 +42,15 @@
     <li id="orderbtn">
       <router-link to='/user/menu' v-slot='{href, navigate}'>
           <button :href='href' @click='navigate' class='button'>
-            <div class="navicon" id="ordericon">
+            <div class="navicon" id="ordericon"
+              :style="{ color: orderColors[this.$route.name] }">
                 <icon-base icon-name="IconOrder"
                   width="50" height="50">
                   <icon-order />
                 </icon-base>
             </div>
-            <div class="navdesc" id="order-desc">
+            <div class="navdesc" id="order-desc"
+              :style="{ color: orderColors[this.$route.name] }">
               주문하기
             </div>
           </button>
@@ -53,7 +59,8 @@
     <li>
       <router-link to='/user/mypage' v-slot='{href, navigate}'>
           <button :href='href' @click='navigate' class='button'>
-            <div class="navicon">
+            <div class="navicon"
+              :style="{ color: listColors[this.$route.name] }">
                 <icon-base
                   icon-name="IconList"
                   width="33" height="32">
@@ -62,7 +69,8 @@
             </div>
             <div class="space">
             </div>
-            <div class="navdesc">
+            <div class="navdesc"
+              :style="{ color: listColors[this.$route.name] }">
               주문내역
             </div>
           </button>
@@ -71,7 +79,8 @@
     <li>
       <router-link to='/user/userinfo' v-slot='{href, navigate}'>
           <button :href='href' @click='navigate' class='button'>
-            <div class="navicon">
+            <div class="navicon"
+              :style="{ color: infoColors[this.$route.name] }">
                 <icon-base icon-name="IconInfo"
                   width="33" height="32" >
                   <icon-info />
@@ -79,7 +88,8 @@
             </div>
             <div class="space">
             </div>
-            <div class="navdesc">
+            <div class="navdesc"
+              :style="{ color: infoColors[this.$route.name] }">
               내 정보
             </div>
           </button>
@@ -98,6 +108,31 @@ import IconList from '../assets/navicons/IconList.vue'
 import IconOrder from '../assets/navicons/IconOrder.vue'
 
 export default {
+  data() {
+    // const thisYellow = 'rgba(255, 150, 0, 1)';
+    const thisRed = 'rgba(255, 0, 0, 0.7)';
+
+    return {
+      homeColors: {
+        home: thisRed,
+      },
+      reviewColors: {
+        review: thisRed,
+        board: thisRed,
+        boardItem: thisRed
+      },
+      orderColors: {
+        menu: thisRed,
+      },
+      listColors: {
+        mypage: thisRed,
+      },
+      infoColors: {
+        userinfo: thisRed,
+        modify: thisRed,
+      }
+    }
+  },
   components: {
     IconBase,
     IconHome,
@@ -105,7 +140,7 @@ export default {
     IconReview,
     IconList,
     IconOrder,
-  }
+  },
 }
 </script>
 
@@ -136,6 +171,7 @@ ul {
 .button {
   border: none;
   margin-top: 20px;
+  padding: 0px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -145,17 +181,18 @@ ul {
   width: 70px;
   height: 60px;
   max-width: 18vw;
+  cursor: pointer;
 }
 
 .navicon {
-  color: rgba(0, 0, 0, 0.9);
-  transition: all 0.2s;
-  transition-delay: 1000ms;
+  /* color: rgba(0, 0, 0, 0.9); */
+  transition: ease-out 0.1s;
+  transition-duration: 100ms;
+  width: 100%;
 }
 
 .navicon:active {
-  color: darkgoldenrod;
-  cursor: pointer;
+  color: rgb(255, 150, 0);
 }
 
 .navdesc {
@@ -179,7 +216,7 @@ ul {
 }
 
 #ordericon:active {
-  color: green;
+  color: red;
 }
 
 .space {

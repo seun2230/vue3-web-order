@@ -81,7 +81,7 @@ const routes = [
       },
       {
         path: 'sign',
-        name: 'Sign',
+        name: 'sign',
         component: SignPage,
         meta: { metaName: '회원가입'}
       },
@@ -93,7 +93,7 @@ const routes = [
       },
       {
         path: 'menu',
-        name: 'Menu',
+        name: 'menu',
         component: MenuPage,
         meta: { metaName: '주문하기'}
       },

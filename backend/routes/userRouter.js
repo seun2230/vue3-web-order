@@ -37,6 +37,10 @@ router.get('/get/orderList', verifyToken, async(req, res) => {
 })
 
 router.post('/post/comment', upload.array('file'), verifyToken, async function(req, res) {
+  console.log("req.body", req.body);
+  console.log("req.body.keword", req.body.keyword)
+  console.log("dd", req.body.keyword.length)
+  console.log("status", req.body.status);
   try {
     console.log("DB Connection! /post/comment")
     const connection = await pool.getConnection(async conn => conn);
@@ -55,7 +59,7 @@ router.post('/post/comment', upload.array('file'), verifyToken, async function(r
         "(comments_image, comments_image2, comments_image3, comments_text, ratings, food_items_food_id, comments_user_id, comments_title, comments_status, comments_date)" +
         "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         
-      if (image[0] === undefined) {
+      if (image[0] === null) {
         const [row] = await connection.query("SELECT * FROM null_image");
         image[0] = [row][0][0].null_image
         image[1] = [row][0][0].null_image
@@ -69,10 +73,17 @@ router.post('/post/comment', upload.array('file'), verifyToken, async function(r
           req.body.menu,
           req.decoded.user_id,
           req.body.title,
-          req.body.status,
+          0,
           date,
         ]
         await connection.query(sql, value);
+        const [comments_id] = await connection.query("SELECT max(comments_id) FROM comments");
+        for(let i = 0; i < req.body.keyword.length; i++) {
+          let sqlKeyword = "INSERT INTO keyword (keyword, comments_comments_id) VALUES (?, ?)"
+          let keyValue = [ req.body.keyword[i], comments_id[0]["max(comments_id)"] ]
+          console.log("keyValue", keyValue);
+          await connection.query(sqlKeyword, keyValue);
+        }
         await connection.commit();
         connection.release();
         res.send({
@@ -89,10 +100,17 @@ router.post('/post/comment', upload.array('file'), verifyToken, async function(r
           req.decoded.user_id,
           req.body.title,
           req.body.status,
-          date
+          date,
         ]
         console.log("value", value);
+        
         await connection.query(sql, value);
+        const [comments_id] = await connection.query("SELECT max(comments_id) FROM comments")
+        for(let i = 0; i < req.body.keyword.length; i++) {
+          let sqlKeyword = "INSERT INTO keyword (keyword, comments_comments_id) VALUES (?, ?)"
+          let keyValue = [ req.body.keyword[i], comments_id[0]["max(comments_id)"] ]
+          await connection.query(sqlKeyword, keyValue);
+        }
         await connection.commit();
         connection.release();
         res.send({
@@ -114,6 +132,26 @@ router.post('/post/comment', upload.array('file'), verifyToken, async function(r
       success: "false",
       message: err
     })
+  }
+})
+
+router.get('/get/keyword/:id', async(req, res) => {
+  try {
+    console.log('DB connection /get/keyword');
+    const connection = await pool.getConnection(async conn => conn);
+    let id = (parseInt(req.params.id,10))
+    try {
+      console.log(id)
+      const [row] = await connection.query('SELECT * FROM keyword WHERE comments_comments_id = ?', id)
+      connection.release();
+      res.send(row);
+
+    } catch (err) {
+      console.log("DB error test", err);
+      connection.release();
+    }
+  } catch (err) {
+    console.log("DB error", err)
   }
 })
 

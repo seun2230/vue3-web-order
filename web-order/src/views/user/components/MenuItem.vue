@@ -3,7 +3,7 @@
       @click="addCart()">
       <div class="infos">
       <img
-        :src="food.food_image1" 
+        :src="food.food_image1"
         :alt="food.food_name" />
         <div class="detail">
           <div class="name">
@@ -60,6 +60,8 @@ export default {
     font-weight: 800;
     color: $menuBg;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+    transition: ease-out 0.2s;
+    transition-duration: 100ms;
     .detail {
       padding: 10px;
       margin-left: 10px;
@@ -87,5 +89,8 @@ export default {
   span {
     height: 100%;
   }
+}
+.infos:active {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 </style>

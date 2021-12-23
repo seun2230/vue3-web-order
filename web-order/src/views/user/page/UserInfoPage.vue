@@ -45,6 +45,24 @@ export default {
 </script>
 
 <style scoped>
+label {
+    padding: 20px;
+  width: 100px;
+  height: 60px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  display: inline-block;
+  cursor: pointer;
+}
+input[type="checkbox"]:checked + label {
+  border-color: green;
+  background-color: rgba(255, 0, 0, 0.4);
+}
+input[type="checkbox"] {
+  display: none;
+}
+
+
 a {
     text-decoration: none;
 }
