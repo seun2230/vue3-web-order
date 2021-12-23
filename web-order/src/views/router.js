@@ -15,7 +15,7 @@ import UserPage from '../views/user/UserPage.vue'
 import UserMyPage from '../views/user/page/UserMyPage.vue'
 import ShopInfo from '../views/user/page/ShopInfo.vue'
 import store from '../store'
-import NullImageManagePage from './admin/page/NullImageManagePage';
+import NullImageManagePage from './admin/page/NullImageManagePage'
 import SlideManagePage from './admin/page/SlideManagePage.vue'
 import DashBoardPage from './admin/page/DashBoardPage.vue'
 import OrderPage from './admin/page/OrderPage.vue'
