@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <el-form>
-    <h4 class="title">Null Image</h4>
+    <h4 class="title">Slide Image</h4>
       <el-form-item class="inner-item"> 
         <AdminImagePreviewOne @setData="setData"/>
       </el-form-item>
@@ -36,7 +36,7 @@ export default {
         let file = this.files[i].file;
         formData.append('files', file);
       }
-      axios.post(`${process.env.VUE_APP_URL}/api/admin/post/nullImageUpload`,
+      axios.post(`${process.env.VUE_APP_URL}/api/admin/post/slideUpload`,
       formData,
       {
         headers: {

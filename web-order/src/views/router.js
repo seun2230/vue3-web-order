@@ -16,6 +16,9 @@ import UserMyPage from '../views/user/page/UserMyPage.vue'
 import ShopInfo from '../views/user/page/ShopInfo.vue'
 import store from '../store'
 import NullImageManagePage from './admin/page/NullImageManagePage';
+import SlideManagePage from './admin/page/SlideManagePage.vue'
+import DashBoardPage from './admin/page/DashBoardPage.vue'
+import OrderPage from './admin/page/OrderPage.vue'
 
 const beforeAuth = isAuthenticated => (from, to, next) => {
   const isAuth = store.getters['user/isAuth'];
@@ -132,16 +135,29 @@ const routes = [
     //  -> app.js 수준에서 라우터의 meta data를 읽어와서 선택적 렌더링
     children: [
       {
+        path: 'dashboard',
+        name: 'dashboard',
+        component: DashBoardPage,
+      },
+      {
         path: 'nullImage',
-        name: "nullImage",
+        name: 'nullImage',
         component: NullImageManagePage,
-        meta: { RootName: 'admin' },
       },
       {
         path: 'foodManagement',
         name: 'foodManagement',
         component: FoodManagePage,
-        meta: { RootName: 'admin' },
+      },
+      {
+        path: 'SlideImage',
+        name: 'SlideImage',
+        component: SlideManagePage,
+      },
+      {
+        path: 'order',
+        name: 'order',
+        component: OrderPage,
       }
     ]
   },

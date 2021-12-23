@@ -6,7 +6,7 @@
                 즐거운 하루 보내고 계신가요?
             </div>
             <div class='logout'>
-                <button-logout />
+                <ButtonLogout />
             </div>
         </div>
         <info-user />

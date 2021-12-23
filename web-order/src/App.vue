@@ -1,24 +1,17 @@
 <template>
-<div class="container">
-  <router-view v-slot="{ Component }">
-        <transition name="component-transition" mode="out-in">
-          <component :is="Component" />
-        </transition>
-        <div class="nav" v-if="this.$route.meta.RootName!='admin'">
-          <nav-under />
-        </div>
-        <div v-else>
-        </div>
-      </router-view>
-</div>
+  <div class="container">
+    <router-view v-slot="{ Component }">
+      <transition name="component-transition" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
+  </div>
 </template>
 
 <script>
-import NavUnder from './components/NavUnder.vue'
 export default {
   name: "App",
   components: {
-    NavUnder
   },
   mounted: function () {
     console.log('router', this.$route.meta.RootName);

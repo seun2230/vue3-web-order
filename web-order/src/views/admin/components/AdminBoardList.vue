@@ -29,6 +29,10 @@
         label="평점"
         width="50px" />
       <el-table-column
+        property="status"
+        label="공개"
+        width="50px" />
+      <el-table-column
         fixed="right"
         label="Operations"
         width="120px">
