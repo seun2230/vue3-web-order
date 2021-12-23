@@ -39,4 +39,8 @@ export default {
   margin-bottom: 0px;
   background: $menuBg;
 }
+.el-header {
+  background-color: $menuHover;
+  padding: 0px;
+}
 </style>

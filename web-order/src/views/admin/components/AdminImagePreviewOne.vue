@@ -123,7 +123,7 @@ export default {
 .file-preview-wrapper>img {
   position: relative;
   width: 460px;
-  height: 460px;
+  max-height: 460px;
   z-index: 10;
 }
 .file-preview-container {

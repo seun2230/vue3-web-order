@@ -29,7 +29,7 @@
         NullImage
       </el-menu-item>
       <el-menu-item index="/admin/SlideImage">
-        SlideImages
+        SlideImage/Notice
       </el-menu-item>
     </el-sub-menu>
   </el-menu>

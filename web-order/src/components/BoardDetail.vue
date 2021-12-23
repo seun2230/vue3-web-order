@@ -34,7 +34,7 @@
           <p @click="clickLike()"><i class="far fa-thumbs-up fa-2x"></i>{{ this.likeUser.length }}</p>
         </div>
         <div v-else class="unlike-btn">
-          <p @click="deleteLike()"><i class="far fa-thumbs-down fa-2x"></i>{{ this.likeUser.length }}</p>
+          <p @click="deleteLike()" style="color: red"><i class="far fa-thumbs-up fa-2x"></i>{{ this.likeUser.length }}</p>
         </div>        
         <p @click="clickReply()"><i class="far fa-comment-dots fa-2x"></i> {{ reply.length }}</p>
       </div>
