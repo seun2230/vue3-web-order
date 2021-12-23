@@ -30,11 +30,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-body {
-  margin: 0px;
-  padding: 0px;
-}
-
 .container {
   height: 100vh;
 }

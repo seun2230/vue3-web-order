@@ -90,12 +90,17 @@ span {
     display: grid;
     width: 50px;
     .btn-menu {
-      font-weight: 800;
+      font-size: 1.2rem;
       text-align: center;
       margin: 0px;
       width: 40px;
       height: 20px;
+      transition: ease-out 0.2s;
+      transition-duration: 100ms;
     }
+  }
+  .btn-menu:active {
+    background-color: rgba(0, 0, 0, 0.1);
   }
 }
 </style>

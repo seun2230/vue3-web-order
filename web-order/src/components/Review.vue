@@ -3,21 +3,21 @@
     <div class="inner">
       <p> * 고객님의 솔직한 리뷰를 남겨주세요. </p>
       <div class="inner-form">
-        <el-form 
-          ref="form" 
+        <el-form
+          ref="form"
           :model="form"
           label-position="top"
           label-width="100px">
-          <el-form-item 
+          <el-form-item
             label="제목"
             placeholder="최소 15자 내외로 작성해주세요.">
-            <el-input 
+            <el-input
               v-model="form.title" />
-          </el-form-item> 
-          <el-form-item 
+          </el-form-item>
+          <el-form-item
             label="메뉴 이름">
             <el-select
-              v-model="form.menu" 
+              v-model="form.menu"
               placeholder="오늘의 메뉴는?">
               <el-option
                 v-for="food in foods"
@@ -27,32 +27,32 @@
             </el-select>
           </el-form-item>
           <el-form-item label="평점">
-            <el-select 
+            <el-select
               v-model="form.ratings"
               width="30px"
               placeholder="음식/가격?" >
-              <el-option 
-                label="😍: 아주 만족해요" 
-                value="5" />         
-              <el-option 
-                label="😊: 만족해요 " 
+              <el-option
+                label="😍: 아주 만족해요"
+                value="5" />
+              <el-option
+                label="😊: 만족해요 "
                 value="4" />
-              <el-option 
-                label="🙄: 보통이에요 " 
+              <el-option
+                label="🙄: 보통이에요 "
                 value="3" />
-              <el-option 
-                label="🙁: 그냥 그래요 " 
+              <el-option
+                label="🙁: 그냥 그래요 "
                 value="2" />
-              <el-option 
-                label="😤: 별로에요" 
+              <el-option
+                label="😤: 별로에요"
                 value="1" />
             </el-select>
           </el-form-item>
-          <el-form-item 
+          <el-form-item
             label="기타 의견">
-            <el-input 
+            <el-input
               v-model="form.review"
-              placeholder="고객님의 의견을 남겨주세요. :)" 
+              placeholder="고객님의 의견을 남겨주세요. :)"
               type="textarea"/>
           </el-form-item>
           <el-form-item>
@@ -60,18 +60,18 @@
           </el-form-item>
           <el-form-item label="리뷰 공개">
             <el-radio-group v-model="form.status">
-              <el-radio 
+              <el-radio
                 label="true">
                 동의
               </el-radio>
-              <el-radio 
+              <el-radio
                 label="false">
                 비동의
               </el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item>
-            <el-button  
+            <el-button
               type="default"
               class="btn-review"
               @click="sendReview()">저장
@@ -109,7 +109,7 @@ export default {
   },
   computed: {
     ...mapState('food', ['foods']),
-    
+
     setDataWatch() {
       return console.log(this.files)
     }
@@ -126,23 +126,23 @@ export default {
       this.$router.push('/user/board');
     },
     sendReview() {
-      let formData = new FormData(); 
+      let formData = new FormData();
       for(let i = 0; i < this.files.length; i++) {
         let file = this.files[i].file;
         formData.append("file", file);
       }
       formData.append("title", this.form.title);
-      formData.append("menu", this.form.menu); 
-      formData.append("ratings", this.form.ratings); 
+      formData.append("menu", this.form.menu);
+      formData.append("ratings", this.form.ratings);
       formData.append("review", this.form.review);
       formData.append("status", this.form.status);
-      
-      axios.post(`${process.env.VUE_APP_URL}/api/user/post/comment`, 
-      formData, { 
+
+      axios.post(`${process.env.VUE_APP_URL}/api/user/post/comment`,
+      formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
-      })      
+      })
       .then((res) => {
         console.log("데이터 전달 성공", res);
         alert('고객님의 리뷰가 등록되었습니다.')

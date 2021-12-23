@@ -18,7 +18,7 @@ export default {
         return false;
       } else {
         return true;
-      } 
+      }
     },
     isAuth: function(state) {
       console.log('isAuth state', state.token);
