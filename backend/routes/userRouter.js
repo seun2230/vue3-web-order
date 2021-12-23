@@ -55,7 +55,6 @@ router.post('/post/comment', upload.array('file'), verifyToken, async function(r
         image[i] = files[i].transforms[0].location
         console.log("imageURL",image[i])
       }
-
       let sql = "INSERT INTO comments " +
         "(comments_image, comments_image2, comments_image3, comments_text, ratings, food_items_food_id, comments_user_id, comments_title, comments_status, comments_date)" +
         "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
