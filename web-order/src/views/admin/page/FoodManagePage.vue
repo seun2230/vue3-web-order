@@ -2,10 +2,10 @@
   <div class="container">
     <el-row :gutter="10">
       <el-col
-        :span="9">
+        :span="7">
         <FoodUploadForm />
       </el-col>
-      <el-col :span="15">
+      <el-col :span="17">
         <AdminMenuList />
         <br />
         <AdminBoardList />

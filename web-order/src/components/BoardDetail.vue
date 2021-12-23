@@ -30,7 +30,12 @@
         <p>{{ reviewInfo.comments_text}}</p>
       </div>
       <div class="user-click">
-        <p><i class="far fa-thumbs-up fa-2x"></i>{{ 17 }}</p>
+        <div v-if="!likeBtn" class="like-btn">
+          <p @click="clickLike()"><i class="far fa-thumbs-up fa-2x"></i>{{ this.likeUser.length }}</p>
+        </div>
+        <div v-else class="unlike-btn">
+          <p @click="deleteLike()" style="color: red"><i class="far fa-thumbs-up fa-2x"></i>{{ this.likeUser.length }}</p>
+        </div>        
         <p @click="clickReply()"><i class="far fa-comment-dots fa-2x"></i> {{ reply.length }}</p>
       </div>
       <div class="btn_group">
@@ -72,8 +77,10 @@
 </template>
 
 <script>
-import ReplyList from './ReplyList.vue'
-import axios from 'axios'
+import { mapState, mapGetters } from 'vuex';
+import ReplyList from './ReplyList.vue';
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -87,6 +94,7 @@ export default {
   },
   created() {
     const id = this.$route.params.id;
+    this.$store.commit('user/getLikeUserList', id)
     axios.get(`${process.env.VUE_APP_URL}/api/user/get/comment/` + id)
     .then(res => {
       console.log("성공", res.data)
@@ -107,16 +115,34 @@ export default {
       this.reply = res.data
     })
   },
-  // computed: {
-  //   translatedId() {
-  //     const userId= this.reviewInfo.comments_user_id
-  //     if(typeof userId === 'string') {
-  //       return userId.replace(/(?<=.).(?=.)/g, "*");
-  //     }
-      
-  //   }
-  // },
+  computed: {
+    ...mapState('user', ['likeUser']),
+    ...mapGetters('user', ['likeBtn']),
+  },
   methods: {
+    clickLike() {
+      const id = this.$route.params.id;
+      axios.post(`${process.env.VUE_APP_URL}/api/user/post/likeUp/` + id)
+      .then(res => {
+        console.log("server response", res.data);
+        this.$router.go()
+      })
+      .catch(err => {
+        console.log("err", err);
+      })
+    },
+    deleteLike() {
+      console.log("clicked!")
+      const id = this.$route.params.id;
+      axios.post(`${process.env.VUE_APP_URL}/api/user/post/likeDown/` + id)
+      .then(res => {
+        console.log("server response", res.data);
+        this.$router.go();
+      })
+      .catch(err => {
+        console.log("err", err);
+      })
+    },
     clickReply() {
       this.show = true;
     },

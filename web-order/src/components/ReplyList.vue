@@ -112,32 +112,36 @@ export default {
     font-weight: bold;
   }
 }
-.reply-right{
-	position: relative;
-	background: #eaf1f1;
-  align-items: center;
-	border-radius: .4em;
-  width: 250px;
-  min-height: auto;
-  margin-bottom: 10px;
+.reply-content {
+  display: inline-block;
 
-  p {
-    margin: 0;
-    padding: 10px;
+  .reply-right{
+    position: relative;
+    background: #eaf1f1;
+    align-items: center;  
+    display: inline-block;  
+    width: auto;
+    border-radius: .4em;
+    margin-bottom: 10px;
+
+    p {
+      margin: 0;
+      padding: 10px;
+    }
   }
-}
 
-.reply-right::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  border: 20px solid transparent;
-  border-right-color: #eaf1f1;
-  border-left: 10px;
-  border-top: 0;
-  margin-top: -10px;
-  margin-left: -10px;
-}  
+  .reply-right::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    border: 20px solid transparent;
+    border-right-color: #eaf1f1;
+    border-left: 10px;
+    border-top: 0;
+    margin-top: -10px;
+    margin-left: -10px;
+  }  
+}
 
 </style>

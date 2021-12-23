@@ -54,7 +54,8 @@
       <router-link to='/user/mypage' v-slot='{href, navigate}'>
           <button :href='href' @click='navigate' class='button'>
             <div class="navicon">
-                <icon-base icon-name="IconList"
+                <icon-base
+                  icon-name="IconList"
                   width="33" height="32">
                   <icon-list />
                 </icon-base>
@@ -147,10 +148,12 @@ ul {
 }
 
 .navicon {
-  color: rgba(0, 0, 0, 0.9)
+  color: rgba(0, 0, 0, 0.9);
+  transition: all 0.2s;
+  transition-delay: 1000ms;
 }
 
-.navicon:hover {
+.navicon:active {
   color: darkgoldenrod;
   cursor: pointer;
 }
@@ -175,7 +178,7 @@ ul {
   margin-bottom: 3px;
 }
 
-#ordericon:hover {
+#ordericon:active {
   color: green;
 }
 

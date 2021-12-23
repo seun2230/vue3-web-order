@@ -263,7 +263,7 @@ router.get("/get/comments", async (req, res) => {
     console.log("DB Connection! /get/comments")
     const connection = await pool.getConnection(async conn => conn);
     try {
-      let sql = "SELECT comments_text as text, comments_title as title," +
+      let sql = "SELECT comments_text as text, comments_title as title, comments_status as status, " +
         "ratings, food_name, comments_user_id as id, comments_id, food_category as category " +
         "FROM comments " +
         "LEFT JOIN food_items ON food_items_food_id = food_id " 
@@ -337,6 +337,37 @@ router.post('/post/commentDelete', async(req, res) => {
   }
 })
 
+router.post("/post/delete/nullImage", async(req, res) => {
+  try{
+    console.log("DB connection! /post/delete/nullImage");
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      let sql = "TRUNCATE TABLE null_image";
+      await connection.beginTransaction();
+      await connection.query(sql);
+      await connection.commit();
+      connection.release();
+      res.send({ delete: true })
+    } catch(err) {
+      console.log("Query Error")
+      console.log("err", err);
+      res.send({
+        delete: false,
+        message: err
+      })
+      await connection.rollback();
+      connection.release();
+    }
+  } catch(err) {
+    console.log("DB Error");
+    console.log("err", err);
+    res.send({
+      delete: false,
+      message: err
+    })
+  }
+})
+
 router.get("/get/nullImage", async (req, res) => {
   try {
     console.log("DB Connection! /get/comments")
@@ -359,11 +390,20 @@ router.post('/post/nullImageUpload', upload.array('files'), async function(req, 
     console.log("DB Connection! /post/nullImageUpload")
     const connection = await pool.getConnection(async conn => conn);
     try {
-      let sql = "SELECT * FROM null_image"
-      const [rows] = await connection.query(sql)
+      let image = req.files[0].transforms[0].location
+      await connection.beginTransaction();
+
+      let sql = "INSERT INTO null_image (null_image) VALUE(?)"
+      let value = [ image ]
+      await connection.query(sql, value);
+      await connection.commit();
       connection.release();
-      res.send(rows)
+      res.send({
+        success : true
+      })
     } catch(err) {
+      await connection.rollback();
+      connection.release();
       console.log(err)
     }
   } catch(err) {
