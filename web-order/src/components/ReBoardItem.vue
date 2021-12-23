@@ -2,12 +2,10 @@
   <router-link class="container-exterrior"
     :to="{name: 'boardItem', params: { id: comment.comments_id }}">
     <div class="cards">
-      <div class="card-image">
-        <img 
-          :src="comment.comments_image"
-          :alt="comment.comments_id" />
-        {{ comment.food_price }}
-      </div>
+      <img 
+        :src="comment.comments_image"
+        :alt="comment.comments_id" />
+      {{ comment.food_price }}
       <span class="badge-new">
       new
       </span>
@@ -25,7 +23,7 @@
             <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
           </div>
         </div>
-        <h3>{{ comment.comments_title }}</h3>
+        <h3 class="title">{{ comment.comments_title }}</h3>
         <span class="text">{{ comment.comments_text }}</span>
         <div class="review-date">{{ comment.comments_date }}</div>
       </div>
@@ -58,9 +56,9 @@ export default {
 @import '../scss/variables.scss';
 .cards {
   display: flex;
-  border: 2px solid rgb(233, 240, 247);
+  border: 3px solid rgb(233, 240, 247);
   width: 100%;
-  height: 200px;
+  height: 150px;
 }
 
 .badge-new {
@@ -74,16 +72,15 @@ export default {
   font-style: oblique;
 // box-shadow: 0px 1px 3px 2px #ebebeb inset;
 }
-.card-image {
-  img {
+img {
   border-radius: .2rem;
-  width: 200px;
-  min-height: 200px;
-  }
+  width: 150px;
+  min-height: 140px;
+  object-fit: cover;
+  z-index: 0;
 }
 .card-content {
   width: 320px;
-  min-height: 200px;
   padding: 15px;
   // text-align: center;
 
@@ -92,18 +89,24 @@ export default {
     font-weight: 600;
   }
   .review-date {
-    padding-top: 30px;
-    float: right;
-    top: -20px;
-    bottom: 10px;
+    right: 220px;
+    font-size: 15px;
     color: rgb(139, 137, 137);
-    position: fixed;
   }
+}
+.title {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 210px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .text {
   display: -webkit-box;
   word-wrap: break-word;
-  -webkit-line-clamp: 3;
+  margin-bottom: 10px;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   // text가 많은 경우 생략 기호 보여주기
   overflow: hidden;
