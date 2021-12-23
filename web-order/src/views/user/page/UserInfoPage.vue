@@ -13,12 +13,6 @@
             <br />
         <review-button />
             <br />
-                <input type="checkbox" id="cbtest" value="맛있어요" v-model="keywords" />
-                <label for="cbtest">맛있어요</label>
-
-                <input type="checkbox" id="cbtest2" value="친절해요" v-model="keywords" />
-                <label for="cbtest2">친절해요</label>
-                <button type="submit" @click="keyword">제출</button>
         <!-- <router-link to='/orderHistory' v-slot='{href, route, navigate}'>
             <button :href='href' @click='navigate' class='button'>
                 {{ route.OrderHistory }} 주문 내역
@@ -34,16 +28,6 @@ import ReviewButton from '../../../components/ReviewButton.vue';
 import { mapGetters, mapState } from 'vuex'
 
 export default {
-    data() {
-        return {
-            keywords: [],
-        }
-    },
-    methods: {
-        keyword() {
-            console.log('keywords:', this.keywords)
-        }
-    },
     components: {
         InfoUser,
         ReviewButton,
