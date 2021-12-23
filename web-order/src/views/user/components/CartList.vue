@@ -84,7 +84,7 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      background-color: rgba(255, 0, 0, 0.7);
+      background-color: rgba($color: black, $alpha: 0.9);
       border-radius: 9px;
       width: 100%;
       height: 80%;
