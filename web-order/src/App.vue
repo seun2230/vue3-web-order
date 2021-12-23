@@ -4,14 +4,22 @@
       <transition name="component-transition" mode="out-in">
         <component :is="Component" />
       </transition>
+      <div class="nav" v-if="this.$route.meta.RootName!='admin'">
+        <nav-under />
+      </div>
     </router-view>
   </div>
 </template>
 
 <script>
+import NavUnder from './components/NavUnder.vue'
+import VueHead from 'vue-head'
+
 export default {
   name: "App",
   components: {
+    NavUnder,
+    VueHead,
   },
   mounted: function () {
     console.log('router', this.$route.meta.RootName);
@@ -19,6 +27,20 @@ export default {
   },
   data: () => ({
   }),
+  head: {
+    title: function () {
+      return {
+        inner: this.title,
+        seperator: '|',
+        complement: 'subtitle'
+      }
+    },
+    meta: function () {
+      return [
+        { name: 'viewport', content: 'width=device-width,initial-scale=1.0,user-scalable=no' }
+      ]
+    }
+  }
 };
 </script>
 
