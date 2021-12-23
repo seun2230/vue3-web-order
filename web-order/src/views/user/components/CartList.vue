@@ -13,7 +13,7 @@
         class="btn-order"
         type="text"
         @click="submitCart(this.carts, this.totalPrice)">
-        결제
+        결제하기
       </div>
     </div>
   </div>
@@ -42,7 +42,7 @@ export default {
     submitCart(carts, totalPrice) {
       let list = [carts, totalPrice];
 
-      axios.post(`${process.env.VUE_APP_URL}/api/food/post/foodOrder`, 
+      axios.post(`${process.env.VUE_APP_URL}/api/food/post/foodOrder`,
         JSON.stringify(list), {
           headers: {
             "Content-Type": "application/json",
@@ -78,15 +78,27 @@ export default {
   .btn-container {
     padding: 5px;
     width: 100%;
+    height: 8vh;
     text-align: center;
     .btn-order {
-      padding: 5px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: rgba(255, 0, 0, 0.7);
       border-radius: 9px;
       width: 100%;
-      color: $menuBg;
+      height: 80%;
+      color: white;
       box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
       font-weight: 800;
+      font-size: 1.3rem;
+      letter-spacing: 1px;
+      transition: ease-out 0.2s;
+      transition-duration: 100ms;
     }
+  }
+  .btn-order:active {
+    background-color: rgba(255, 0, 0, 0.5);
   }
 }
 </style>

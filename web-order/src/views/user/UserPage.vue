@@ -36,8 +36,14 @@ export default {
 }
 
 .comp-body {
-  padding-bottom: 80px;
+  padding-bottom: 12vh;
   overflow-x: hidden;
+}
+
+@media screen and (max-height: 799px) {
+    .comp-body {
+      padding-bottom: 14vh;
+    }
 }
 
 .component-transition-enter-active,
