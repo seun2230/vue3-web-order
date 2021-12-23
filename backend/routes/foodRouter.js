@@ -39,7 +39,7 @@ router.get('/get/foods', async (req, res) => {
       try {
         console.log("Query Start")
         const date = new Date().format('yyyy-MM-dd hh:mm:ss')
-        let sql = 'INSERT INTO order_num' +
+        let sql = 'INSERT INTO order_num' + 
         '(order_total_price, users_user_id, order_date)' +
         'VALUES(?, ?, ?)'
   

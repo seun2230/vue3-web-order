@@ -24,11 +24,18 @@
         v-if="reviewInfo.comments_image !== this.nullImage"
         :src="reviewInfo.comments_image" />
       <div class="user_order">
-       {{ reviewInfo.food_name}}
+        <span>메뉴 : {{ reviewInfo.food_name}}</span>
+      </div>
+      <div class="keyword-hidden" id="hidden" @click="clickHidden()">
+        <div class="keyword" 
+          v-for="keyword in keywords"
+          :key="keyword.id_keyword">
+          <span class="keyword-text">{{ keyword.keyword }}</span>
+        </div>
       </div>
       <div class="user_text">
         <p>{{ reviewInfo.comments_text}}</p>
-      </div>
+      </div>    
       <div class="user-click">
         <div v-if="!likeBtn" class="like-btn">
           <p @click="clickLike()"><i class="far fa-thumbs-up fa-2x"></i>{{ this.likeUser.length }}</p>
@@ -90,6 +97,7 @@ export default {
       nullImage: "",
       textarea: '',
       reply: [],
+      keywords: []
     }
   },
   created() {
@@ -113,12 +121,24 @@ export default {
       console.log("reply", res.data)
       this.reply = res.data
     })
+     axios.get(`${process.env.VUE_APP_URL}/api/user/get/keyword/` + id)
+    .then(res => {
+      console.log("keyword", res.data)
+      this.keywords = res.data
+    })
+    .catch(err => {
+      console.log("err", err);
+    }) 
   },
   computed: {
     ...mapState('user', ['likeUser']),
     ...mapGetters('user', ['likeBtn']),
   },
   methods: {
+    clickHidden() {
+      let x = document.getElementById('hidden');
+      x.style.height = "150px";
+    },
     clickLike() {
       const id = this.$route.params.id;
       axios.post(`${process.env.VUE_APP_URL}/api/user/post/likeUp/` + id)
@@ -230,6 +250,11 @@ export default {
 
   }
 }
+.keyword-hidden {
+    height: 33px;
+    overflow: hidden;
+}
+
 .user-click {
   display: flex;
   align-items: center;
@@ -244,14 +269,39 @@ export default {
   width: 100%;
   min-height: 50px;
 }
+
 .user_order {
   display: inline-block;
+  text-align: center;
   width: auto;
-  padding: 5px; 
+  height: 30px;
+  padding: 10px;
   background-color: rgb(236, 230, 230);
-  border-radius: 2rem;
+  box-shadow: 0 4px 2px -4px black;
+  border-radius: .3rem;
   font-size: 15px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  
+  p {
+    margin: 0px;
+    padding: 0px;
+  }
 }
+.keyword {
+  display: inline-block;
+  text-align: center;
+  height: 30px;
+  width: auto;
+  background:rgb(248, 248, 248);
+  border: 1px solid rgb(235, 233, 233);
+  border-radius: .3rem;
+  padding: 10px;
+  box-shadow: 0 4px 2px -4px black;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
 
 img {
   border-radius: .4rem;
