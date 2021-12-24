@@ -36,7 +36,7 @@ export default {
     pageSize: {
       type: Number,
       required: false,
-      default: 6
+      default: 4
     },
   },
   beforeCreate() {
@@ -79,7 +79,7 @@ export default {
       const start = this.pageNum * this.pageSize;
       const end = start + this.pageSize;
       return this.comments.slice(start, end)
-    },
+    }
   },
 }
 </script>
@@ -87,7 +87,11 @@ export default {
 <style lang="scss">
 .btn-fade {
   position: fixed;
+<<<<<<< HEAD
   bottom: 140px;
+=======
+  bottom: 100px;
+>>>>>>> 09508cea999466c25b36c5799157d01143fdd68c
   right: 12px;
   z-index: 30;
 

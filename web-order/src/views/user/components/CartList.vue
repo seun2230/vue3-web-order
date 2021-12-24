@@ -49,9 +49,9 @@ export default {
           },
         })
         .then((res) => {
-          console.log("res, res")
-          console.log("server res :", res.data);
+          console.log("server res", res.data)
           this.$store.commit("food/resetCart");
+          this.$router.push('/')
         })
         .catch((err) => {
           console.error(err);

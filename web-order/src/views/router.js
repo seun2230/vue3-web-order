@@ -17,9 +17,12 @@ import ShopInfo from '../views/user/page/ShopInfo.vue'
 import store from '../store'
 import NullImageManagePage from './admin/page/NullImageManagePage';
 import SlideManagePage from './admin/page/SlideManagePage.vue'
-import DashBoardPage from './admin/page/DashBoardPage.vue'
 import OrderPage from './admin/page/OrderPage.vue'
+<<<<<<< HEAD
 import MyArticlePage from '../views/user/page/MyArticlePage.vue';
+=======
+import UserManagePage from './admin/page/UserManagePage.vue'
+>>>>>>> 09508cea999466c25b36c5799157d01143fdd68c
 
 const beforeAuth = isAuthenticated => (from, to, next) => {
   const isAuth = store.getters['user/isAuth'];
@@ -85,7 +88,10 @@ const routes = [
         name: 'boardModify',
         component: BoardModify,
         meta: { metaName: '리뷰 수정'}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 09508cea999466c25b36c5799157d01143fdd68c
       },
       {
         path: 'sign',
@@ -143,11 +149,6 @@ const routes = [
     //  -> app.js 수준에서 라우터의 meta data를 읽어와서 선택적 렌더링
     children: [
       {
-        path: 'dashboard',
-        name: 'dashboard',
-        component: DashBoardPage,
-      },
-      {
         path: 'nullImage',
         name: 'nullImage',
         component: NullImageManagePage,
@@ -166,6 +167,11 @@ const routes = [
         path: 'order',
         name: 'order',
         component: OrderPage,
+      },
+      {
+        path: 'userManagement',
+        name: 'userManagement',
+        component: UserManagePage
       }
     ]
   },
