@@ -174,7 +174,6 @@ export default {
       pageNum: 0,
       form: {
         title: '',
-        menu:'',
         review: '',
         status: '',
       }
@@ -241,12 +240,12 @@ export default {
         formData.append("file", file);
       }
       formData.append("title", this.form.title);
-      formData.append("menu", this.form.menu); 
       formData.append("ratings", this.form.ratings); 
       formData.append("review", this.form.review);
       formData.append("status", this.form.status);
       
-      axios.post(`${process.env.VUE_APP_URL}/api/user/post/comment`, 
+       const foodId =  this.$route.params.id;
+      axios.post(`${process.env.VUE_APP_URL}/api/user/post/comment/` + foodId,
       formData, { 
         headers: {
           'Content-Type': 'multipart/form-data'

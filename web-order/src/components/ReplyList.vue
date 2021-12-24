@@ -6,7 +6,7 @@
         <p>{{ reply.reply_text }}</p>
       </div>
       <div class="reply-date">
-        <span style="font-size: 15px; color: grey;">{{ reply.reply_date }}</span>
+        <span style="font-size: 15px; color: grey">{{ reply.reply_date }}</span>
       </div>
       <form>
         <div class="form-hidden">
@@ -66,9 +66,11 @@ export default {
       this.toggle = true;
     },
     modifyReply(reply_ID) {
+      console.log("ss",reply_ID);
       const text = this.textarea;
-      let data = [{"comment_text": text, "reply_id": reply_ID }]
-      axios.post(`${process.env.VUE_APP_URL}/api/user/modify/reply`,
+      let data = {"comment_text": text, "reply_id": reply_ID }
+      const id = this.$route.params.id;
+      axios.post(`${process.env.VUE_APP_URL}/api/user/modify/reply/` + id,
       JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/json'
@@ -83,8 +85,10 @@ export default {
       })
     },
     deleteReply(reply_ID) {
-      let data = [ {"reply_id": reply_ID }]
-      axios.post(`${process.env.VUE_APP_URL}/api/user/delete/reply`,
+      console.log(reply_ID)
+      let data = {"reply_id": reply_ID }
+      const id = this.$route.params.id;
+      axios.post(`${process.env.VUE_APP_URL}/api/user/delete/reply/`  + id,
       JSON.stringify(data), {
          headers: {
           'Content-Type': 'application/json'
