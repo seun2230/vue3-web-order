@@ -1,52 +1,52 @@
 <template>
   <div class="container">
     <div class="inner">
-      <p> * 고객님의 솔직한 리뷰를 남겨주세요. </p>
+      <!-- <p :name="name()"> * 고객님의 솔직한 리뷰를 남겨주세요. {{ this.food_name }}</p> -->
       <div class="inner-form">
-        <el-form 
-          ref="form" 
+        <el-form
+          ref="form"
           :model="form"
           label-position="top"
           label-width="100px">
-          <el-form-item 
+          <el-form-item
             label="제목"
             placeholder="최소 15자 내외로 작성해주세요.">
-            <el-input 
-              v-model="form.title" /> 
-          </el-form-item> 
+            <el-input
+              v-model="form.title" />
+          </el-form-item>
           <el-form-item label="평점">
-            <el-select 
+            <el-select
               v-model="form.ratings"
               width="30px"
               placeholder="음식/가격?" >
-              <el-option 
-                label="😍: 아주 만족해요" 
-                value="5" />         
-              <el-option 
-                label="😊: 만족해요 " 
+              <el-option
+                label="😍: 아주 만족해요"
+                value="5" />
+              <el-option
+                label="😊: 만족해요 "
                 value="4" />
-              <el-option 
-                label="🙄: 보통이에요 " 
+              <el-option
+                label="🙄: 보통이에요 "
                 value="3" />
-              <el-option 
-                label="🙁: 그냥 그래요 " 
+              <el-option
+                label="🙁: 그냥 그래요 "
                 value="2" />
-              <el-option 
-                label="😤: 별로에요" 
+              <el-option
+                label="😤: 별로에요"
                 value="1" />
             </el-select>
           </el-form-item>
           <el-form-item label="키워드 등록(중복 선택 가능)" />
           <el-carousel height="250px" :interval="8000" arrow="always">
-            <el-carousel-item  >
+            <el-carousel-item>
                <h3>메뉴</h3>
                 <div class="keyword-menu"
                     v-for="food in paginatedData"
                     :key="food.food_id">
-                  <input 
-                    type="checkbox" 
+                  <input
+                    type="checkbox"
                     v-model="keywords" :id="food.food_name" :value="food.food_name"/>
-                  <label 
+                  <label
                     :for="food.food_name">{{ food.food_name }} 맛있어요</label>
                 </div>
                 <div class="page-view">
@@ -61,64 +61,64 @@
             </el-carousel-item>
             <el-carousel-item>
               <h3>주문</h3>
-               <input 
-              type="checkbox" 
-              v-model="keywords" id="keyword1" value="대기열이 짧아요"/> 
-              <label 
+               <input
+              type="checkbox"
+              v-model="keywords" id="keyword1" value="대기열이 짧아요"/>
+              <label
                 for="keyword1">대기열 짧아요</label>
-             <input 
-              type="checkbox" 
-              v-model="keywords" id="keyword2" value="가성비가 높아요"/> 
-              <label for="keyword2">가성비가 높아요</label> 
-             <input 
-              type="checkbox" 
+             <input
+              type="checkbox"
+              v-model="keywords" id="keyword2" value="가성비가 좋아요"/>
+              <label for="keyword2">가성비가 좋아요</label>
+             <input
+              type="checkbox"
               v-model="keywords" id="keyword3" value="주문 간편해요"/>
-              <label for="keyword3">🛒주문 간편해요</label> 
-              <input 
-              type="checkbox" 
-              v-model="keywords" id="keyword4" value="결제가 빨라요"/> 
-              <label for="keyword4">결제가 빨라요</label> 
-                 <input 
-              type="checkbox" 
-              v-model="keywords" id="keyword5" value="주문 길어요"/> 
-              <label for="keyword5">주문 길어요</label> 
-                 <input 
-              type="checkbox" 
-              v-model="keywords" id="keyword6" value="주문 알림 필요해요"/> 
-              <label for="keyword6">주문 알림 필요해요</label> 
+              <label for="keyword3">🛒주문 간편해요</label>
+              <input
+              type="checkbox"
+              v-model="keywords" id="keyword4" value="결제가 빨라요"/>
+              <label for="keyword4">결제가 빨라요</label>
+                 <input
+              type="checkbox"
+              v-model="keywords" id="keyword5" value="주문 길어요"/>
+              <label for="keyword5">주문 길어요</label>
+                 <input
+              type="checkbox"
+              v-model="keywords" id="keyword6" value="주문 알림 필요해요"/>
+              <label for="keyword6">주문 알림 필요해요</label>
             </el-carousel-item>
             <el-carousel-item>
               <h3>매장</h3>
-              <input 
-                type="checkbox" 
+              <input
+                type="checkbox"
                 v-model="keywords" id="keyword7" value="사장님이 친절해요"/>
-              <label for="keyword7">👩‍🍳사장님 친절해요"</label> 
-              <input 
-              type="checkbox" 
+              <label for="keyword7">👩‍🍳사장님 친절해요"</label>
+              <input
+              type="checkbox"
               v-model="keywords" id="keyword8" value="뷰가 좋아요"/>
               <label for="keyword8">🏝 뷰가 좋아요</label> <br />
-               <input 
-              type="checkbox" 
+               <input
+              type="checkbox"
               v-model="keywords" id="keyword9" value="분위기가 조용해요"/>
-              <label for="keyword9">분위기가 조용해요</label> 
-              <input 
-              type="checkbox" 
+              <label for="keyword9">분위기가 조용해요</label>
+              <input
+              type="checkbox"
               v-model="keywords" id="keyword10" value="매장이 청결해요"/>
               <label for="keyword10">매장이 청결해요</label>
-             <input 
-              type="checkbox" 
+             <input
+              type="checkbox"
               v-model="keywords" id="keyword11" value="주차 시설이 괜찮아요"/>
-              <label for="keywor11">🚗주차 편리해요</label> 
-              <input 
-              type="checkbox" 
+              <label for="keywor11">🚗주차 편리해요</label>
+              <input
+              type="checkbox"
               v-model="keywords" id="keyword12" value="혼자 와도 좋아요"/>
-              <label for="keyword12">혼자도 편해요</label> 
+              <label for="keyword12">혼자도 편해요</label>
             </el-carousel-item>
           </el-carousel>
           <el-form-item label="후기 등록">
-            <el-input 
+            <el-input
               v-model="form.review"
-              placeholder="고객님의 의견을 남겨주세요. :)" 
+              placeholder="고객님의 의견을 남겨주세요. :)"
               type="textarea"/>
           </el-form-item>
           <el-form-item>
@@ -126,18 +126,18 @@
           </el-form-item>
           <el-form-item label="리뷰 공개">
             <el-radio-group v-model="form.status">
-              <el-radio 
+              <el-radio
                 label="true">
                 동의
               </el-radio>
-              <el-radio 
+              <el-radio
                 label="false">
                 비동의
               </el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item>
-            <el-button  
+            <el-button
               type="default"
               class="btn-review"
               @click="sendReview()">저장
@@ -168,6 +168,7 @@ export default {
   },
   data() {
     return {
+      food_name: null,
       files: [],
       keywords: [],
       pageList: [],
@@ -184,14 +185,14 @@ export default {
   },
   computed: {
     ...mapState('food', ['foods']),
-    /*
-    name() {
-      console.log("id", this.$route.params.id)
-      const foodName = this.foods.find(x => x.food_id === parseInt(this.$route.params.id, 10));
-        console.log("ss",foodName.food_name);
-        return foodName;
-    
-    }, */
+
+    // name() {
+    //   console.log("id", this.$route.params.id)
+    //   const foodName = this.foods.find(x => x.food_id === parseInt(this.$route.params.id, 10));
+    //     console.log("ss",foodName.food_name);
+    //     return foodName;
+
+    // },
     pageCount() {
       let listLength = this.foods.length,
       listSize = this.pageSize,
@@ -226,8 +227,8 @@ export default {
       console.log("keyword", this.keywords);
       // console.log("keywords", this.keywords.length);
       console.log("keywords test", this.keywords[0])
-      
-      let formData = new FormData(); 
+
+      let formData = new FormData();
 
       for(let j = 0; j < this.keywords.length; j++) {
         let keyword = this.keywords[j];
@@ -240,17 +241,17 @@ export default {
         formData.append("file", file);
       }
       formData.append("title", this.form.title);
-      formData.append("ratings", this.form.ratings); 
+      formData.append("ratings", this.form.ratings);
       formData.append("review", this.form.review);
       formData.append("status", this.form.status);
-      
+
        const foodId =  this.$route.params.id;
       axios.post(`${process.env.VUE_APP_URL}/api/user/post/comment/` + foodId,
-      formData, { 
+      formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
-      })      
+      })
       .then((res) => {
         console.log("데이터 전달 성공", res);
         alert('고객님의 리뷰가 등록되었습니다.')
@@ -332,7 +333,7 @@ input {
   padding: 10px;
 }
 // input[id] {
-//   position: relative; 
+//   position: relative;
 //   top: 50px;
 // }
 // label[for] {

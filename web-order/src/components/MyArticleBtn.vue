@@ -1,39 +1,25 @@
 <template>
     <div class='infoAccount'>
         <div class='router'>
-            <router-link to='/user/mypage' v-slot='{href, navigate}'
+            <router-link to='/user/myarticle' v-slot='{href, navigate}'
             :href='href' @click='navigate'
             class='routerBtn'>
             <div>
-                <span class='infoTitle'>리뷰 남기기</span><br />
-                <span class="infoBody">메뉴에 대한 평가를 남겨보세요.</span>
+                <span class='infoTitle'>좋아요를 누른 게시물</span><br />
+                <span class="infoBody">관심 있는 리뷰를 모아보세요.</span>
             </div>
             <div class="routericon">
                 <i class="fas fa-arrow-right fa-2x"></i>
             </div>
-        </router-link>
+            </router-link>
         </div>
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
 export default {
-    name: 'UserInfo',
-    props: {
-        userInfo: {
-            type: Object,
-            default: () => {
-                return {};
-            },
-        },
-    },
-    computed: {
-        ...mapState('user', [
-            'user_info'
-        ])
-    }
-};
+
+}
 </script>
 
 <style scoped>

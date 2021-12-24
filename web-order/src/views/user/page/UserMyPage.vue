@@ -8,9 +8,12 @@
       :key="order.id"
       :order="order" >
       <div class="order_date">
-        {{ order.order_date }} &nbsp;결제완료
+        {{ order.order_date }}
+        <div class="done">
+        결제완료
+        </div>
       </div>
-      <div class="del_modal">
+      <!-- <div class="del_modal">
         <button class="btn-area" @click="openModal()">
           <div class="del-btn">
           <icon-base icon-name="VerticalDots"
@@ -22,7 +25,7 @@
         <ModalAdd
           @close="closeModal()"
           v-if="modal" />
-      </div>
+      </div> -->
       <div class="order_food">
         <span>{{ order.food_name }}</span>
       </div>
@@ -30,28 +33,30 @@
         <span>수량 : {{ order.quantity }}</span>
       </div>
       <div class="order_price">
-        <span>총 결제 금액 : {{ order.price }}</span>
+        <span>합계 : {{ order.price }}</span>
       </div>
-      <router-link class="container-exterrior"
-       :to="{name: 'review', params: { id: order.food_id }}">
-        <el-button  class="blue-btn"
-        type="default">리뷰 작성</el-button>  
-      </router-link>
+      <div class="reviw-btn-area">
+        <router-link class="container-exterrior"
+        :to="{name: 'review', params: { id: order.id }}">
+          <el-button  class="blue-btn"
+          type="default">리뷰 작성</el-button>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import IconBase from '../../../assets/navicons/IconBase.vue'
-import VerticalDots from '../../../assets/VerticalDots.vue'
-import ModalAdd from '../components/ModalAdd.vue';
+// import IconBase from '../../../assets/navicons/IconBase.vue'
+// import VerticalDots from '../../../assets/VerticalDots.vue'
+// import ModalAdd from '../components/ModalAdd.vue';
 
 export default {
   components: {
-    IconBase,
-    VerticalDots,
-    ModalAdd,
+    // IconBase,
+    // VerticalDots,
+    // ModalAdd,
   },
   data() {
     return {
@@ -61,20 +66,20 @@ export default {
   created() {
     this.$store.commit("user/getOrderList")
   },
-  methods: {
-    resetOrder() {
+  // methods: {
+  //   resetOrder() {
 
-    },
-    openModal() {
-      this.modal = !this.modal;
-    },
-    closeModal() {
-      this.modal = false;
-    },
-    writeReview() {
+  //   },
+  //   openModal() {
+  //     this.modal = !this.modal;
+  //   },
+  //   closeModal() {
+  //     this.modal = false;
+  //   },
+  //   writeReview() {
 
-    }
-  },
+  //   }
+  // },
   computed: {
     ...mapState('user', ['orderList']),
   }
@@ -105,7 +110,12 @@ export default {
 }
 
 .blue-btn {
-  @include colorBtn($blue)
+  @include colorBtn($blue);
+  border-radius: 5px;
+  width: 100px;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+  transition: ease-out 300ms;
+  transition-duration: 300ms;
 }
 
 .container {
@@ -147,14 +157,27 @@ export default {
   font-size: 0.9rem;
 }
 
+.done {
+  margin-top: 5px;
+}
+
 .order_food {
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+}
+
+.order_price {
+  margin-top: 10px;
 }
 
 .empty-item {
   padding: 20vh 10vw 0 10vw;
   text-align: center;
+}
+
+.reviw-btn-area {
+  margin-top: 10px;
 }
 </style>

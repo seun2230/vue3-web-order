@@ -6,12 +6,12 @@
         :src="comment.comments_image"
         :alt="comment.comments_id" />
       {{ comment.food_price }}
-      <span v-if="isNew" class="badge-new">
+      <span class="badge-new">
       new
       </span>
       <div class="card-content">
         <div class="card-user">
-          <span class="user-info">{{ translateId }}</span>
+          <span class="user-info">{{ comment.comments_user_id }}</span>
         </div>
         <div class="ratings">
           <div
@@ -47,52 +47,10 @@ export default {
       return score * 20;
     },
   },
-  computed : {
-    isNew() {
-      const nowDate = this.comment.comments_date;
-      const year = +nowDate.split('-')[0];
-      const month = +nowDate.split('-')[1];
-      const day = +nowDate.split('-')[2]
-      const nowDateObject = new Date(year, month, day);
-      
-    return new Date().getTime() - nowDateObject.getTime() < 24 * 60 * 60 * 1000; 
-        
-     
-     
-
-    },
-    translateId() {
-       const userId= this.comment.comments_user_id
-       console.log(userId)
-         if(typeof userId === 'string') {
-          return userId.replace(/(?<=.).(?=.)/g, "*");
-         }
-         return null
-         }
-         
-  }
-  // computed: {
-  //   
-  //   }
-  // }
 }
 </script>
 
 <style scoped lang="scss">
-@import '../scss/variables.scss';
-.cards {
-  display: flex;
-  border: 3px solid rgb(233, 240, 247);
-  width: 100%;
-  height: 150px;
-  transition: ease-out 300ms;
-  transition-duration: 300ms;
-}
-
-.cards:active {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
 .badge-new {
   position: absolute;
   right: 5px;
@@ -162,6 +120,15 @@ img {
   z-index: 1;
   overflow: hidden;
   -webkit-text-fill-color: rgba(245, 148, 22, 0.842);
+}
+
+.cards {
+  transition: ease-out 300ms;
+  transition-duration: 300ms;
+}
+
+.cards:active {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 </style>

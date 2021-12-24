@@ -7,8 +7,6 @@
       </el-col>
       <el-col :span="17">
         <AdminMenuList />
-        <br />
-        <AdminBoardList />
       </el-col>
     </el-row>  
   </div>
@@ -17,13 +15,11 @@
 <script>
 import FoodUploadForm from '../components/FoodUploadFrom.vue'
 import AdminMenuList from '../components/AdminMenuList.vue'
-import AdminBoardList from '../components/AdminBoardList.vue'
 
 export default {
   components: {
     FoodUploadForm,
     AdminMenuList,
-    AdminBoardList,
   }
 }
 </script>

@@ -6,6 +6,9 @@ export default {
     return {
       slide: [],
       comments: [],
+      users: [],
+      orderList: [],
+      orderListComplete: [],
     }
   },
   getters: {
@@ -32,6 +35,27 @@ export default {
         console.log("Error", err)
       })
     },
+    getUserList(state) {
+      axios.get(`${process.env.VUE_APP_URL}/api/admin/get/userList`)
+      .then(res => {
+        console.log(res.data)
+        state.users = res.data
+      })
+    },
+    getOrderList(state) {
+      axios.get(`${process.env.VUE_APP_URL}/api/admin/get/orderList`)
+      .then(res => {
+        console.log(res.data)
+        state.orderList = res.data
+      })
+    },
+    getOrderListComplete(state) {
+      axios.get(`${process.env.VUE_APP_URL}/api/admin/get/orderListComplete`)
+      .then(res => {
+        console.log(res.data)
+        state.orderListComplete = res.data
+      })
+    }
   },
   actions: {
 

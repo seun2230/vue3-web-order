@@ -10,7 +10,7 @@ router.get('/get/orderList', verifyToken, async(req, res) => {
     const connection = await pool.getConnection(async conn => conn);
     try {
       let sql = "SELECT id_order_list as id ,id_order_num, order_quantity as quantity, order_date, order_status as status, order_total_price as price, food_name, food_id " +
-        "FROM order_list " + 
+        "FROM order_list " +
         "LEFT JOIN order_num ON order_num_id_order_num = id_order_num " +
         "LEFT JOIN food_items ON food_items_food_id = food_id " +
         "WHERE users_user_id = ?";
@@ -53,7 +53,7 @@ router.post('/post/comment/:id', upload.array('file'), verifyToken, async functi
       let image = []
       console.log("ss", files)
       const date = new Date().format('yyyy-MM-dd')
-    
+
       for (let i = 0; i < req.files.length; i++) {
         image[i] = files[i].transforms[0].location
         console.log("imageURL",image[i])
@@ -61,7 +61,7 @@ router.post('/post/comment/:id', upload.array('file'), verifyToken, async functi
       let sql = "INSERT INTO comments " +
         "(comments_image, comments_image2, comments_image3, comments_text, ratings, food_items_food_id, comments_user_id, comments_title, comments_status, comments_date)" +
         "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-        
+
       if (image[0] === null) {
         const [row] = await connection.query("SELECT * FROM null_image");
         image[0] = [row][0][0].null_image
@@ -106,7 +106,7 @@ router.post('/post/comment/:id', upload.array('file'), verifyToken, async functi
           date,
         ]
         console.log("value", value);
-        
+
         await connection.query(sql, value);
         const [comments_id] = await connection.query("SELECT max(comments_id) FROM comments")
         for(let i = 0; i < req.body.keyword.length; i++) {
@@ -246,7 +246,7 @@ router.post('/update/comment/:id', upload.array('file'), verifyToken, async(req,
       "WHERE comments_id = ? AND comments_user_id = ?"
       var id = parseInt(req.params.id, 10)
       let params = [
-        image[0], 
+        image[0],
         req.body.review,
         req.body.ratings,
         req.body.title,
@@ -283,7 +283,7 @@ router.get('/get/reply/:id', async(req, res) => {
   try {
     console.log("DB Connection /get/reply")
     const connection = await pool.getConnection(async conn => conn);
-    
+
     try {
       let sql = "SELECT * FROM reply WHERE comments_comments_id = ? "
       let value = [ parseInt(req.params.id, 10) ]
@@ -351,7 +351,7 @@ router.post('/reply/:id', verifyToken, async(req,res) => {
 })
 
 router.post('/modify/reply/:id', verifyToken, async(req,res) => {
-  
+
   try {
     console.log("DB connection /post/modify/reply")
     const connection = await pool.getConnection(async conn => conn);
@@ -362,7 +362,7 @@ router.post('/modify/reply/:id', verifyToken, async(req,res) => {
                 "SET reply_text = ? " +
                 "WHERE comments_comments_id = ? AND id_reply = ? AND users_user_id = ?"
       let params = [
-        req.body.comment_text, 
+        req.body.comment_text,
         id,
         req.body.reply_id,
         req.decoded.user_id,
@@ -397,7 +397,7 @@ router.post('/modify/reply/:id', verifyToken, async(req,res) => {
 "DELETE FROM comments WHERE comments_id = ? AND comments_user_id = ?"
 
 router.post('/delete/reply/:id', verifyToken, async(req,res) => {
-  
+
   try {
     console.log("DB connection /post/commentDelete")
     const connection = await pool.getConnection(async conn => conn);
@@ -444,7 +444,7 @@ router.get('/get/likeStatus/:id', async(req, res) => {
     const connection = await pool.getConnection(async conn => conn);
     try {
       const pageId = parseInt(req.params.id, 10);
-      let sql = "SELECT users_user_id as user_id FROM user_like " + 
+      let sql = "SELECT users_user_id as user_id FROM user_like " +
                 "WHERE comments_comments_id = ?";
       let value = [
         pageId,
@@ -543,6 +543,31 @@ router.post('/post/likeDown/:id', verifyToken, async(req, res) => {
       message: "DB error",
       err: err
     })
+  }
+})
+
+router.get('/get/myarticle', verifyToken, async(req, res) => {
+  try {
+    console.log("DB connection /get/myarticle");
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      let sql = "SELECT * " +
+        "FROM user_like " +
+        "LEFT JOIN comments ON comments_id = comments_comments_id " +
+        "WHERE comments_status = 0 AND users_user_id = ?" ;
+      let value = [
+        req.decoded.user_id,
+      ]
+      const [row] = await connection.query(sql, value);
+      connection.release();
+      console.log(row[0])
+      res.send(row);
+    } catch (err) {
+      console.log("SQL Error:", err);
+      connection.release();
+    }
+  } catch (err) {
+    console.log("DB Error:", err);
   }
 })
 

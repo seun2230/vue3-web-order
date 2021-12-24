@@ -49,9 +49,9 @@ export default {
           },
         })
         .then((res) => {
-          console.log("res, res")
-          console.log("server res :", res.data);
+          console.log("server res", res.data)
           this.$store.commit("food/resetCart");
+          this.$router.push('/')
         })
         .catch((err) => {
           console.error(err);
@@ -93,8 +93,8 @@ export default {
       font-weight: 800;
       font-size: 1.3rem;
       letter-spacing: 1px;
-      transition: ease-out 0.2s;
-      transition-duration: 100ms;
+      transition: ease-out 300ms;
+      transition-duration: 300ms;
     }
   }
   .btn-order:active {

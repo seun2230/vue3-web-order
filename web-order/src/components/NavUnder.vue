@@ -117,7 +117,8 @@ export default {
       reviewColors: {
         review: thisColor,
         board: thisColor,
-        boardItem: thisColor
+        boardItem: thisColor,
+        boardModify: thisColor,
       },
       orderColors: {
         menu: thisColor,
@@ -128,6 +129,7 @@ export default {
       infoColors: {
         userinfo: thisColor,
         modify: thisColor,
+        myarticle: thisColor,
       }
     }
   },
@@ -184,14 +186,9 @@ ul {
 }
 
 .navicon {
-  /* color: rgba(0, 0, 0, 0.9); */
-  transition: ease-out 0.1s;
-  transition-duration: 100ms;
+  transition: ease-out 300ms;
+  transition-duration: 300ms;
   width: 100%;
-}
-
-.navicon:active {
-  color: rgb(255, 150, 0);
 }
 
 .navdesc {
@@ -212,10 +209,6 @@ ul {
   color: rgb(255, 150, 0);
   filter: brightness(100%);
   margin-bottom: 3px;
-}
-
-#ordericon:active {
-  color: red;
 }
 
 .space {

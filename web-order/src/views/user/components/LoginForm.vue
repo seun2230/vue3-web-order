@@ -49,8 +49,12 @@ export default {
   },
   methods: {
     login() {
-      console.log("ㅠㅠ",process.env.VUE_APP_URL)
-      this.$store.dispatch('user/login', this.form)
+      if (this.form.user_id === "admin" && this.form.user_password === "admin") {
+        this.$router.push("/admin/foodmanagement");
+      } else {
+        console.log("ㅠㅠ",process.env.VUE_APP_URL)
+        this.$store.dispatch('user/login', this.form)
+      }
     },
     sign() {
       this.$router.push('/user/sign');
