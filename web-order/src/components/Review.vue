@@ -14,18 +14,6 @@
             <el-input 
               v-model="form.title" /> 
           </el-form-item> 
-          <el-form-item 
-            label="메뉴 이름">
-            <el-select
-              v-model="form.menu" 
-              placeholder="오늘의 메뉴는?">
-              <el-option
-                v-for="food in foods"
-                :key="food.food_id"
-                :label="food.food_name"
-                :value="food.food_id" />
-            </el-select>
-          </el-form-item>
           <el-form-item label="평점">
             <el-select 
               v-model="form.ratings"
@@ -50,24 +38,30 @@
           </el-form-item>
           <el-form-item label="키워드 등록(중복 선택 가능)" />
           <el-carousel height="320px" :interval="8000" arrow="always">
-            <el-carousel-item  >
+            <el-carousel-item>
                <h3>메뉴</h3>
-              <input 
-              type="checkbox" 
-              v-model="keywords" id="keyword1" value="치킨이 맛있어요" /> 
-              <label 
-                for="keyword1">치킨이 맛있어요</label>
-              <input 
-              type="checkbox" 
-              v-model="keywords" id="keyword2" value="불고기가 맛있어요" /> 
-              <label 
-                for="keyword2">불고기가 맛있어요</label>
-                <input 
-              type="checkbox" 
-              v-model="keywords" id="keyword3" value="김치전이 맛있어요" /> 
-              <label 
-                for="keyword3">김치전이 맛있어요</label>
-              <input 
+                <div class="keyword-menu"
+                    v-for="food in paginatedData"
+                    :key="food.food_id">
+                  <label 
+                    :for="food.food_name">{{ food.food_name }} 맛있어요</label>
+                  <input 
+                    type="checkbox" 
+                    v-model="keywords" :id="food.food_id" :value="food.food_name"/>
+                </div>
+                <div class="page-view">
+                  <el-button @click="prevPage" type="text" :disabled="pageNum === 0">
+                    first <i class="fas fa-angle-left"></i>
+                  </el-button>
+                  <span class="page-count">{{ pageNum + 1}} / {{ pageCount }}</span>
+                  <el-button @click="nextPage" type="text" :disabled="pageNum >= pageCount -1">
+                    last <i class="fas fa-angle-right"></i>
+                  </el-button>
+                </div>
+            </el-carousel-item>
+            <el-carousel-item>
+              <h3>주문</h3>
+               <input 
               type="checkbox" 
               v-model="keywords" id="keyword4" value="대기열이 짧아요"/> 
               <label 
@@ -80,6 +74,18 @@
               type="checkbox" 
               v-model="keywords" id="keyword6" value="주문 간편해요"/>
               <label for="keyword6">🛒주문 간편해요</label> 
+              <input 
+              type="checkbox" 
+              v-model="keywords" id="keyword5" value="결제가 빨라요"/> 
+              <label for="keyword5">결제가 빨라요</label> 
+                 <input 
+              type="checkbox" 
+              v-model="keywords" id="keyword5" value="주문 길어요"/> 
+              <label for="keyword5">주문 길어요</label> 
+                 <input 
+              type="checkbox" 
+              v-model="keywords" id="keyword5" value="주문 알림 필요해요"/> 
+              <label for="keyword5">주문 알림 필요해요</label> 
             </el-carousel-item>
             <el-carousel-item>
               <h3>매장</h3>
@@ -150,6 +156,13 @@ import { mapState } from 'vuex'
 import UserImagePreview from './UserImagePreview.vue';
 
 export default {
+  props: {
+    pageSize: {
+       type: Number,
+       required: false,
+       default: 6
+    }
+  },
   components: {
     UserImagePreview,
   },
@@ -157,6 +170,8 @@ export default {
     return {
       files: [],
       keywords: [],
+      pageList: [],
+      pageNum: 0,
       form: {
         title: '',
         menu:'',
@@ -170,12 +185,34 @@ export default {
   },
   computed: {
     ...mapState('food', ['foods']),
+    /*
+    name() {
+      console.log("id", this.$route.params.id)
+      const foodName = this.foods.find(x => x.food_id === parseInt(this.$route.params.id, 10));
+        console.log("ss",foodName.food_name);
+        return foodName;
     
-    setDataWatch() {
-      return console.log(this.files)
+    }, */
+    pageCount() {
+      let listLength = this.foods.length,
+      listSize = this.pageSize,
+      page = Math.floor(listLength / listSize)
+      if(listLength % listSize > 0 ) page += 1;
+      return page;
+    },
+    paginatedData() {
+      const start = this.pageNum * this.pageSize;
+      const end = start + this.pageSize;
+      return this.foods.slice(start, end);
     }
   },
   methods: {
+    prevPage() {
+      this.pageNum -= 1;
+    },
+    nextPage() {
+      this.pageNum += 1;
+    },
     setData(e) {
       console.log(e);
       this.files = e
@@ -250,6 +287,9 @@ export default {
 
 p {
   margin: 10px 0px;
+}
+.keyword-menu{
+  display: inline-block;
 }
 
 label {

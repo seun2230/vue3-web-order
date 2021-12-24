@@ -61,7 +61,7 @@ export default {
       this.pageNum -= 1;
     },
     writeComment() {
-      this.$router.push('/user/review');
+      this.$router.push('/user/mypage');
     },
   },
   computed: {

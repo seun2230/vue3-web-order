@@ -47,8 +47,14 @@ export default {
       return score * 20;
     },
   },
-  computed: {
-  }
+  // computed: {
+  //   translateId() {
+  //     const userId= this.reviewInfo.comments_user_id
+  //       if(typeof userId === 'string') {
+  //         return userId.replace(/(?<=.).(?=.)/g, "*");
+  //       }
+  //   }
+  // }
 }
 </script>
 

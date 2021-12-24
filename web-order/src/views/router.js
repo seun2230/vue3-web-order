@@ -56,7 +56,7 @@ const routes = [
     component: UserPage,
     children: [
       {
-        path: 'review',
+        path: 'review/:id',
         name: 'review',
         component: Review,
         meta: { metaName: '리뷰 작성'}
