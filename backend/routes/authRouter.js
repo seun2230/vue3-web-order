@@ -5,14 +5,11 @@ const pool = require('../db');
 const bcrypt = require('bcryptjs');
 const passport = require('passport')
 
-router.get('/kakao', KaKaoLogin);
+router.get('/kakao', passport.authenticate('kakao'));
 
-router.get('/kakao/callback',
-  passport.authenticate('kakao', { 
-    failureRedirect: '/', 
-  }), (req, res) => { 
-    res.redirect('/'); 
-  });
+router.get('/kakao/callback', passport.authenticate('kakao', {failureRedirect: '/',}), (req, res) => {res.redirect('/');});
+
+router.post('/kakao/login', KaKaoLogin)
 
 router.post('/login', login);
 

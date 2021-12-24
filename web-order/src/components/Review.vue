@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="inner">
-      <p> * 고객님의 솔직한 리뷰를 남겨주세요. </p>
+      <p :name="name()"> * 고객님의 솔직한 리뷰를 남겨주세요. {{ this.food_name }}</p>
       <div class="inner-form">
         <el-form
           ref="form"
@@ -155,6 +155,7 @@ export default {
   },
   data() {
     return {
+      food_name: null,
       files: [],
       keywords: [],
       form: {
@@ -164,15 +165,18 @@ export default {
         status: '',
       }
     }
-  },
+  }, 
   created() {
     this.$store.commit('food/getState')
   },
   computed: {
     ...mapState('food', ['foods']),
-
-    setDataWatch() {
-      return console.log(this.files)
+    name() {
+      console.log("ds",this.foods)
+      const likeInfo = this.foods.find(x => x.food_id === 35);
+      console.log("ss", likeInfo.food_name)
+      // this.food_name = likeInfo
+      return likeInfo.food_name;
     }
   },
   methods: {

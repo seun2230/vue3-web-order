@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db/index')
-const { upload } = require('../api/S3UploadStorage')
+const { upload } = require('../api/S3UploadStorage');
 
 router.post('/post/foodUpload', upload.array('files'), async function(req, res) {
     try { 
@@ -77,6 +77,32 @@ router.post('/post/foodUpload', upload.array('files'), async function(req, res) 
           error: "DB Error",
           err
         })
+      }
+    })
+
+    router.post("/post/delete/slide/:id", async (req, res) => {
+      try {
+        console.log("DB Connection! /post/delete/slide")
+        console.log('re', req.params.id)
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+          let id = (parseInt(req.params.id,10))
+          let sql = "DELETE FROM slide WHERE id_slide = ?"
+          let value = [ id ]
+          await connection.beginTransaction();
+          await connection.query(sql, value)
+          await connection.commit();
+          connection.release();
+          res.send({
+            message: "success"
+          })
+        } catch(err) {
+          await connection.rollback();
+          connection.release();
+          console.log(err)
+        }
+      } catch(err) {
+        console.log(err)
       }
     })
 
@@ -159,9 +185,9 @@ router.post('/status', async(req, res) => {
   }
 })
 
-router.get("/orderlist", async (req, res) => {
+router.get("/orderList", async (req, res) => {
   try {
-    console.log("DB Connection! /orderlist")
+    console.log("DB Connection! /orderList")
     const connection = await pool.getConnection(async conn => conn);
     try {
     
@@ -171,8 +197,7 @@ router.get("/orderlist", async (req, res) => {
       "LEFT JOIN food_items " +
       "ON food_items_food_id = food_id " +
       "LEFT JOIN users " +
-      "ON users_user_id = user_id " +
-      "WHERE order_status = 0";
+      "ON users_user_id = user_id " 
       
       const [rows] = await connection.query(sql)
       connection.release();
@@ -283,8 +308,6 @@ router.get("/get/comments/:id", async (req, res) => {
     console.log("DB Connection! /get/comments")
     const connection = await pool.getConnection(async conn => conn);
     try {
-
-      param
       let sql = "SELECT comments_text as text, comments_title as title," +
         "ratings, food_name, user_id as id, user_name as name," +
         "user_gender as gender, comments_image as image ,comments_id, food_category as category " +
@@ -410,5 +433,55 @@ router.post('/post/nullImageUpload', upload.array('files'), async function(req, 
     console.log(err)
   }
 })
+
+router.get('/get/userList', async(req, res) => {
+  try {
+    console.log("DB Connection! /get/userList")
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      let sql = "SELECT * FROM users "
+      const [rows] = await connection.query(sql)
+      connection.release();
+      res.send(rows)  
+    } catch(err) {
+      console.log(err)
+    }
+  } catch(err) {
+    console.log(err)
+  }
+})
+
+router.post('/post/delete/user', async(req, res) => {
+  try{
+    console.log("DB connection! /post/delete/user");
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      let sql = "DELETE FROM users WHERE user_id = ?";
+      let value = [ req.body.user_id ]
+      await connection.beginTransaction();
+      await connection.query(sql, value);
+      await connection.commit();
+      connection.release();
+      res.send({ delete: true })
+    } catch(err) {
+      console.log("Query Error")
+      console.log("err", err);
+      res.send({
+        delete: false,
+        message: err
+      })
+      await connection.rollback();
+      connection.release();
+    }
+  } catch(err) {
+    console.log("DB Error");
+    console.log("err", err);
+    res.send({
+      delete: false,
+      message: err
+    })
+  }
+})
+
 
 module.exports = router;

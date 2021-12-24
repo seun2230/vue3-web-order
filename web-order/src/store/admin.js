@@ -6,6 +6,7 @@ export default {
     return {
       slide: [],
       comments: [],
+      users: []
     }
   },
   getters: {
@@ -32,6 +33,13 @@ export default {
         console.log("Error", err)
       })
     },
+    getUserList(state) {
+      axios.get(`${process.env.VUE_APP_URL}/api/admin/get/userList`)
+      .then(res => {
+        console.log(res.data)
+        state.users = res.data
+      })
+    }
   },
   actions: {
 
