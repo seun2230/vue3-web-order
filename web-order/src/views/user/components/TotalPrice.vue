@@ -28,26 +28,23 @@ export default {
     margin: 5px;
   padding: 5px;
   border-radius: 9px;
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
   .message-box {
     width: 100%;
     height: 35px;
     padding: 5px;
     .message {
-      font-size: x-large;
+      font-size: 1.2rem;
       font-weight: 800;
       color: $menuBg;
     }
   }
   .price-box {
-    background-color: rgba(0, 0, 0, 0.1);
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     padding: 5px;
     width: 100%;
     border-radius: 9px;
     .price {
-      font-size: xx-large;
+      font-size: 1.6rem;
       font-weight: 800;
       color: $menuBg;
     }
