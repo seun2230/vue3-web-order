@@ -41,6 +41,15 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="page-view">
+      <el-button @click="prevPage" type="text" :disabled="pageNum === 0">
+       이전
+      </el-button>
+      <span class="page-count">{{ pageNum + 1}} / {{ pageCount }}</span>
+      <el-button @click="nextPage" type="text" :disabled="pageNum >= pageCount -1">
+       다음
+      </el-button>
+    </div>
   </div>
 </template>
 
@@ -108,3 +117,14 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.container {
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 2px;
+  .title {
+    text-align: center;
+  }
+}
+</style>

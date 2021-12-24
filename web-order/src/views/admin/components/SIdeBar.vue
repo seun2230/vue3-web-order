@@ -8,11 +8,6 @@
     :active-text-color="variables.$menuActiveText"
     :collapse-transition="false">
     <el-menu-item
-      index="/admin/dashboard">
-      <el-icon class="fas fa-home" />
-      <span>HOME</span>
-    </el-menu-item>
-    <el-menu-item
       index="/admin/order">
       <el-icon class="fas fa-bell" />
       <span>ORDER</span>
@@ -23,7 +18,10 @@
         <span>MANAGEMENT</span>
       </template>
       <el-menu-item index="/admin/foodManagement">
-        Food/Review
+        Food
+      </el-menu-item>
+      <el-menu-item index="/admin/userManagement">
+        User
       </el-menu-item>
       <el-menu-item index="/admin/nullImage">
         NullImage

@@ -2,9 +2,11 @@
   <div class="container">
     <el-row :gutter="10">
       <el-col
-        :span="7" />
+        :span="14">
+        <AdminBoardList />
+      </el-col>
       <el-col 
-        :span="17">
+        :span="10">
         <AdminUserList />
       </el-col>
     </el-row>  
@@ -13,9 +15,12 @@
 
 <script>
 import AdminUserList from '../components/AdminUserList.vue'
+import AdminBoardList from '../components/AdminBoardList.vue'
+
 export default {
   components: {
-    AdminUserList,   
+    AdminUserList,
+    AdminBoardList,
   }
 }
 </script>

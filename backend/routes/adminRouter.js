@@ -151,17 +151,15 @@ router.post('/post/foodUpload', upload.array('files'), async function(req, res) 
       })
   
     
-router.post('/status', async(req, res) => {
+router.post('/post/update/status', async(req, res) => {
   try {
     console.log("DB Connection! /order/status")
     const connection = await pool.getConnection(async conn => conn);
     try {
-      let sql = "UPDATE order_num SET order_status = 1 WHERE id_order_num = ?";
-      let value = [req.body.id_order_num]
-
+      let sql = "UPDATE order_list SET order_status = 1 WHERE id_order_list = ?";
+      let value = [req.body.id_order_list]
       await connection.beginTransaction();
       await connection.query(sql, value)
-
       await connection.commit();
       connection.release();
       res.send({
@@ -184,20 +182,40 @@ router.post('/status', async(req, res) => {
     })
   }
 })
+router.get("/get/orderListComplete", async(req, res) => {
+  try {
+    console.log("DB Connection! /orderListComplete")
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      let sql = "SELECT * " +
+          "FROM order_num " +
+          "LEFT JOIN order_list ON id_order_num = order_num_id_order_num " +
+          "LEFT JOIN food_items ON food_items_food_id = food_id " +
+          "LEFT JOIN users ON users_user_id = user_id " +
+          "WHERE order_status = 1";
+      
+      const [rows] = await connection.query(sql)
+      connection.release();
+      res.send(rows)
+    } catch(err) {
+      console.log(err)
+    }
+  } catch(err) {
+    console.log(err)
+  }
+})
 
-router.get("/orderList", async (req, res) => {
+router.get("/get/orderList", async (req, res) => {
   try {
     console.log("DB Connection! /orderList")
     const connection = await pool.getConnection(async conn => conn);
     try {
-    
       let sql = "SELECT * " +
-      "FROM order_num LEFT JOIN order_list " +
-      "ON id_order_num = order_num_id_order_num " +
-      "LEFT JOIN food_items " +
-      "ON food_items_food_id = food_id " +
-      "LEFT JOIN users " +
-      "ON users_user_id = user_id " 
+          "FROM order_num " +
+          "LEFT JOIN order_list ON id_order_num = order_num_id_order_num " +
+          "LEFT JOIN food_items ON food_items_food_id = food_id " +
+          "LEFT JOIN users ON users_user_id = user_id " +
+          "WHERE order_status = 0";
       
       const [rows] = await connection.query(sql)
       connection.release();
