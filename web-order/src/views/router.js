@@ -77,7 +77,7 @@ const routes = [
         path: 'board/modify/:id',
         name: 'boardModify',
         component: BoardModify,
-
+        meta: { metaName: '리뷰 수정'}
       },
       {
         path: 'sign',

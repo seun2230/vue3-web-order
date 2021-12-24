@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <div class="empty-item" v-if="this.orderList < 1">
-      
       주문 내역이 존재하지 않습니다.
     </div>
     <div class="order_item" v-else

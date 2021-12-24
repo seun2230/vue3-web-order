@@ -43,11 +43,11 @@
                 <div class="keyword-menu"
                     v-for="food in paginatedData"
                     :key="food.food_id">
-                  <label 
-                    :for="food.food_name">{{ food.food_name }} 맛있어요</label>
                   <input 
                     type="checkbox" 
-                    v-model="keywords" :id="food.food_id" :value="food.food_name"/>
+                    v-model="keywords" :id="food.food_name" :value="food.food_name"/>
+                  <label 
+                    :for="food.food_name">{{ food.food_name }} 맛있어요</label>
                 </div>
                 <div class="page-view">
                   <el-button @click="prevPage" type="text" :disabled="pageNum === 0">
@@ -63,29 +63,29 @@
               <h3>주문</h3>
                <input 
               type="checkbox" 
-              v-model="keywords" id="keyword4" value="대기열이 짧아요"/> 
+              v-model="keywords" id="keyword1" value="대기열이 짧아요"/> 
               <label 
-                for="keyword4">대기열 짧아요</label>
+                for="keyword1">대기열 짧아요</label>
              <input 
               type="checkbox" 
-              v-model="keywords" id="keyword5" value="가성비가 높아요"/> 
-              <label for="keyword5">가성비가 높아요</label> 
+              v-model="keywords" id="keyword2" value="가성비가 높아요"/> 
+              <label for="keyword2">가성비가 높아요</label> 
              <input 
               type="checkbox" 
-              v-model="keywords" id="keyword6" value="주문 간편해요"/>
-              <label for="keyword6">🛒주문 간편해요</label> 
+              v-model="keywords" id="keyword3" value="주문 간편해요"/>
+              <label for="keyword3">🛒주문 간편해요</label> 
               <input 
               type="checkbox" 
-              v-model="keywords" id="keyword5" value="결제가 빨라요"/> 
-              <label for="keyword5">결제가 빨라요</label> 
+              v-model="keywords" id="keyword4" value="결제가 빨라요"/> 
+              <label for="keyword4">결제가 빨라요</label> 
                  <input 
               type="checkbox" 
               v-model="keywords" id="keyword5" value="주문 길어요"/> 
               <label for="keyword5">주문 길어요</label> 
                  <input 
               type="checkbox" 
-              v-model="keywords" id="keyword5" value="주문 알림 필요해요"/> 
-              <label for="keyword5">주문 알림 필요해요</label> 
+              v-model="keywords" id="keyword6" value="주문 알림 필요해요"/> 
+              <label for="keyword6">주문 알림 필요해요</label> 
             </el-carousel-item>
             <el-carousel-item>
               <h3>매장</h3>
