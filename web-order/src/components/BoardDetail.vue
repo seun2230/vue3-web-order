@@ -8,7 +8,7 @@
         <div class="user">
           <p>{{ reviewInfo.comments_user_id}}</p>
           <div class="ratings">
-            <div 
+            <div
               class="ratings-fill"
               :style="{ width: reviewInfo.ratings * 20 + '%' }">
                 <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
@@ -20,38 +20,42 @@
             <span class="user_date">{{ reviewInfo.comments_date  }}</span>
         </div>
       </div>
-      <img 
+      <img
         v-if="reviewInfo.comments_image !== this.nullImage"
         :src="reviewInfo.comments_image" />
       <div class="user_order">
         <span>메뉴 : {{ reviewInfo.food_name}}</span>
       </div>
-      <div class="keyword-hidden" id="hidden" @click="clickHidden()">
-        <div class="keyword" 
-          v-for="keyword in keywords"
-          :key="keyword.id_keyword">
-          <span class="keyword-text">{{ keyword.keyword }}</span>
+      <div class="keyword-box">
+        <div class="keyword-hidden" id="hidden" @click="clickHidden()">
+          <div class="keyword"
+            v-for="keyword in keywords"
+            :key="keyword.id_keyword">
+            <span class="keyword-text">{{ keyword.keyword }}</span>
+          </div>
         </div>
       </div>
       <div class="user_text">
         <p>{{ reviewInfo.comments_text}}</p>
-      </div>    
+      </div>
       <div class="user-click">
         <div v-if="!likeBtn" class="like-btn">
           <p @click="clickLike()"><i class="far fa-thumbs-up fa-2x"></i>{{ this.likeUser.length }}</p>
         </div>
         <div v-else class="unlike-btn">
           <p @click="deleteLike()" style="color: red"><i class="far fa-thumbs-up fa-2x"></i>{{ this.likeUser.length }}</p>
-        </div>        
+        </div>
+        <div class="reply-btn">
         <p @click="clickReply()"><i class="far fa-comment-dots fa-2x"></i> {{ reply.length }}</p>
+        </div>
       </div>
       <div class="btn_group">
-        <el-button 
-          type="text" 
+        <el-button
+          type="default"
           @click="deleteComment()">삭제
         </el-button>
-        <el-button 
-         type="text"
+        <el-button
+         type="default"
          @click="modifyComment()">
          수정
         </el-button>
@@ -68,7 +72,7 @@
           type="text">
           <template #append
              style="text-align: center">
-            <el-button 
+            <el-button
               type="text"
               class="btn_write"
               @click="writeReply()">등록</el-button>
@@ -128,7 +132,7 @@ export default {
     })
     .catch(err => {
       console.log("err", err);
-    }) 
+    })
   },
   computed: {
     ...mapState('user', ['likeUser']),
@@ -166,12 +170,12 @@ export default {
       this.show = true;
     },
     modifyComment() {
-      var id = this.$route.params.id; 
+      var id = this.$route.params.id;
       console.log("id", id);
       this.$router.push('modify/' + id)
     },
     deleteComment() {
-      var id = this.$route.params.id; 
+      var id = this.$route.params.id;
       console.log("id", id);
       axios.get(`${process.env.VUE_APP_URL}/api/user/delete/comment/` + id)
       .then(({data}) => {
@@ -231,7 +235,7 @@ export default {
     }
     .user_info {
       display: flex;
-      align-items: center; 
+      align-items: center;
       .user {
         padding: 5px;
         p {
@@ -250,6 +254,11 @@ export default {
 
   }
 }
+
+.keyword-box {
+  margin-top: 20px;
+}
+
 .keyword-hidden {
     height: 33px;
     overflow: hidden;
@@ -261,7 +270,7 @@ export default {
   padding-right: 10px;
 
   p {
-    margin: 0px;
+    margin-top: 15px;
     padding: 10px;
   }
 }
@@ -275,6 +284,8 @@ export default {
   text-align: center;
   width: auto;
   height: 30px;
+  margin-top: 10px;
+  margin-bottom: 20px;
   padding: 10px;
   background-color: rgb(236, 230, 230);
   box-shadow: 0 4px 2px -4px black;
@@ -282,7 +293,7 @@ export default {
   font-size: 15px;
   margin-right: 5px;
   margin-bottom: 5px;
-  
+
   p {
     margin: 0px;
     padding: 0px;
@@ -317,11 +328,11 @@ img {
   position: relative;
   unicode-bidi: bidi-override;
   width: max-content;
-  -webkit-text-fill-color: transparent; 
+  -webkit-text-fill-color: transparent;
   -webkit-text-stroke-width: 1.3px;
   -webkit-text-stroke-color: rgba(255, 255, 255, 0.322);
 }
- 
+
 .ratings-fill {
   position: absolute;
   top: 0;
@@ -329,5 +340,14 @@ img {
   z-index: 1;
   overflow: hidden;
   -webkit-text-fill-color: rgba(245, 148, 22, 0.842);
+}
+
+.btn_group {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.like-btn, .unlike-btn, .reply-btn {
+  font-size: 0.9rem;
 }
 </style>

@@ -19,6 +19,7 @@ import NullImageManagePage from './admin/page/NullImageManagePage';
 import SlideManagePage from './admin/page/SlideManagePage.vue'
 import DashBoardPage from './admin/page/DashBoardPage.vue'
 import OrderPage from './admin/page/OrderPage.vue'
+import MyArticlePage from '../views/user/page/MyArticlePage.vue';
 
 const beforeAuth = isAuthenticated => (from, to, next) => {
   const isAuth = store.getters['user/isAuth'];
@@ -56,6 +57,12 @@ const routes = [
     component: UserPage,
     children: [
       {
+        path: 'myarticle',
+        name: 'myarticle',
+        component: MyArticlePage,
+        meta: { metaName: '관심 리뷰'}
+      },
+      {
         path: 'review/:id',
         name: 'review',
         component: Review,
@@ -77,6 +84,7 @@ const routes = [
         path: 'board/modify/:id',
         name: 'boardModify',
         component: BoardModify,
+        meta: { metaName: '리뷰 수정'}
 
       },
       {

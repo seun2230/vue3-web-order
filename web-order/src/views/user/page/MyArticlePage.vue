@@ -1,17 +1,11 @@
 <template>
   <div class="container">
-    <div class="btn-fade">
-      <el-button
-        class="btn-comment"
-        type="text"
-        @click="writeComment()"><i class="far fa-edit"></i> 작성하기</el-button>
-    </div>
-    <ReBoardItem
+    <MyArticleComp
       v-for="comment in paginatedData.slice().reverse()"
-      :key="comment.comments_id"
+      :key="comment.mycomments_id"
       :comment="comment" />
-    <div v-if="comments.length == 0">
-      <p>등록된 리뷰가 없습니다.</p>
+    <div v-if="mycomments.length == 0">
+      <p>아직 흥미로운 리뷰가 없습니다.</p>
     </div>
     <div class="page-view">
       <el-button @click="prevPage" type="text" :disabled="pageNum === 0">
@@ -26,11 +20,12 @@
 </template>
 
 <script>
-import ReBoardItem from './ReBoardItem.vue'
+import MyArticleComp from '../../user/components/MyArticleComp.vue';
 import { mapState } from 'vuex';
+
 export default {
   components: {
-    ReBoardItem
+    MyArticleComp,
   },
   props: {
     pageSize: {
@@ -39,13 +34,8 @@ export default {
       default: 6
     },
   },
-  beforeCreate() {
-    this.$store.commit('comment/getState')
-  },
-  create: {
-    ...mapState('comment', [
-      'comments'
-    ])
+  created() {
+    this.$store.commit('comment/myArticle');
   },
   data() {
     return {
@@ -60,16 +50,11 @@ export default {
     prevPage() {
       this.pageNum -= 1;
     },
-    writeComment() {
-      this.$router.push('/user/mypage');
-    },
   },
   computed: {
-    ...mapState('comment', [
-      'comments'
-    ]),
+    ...mapState('comment', ['mycomments']),
     pageCount() {
-      let listLeng = this.comments.length,
+      let listLeng = this.mycomments.length,
           listSize = this.pageSize,
           page = Math.floor(listLeng / listSize);
       if(listLeng % listSize > 0) page += 1;
@@ -78,27 +63,26 @@ export default {
     paginatedData() {
       const start = this.pageNum * this.pageSize;
       const end = start + this.pageSize;
-      return this.comments.slice(start, end)
+      return this.mycomments.slice(start, end)
     },
   },
 }
 </script>
 
-<style lang="scss">
+<style scoped>
+
 .btn-fade {
   position: fixed;
-  bottom: 140px;
+  bottom: 120px;
   right: 12px;
-  z-index: 30;
-
-  .btn-comment {
+}
+.btn-comment {
     width: 20vh;
     color:red;
     background: #fff;
     border-radius: 1rem;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.13);
     overflow: hidden;
-  }
 }
 .page-view {
   text-align: center;
@@ -132,10 +116,5 @@ export default {
 .star-ratings-base {
   z-index: 0;
   padding: 0;
-}
-
-p {
-  text-align: center;
-  margin-top: 100px;
 }
 </style>

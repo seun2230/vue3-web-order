@@ -117,7 +117,8 @@ export default {
       reviewColors: {
         review: thisColor,
         board: thisColor,
-        boardItem: thisColor
+        boardItem: thisColor,
+        boardModify: thisColor,
       },
       orderColors: {
         menu: thisColor,
@@ -128,6 +129,7 @@ export default {
       infoColors: {
         userinfo: thisColor,
         modify: thisColor,
+        myarticle: thisColor,
       }
     }
   },
