@@ -20,7 +20,7 @@
               type="textarea" />
             <el-button 
               type="text"
-              @click="modifyReply(this.reply.id_reply)">수정
+              @click="modifyReply(this.reply.id_reply,this.textarea);this.textarea=``">수정
             </el-button>
             <el-button 
               type="text"
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+
 export default {
   data() {
     return {
@@ -56,7 +56,15 @@ export default {
     reply: {
       type: Object,
       default: function() { return{} }
+    },
+    deleteReply : {
+      type:Function
+    },
+    modifyReply : {
+      type:Function
     }
+
+    
   },
   methods: {
     closeToggle() {
@@ -65,45 +73,8 @@ export default {
     clickToggle() {
       this.toggle = true;
     },
-    modifyReply(reply_ID) {
-      console.log("ss",reply_ID);
-      const text = this.textarea;
-      let data = {"comment_text": text, "reply_id": reply_ID }
-      const id = this.$route.params.id;
-      axios.post(`${process.env.VUE_APP_URL}/api/user/modify/reply/` + id,
-      JSON.stringify(data), {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      })
-      .then(({data}) => {
-        console.log("data success!", data);
-        this.$router.push('/user/board')
-      })
-      .catch(err => {
-        console.log("data fail", err);
-      })
-    },
-    deleteReply(reply_ID) {
-      console.log(reply_ID)
-      let data = {"reply_id": reply_ID }
-      const id = this.$route.params.id;
-      axios.post(`${process.env.VUE_APP_URL}/api/user/delete/reply/`  + id,
-      JSON.stringify(data), {
-         headers: {
-          'Content-Type': 'application/json'
-        },
-      })
-      .then(({data}) => {
-        console.log("data Success!", data)
-        setTimeout(() => {
-          this.$router.push('/user/board')
-        },2000)
-      })
-      .catch(err => {
-        console.error("data Fail!", err)
-      })
-    }
+   
+    
   }
 }
 </script>

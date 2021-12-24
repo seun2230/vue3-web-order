@@ -6,12 +6,12 @@
         :src="comment.comments_image"
         :alt="comment.comments_id" />
       {{ comment.food_price }}
-      <span class="badge-new">
+      <span v-if="isNew" class="badge-new">
       new
       </span>
       <div class="card-content">
         <div class="card-user">
-          <span class="user-info">{{ comment.comments_user_id }}</span>
+          <span class="user-info">{{ translateId }}</span>
         </div>
         <div class="ratings">
           <div
@@ -47,12 +47,32 @@ export default {
       return score * 20;
     },
   },
+  computed : {
+    isNew() {
+      const nowDate = this.comment.comments_date;
+      const year = +nowDate.split('-')[0];
+      const month = +nowDate.split('-')[1];
+      const day = +nowDate.split('-')[2]
+      const nowDateObject = new Date(year, month, day);
+      
+    return new Date().getTime() - nowDateObject.getTime() < 24 * 60 * 60 * 1000; 
+        
+     
+     
+
+    },
+    translateId() {
+       const userId= this.comment.comments_user_id
+       console.log(userId)
+         if(typeof userId === 'string') {
+          return userId.replace(/(?<=.).(?=.)/g, "*");
+         }
+         return null
+         }
+         
+  }
   // computed: {
-  //   translateId() {
-  //     const userId= this.reviewInfo.comments_user_id
-  //       if(typeof userId === 'string') {
-  //         return userId.replace(/(?<=.).(?=.)/g, "*");
-  //       }
+  //   
   //   }
   // }
 }

@@ -76,9 +76,11 @@
         </el-input>
       </div>
       <ReplyList
-        v-for="reply in reply"
-        :reply="reply"
-        :key="reply.id_reply" />
+        v-for="replyChild in reply"
+        :reply="replyChild"
+        :key="replyChild.id_reply"
+        :deleteReply="deleteReply"
+        :modifyReply="modifyReply"/>
     </form>
   </div>
 </template>
@@ -200,6 +202,15 @@ export default {
       })
       .then(({data}) => {
         console.log("data success!", data);
+         const now = new Date();
+        const hour = (now.getHours() > 12 ? now.getHours() - 12 : now.getHours())
+        
+        const formatDate= (num) => num >= 10 ? num : "0" + num
+        const formattedHour = hour >= 10 ? hour : "0" + hour
+        
+        const formattedDate = `${now.getFullYear()}-${formatDate(now.getMonth() +1)}-${formatDate(now.getDate())} ${formattedHour}:${formatDate(now.getMinutes())}`;
+        this.reply.push({users_user_id:id, reply_text:text, reply_date : formattedDate})
+        document.querySelector('.form_group').children[0].children[0].value = '';
       })
       .catch(err => {
         console.log("data fail", err);
@@ -210,6 +221,65 @@ export default {
       console.log(score);
       return score * 20;
     },
+    deleteReply(reply_ID) {
+      console.log(reply_ID)
+      let data = {"reply_id": reply_ID }
+      const id = this.$route.params.id;
+      axios.post(`${process.env.VUE_APP_URL}/api/user/delete/reply/`  + id,
+      JSON.stringify(data), {
+         headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(({data}) => {
+        console.log("data Success!", data)
+        const index = this.reply.findIndex(item => {
+          return item.id_reply === reply_ID
+        })
+        this.reply.splice(index,1);
+        
+      })
+      .catch(err => {
+        console.error("data Fail!", err)
+        
+      })
+    },
+     modifyReply(reply_ID,text) {
+      console.log("ss",reply_ID);
+      
+      let data = {"comment_text": text, "reply_id": reply_ID }
+      const id = this.$route.params.id;
+      axios.post(`${process.env.VUE_APP_URL}/api/user/modify/reply/` + id,
+      JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(({data}) => {
+        console.log("data success!", data);
+        const index = this.reply.findIndex(item => {
+          return item.id_reply === reply_ID
+        })
+        const now = new Date();
+        const hour = (now.getHours() > 12 ? now.getHours() - 12 : now.getHours())
+        
+        const formatDate= (num) => num >= 10 ? num : "0" + num
+        const formattedHour = hour >= 10 ? hour : "0" + hour
+        
+        const formattedDate = `${now.getFullYear()}-${formatDate(now.getMonth() +1)}-${formatDate(now.getDate())} ${formattedHour}:${formatDate(now.getMinutes())}`;
+        this.reply[index] = {
+          ...this.reply[index],
+          reply_text:text,
+          reply_date : formattedDate
+        }
+        
+        
+      })
+      .catch(err => {
+        console.log("data fail", err);
+      })
+    },
+
   },
   components: {
     ReplyList,
