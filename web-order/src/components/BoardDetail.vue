@@ -24,7 +24,7 @@
         v-if="reviewInfo.comments_image !== this.nullImage"
         :src="reviewInfo.comments_image" />
       <div class="user_order">
-        <span>메뉴 : {{ reviewInfo.food_name}}</span>
+        <span>{{ reviewInfo.food_name}}</span>
       </div>
       <div class="keyword-box">
         <div class="keyword-hidden" id="hidden" @click="clickHidden()">
@@ -285,16 +285,14 @@ export default {
   width: auto;
   height: 30px;
   margin-top: 10px;
-  margin-bottom: 20px;
-  padding: 10px;
-  background-color: rgb(236, 230, 230);
-  box-shadow: 0 4px 2px -4px black;
+  padding: 7px;
+  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.6);
   border-radius: .3rem;
   font-size: 15px;
   margin-right: 5px;
   margin-bottom: 5px;
 
-  p {
+  span {
     margin: 0px;
     padding: 0px;
   }
@@ -302,15 +300,18 @@ export default {
 .keyword {
   display: inline-block;
   text-align: center;
-  height: 30px;
+  height: 32px;
   width: auto;
-  background:rgb(248, 248, 248);
-  border: 1px solid rgb(235, 233, 233);
+  border: 1px solid rgba(80, 30, 172, 0.9);
   border-radius: .3rem;
-  padding: 10px;
-  box-shadow: 0 4px 2px -4px black;
+  padding: 7px;
+  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.6);
   margin-right: 5px;
   margin-bottom: 5px;
+}
+
+.keyword-hidden {
+  height: 35px;
 }
 
 
@@ -344,7 +345,6 @@ img {
 
 .btn_group {
   margin-top: 20px;
-  text-align: right;
 }
 
 .like-btn, .unlike-btn, .reply-btn {

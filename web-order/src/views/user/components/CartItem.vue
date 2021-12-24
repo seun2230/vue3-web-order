@@ -95,8 +95,8 @@ span {
       margin: 0px;
       width: 40px;
       height: 20px;
-      transition: ease-out 0.2s;
-      transition-duration: 100ms;
+      transition: ease-out 300ms;
+      transition-duration: 300ms;
     }
   }
   .btn-menu:active {

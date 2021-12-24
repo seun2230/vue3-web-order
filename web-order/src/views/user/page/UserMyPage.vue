@@ -33,7 +33,7 @@
         <span>수량 : {{ order.quantity }}</span>
       </div>
       <div class="order_price">
-        <span>총 결제 금액 : {{ order.price }}</span>
+        <span>합계 : {{ order.price }}</span>
       </div>
       <div class="reviw-btn-area">
         <router-link class="container-exterrior"
@@ -114,8 +114,8 @@ export default {
   border-radius: 5px;
   width: 100px;
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
-  transition: ease-out 0.1s;
-  transition-duration: 100ms;
+  transition: ease-out 300ms;
+  transition-duration: 300ms;
 }
 
 .container {

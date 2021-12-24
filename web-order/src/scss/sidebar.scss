@@ -170,7 +170,7 @@
     &.hideSidebar {
       .sidebar-container {
         pointer-events: none;
-        transition-duration: 0.3s;
+        transition-duration: 300ms;
         transform: translate3d(-$sideBarWidth, 0, 0);
       }
     }

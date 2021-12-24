@@ -28,8 +28,8 @@ export default {
 
 <style lang="scss" scoped>
 #backward {
-  transition: ease-out 0.1s;
-  transition-duration: 100ms;
+  transition: ease-out 100ms;
+  transition-duration: 300ms;
 }
 #backward:active {
   color: rgba(255, 0, 0, 0.2);

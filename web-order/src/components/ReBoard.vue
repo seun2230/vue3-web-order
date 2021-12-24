@@ -4,7 +4,7 @@
       <el-button
         class="btn-comment"
         type="text"
-        @click="writeComment()"><i class="far fa-edit"></i> 작성하기</el-button>
+        @click="writeComment()"><i class="far fa-edit"></i></el-button>
     </div>
     <ReBoardItem
       v-for="comment in paginatedData.slice().reverse()"
@@ -87,7 +87,7 @@ export default {
 <style lang="scss">
 .btn-fade {
   position: fixed;
-  bottom: 140px;
+  bottom: 100px;
   right: 12px;
   z-index: 30;
 
@@ -95,9 +95,12 @@ export default {
     width: 20vh;
     color:red;
     background: #fff;
-    border-radius: 1rem;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.13);
+    border-radius: 10rem;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
     overflow: hidden;
+    font-size: 2rem;
+    width: 70px;
+    padding-left: 8px;
   }
 }
 .page-view {

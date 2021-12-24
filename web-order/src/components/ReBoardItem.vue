@@ -65,6 +65,12 @@ export default {
   border: 3px solid rgb(233, 240, 247);
   width: 100%;
   height: 150px;
+  transition: ease-out 300ms;
+  transition-duration: 300ms;
+}
+
+.cards:active {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .badge-new {

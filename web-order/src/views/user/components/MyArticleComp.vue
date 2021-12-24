@@ -51,13 +51,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.cards {
-  display: flex;
-  border: 3px solid rgb(233, 240, 247);
-  width: 100%;
-  height: 150px;
-}
-
 .badge-new {
   position: absolute;
   right: 5px;
@@ -127,6 +120,15 @@ img {
   z-index: 1;
   overflow: hidden;
   -webkit-text-fill-color: rgba(245, 148, 22, 0.842);
+}
+
+.cards {
+  transition: ease-out 300ms;
+  transition-duration: 300ms;
+}
+
+.cards:active {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 </style>

@@ -60,8 +60,8 @@ export default {
     font-weight: 800;
     color: $menuBg;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
-    transition: ease-out 0.2s;
-    transition-duration: 100ms;
+    transition: ease-out 300ms;
+    transition-duration: 300ms;
     .detail {
       padding: 10px;
       margin-left: 10px;
