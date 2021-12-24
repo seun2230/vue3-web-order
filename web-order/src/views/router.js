@@ -18,11 +18,8 @@ import store from '../store'
 import NullImageManagePage from './admin/page/NullImageManagePage';
 import SlideManagePage from './admin/page/SlideManagePage.vue'
 import OrderPage from './admin/page/OrderPage.vue'
-<<<<<<< HEAD
 import MyArticlePage from '../views/user/page/MyArticlePage.vue';
-=======
 import UserManagePage from './admin/page/UserManagePage.vue'
->>>>>>> 09508cea999466c25b36c5799157d01143fdd68c
 
 const beforeAuth = isAuthenticated => (from, to, next) => {
   const isAuth = store.getters['user/isAuth'];
@@ -88,10 +85,6 @@ const routes = [
         name: 'boardModify',
         component: BoardModify,
         meta: { metaName: '리뷰 수정'}
-<<<<<<< HEAD
-
-=======
->>>>>>> 09508cea999466c25b36c5799157d01143fdd68c
       },
       {
         path: 'sign',

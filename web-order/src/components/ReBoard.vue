@@ -87,11 +87,7 @@ export default {
 <style lang="scss">
 .btn-fade {
   position: fixed;
-<<<<<<< HEAD
   bottom: 140px;
-=======
-  bottom: 100px;
->>>>>>> 09508cea999466c25b36c5799157d01143fdd68c
   right: 12px;
   z-index: 30;
 

@@ -9,13 +9,8 @@ router.get('/get/orderList', verifyToken, async(req, res) => {
   try {
     const connection = await pool.getConnection(async conn => conn);
     try {
-<<<<<<< HEAD
-      let sql = "SELECT id_order_list as id ,id_order_num, order_quantity as quantity, order_date, order_status as status, order_total_price as price, food_name " +
-        "FROM order_list " +
-=======
       let sql = "SELECT id_order_list as id ,id_order_num, order_quantity as quantity, order_date, order_status as status, order_total_price as price, food_name, food_id " +
-        "FROM order_list " + 
->>>>>>> 09508cea999466c25b36c5799157d01143fdd68c
+        "FROM order_list " +
         "LEFT JOIN order_num ON order_num_id_order_num = id_order_num " +
         "LEFT JOIN food_items ON food_items_food_id = food_id " +
         "WHERE users_user_id = ?";
@@ -356,7 +351,7 @@ router.post('/reply/:id', verifyToken, async(req,res) => {
 })
 
 router.post('/modify/reply/:id', verifyToken, async(req,res) => {
-  
+
   try {
     console.log("DB connection /post/modify/reply")
     const connection = await pool.getConnection(async conn => conn);
@@ -367,7 +362,7 @@ router.post('/modify/reply/:id', verifyToken, async(req,res) => {
                 "SET reply_text = ? " +
                 "WHERE comments_comments_id = ? AND id_reply = ? AND users_user_id = ?"
       let params = [
-        req.body.comment_text, 
+        req.body.comment_text,
         id,
         req.body.reply_id,
         req.decoded.user_id,
@@ -402,7 +397,7 @@ router.post('/modify/reply/:id', verifyToken, async(req,res) => {
 "DELETE FROM comments WHERE comments_id = ? AND comments_user_id = ?"
 
 router.post('/delete/reply/:id', verifyToken, async(req,res) => {
-  
+
   try {
     console.log("DB connection /post/commentDelete")
     const connection = await pool.getConnection(async conn => conn);

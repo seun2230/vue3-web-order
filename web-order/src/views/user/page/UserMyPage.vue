@@ -1,10 +1,6 @@
 <template>
   <div class="container">
     <div class="empty-item" v-if="this.orderList < 1">
-<<<<<<< HEAD
-
-=======
->>>>>>> 09508cea999466c25b36c5799157d01143fdd68c
       주문 내역이 존재하지 않습니다.
     </div>
     <div class="order_item" v-else
