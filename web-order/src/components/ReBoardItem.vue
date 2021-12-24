@@ -2,7 +2,7 @@
   <router-link class="container-exterrior"
     :to="{name: 'boardItem', params: { id: comment.comments_id }}">
     <div class="cards">
-      <img 
+      <img
         :src="comment.comments_image"
         :alt="comment.comments_id" />
       {{ comment.food_price }}
@@ -11,10 +11,10 @@
       </span>
       <div class="card-content">
         <div class="card-user">
-          <span class="user-info">{{ comment.comments_user_id }}</span> 
+          <span class="user-info">{{ comment.comments_user_id }}</span>
         </div>
         <div class="ratings">
-          <div 
+          <div
             class="ratings-fill"
             :style="{ width: comment.ratings * 20 + '%' }">
               <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
@@ -124,11 +124,11 @@ img {
   position: relative;
   unicode-bidi: bidi-override;
   width: max-content;
-  -webkit-text-fill-color: transparent; 
+  -webkit-text-fill-color: transparent;
   -webkit-text-stroke-width: 1.3px;
   -webkit-text-stroke-color: rgba(255, 255, 255, 0.322);
 }
- 
+
 .ratings-fill {
   position: absolute;
   top: 0;
@@ -137,5 +137,5 @@ img {
   overflow: hidden;
   -webkit-text-fill-color: rgba(245, 148, 22, 0.842);
 }
- 
+
 </style>

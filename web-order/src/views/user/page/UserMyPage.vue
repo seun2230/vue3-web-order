@@ -5,7 +5,7 @@
       주문 내역이 존재하지 않습니다.
     </div>
     <div class="order_item" v-else
-      v-for="order in orderList"
+      v-for="order in orderList.slice().reverse()"
       :key="order.id"
       :order="order" >
       <div class="order_date">

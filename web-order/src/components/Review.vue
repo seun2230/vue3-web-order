@@ -37,8 +37,8 @@
             </el-select>
           </el-form-item>
           <el-form-item label="키워드 등록(중복 선택 가능)" />
-          <el-carousel height="320px" :interval="8000" arrow="always">
-            <el-carousel-item>
+          <el-carousel height="250px" :interval="8000" arrow="always">
+            <el-carousel-item  >
                <h3>메뉴</h3>
                 <div class="keyword-menu"
                     v-for="food in paginatedData"
@@ -267,6 +267,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+h3 {
+  margin: 0px;
+}
 .container {
   padding: 0px 15px;
 }
