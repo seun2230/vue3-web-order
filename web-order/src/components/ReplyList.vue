@@ -6,7 +6,7 @@
         <p>{{ reply.reply_text }}</p>
       </div>
       <div class="reply-date">
-        <p>{{ reply.reply_date }}</p>
+        <span style="font-size: 15px; color: grey">{{ reply.reply_date }}</span>
       </div>
       <form>
         <div class="form-hidden">
@@ -66,9 +66,11 @@ export default {
       this.toggle = true;
     },
     modifyReply(reply_ID) {
+      console.log("ss",reply_ID);
       const text = this.textarea;
-      let data = [{"comment_text": text, "reply_id": reply_ID }]
-      axios.post(`${process.env.VUE_APP_URL}/api/user/modify/reply`,
+      let data = {"comment_text": text, "reply_id": reply_ID }
+      const id = this.$route.params.id;
+      axios.post(`${process.env.VUE_APP_URL}/api/user/modify/reply/` + id,
       JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/json'
@@ -83,8 +85,10 @@ export default {
       })
     },
     deleteReply(reply_ID) {
-      let data = [ {"reply_id": reply_ID }]
-      axios.post(`${process.env.VUE_APP_URL}/api/user/delete/reply`,
+      console.log(reply_ID)
+      let data = {"reply_id": reply_ID }
+      const id = this.$route.params.id;
+      axios.post(`${process.env.VUE_APP_URL}/api/user/delete/reply/`  + id,
       JSON.stringify(data), {
          headers: {
           'Content-Type': 'application/json'
@@ -108,24 +112,24 @@ export default {
 .reply-container {
   padding: 10px;
 
-  span {
-    font-weight: bold;
-  }
 }
 .reply-content {
-  display: inline-block;
-
+  // display: inline-block;
+   span {
+    font-weight: bold;
+    padding-right: 10px;
+  }
   .reply-right{
     position: relative;
     background: #eaf1f1;
     align-items: center;  
     display: inline-block;  
     width: auto;
-    border-radius: .4em;
+    border-radius: .2em;
+    box-shadow: 0 4px 2px -4px black;
     margin-bottom: 10px;
-
     p {
-      margin: 0;
+      margin: 0px;
       padding: 10px;
     }
   }

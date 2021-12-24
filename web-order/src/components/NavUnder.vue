@@ -109,27 +109,25 @@ import IconOrder from '../assets/navicons/IconOrder.vue'
 
 export default {
   data() {
-    // const thisYellow = 'rgba(255, 150, 0, 1)';
-    const thisRed = 'rgba(255, 0, 0, 0.7)';
-
+    const thisColor = 'rgb(41, 124, 92)';
     return {
       homeColors: {
-        home: thisRed,
+        home: thisColor,
       },
       reviewColors: {
-        review: thisRed,
-        board: thisRed,
-        boardItem: thisRed
+        review: thisColor,
+        board: thisColor,
+        boardItem: thisColor
       },
       orderColors: {
-        menu: thisRed,
+        menu: thisColor,
       },
       listColors: {
-        mypage: thisRed,
+        mypage: thisColor,
       },
       infoColors: {
-        userinfo: thisRed,
-        modify: thisRed,
+        userinfo: thisColor,
+        modify: thisColor,
       }
     }
   },
@@ -160,6 +158,7 @@ ul {
   border-top: 1px solid #bcbcbc;
   /* border-radius: 10px; */
   background-color: white;
+  /* color:rgb(41, 124, 92) */
 }
 
 @media screen and (max-height: 799px) {

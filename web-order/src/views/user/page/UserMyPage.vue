@@ -4,7 +4,7 @@
       주문 내역이 존재하지 않습니다.
     </div>
     <div class="order_item" v-else
-      v-for="order in orderList"
+      v-for="order in orderList.slice().reverse()"
       :key="order.id"
       :order="order" >
       <div class="order_date">
@@ -32,6 +32,11 @@
       <div class="order_price">
         <span>총 결제 금액 : {{ order.price }}</span>
       </div>
+      <router-link class="container-exterrior"
+       :to="{name: 'review', params: { id: order.food_id }}">
+        <el-button  class="blue-btn"
+        type="default">리뷰 작성</el-button>  
+      </router-link>
     </div>
   </div>
 </template>
@@ -65,6 +70,9 @@ export default {
     },
     closeModal() {
       this.modal = false;
+    },
+    writeReview() {
+
     }
   },
   computed: {
@@ -74,6 +82,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../../scss/variables.scss';
+@mixin colorBtn($color) {
+  background: $mainBg;
+  height: 50%;
+  width: 50%;
+  min-height: 25px;
+  border-radius: 9px;
+  color: $color;
+  font-weight: 800;
+  justify-content: center;
+  vertical-align: middle;
+  padding: 0px;
+  &:hover {
+    color: $color;
+
+    &:before,
+    &:after {
+      background: $mainBg;
+    }
+  }
+}
+
+.blue-btn {
+  @include colorBtn($blue)
+}
+
 .container {
   padding: 10px;
   display: flex;
