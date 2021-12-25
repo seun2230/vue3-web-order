@@ -3,10 +3,10 @@
     <div class="inner">
       <div class="user_info">
         <div class="user">
-          <el-avatar> {{ reviewInfo.comments_user_id }} </el-avatar>
+      <el-avatar>{{ reviewInfo.comments_user_id }}</el-avatar>
         </div>
         <div class="user">
-          <p>{{ reviewInfo.comments_user_id}}</p>
+          <p>{{reviewInfo.comments_user_id}}</p>
           <div class="ratings">
             <div
               class="ratings-fill"
@@ -143,7 +143,7 @@ export default {
   methods: {
     clickHidden() {
       let x = document.getElementById('hidden');
-      x.style.height = "150px";
+      x.style.height = "100px";
     },
     clickLike() {
       const id = this.$route.params.id;
@@ -194,6 +194,7 @@ export default {
     writeReply() {
       const id = this.$route.params.id;
       const foodId =  this.reviewInfo.food_id;
+      const userId = this.reviewInfo.comments_user_id;
       const text = this.textarea;
       let data = [{"food_id":foodId,
         "comment_text": text}]
@@ -213,17 +214,13 @@ export default {
         const formattedHour = hour >= 10 ? hour : "0" + hour
         
         const formattedDate = `${now.getFullYear()}-${formatDate(now.getMonth() +1)}-${formatDate(now.getDate())} ${formattedHour}:${formatDate(now.getMinutes())}`;
-        this.reply.push({users_user_id:id, reply_text:text, reply_date : formattedDate})
+        
+        this.reply.push({users_user_id: userId, reply_text:text, reply_date : formattedDate})
         document.querySelector('.form_group').children[0].children[0].value = '';
       })
       .catch(err => {
         console.log("data fail", err);
       })
-    },
-    ratingToPercent() {
-      const score = this.reviewInfo.ratings;
-      console.log(score);
-      return score * 20;
     },
     deleteReply(reply_ID) {
       console.log(reply_ID)
@@ -250,7 +247,7 @@ export default {
     },
      modifyReply(reply_ID,text) {
       console.log("ss",reply_ID);
-      
+      this.toggle = true;
       let data = {"comment_text": text, "reply_id": reply_ID }
       const id = this.$route.params.id;
       axios.post(`${process.env.VUE_APP_URL}/api/user/modify/reply/` + id,
@@ -276,14 +273,16 @@ export default {
           reply_text:text,
           reply_date : formattedDate
         }
-        
-        
       })
       .catch(err => {
         console.log("data fail", err);
       })
     },
-
+    ratingToPercent() {
+      const score = this.reviewInfo.ratings;
+      console.log(score);
+      return score * 20;
+    },
   },
   components: {
     ReplyList,
@@ -305,11 +304,12 @@ export default {
     }
     .user_info {
       display: flex;
-      align-items: center;
       .user {
         padding: 5px;
-        p {
+        p{
+          text-align: left;
           margin: 0px;
+          padding-right: 10px;
           font-weight: 600;
         }
         .user_date {
@@ -317,36 +317,21 @@ export default {
           position: absolute;
           top: 70px;
           right: 20px;
-
         }
       }
     }
-
   }
 }
 
-.keyword-box {
-  margin-top: 20px;
-}
-
-.keyword-hidden {
-    height: 33px;
-    overflow: hidden;
-}
-
-.user-click {
-  display: flex;
-  align-items: center;
-  padding-right: 10px;
-
-  p {
-    margin-top: 15px;
-    padding: 10px;
-  }
-}
 .user_text {
   width: 100%;
   min-height: 50px;
+
+  p {
+    margin-top: 10px;
+    padding: 0px;
+    float: left;
+  }
 }
 
 .user_order {
@@ -360,7 +345,6 @@ export default {
   border-radius: .3rem;
   font-size: 15px;
   margin-right: 5px;
-  margin-bottom: 5px;
 
   span {
     margin: 0px;
@@ -375,15 +359,30 @@ export default {
   border: 1px solid rgba(80, 30, 172, 0.9);
   border-radius: .3rem;
   padding: 7px;
-  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.6);
   margin-right: 5px;
   margin-bottom: 5px;
 }
 
 .keyword-hidden {
   height: 35px;
+  overflow: hidden;
 }
 
+.keyword-box {
+  margin-top: 20px;
+}
+
+.user-click {
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
+
+  p {
+    margin-top: 15px;
+    padding: 10px;
+  }
+}
 
 img {
   border-radius: .4rem;
@@ -394,6 +393,9 @@ img {
   background-color: #ffffff;
 }
 
+.element-style {
+  height: 100px;
+}
 .ratings {
   display: inline-block;
   position: relative;

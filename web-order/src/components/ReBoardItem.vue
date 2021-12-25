@@ -6,7 +6,7 @@
         :src="comment.comments_image"
         :alt="comment.comments_id" />
       {{ comment.food_price }}
-      <span v-if="isNew" class="badge-new">
+      <span v-if="formmatDate" class="badge-new">
       new
       </span>
       <div class="card-content">
@@ -47,8 +47,9 @@ export default {
       return score * 20;
     },
   },
-  computed : {
-    isNew() {
+  computed: {
+    // 하루 기준 시간 지나면 new badge가 없어짐
+    formmatDate() {
       const nowDate = this.comment.comments_date;
       const year = +nowDate.split('-')[0];
       const month = +nowDate.split('-')[1];
@@ -56,25 +57,18 @@ export default {
       const nowDateObject = new Date(year, month, day);
       
     return new Date().getTime() - nowDateObject.getTime() < 24 * 60 * 60 * 1000; 
-        
-     
-     
-
+    
     },
     translateId() {
        const userId= this.comment.comments_user_id
        console.log(userId)
-         if(typeof userId === 'string') {
-          return userId.replace(/(?<=.).(?=.)/g, "*");
-         }
-         return null
-         }
-         
+      if(typeof userId === 'string') {
+        return userId.replace(/(?<=.).(?=.)/g, "*");
+      }
+      return null // return 값이 없으면 안됨
+    }
+    
   }
-  // computed: {
-  //   
-  //   }
-  // }
 }
 </script>
 
@@ -95,14 +89,12 @@ export default {
 
 .badge-new {
   position: absolute;
-  right: 5px;
   background: orange;
+  width: 40px;
   color: #fff;
-  border-radius: 2px solid;
   text-transform: uppercase;
   font-weight: bold;
   font-style: oblique;
-// box-shadow: 0px 1px 3px 2px #ebebeb inset;
 }
 img {
   border-radius: .2rem;

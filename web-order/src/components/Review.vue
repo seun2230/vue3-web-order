@@ -1,19 +1,12 @@
 <template>
   <div class="container">
     <div class="inner">
-      <!-- <p :name="name()"> * 고객님의 솔직한 리뷰를 남겨주세요. {{ this.food_name }}</p> -->
       <div class="inner-form">
         <el-form
           ref="form"
           :model="form"
           label-position="top"
           label-width="100px">
-          <el-form-item
-            label="제목"
-            placeholder="최소 15자 내외로 작성해주세요.">
-            <el-input
-              v-model="form.title" />
-          </el-form-item>
           <el-form-item label="평점">
             <el-select
               v-model="form.ratings"
@@ -186,13 +179,6 @@ export default {
   computed: {
     ...mapState('food', ['foods']),
 
-    // name() {
-    //   console.log("id", this.$route.params.id)
-    //   const foodName = this.foods.find(x => x.food_id === parseInt(this.$route.params.id, 10));
-    //     console.log("ss",foodName.food_name);
-    //     return foodName;
-
-    // },
     pageCount() {
       let listLength = this.foods.length,
       listSize = this.pageSize,
@@ -225,9 +211,7 @@ export default {
     },
     sendReview() {
       console.log("keyword", this.keywords);
-      // console.log("keywords", this.keywords.length);
-      console.log("keywords test", this.keywords[0])
-
+    
       let formData = new FormData();
 
       for(let j = 0; j < this.keywords.length; j++) {
@@ -275,7 +259,6 @@ h3 {
 }
 
 .btn-review {
-  // margin-top: 10px;
   position: absolute;
   top: 0px;
   right: 10px;
@@ -295,19 +278,6 @@ p {
   display: inline-block;
 }
 
-label {
-  display:inline-block;
-  text-align: center;
-  height: 50px;
-  width: 150px;
-  background:rgb(248, 248, 248);
-  border: 1px solid rgb(235, 233, 233);
-  border-radius: .2rem;
-  padding: 5px;
-  box-shadow: 0 2px 2px -4px black;
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
 input[id] {
   position: relative;
   top: 4px;
@@ -323,6 +293,18 @@ input[type="checkbox"]:checked + label {
 input[type="checkbox"] {
   display: none;
 }
+input[type="checkbox"] + label {
+ display:inline-block;
+  height: 40px;
+  width: 150px;
+  background:rgb(248, 248, 248);
+  border: 1px solid rgb(235, 233, 233);
+  border-radius: .2rem;
+  padding: 10px;
+  box-shadow: 0 2px 2px -4px black;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
 input {
   width: 150px;
   font-size: 25px;
@@ -332,14 +314,7 @@ input {
   box-shadow: 0 4px 4px -4px black;
   padding: 10px;
 }
-// input[id] {
-//   position: relative;
-//   top: 50px;
-// }
-// label[for] {
-//   position: relative;
-//   top: 50px;
-//   }
+
 .el-carousel__item  {
   color: #475669;
   font-size: 15px;

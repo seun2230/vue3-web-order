@@ -241,7 +241,7 @@ router.post('/update/comment/:id', upload.array('file'), verifyToken, async(req,
       for (let i = 0; i < req.files.length; i++) {
         image[i] = files[i].transforms[0].location
       }
-      let sql = "UPDATE reply " +
+      let sql = "UPDATE comments " +
       "SET comments_image= ?, comments_text = ?, ratings = ?, comments_title = ? "+
       "WHERE comments_id = ? AND comments_user_id = ?"
       var id = parseInt(req.params.id, 10)

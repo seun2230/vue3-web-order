@@ -44,33 +44,14 @@
               type="textarea"/>
           </el-form-item>
           <el-form-item>
-            <div
-              class="image-preview"
-              @click="addFiles()">
-              <div
-                class="image-preview-item"
-                v-for="(file, key) in files"
-                :key="'file-' + key">
-                <div class="img-box">
-                  <img
-                    class="image-preview-image"
-                    :id="'image-' + parseInt(key)" />
-                </div>  
-              </div>
-            </div>
-            <input
-              type="file"
-              id="multiple-image-input"
-              accept="image/*"
-              multiple
-              @change="handleFileUpload($event)" />
+            <UserImagePreview @child="setData"/>
           </el-form-item>
           <el-form-item>
             <el-button @click="returnBoard()">취소</el-button>
             <el-button 
               color="black" 
               class="btn-review"
-              @click="sendReview()">리뷰 수정
+              @click="sendModify()">리뷰 수정
             </el-button>
           </el-form-item>
         </el-form>
@@ -81,7 +62,7 @@
 
 <script>
 import axios from 'axios'
-
+import UserImagePreview from './UserImagePreview.vue';
 
 export default {
   data() {
@@ -98,12 +79,13 @@ export default {
     returnBoard() {
       this.$router.push('/user/board/');
     },
-    sendReview() {
+    sendModify() {
       var id = this.$route.params.id; 
       console.log("id", id);
       let formData = new FormData(); 
       for(let i = 0; i < this.files.length; i++) {
-        formData.append('file', this.files[i]);
+          let file = this.files[i].file;
+        formData.append('file', file);
       }
       formData.append("title", this.form.title);
       formData.append("ratings", this.form.ratings); 
@@ -128,36 +110,18 @@ export default {
         console.error("오류 발생함", err);
       });
     },
-
-    addFiles() {
-      console.log("addFiles Clicked!")
-      document.getElementById('multiple-image-input').click();
+     setData(event) {
+      this.files = event
     },
-    handleFileUpload(event) {
-      let uploadedFiles = event.target.files;
-      
-      for (let i = 0; i < uploadedFiles.length; i++) {
-        this.files.push(uploadedFiles[i]);
-      }
-  
-      this.getImagePreviews();
-    },
-    getImagePreviews() {
-      for (let i = 0; i < this.files.length; i++) {
-        let reader = new FileReader();
-
-        reader.addEventListener("load", function() {
-          document.getElementById('image-' + parseInt(i)).src = reader.result;
-        }.bind(this), false);
-
-        reader.readAsDataURL(this.files[i]);
-      }
-    },
+    
     removeFile() {
       this.files = [];
       console.log(this.files);
     }
-  }
+  },
+  components: {
+    UserImagePreview,
+  },
 };
 
 </script>
@@ -168,6 +132,11 @@ export default {
 .container {
   border: 1px solid #ccc;
   padding: 10px;
+
+  p {
+    margin: 10px;
+    padding: 0px;
+  }
 }
 
 .btn-review {
