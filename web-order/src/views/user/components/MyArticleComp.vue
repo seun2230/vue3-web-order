@@ -6,12 +6,12 @@
         :src="comment.comments_image"
         :alt="comment.comments_id" />
       {{ comment.food_price }}
-      <span class="badge-new">
+      <span v-if="formmatDate" class="badge-new">
       new
       </span>
       <div class="card-content">
         <div class="card-user">
-          <span class="user-info">{{ comment.comments_user_id }}</span>
+          <span class="user-info">{{ translateId }}</span>
         </div>
         <div class="ratings">
           <div
@@ -23,8 +23,9 @@
             <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
           </div>
         </div>
-        <h3 class="title">{{ comment.comments_title }}</h3>
-        <span class="text">{{ comment.comments_text }}</span>
+        <div class="review-text">
+          <h3 class="text">{{ comment.comments_text }}</h3>
+        </div>
         <div class="review-date">{{ comment.comments_date }}</div>
       </div>
     </div>
@@ -51,26 +52,40 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.cards {
+  display: flex;
+  border: 3px solid rgb(233, 240, 247);
+  width: 100vw;
+  height: 150px;
+  transition: ease-out 300ms;
+  transition-duration: 300ms;
+}
+
+.cards:active {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
 .badge-new {
   position: absolute;
-  right: 5px;
   background: orange;
+  width: 40px;
   color: #fff;
-  border-radius: 2px solid;
   text-transform: uppercase;
   font-weight: bold;
   font-style: oblique;
-// box-shadow: 0px 1px 3px 2px #ebebeb inset;
 }
+
 img {
   border-radius: .2rem;
   width: 150px;
   min-height: 140px;
+  max-width: 32vw;
   object-fit: cover;
   z-index: 0;
 }
+
 .card-content {
-  width: 320px;
+  width: 100%;
   padding: 15px;
   // text-align: center;
 
@@ -79,26 +94,20 @@ img {
     font-weight: 600;
   }
   .review-date {
-    right: 220px;
+    margin-top: 30px;
+    float: right;
     font-size: 15px;
     color: rgb(139, 137, 137);
   }
 }
-.title {
+
+.text {
   margin-top: 10px;
   margin-bottom: 10px;
-  width: 210px;
+  width: 220px;
+  font-weight: 500;
+  font-size: 1rem;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.text {
-  display: -webkit-box;
-  word-wrap: break-word;
-  margin-bottom: 10px;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  // text가 많은 경우 생략 기호 보여주기
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -120,15 +129,6 @@ img {
   z-index: 1;
   overflow: hidden;
   -webkit-text-fill-color: rgba(245, 148, 22, 0.842);
-}
-
-.cards {
-  transition: ease-out 300ms;
-  transition-duration: 300ms;
-}
-
-.cards:active {
-  background-color: rgba(0, 0, 0, 0.1);
 }
 
 </style>
