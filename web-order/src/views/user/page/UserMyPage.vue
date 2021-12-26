@@ -37,7 +37,7 @@
       </div>
       <div class="reviw-btn-area">
         <router-link class="container-exterrior"
-        :to="{name: 'review', params: { id: order.id }}">
+        :to="{name: 'review', params: { id: order.food_id }}">
           <el-button  class="blue-btn"
           type="default">리뷰 작성</el-button>
         </router-link>

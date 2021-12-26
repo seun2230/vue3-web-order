@@ -42,7 +42,7 @@ router.post('/post/comment/:id', upload.array('file'), verifyToken, async functi
   console.log("dd", req.body.keyword.length)
   console.log("status", req.body.status);
 
-  let foodId = (parseInt(req.params.id,10))
+  const foodId = parseInt(req.params.id, 10);
   try {
     console.log("DB Connection! /post/comment")
     const connection = await pool.getConnection(async conn => conn);

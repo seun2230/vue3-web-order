@@ -23,8 +23,7 @@
             <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
           </div>
         </div>
-        <h3 class="title">{{ comment.comments_title }}</h3>
-        <span class="text">{{ comment.comments_text }}</span>
+        <h3 class="text">{{ comment.comments_text }}</h3>
         <div class="review-date">{{ comment.comments_date }}</div>
       </div>
     </div>
@@ -113,26 +112,19 @@ img {
     font-weight: 600;
   }
   .review-date {
-    right: 220px;
+    margin-top: 30px;
+    float: right;
     font-size: 15px;
     color: rgb(139, 137, 137);
   }
 }
-.title {
+
+.text {
   margin-top: 10px;
   margin-bottom: 10px;
-  width: 210px;
+  width: 220px;
+  font-weight: 500;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.text {
-  display: -webkit-box;
-  word-wrap: break-word;
-  margin-bottom: 10px;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  // text가 많은 경우 생략 기호 보여주기
   overflow: hidden;
   text-overflow: ellipsis;
 }
