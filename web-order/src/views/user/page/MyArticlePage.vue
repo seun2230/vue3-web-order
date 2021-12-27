@@ -65,56 +65,44 @@ export default {
       const end = start + this.pageSize;
       return this.mycomments.slice(start, end)
     },
-  },
+    // 하루 기준 시간 지나면 new badge가 없어짐
+    formmatDate() {
+      const nowDate = this.comment.comments_date;
+      const year = +nowDate.split('-')[0];
+      const month = +nowDate.split('-')[1];
+      const day = +nowDate.split('-')[2]
+      const nowDateObject = new Date(year, month, day);
+      
+    return new Date().getTime() - nowDateObject.getTime() < 24 * 60 * 60 * 1000; 
+    
+    },
+    translateId() {
+       const userId= this.comment.comments_user_id
+       console.log(userId)
+      if(typeof userId === 'string') {
+        return userId.replace(/(?<=.).(?=.)/g, "*");
+      }
+      return null // return 값이 없으면 안됨
+    }
+  }
 }
 </script>
 
-<style scoped>
-
-.btn-fade {
-  position: fixed;
-  bottom: 120px;
-  right: 12px;
-}
-.btn-comment {
-    width: 20vh;
-    color:red;
-    background: #fff;
-    border-radius: 1rem;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.13);
-    overflow: hidden;
-}
-.page-view {
-  text-align: center;
-}
-
-.page-count {
-  padding: 10px;
-}
-.star-ratings {
-  color: #aaa9a9;
-  position: relative;
-  unicode-bidi: bidi-override;
-  width: max-content;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke-width: 1.3px;
-  -webkit-text-stroke-color: #2b2a29;
-}
-
-.star-ratings-fill {
-  color: #fff58c;
-  padding: 0;
-  position: absolute;
-  z-index: 1;
+<style scoped lang="scss">
+.container {
   display: flex;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  -webkit-text-fill-color: gold;
+  flex-direction: column;
 }
 
-.star-ratings-base {
-  z-index: 0;
-  padding: 0;
+.text {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 220px;
+  font-weight: 500;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
 </style>

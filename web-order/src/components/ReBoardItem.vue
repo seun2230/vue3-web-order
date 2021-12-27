@@ -23,7 +23,9 @@
             <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
           </div>
         </div>
-        <h3 class="text">{{ comment.comments_text }}</h3>
+        <div class="review-text">
+          <h3 class="text">{{ comment.comments_text }}</h3>
+        </div>
         <div class="review-date">{{ comment.comments_date }}</div>
       </div>
     </div>
@@ -54,9 +56,9 @@ export default {
       const month = +nowDate.split('-')[1];
       const day = +nowDate.split('-')[2]
       const nowDateObject = new Date(year, month, day);
-      
-    return new Date().getTime() - nowDateObject.getTime() < 24 * 60 * 60 * 1000; 
-    
+
+    return new Date().getTime() - nowDateObject.getTime() < 24 * 60 * 60 * 1000;
+
     },
     translateId() {
        const userId= this.comment.comments_user_id
@@ -66,17 +68,21 @@ export default {
       }
       return null // return 값이 없으면 안됨
     }
-    
+
   }
 }
 </script>
 
 <style scoped lang="scss">
 @import '../scss/variables.scss';
+.container {
+  display: flex;
+}
+
 .cards {
   display: flex;
   border: 3px solid rgb(233, 240, 247);
-  width: 100%;
+  width: 100vw;
   height: 150px;
   transition: ease-out 300ms;
   transition-duration: 300ms;
@@ -95,15 +101,19 @@ export default {
   font-weight: bold;
   font-style: oblique;
 }
+
 img {
   border-radius: .2rem;
   width: 150px;
   min-height: 140px;
+  max-width: 32vw;
+  min-width: 32vw;
   object-fit: cover;
   z-index: 0;
 }
+
 .card-content {
-  width: 320px;
+  width: 100%;
   padding: 15px;
   // text-align: center;
 
@@ -124,6 +134,7 @@ img {
   margin-bottom: 10px;
   width: 220px;
   font-weight: 500;
+  font-size: 1rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

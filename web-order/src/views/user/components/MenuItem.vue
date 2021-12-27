@@ -12,7 +12,7 @@
           <div class="description">
           </div>
           <div class="price">
-            <span>{{ food.food_price }} 원</span>
+            <span class="price-num">{{ food.food_price }}</span>&nbsp;<span>원</span>
           </div>
         </div>
       </div>
@@ -63,6 +63,9 @@ export default {
     transition: ease-out 300ms;
     transition-duration: 300ms;
     .detail {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       padding: 10px;
       margin-left: 10px;
       height: 100%;
@@ -80,9 +83,15 @@ export default {
         overflow: hidden;
       }
       .price {
+        display: flex;
+        justify-content: flex-end;
+        padding-top:5px;
         text-align: right;
         width: 100%;
         height: 30%;
+      }
+      .price-num {
+        font-size: 1.1rem;
       }
     }
   }

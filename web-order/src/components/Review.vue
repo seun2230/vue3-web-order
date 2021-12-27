@@ -7,12 +7,6 @@
           :model="form"
           label-position="top"
           label-width="100px">
-          <el-form-item
-            label="제목"
-            placeholder="최소 15자 내외로 작성해주세요.">
-            <el-input 
-              v-model="form.title" /> 
-          </el-form-item> 
           <el-form-item label="평점">
             <el-select
               v-model="form.ratings"
@@ -36,8 +30,8 @@
             </el-select>
           </el-form-item>
           <el-form-item label="키워드 등록(중복 선택 가능)" />
-          <el-carousel height="250px" 
-            :interval="8000" 
+          <el-carousel height="250px"
+            :interval="8000"
             arrow="always">
             <el-carousel-item>
                <h3>메뉴</h3>
@@ -46,8 +40,8 @@
                     :key="food.food_id">
                   <input
                     type="checkbox"
-                    v-model="keywords" 
-                    :id="food.food_name" 
+                    v-model="keywords"
+                    :id="food.food_name"
                     :value="food.food_name"/>
                   <label
                     :for="food.food_name">{{ food.food_name }} 맛있어요</label>
@@ -66,39 +60,39 @@
               <h3>주문</h3>
                <input
                 type="checkbox"
-                v-model="keywords" 
-                id="keyword1" 
+                v-model="keywords"
+                id="keyword1"
                 value="대기열이 짧아요"/>
               <label
                 for="keyword1">대기열 짧아요</label>
              <input
               type="checkbox"
               v-model="keywords"
-               id="keyword2" 
+               id="keyword2"
                value="가성비가 좋아요"/>
               <label for="keyword2">가성비가 좋아요</label>
              <input
               type="checkbox"
               v-model="keywords"
-               id="keyword3" 
+               id="keyword3"
                value="주문 간편해요"/>
               <label for="keyword3">🛒주문 간편해요</label>
               <input
                 type="checkbox"
-                v-model="keywords" 
-                id="keyword4" 
+                v-model="keywords"
+                id="keyword4"
                 value="결제가 빨라요"/>
               <label for="keyword4">결제가 빨라요</label>
               <input
                 type="checkbox"
-                v-model="keywords" 
-                id="keyword5" 
+                v-model="keywords"
+                id="keyword5"
                 value="주문 길어요"/>
               <label for="keyword5">주문 길어요</label>
               <input
                 type="checkbox"
                 v-model="keywords"
-                id="keyword6" 
+                id="keyword6"
                 value="주문 알림 필요해요"/>
               <label for="keyword6">주문 알림 필요해요</label>
             </el-carousel-item>
@@ -106,38 +100,38 @@
               <h3>매장</h3>
               <input
                 type="checkbox"
-                v-model="keywords" 
-                id="keyword7" 
+                v-model="keywords"
+                id="keyword7"
                 value="사장님이 친절해요"/>
               <label for="keyword7">👩‍🍳사장님 친절해요"</label>
               <input
                 type="checkbox"
-                v-model="keywords" 
-                id="keyword8" 
+                v-model="keywords"
+                id="keyword8"
                 value="뷰가 좋아요"/>
               <label for="keyword8">🏝 뷰가 좋아요</label> <br />
                <input
                 type="checkbox"
                 v-model="keywords"
-                id="keyword9" 
+                id="keyword9"
                 value="분위기가 조용해요"/>
               <label for="keyword9">분위기가 조용해요</label>
               <input
                 type="checkbox"
                 v-model="keywords"
-                id="keyword10" 
+                id="keyword10"
                 value="매장이 청결해요"/>
               <label for="keyword10">매장이 청결해요</label>
              <input
               type="checkbox"
-              v-model="keywords" 
-              id="keyword11" 
+              v-model="keywords"
+              id="keyword11"
               value="주차 시설이 괜찮아요"/>
               <label for="keywor11">🚗주차 편리해요</label>
               <input
                 type="checkbox"
                 v-model="keywords"
-                id="keyword12" 
+                id="keyword12"
                 value="혼자 와도 좋아요"/>
               <label for="keyword12">혼자도 편해요</label>
             </el-carousel-item>
@@ -245,7 +239,7 @@ export default {
     },
     sendReview() {
       console.log("keyword", this.keywords);
-    
+
       let formData = new FormData();
 
       for(let j = 0; j < this.keywords.length; j++) {

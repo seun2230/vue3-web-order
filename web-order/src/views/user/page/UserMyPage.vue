@@ -144,7 +144,7 @@ export default {
 .order_item {
   margin: 10px;
   min-height: 150px;
-  padding: 15px;
+  padding: 10px;
   border: 1px solid lightgrey;
   border-radius: 10px;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
@@ -169,7 +169,7 @@ export default {
 }
 
 .order_price {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .empty-item {
