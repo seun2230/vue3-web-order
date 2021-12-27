@@ -48,6 +48,28 @@ export default {
       return score * 20;
     },
   },
+    computed: {
+    // 하루 기준 시간 지나면 new badge가 없어짐
+    formmatDate() {
+      const nowDate = this.comment.comments_date;
+      const year = +nowDate.split('-')[0];
+      const month = +nowDate.split('-')[1];
+      const day = +nowDate.split('-')[2]
+      const nowDateObject = new Date(year, month, day);
+
+    return new Date().getTime() - nowDateObject.getTime() < 24 * 60 * 60 * 1000;
+
+    },
+    translateId() {
+       const userId= this.comment.comments_user_id
+       console.log(userId)
+      if(typeof userId === 'string') {
+        return userId.replace(/(?<=.).(?=.)/g, "*");
+      }
+      return null // return 값이 없으면 안됨
+    }
+
+  }
 }
 </script>
 

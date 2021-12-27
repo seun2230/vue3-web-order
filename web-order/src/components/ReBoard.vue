@@ -7,7 +7,7 @@
         @click="writeComment()"><i class="far fa-edit"></i></el-button>
     </div>
     <ReBoardItem
-      v-for="comment in paginatedData.slice().reverse()"
+      v-for="comment in paginatedData"
       :key="comment.comments_id"
       :comment="comment" />
     <div v-if="comments.length == 0">
@@ -78,7 +78,7 @@ export default {
     paginatedData() {
       const start = this.pageNum * this.pageSize;
       const end = start + this.pageSize;
-      return this.comments.slice(start, end)
+      return this.comments.slice().reverse(start, end);
     }
   },
 }
