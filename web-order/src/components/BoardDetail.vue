@@ -20,9 +20,29 @@
             <span class="user_date">{{ reviewInfo.comments_date  }}</span>
         </div>
       </div>
-      <img
+      <!-- <img
         v-if="reviewInfo.comments_image !== this.nullImage"
-        :src="reviewInfo.comments_image" />
+        :src="reviewInfo.comments_image" /> -->
+        <el-carousel 
+            height="320px"
+            :interval="8000"
+            arrow="always">
+            <el-carousel-item v-if="reviewInfo.comments_image1 !== null">
+              <img
+                v-if="reviewInfo.comments_image !== this.nullImage || reviewInfo.comments_image !== null"
+                :src="reviewInfo.comments_image" />
+            </el-carousel-item>
+            <el-carousel-item v-if="reviewInfo.comments_image2 !== null">
+              <img
+                v-if="reviewInfo.comments_image2 !== this.nullImage || reviewInfo.comments_image2 !== null"
+                :src="reviewInfo.comments_image2" />
+            </el-carousel-item>
+            <el-carousel-item v-if="reviewInfo.comments_image3 !== null">
+              <img
+                v-if="reviewInfo.comments_image3 !== this.nullImage"
+                :src="reviewInfo.comments_image3" />
+            </el-carousel-item>
+        </el-carousel>
       <div class="user_order">
         <span>{{ reviewInfo.food_name}}</span>
       </div>

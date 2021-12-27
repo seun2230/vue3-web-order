@@ -78,7 +78,7 @@ export default {
     paginatedData() {
       const start = this.pageNum * this.pageSize;
       const end = start + this.pageSize;
-      return this.comments.slice().reverse(start, end);
+      return this.comments.reverse().slice(start, end);
     }
   },
 }
