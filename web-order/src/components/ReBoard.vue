@@ -18,7 +18,8 @@
         prev <i class="fas fa-angle-left"></i>
       </el-button>
       <span class="page-count">{{ pageNum + 1}} / {{ pageCount }}</span>
-      <el-button @click="nextPage" type="text" :disabled="pageNum >= pageCount -1">
+      <el-button @click="nextPage" type="text"
+        :disabled="pageNum >= pageCount -1">
         next <i class="fas fa-angle-right"></i>
       </el-button>
     </div>
@@ -78,7 +79,7 @@ export default {
     paginatedData() {
       const start = this.pageNum * this.pageSize;
       const end = start + this.pageSize;
-      return this.comments.slice().reverse(start, end);
+      return this.comments.reverse().slice(start, end);
     }
   },
 }

@@ -47,11 +47,9 @@ router.post('/post/comment/:id', upload.array('file'), verifyToken, async functi
     console.log("DB Connection! /post/comment")
     const connection = await pool.getConnection(async conn => conn);
     try {
-
       await connection.beginTransaction();
       const files = req.files
       let image = []
-      console.log("ss", files)
       const date = new Date().format('yyyy-MM-dd')
 
       for (let i = 0; i < req.files.length; i++) {
@@ -61,13 +59,11 @@ router.post('/post/comment/:id', upload.array('file'), verifyToken, async functi
       let sql = "INSERT INTO comments " +
         "(comments_image, comments_image2, comments_image3, comments_text, ratings, food_items_food_id, comments_user_id, comments_title, comments_status, comments_date)" +
         "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-      console.log("image[0]",image[0])
       if (image[0] === undefined) {
-        console.log("ss")
         const [row] = await connection.query("SELECT * FROM null_image");
-        image[0] = [row][0][0].null_image
-        image[1] = [row][0][0].null_image
-        image[2] = [row][0][0].null_image
+        image[0] = row[0].null_image
+        image[1] = row[0].null_image
+        image[2] = row[0].null_image
         let value = [
           image[0],
           image[1],
@@ -82,11 +78,24 @@ router.post('/post/comment/:id', upload.array('file'), verifyToken, async functi
         ]
         await connection.query(sql, value);
         const [comments_id] = await connection.query("SELECT max(comments_id) FROM comments");
-        for(let i = 0; i < req.body.keyword.length; i++) {
-          let sqlKeyword = "INSERT INTO keyword (keyword, comments_comments_id) VALUES (?, ?)"
-          let keyValue = [ req.body.keyword[i], comments_id[0]["max(comments_id)"] ]
-          console.log("keyValue", keyValue);
-          await connection.query(sqlKeyword, keyValue);
+        if(typeof req.body.keyword === "string") {
+          console.log(req.body.keyword)
+            let sqlKeyword = "INSERT INTO keyword (keyword, comments_comments_id) VALUES (?, ?)"
+            let keyValue = [ req.body.keyword, comments_id[0]["max(comments_id)"] ]
+            console.log("keyValue", keyValue);
+            await connection.query(sqlKeyword, keyValue);
+            await connection.commit();
+            connection.release();
+        } else {
+          for(let i = 0; i < req.body.keyword.length; i++) {
+            console.log(req.body.keyword)
+            let sqlKeyword = "INSERT INTO keyword (keyword, comments_comments_id) VALUES (?, ?)"
+            let keyValue = [ req.body.keyword[i], comments_id[0]["max(comments_id)"] ]
+            console.log("keyValue", keyValue);
+            await connection.query(sqlKeyword, keyValue);
+            await connection.commit();
+            connection.release();
+          }
         }
         await connection.commit();
         connection.release();
@@ -106,14 +115,26 @@ router.post('/post/comment/:id', upload.array('file'), verifyToken, async functi
           req.body.status,
           date,
         ]
-        console.log("value", value);
-
         await connection.query(sql, value);
-        const [comments_id] = await connection.query("SELECT max(comments_id) FROM comments")
-        for(let i = 0; i < req.body.keyword.length; i++) {
-          let sqlKeyword = "INSERT INTO keyword (keyword, comments_comments_id) VALUES (?, ?)"
-          let keyValue = [ req.body.keyword[i], comments_id[0]["max(comments_id)"] ]
-          await connection.query(sqlKeyword, keyValue);
+        const [comments_id] = await connection.query("SELECT max(comments_id) FROM comments");
+        if(typeof req.body.keyword === "string") {
+          console.log(req.body.keyword)
+            let sqlKeyword = "INSERT INTO keyword (keyword, comments_comments_id) VALUES (?, ?)"
+            let keyValue = [ req.body.keyword, comments_id[0]["max(comments_id)"] ]
+            console.log("keyValue", keyValue);
+            await connection.query(sqlKeyword, keyValue);
+            await connection.commit();
+            connection.release();
+        } else {
+          for(let i = 0; i < req.body.keyword.length; i++) {
+            console.log(req.body.keyword)
+            let sqlKeyword = "INSERT INTO keyword (keyword, comments_comments_id) VALUES (?, ?)"
+            let keyValue = [ req.body.keyword[i], comments_id[0]["max(comments_id)"] ]
+            console.log("keyValue", keyValue);
+            await connection.query(sqlKeyword, keyValue);
+            await connection.commit();
+            connection.release();
+          }
         }
         await connection.commit();
         connection.release();
