@@ -61,8 +61,9 @@ router.post('/post/comment/:id', upload.array('file'), verifyToken, async functi
       let sql = "INSERT INTO comments " +
         "(comments_image, comments_image2, comments_image3, comments_text, ratings, food_items_food_id, comments_user_id, comments_title, comments_status, comments_date)" +
         "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-
-      if (image[0] === null) {
+      console.log("image[0]",image[0])
+      if (image[0] === undefined) {
+        console.log("ss")
         const [row] = await connection.query("SELECT * FROM null_image");
         image[0] = [row][0][0].null_image
         image[1] = [row][0][0].null_image

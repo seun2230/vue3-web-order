@@ -46,7 +46,7 @@
                   <label
                     :for="food.food_name">{{ food.food_name }} 맛있어요</label>
                 </div>
-                <div class="page-view">
+                <!-- <div class="page-view">
                   <el-button @click="prevPage" type="text" :disabled="pageNum === 0">
                     first <i class="fas fa-angle-left"></i>
                   </el-button>
@@ -54,7 +54,7 @@
                   <el-button @click="nextPage" type="text" :disabled="pageNum >= pageCount -1">
                     last <i class="fas fa-angle-right"></i>
                   </el-button>
-                </div>
+                </div> -->
             </el-carousel-item>
             <el-carousel-item>
               <h3>주문</h3>

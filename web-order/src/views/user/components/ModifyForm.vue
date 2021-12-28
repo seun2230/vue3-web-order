@@ -115,7 +115,7 @@ export default {
       if (value === '') {
         callback(new Error('비밀번호를 입력해주세요.'))
       } else if (value !== this.form.user_password) {
-        callback(new Error("비밀번호가 맞지 않습니다."))
+        callback(new Error("비밀번호가 일치하지 않습니다."))
       } else {
         callback()
       }
@@ -127,7 +127,7 @@ export default {
       } else {
         setTimeout(() => {
           if (!regex.test(value)) {
-            callback(new Error('이름은 한글 또는 영문 대,소문자로 입력하세요.'));
+            callback(new Error('이름은 한글 또는 영문 대, 소문자로 입력하세요.'));
           } else {
             callback()
           }
