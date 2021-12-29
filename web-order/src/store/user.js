@@ -77,6 +77,7 @@ export default {
         console.log(err)
       })
     },
+    
   },
   actions: {
     login({ commit }, state) {
@@ -97,5 +98,11 @@ export default {
         console.log("err", err)
       })
     },
+    like({commit}) {
+      commit('setLikeUserList')
+    },
+    dislike({commit}) {
+      commit('deleteLikeUserList')
+    }
   }
 }

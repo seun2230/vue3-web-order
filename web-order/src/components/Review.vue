@@ -127,7 +127,7 @@
               v-model="keywords"
               id="keyword11"
               value="주차 시설이 괜찮아요"/>
-              <label for="keywor11">🚗주차 편리해요</label>
+              <label for="keyword11">🚗주차 편리해요</label>
               <input
                 type="checkbox"
                 v-model="keywords"
