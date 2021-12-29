@@ -18,7 +18,8 @@
         prev <i class="fas fa-angle-left"></i>
       </el-button>
       <span class="page-count">{{ pageNum + 1}} / {{ pageCount }}</span>
-      <el-button @click="nextPage" type="text" :disabled="pageNum >= pageCount -1">
+      <el-button @click="nextPage" type="text"
+        :disabled="pageNum >= pageCount -1">
         next <i class="fas fa-angle-right"></i>
       </el-button>
     </div>
