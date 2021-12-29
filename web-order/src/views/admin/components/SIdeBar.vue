@@ -8,36 +8,28 @@
     :active-text-color="variables.$menuActiveText"
     :collapse-transition="false">
     <el-menu-item
-      index="/admin/dashboard">
-      <el-icon class="fas fa-home" />
-      <span>HOME</span>
-    </el-menu-item>
-    <el-menu-item
       index="/admin/order">
       <el-icon class="fas fa-bell" />
       <span>ORDER</span>
     </el-menu-item>
     <el-sub-menu>
       <template #title>
-        <el-icon class="fas fa-chart-bar" />
-        <span>CHART</span>
+        <el-icon class="fas fa-cogs" />
+        <span>MANAGEMENT</span>
       </template>
-      <el-menu-item index="3-1">
-        MONTH
+      <el-menu-item index="/admin/foodManagement">
+        Food
       </el-menu-item>
-      <el-menu-item index="3-2">
-        WEEK
+      <el-menu-item index="/admin/userManagement">
+        User
       </el-menu-item>
-      <el-menu-item index="3-3">
-        DAY
+      <el-menu-item index="/admin/nullImage">
+        NullImage
+      </el-menu-item>
+      <el-menu-item index="/admin/SlideImage">
+        SlideImage/Notice
       </el-menu-item>
     </el-sub-menu>
-    <el-menu-item
-      index="/admin/foodManagement">
-      <el-icon
-        class="fas fa-cogs" />
-      <span>MANAGEMENT</span>
-    </el-menu-item>
   </el-menu>
 </template>
 

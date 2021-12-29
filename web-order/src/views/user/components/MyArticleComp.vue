@@ -1,0 +1,156 @@
+<template>
+  <router-link class="container-exterrior"
+    :to="{name: 'boardItem', params: { id: comment.comments_id }}">
+    <div class="cards">
+      <img
+        :src="comment.comments_image"
+        :alt="comment.comments_id" />
+      {{ comment.food_price }}
+      <span v-if="formmatDate" class="badge-new">
+      new
+      </span>
+      <div class="card-content">
+        <div class="card-user">
+          <span class="user-info">{{ translateId }}</span>
+        </div>
+        <div class="ratings">
+          <div
+            class="ratings-fill"
+            :style="{ width: comment.ratings * 20 + '%' }">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <div class="ratings-before">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+        </div>
+        <div class="review-text">
+          <h3 class="text">{{ comment.comments_text }}</h3>
+        </div>
+        <div class="review-date">{{ comment.comments_date }}</div>
+      </div>
+    </div>
+  </router-link>
+</template>
+
+<script>
+export default {
+  props: {
+    comment: {
+      type: Object,
+      default: function() { return {} },
+      required: true,
+    },
+  },
+  methods: {
+    ratingToPercent() {
+      const score = this.comment.ratings;
+      console.log(score);
+      return score * 20;
+    },
+  },
+    computed: {
+    // 하루 기준 시간 지나면 new badge가 없어짐
+    formmatDate() {
+      const nowDate = this.comment.comments_date;
+      const year = +nowDate.split('-')[0];
+      const month = +nowDate.split('-')[1];
+      const day = +nowDate.split('-')[2]
+      const nowDateObject = new Date(year, month, day);
+
+    return new Date().getTime() - nowDateObject.getTime() < 24 * 60 * 60 * 1000;
+
+    },
+    translateId() {
+       const userId= this.comment.comments_user_id
+       console.log(userId)
+      if(typeof userId === 'string') {
+        return userId.replace(/(?<=.).(?=.)/g, "*");
+      }
+      return null // return 값이 없으면 안됨
+    }
+
+  }
+}
+</script>
+
+<style scoped lang="scss">
+.cards {
+  display: flex;
+  border: 3px solid rgb(233, 240, 247);
+  width: 100vw;
+  height: 150px;
+  transition: ease-out 300ms;
+  transition-duration: 300ms;
+}
+
+.cards:active {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.badge-new {
+  position: absolute;
+  background: orange;
+  width: 40px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-style: oblique;
+}
+
+img {
+  border-radius: .2rem;
+  width: 150px;
+  min-height: 140px;
+  max-width: 32vw;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.card-content {
+  width: 100%;
+  padding: 15px;
+  // text-align: center;
+
+  .user-info {
+    color: rgb(99, 94, 94);
+    font-weight: 600;
+  }
+  .review-date {
+    margin-top: 30px;
+    float: right;
+    font-size: 15px;
+    color: rgb(139, 137, 137);
+  }
+}
+
+.text {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 220px;
+  font-weight: 500;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ratings {
+  display: inline-block;
+  position: relative;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 1.3px;
+  -webkit-text-stroke-color: rgba(255, 255, 255, 0.322);
+}
+
+.ratings-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  overflow: hidden;
+  -webkit-text-fill-color: rgba(245, 148, 22, 0.842);
+}
+
+</style>

@@ -78,6 +78,12 @@ export default {
     border: 1px solid lightgrey;
     border-radius: 10px;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+    transition: ease-out 300ms;
+    transition-duration: 300ms;
+}
+
+.routerBtn:active {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .routericon{

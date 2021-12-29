@@ -5,6 +5,7 @@ export default {
   state: () => {
     return {
       comments: [],
+      mycomments: [],
     }
   },
   getters: {
@@ -19,6 +20,16 @@ export default {
       .catch((err) => {
         console.error("data 실패", err);
       })
+    },
+    myArticle(state) {
+      axios.get(`${process.env.VUE_APP_URL}/api/user/get/myarticle`)
+        .then(res => {
+            state.mycomments = res.data;
+            console.log('res array on mutation', state.mycomments);
+        })
+        .catch (err => {
+            console.log('err: ', err);
+        })
     }
   },
   actions: {

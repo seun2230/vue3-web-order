@@ -1,10 +1,11 @@
 <template>
-  <div class="container">
+  <div class="nav-container">
   <ul>
     <li>
       <router-link to='/' v-slot='{href, navigate}'>
           <button :href='href' @click='navigate' class='button'>
-            <div class="navicon">
+            <div class="navicon"
+              :style="{ color: homeColors[this.$route.name] }">
                 <icon-base icon-name="IconHome"
                   width="33" height="32">
                   <icon-home />
@@ -12,7 +13,8 @@
             </div>
             <div class="space">
             </div>
-            <div class="navdesc">
+            <div class="navdesc"
+              :style="{ color: homeColors[this.$route.name] }">
               홈
             </div>
           </button>
@@ -21,7 +23,8 @@
     <li>
       <router-link to='/user/board' v-slot='{href, navigate}'>
           <button :href='href' @click='navigate' class='button'>
-            <div class="navicon">
+            <div class="navicon"
+              :style="{ color: reviewColors[this.$route.name] }">
                 <icon-base icon-name="IconReview"
                   width="33" height="32">
                   <icon-review />
@@ -29,7 +32,8 @@
             </div>
             <div class="space">
             </div>
-            <div class="navdesc">
+            <div class="navdesc"
+              :style="{ color: reviewColors[this.$route.name] }">
               리뷰
             </div>
           </button>
@@ -38,13 +42,15 @@
     <li id="orderbtn">
       <router-link to='/user/menu' v-slot='{href, navigate}'>
           <button :href='href' @click='navigate' class='button'>
-            <div class="navicon" id="ordericon">
+            <div class="navicon" id="ordericon"
+              :style="{ color: orderColors[this.$route.name] }">
                 <icon-base icon-name="IconOrder"
                   width="50" height="50">
                   <icon-order />
                 </icon-base>
             </div>
-            <div class="navdesc">
+            <div class="navdesc" id="order-desc"
+              :style="{ color: orderColors[this.$route.name] }">
               주문하기
             </div>
           </button>
@@ -53,15 +59,18 @@
     <li>
       <router-link to='/user/mypage' v-slot='{href, navigate}'>
           <button :href='href' @click='navigate' class='button'>
-            <div class="navicon">
-                <icon-base icon-name="IconList"
+            <div class="navicon"
+              :style="{ color: listColors[this.$route.name] }">
+                <icon-base
+                  icon-name="IconList"
                   width="33" height="32">
                   <icon-list />
                 </icon-base>
             </div>
             <div class="space">
             </div>
-            <div class="navdesc">
+            <div class="navdesc"
+              :style="{ color: listColors[this.$route.name] }">
               주문내역
             </div>
           </button>
@@ -70,7 +79,8 @@
     <li>
       <router-link to='/user/userinfo' v-slot='{href, navigate}'>
           <button :href='href' @click='navigate' class='button'>
-            <div class="navicon">
+            <div class="navicon"
+              :style="{ color: infoColors[this.$route.name] }">
                 <icon-base icon-name="IconInfo"
                   width="33" height="32" >
                   <icon-info />
@@ -78,7 +88,8 @@
             </div>
             <div class="space">
             </div>
-            <div class="navdesc">
+            <div class="navdesc"
+              :style="{ color: infoColors[this.$route.name] }">
               내 정보
             </div>
           </button>
@@ -97,6 +108,31 @@ import IconList from '../assets/navicons/IconList.vue'
 import IconOrder from '../assets/navicons/IconOrder.vue'
 
 export default {
+  data() {
+    const thisColor = 'rgb(41, 124, 92)';
+    return {
+      homeColors: {
+        home: thisColor,
+      },
+      reviewColors: {
+        review: thisColor,
+        board: thisColor,
+        boardItem: thisColor,
+        boardModify: thisColor,
+      },
+      orderColors: {
+        menu: thisColor,
+      },
+      listColors: {
+        mypage: thisColor,
+      },
+      infoColors: {
+        userinfo: thisColor,
+        modify: thisColor,
+        myarticle: thisColor,
+      }
+    }
+  },
   components: {
     IconBase,
     IconHome,
@@ -104,7 +140,7 @@ export default {
     IconReview,
     IconList,
     IconOrder,
-  }
+  },
 }
 </script>
 
@@ -118,23 +154,25 @@ ul {
   padding: 0px;
   bottom: 0px;
   width: 100%;
-  height: 10vh;
-  max-height: 10vh;
-  z-index:100;
+  height: 11vh;
+  max-height: 11vh;
+  z-index:1000;
   border-top: 1px solid #bcbcbc;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   background-color: white;
+  /* color:rgb(41, 124, 92) */
 }
 
 @media screen and (max-height: 799px) {
     ul {
-      min-height: 13%;
+      min-height: 14%;
     }
 }
 
 .button {
   border: none;
-  margin-top: 15px;
+  margin-top: 20px;
+  padding: 0px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -144,15 +182,13 @@ ul {
   width: 70px;
   height: 60px;
   max-width: 18vw;
+  cursor: pointer;
 }
 
 .navicon {
-  color: rgba(0, 0, 0, 0.9)
-}
-
-.navicon:hover {
-  color: darkgoldenrod;
-  cursor: pointer;
+  transition: ease-out 300ms;
+  transition-duration: 300ms;
+  width: 100%;
 }
 
 .navdesc {
@@ -164,14 +200,15 @@ ul {
   height: 65px;
 }
 
-#ordericon {
-  color: rgb(255, 201, 0);
-  filter: brightness(100%);
-  margin-bottom: 3px;
+#order-desc {
+  color: rgb(255, 150, 0);
+  font-weight: bold;
 }
 
-#ordericon:hover {
-  color: green;
+#ordericon {
+  color: rgb(255, 150, 0);
+  filter: brightness(100%);
+  margin-bottom: 3px;
 }
 
 .space {

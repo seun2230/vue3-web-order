@@ -3,7 +3,7 @@
       @click="addCart()">
       <div class="infos">
       <img
-        :src="food.food_image1" 
+        :src="food.food_image1"
         :alt="food.food_name" />
         <div class="detail">
           <div class="name">
@@ -12,7 +12,7 @@
           <div class="description">
           </div>
           <div class="price">
-            <span>{{ food.food_price }} 원</span>
+            <span class="price-num">{{ food.food_price }}</span>&nbsp;<span>원</span>
           </div>
         </div>
       </div>
@@ -60,7 +60,12 @@ export default {
     font-weight: 800;
     color: $menuBg;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+    transition: ease-out 300ms;
+    transition-duration: 300ms;
     .detail {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       padding: 10px;
       margin-left: 10px;
       height: 100%;
@@ -78,14 +83,23 @@ export default {
         overflow: hidden;
       }
       .price {
+        display: flex;
+        justify-content: flex-end;
+        padding-top:5px;
         text-align: right;
         width: 100%;
         height: 30%;
+      }
+      .price-num {
+        font-size: 1.1rem;
       }
     }
   }
   span {
     height: 100%;
   }
+}
+.infos:active {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 </style>

@@ -2,7 +2,7 @@
   <div class="title">
     <div class="arrow">
       <button @click="Backward"
-        class="backwardBtn"><i class="fas fa-arrow-left"></i>
+        class="backwardBtn"><i class="fas fa-arrow-left" id="backward"></i>
       </button>
     </div>
     <div class="routerMeta">
@@ -27,6 +27,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#backward {
+  transition: ease-out 100ms;
+  transition-duration: 300ms;
+}
+#backward:active {
+  color: rgba(255, 0, 0, 0.2);
+}
+
 .backwardBtn {
   font-size: 1.3rem;
   margin-left: 5px;
@@ -60,5 +68,6 @@ button:hover {
   width: 100%;
   height: 12vw;
   border-bottom: 1px solid #bcbcbc;
+  z-index: 1000;
 }
 </style>

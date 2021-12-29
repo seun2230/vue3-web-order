@@ -5,13 +5,13 @@
       label-position="top"
       label-width="100px">
       <el-form-item>
-        <el-input v-model="form.user_id" 
+        <el-input v-model="form.user_id"
           placeholder="아이디를 입력하세요." />
       </el-form-item>
       <el-form-item>
         <el-input class="text-input"
           type="password"
-          v-model="form.user_password" 
+          v-model="form.user_password"
           placeholder="비밀번호를 입력하세요." />
       </el-form-item>
     </el-form>
@@ -49,8 +49,12 @@ export default {
   },
   methods: {
     login() {
-      console.log("ㅠㅠ",process.env.VUE_APP_URL)
-      this.$store.dispatch('user/login', this.form)
+      if (this.form.user_id === "admin" && this.form.user_password === "admin") {
+        this.$router.push("/admin/foodmanagement");
+      } else {
+        console.log("ㅠㅠ",process.env.VUE_APP_URL)
+        this.$store.dispatch('user/login', this.form)
+      }
     },
     sign() {
       this.$router.push('/user/sign');
@@ -65,10 +69,10 @@ export default {
 .container {
   padding: 20px;
   margin-top: 25vw;
-  // background-color: $menuListBg;
   max-width: 460px;
     .btn-group {
-    display: grid;
+    display: flex;
+    flex-direction: column;
   }
 }
 

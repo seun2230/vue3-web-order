@@ -8,9 +8,18 @@ export default {
       token: [],
       orderList: [],
       user_info: [],
+      likeUser: [],
     }
   },
   getters: {
+    likeBtn(state) {
+      const likeInfo = state.likeUser.find(x => x.user_id === state.user_info[0].user_id);
+      if(likeInfo == null) {
+        return false;
+      } else {
+        return true;
+      }
+    },
     isAuth: function(state) {
       console.log('isAuth state', state.token);
       if (state.token.length < 1) {
@@ -28,12 +37,22 @@ export default {
     }
   },
   mutations: {
+    getLikeUserList(state, payload) {
+      console.log("payload", payload)
+      axios.get(`${process.env.VUE_APP_URL}/api/user/get/likeStatus/` + payload)
+      .then(res => {
+        console.log("server", res);
+        state.likeUser = res.data;
+      })
+      .catch(err => {
+        console.log("err", err)
+      })
+    },
     getOrderList(state) {
       axios.get(`${process.env.VUE_APP_URL}/api/user/get/orderList`)
       .then(res => {
         console.log("sss", res.data)
         state.orderList = res.data;
-        console.log("여기", state.orderList)
       }).catch(err => {
         console.log("Error", err);
       })
@@ -58,6 +77,7 @@ export default {
         console.log(err)
       })
     },
+    
   },
   actions: {
     login({ commit }, state) {
@@ -78,5 +98,11 @@ export default {
         console.log("err", err)
       })
     },
+    like({commit}) {
+      commit('setLikeUserList')
+    },
+    dislike({commit}) {
+      commit('deleteLikeUserList')
+    }
   }
 }

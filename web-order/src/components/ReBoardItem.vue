@@ -2,21 +2,19 @@
   <router-link class="container-exterrior"
     :to="{name: 'boardItem', params: { id: comment.comments_id }}">
     <div class="cards">
-      <div class="card-image">
-        <img 
-          :src="comment.comments_image"
-          :alt="comment.comments_id" />
-        {{ comment.food_price }}
-      </div>
-      <span class="badge-new">
+      <img
+        :src="comment.comments_image"
+        :alt="comment.comments_id" />
+      {{ comment.food_price }}
+      <span v-if="formmatDate" class="badge-new">
       new
       </span>
       <div class="card-content">
         <div class="card-user">
-          <span class="user-info">{{ comment.comments_user_id }}</span> 
+          <span class="user-info">{{ translateId }}</span>
         </div>
         <div class="ratings">
-          <div 
+          <div
             class="ratings-fill"
             :style="{ width: comment.ratings * 20 + '%' }">
               <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
@@ -25,8 +23,9 @@
             <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
           </div>
         </div>
-        <h3>{{ comment.comments_title }}</h3>
-        <span class="text">{{ comment.comments_text }}</span>
+        <div class="review-text">
+          <h3 class="text">{{ comment.comments_text }}</h3>
+        </div>
         <div class="review-date">{{ comment.comments_date }}</div>
       </div>
     </div>
@@ -50,39 +49,71 @@ export default {
     },
   },
   computed: {
+    // 하루 기준 시간 지나면 new badge가 없어짐
+    formmatDate() {
+      const nowDate = this.comment.comments_date;
+      const year = +nowDate.split('-')[0];
+      const month = +nowDate.split('-')[1];
+      const day = +nowDate.split('-')[2]
+      const nowDateObject = new Date(year, month, day);
+
+    return new Date().getTime() - nowDateObject.getTime() < 24 * 60 * 60 * 1000;
+
+    },
+    translateId() {
+       const userId= this.comment.comments_user_id
+       console.log(userId)
+      if(typeof userId === 'string') {
+        return userId.replace(/(?<=.).(?=.)/g, "*");
+      }
+      return null // return 값이 없으면 안됨
+    }
+
   }
 }
 </script>
 
 <style scoped lang="scss">
 @import '../scss/variables.scss';
+.container {
+  display: flex;
+}
+
 .cards {
   display: flex;
-  border: 2px solid rgb(233, 240, 247);
-  width: 100%;
+  border: 3px solid rgb(233, 240, 247);
+  width: 100vw;
+  height: 150px;
+  transition: ease-out 300ms;
+  transition-duration: 300ms;
+}
+
+.cards:active {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .badge-new {
   position: absolute;
-  right: 5px;
   background: orange;
+  width: 40px;
   color: #fff;
-  border-radius: 2px solid;
   text-transform: uppercase;
   font-weight: bold;
   font-style: oblique;
-// box-shadow: 0px 1px 3px 2px #ebebeb inset;
 }
-.card-image {
-  img {
+
+img {
   border-radius: .2rem;
-  width: 200px;
-  height: 240px;
-  }
+  width: 150px;
+  min-height: 140px;
+  max-width: 32vw;
+  min-width: 32vw;
+  object-fit: cover;
+  z-index: 0;
 }
+
 .card-content {
-  width: 320px;
-  min-height: 200px;
+  width: 100%;
   padding: 15px;
   // text-align: center;
 
@@ -91,19 +122,20 @@ export default {
     font-weight: 600;
   }
   .review-date {
-    padding-top: 40px;
+    margin-top: 30px;
     float: right;
-    top: -10px;
-    bottom: 10px;
-    color: rgb(170, 168, 168);
+    font-size: 15px;
+    color: rgb(139, 137, 137);
   }
 }
+
 .text {
-  display: -webkit-box;
-  word-wrap: break-word;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  // text가 많은 경우 생략 기호 보여주기
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 220px;
+  font-weight: 500;
+  font-size: 1rem;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -113,11 +145,11 @@ export default {
   position: relative;
   unicode-bidi: bidi-override;
   width: max-content;
-  -webkit-text-fill-color: transparent; 
+  -webkit-text-fill-color: transparent;
   -webkit-text-stroke-width: 1.3px;
   -webkit-text-stroke-color: rgba(255, 255, 255, 0.322);
 }
- 
+
 .ratings-fill {
   position: absolute;
   top: 0;
@@ -126,5 +158,5 @@ export default {
   overflow: hidden;
   -webkit-text-fill-color: rgba(245, 148, 22, 0.842);
 }
- 
+
 </style>

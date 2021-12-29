@@ -1,8 +1,9 @@
 <template>
   <div class="container">
+    <h4 class="title">게시판 관리</h4>
     <el-table
       ref="multipleTable"
-      :data="comments"
+      :data="paginatedData"
       style="width: 100%">
       <el-table-column
         property="title"
@@ -28,6 +29,10 @@
         label="평점"
         width="50px" />
       <el-table-column
+        property="status"
+        label="공개"
+        width="50px" />
+      <el-table-column
         fixed="right"
         label="Operations"
         width="120px">
@@ -41,6 +46,15 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="page-view">
+      <el-button @click="prevPage" type="text" :disabled="pageNum === 0">
+       이전
+      </el-button>
+      <span class="page-count">{{ pageNum + 1}} / {{ pageCount }}</span>
+      <el-button @click="nextPage" type="text" :disabled="pageNum >= pageCount -1">
+       다음
+      </el-button>
+    </div>
   </div>
 </template>
 
@@ -49,11 +63,20 @@ import { mapState } from 'vuex'
 import axios from 'axios'
 
 export default {
+  props: {
+    pageSize: {
+      type: Number,
+      required: false,
+      default: 5,
+    },
+  },
   components: {
   },
   data() {
     return {
       index: [],
+      pageNum: 0,
+      pageList: [],
     }
   },
   created() {
@@ -63,8 +86,26 @@ export default {
     ...mapState('admin', [
       'comments'
     ]),
+    pageCount() {
+      let listLength = this.comments.length,
+          listSize = this.pageSize,
+          page = Math.floor(listLength / listSize);
+      if(listLength % listSize > 0) page += 1;
+      return page;
+    },
+    paginatedData() {
+      const start = this.pageNum * this.pageSize;
+      const end = start + this.pageSize;
+      return this.comments.slice(start, end);
+    },
   },
   methods: {
+    nextPage() {
+      this.pageNum += 1;
+    },
+    prevPage() {
+      this.pageNum -= 1;
+    },
     deleteRow(index) {
       let delete_id = this.comments[index]
       axios.post(`${process.env.VUE_APP_URL}/api/admin/post/commentDelete`,
@@ -87,12 +128,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../scss/variables.scss';
-
 .container {
   padding: 10px;
   background: #ffffff;
   border-radius: 2px;
+  .title {
+    text-align: center;
+  }
 }
 
 </style>

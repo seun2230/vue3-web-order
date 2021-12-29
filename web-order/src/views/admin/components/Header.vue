@@ -1,18 +1,23 @@
 <template>
-  <el-page-header content="detail" @back="goBack" />
+  <div class="container">
+    <p class="header">text</p>
+  </div>
 </template>
+
 <script>
-import { defineComponent } from 'vue'
 
-export default defineComponent({
-  setup() {
-    const goBack = () => {
-      console.log('go back')
-    }
+export default {
 
-    return {
-      goBack,
-    }
-  },
-})
+}
 </script>
+
+<style lang="scss" scoped>
+.container {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  .header {
+    color: #ffffff;
+  }
+}
+</style>

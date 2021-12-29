@@ -6,7 +6,7 @@
         <p>{{ reply.reply_text }}</p>
       </div>
       <div class="reply-date">
-        <p>{{ reply.reply_date }}</p>
+        <span style="font-size: 15px; color: grey">{{ reply.reply_date }}</span>
       </div>
       <form>
         <div class="form-hidden">
@@ -20,7 +20,7 @@
               type="textarea" />
             <el-button 
               type="text"
-              @click="modifyReply(this.reply.id_reply)">수정
+              @click="modifyReply(this.reply.id_reply,this.textarea);this.textarea=``">수정
             </el-button>
             <el-button 
               type="text"
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+
 export default {
   data() {
     return {
@@ -56,7 +56,15 @@ export default {
     reply: {
       type: Object,
       default: function() { return{} }
+    },
+    deleteReply : {
+      type:Function
+    },
+    modifyReply : {
+      type:Function
     }
+
+    
   },
   methods: {
     closeToggle() {
@@ -65,41 +73,8 @@ export default {
     clickToggle() {
       this.toggle = true;
     },
-    modifyReply(reply_ID) {
-      const text = this.textarea;
-      let data = [{"comment_text": text, "reply_id": reply_ID }]
-      axios.post(`${process.env.VUE_APP_URL}/api/user/modify/reply`,
-      JSON.stringify(data), {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      })
-      .then(({data}) => {
-        console.log("data success!", data);
-        this.$router.push('/user/board')
-      })
-      .catch(err => {
-        console.log("data fail", err);
-      })
-    },
-    deleteReply(reply_ID) {
-      let data = [ {"reply_id": reply_ID }]
-      axios.post(`${process.env.VUE_APP_URL}/api/user/delete/reply`,
-      JSON.stringify(data), {
-         headers: {
-          'Content-Type': 'application/json'
-        },
-      })
-      .then(({data}) => {
-        console.log("data Success!", data)
-        setTimeout(() => {
-          this.$router.push('/user/board')
-        },2000)
-      })
-      .catch(err => {
-        console.error("data Fail!", err)
-      })
-    }
+   
+    
   }
 }
 </script>
@@ -108,36 +83,40 @@ export default {
 .reply-container {
   padding: 10px;
 
-  span {
+}
+.reply-content {
+  // display: inline-block;
+   span {
     font-weight: bold;
+    padding-right: 10px;
   }
-}
-.reply-right{
-	position: relative;
-	background: #eaf1f1;
-  align-items: center;
-	border-radius: .4em;
-  width: 250px;
-  min-height: auto;
-  margin-bottom: 10px;
-
-  p {
-    margin: 0;
-    padding: 10px;
+  .reply-right{
+    position: relative;
+    background: #eaf1f1;
+    align-items: center;  
+    display: inline-block;  
+    width: auto;
+    border-radius: .2em;
+    box-shadow: 0 4px 2px -4px black;
+    margin-bottom: 10px;
+    p {
+      margin: 0px;
+      padding: 10px;
+    }
   }
-}
 
-.reply-right::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  border: 20px solid transparent;
-  border-right-color: #eaf1f1;
-  border-left: 10px;
-  border-top: 0;
-  margin-top: -10px;
-  margin-left: -10px;
-}  
+  .reply-right::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    border: 20px solid transparent;
+    border-right-color: #eaf1f1;
+    border-left: 10px;
+    border-top: 0;
+    margin-top: -10px;
+    margin-left: -10px;
+  }  
+}
 
 </style>

@@ -33,25 +33,14 @@ export default {
         })
       },
       getOrder(state) {
-        axios.get(`${process.env.VUE_APP_URL}/api/admin/orderlist`)
+        axios.get(`${process.env.VUE_APP_URL}/api/admin/orderList`)
         .then((res) => {
           state.order = res.data
         })
         .catch((err) => {
           console.log(err)
         })
-      },
-      resetCart(state) {
-        state.carts = []
-      },
-      success(state, payload) {
-				state.foods = payload
-			},
-
-      checkOrder(state, payload) {
-        state.order = payload
-      },
-            
+      },         
       orderList(state) {
         axios.get(`${process.env.VUE_APP_URL}/api/admin/order`)
         .then((res) => {
@@ -67,7 +56,6 @@ export default {
         console.log("error")
       },
       addToCart(state, food) {
-        // let date = new Date();
         let addCart = state.carts.find(item => { 
           return item.food_id === food.food_id; 
         });
@@ -79,11 +67,9 @@ export default {
 
         let copiedFood = Object.assign({
           quantity : 1,
-          user_id : 1,
         }, food)
 
         state.carts.push(copiedFood)
-       //  state.order.push(copiedFood)
       },
       increaseToCount(state,food) {
         let addItem = state.carts.find(item => item.id == food.id);

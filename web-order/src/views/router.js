@@ -13,7 +13,13 @@ import BoardModify from '../components/BoardModify'
 import MenuPage from '../views/user/page/MenuPage.vue'
 import UserPage from '../views/user/UserPage.vue'
 import UserMyPage from '../views/user/page/UserMyPage.vue'
+import ShopInfo from '../views/user/page/ShopInfo.vue'
 import store from '../store'
+import NullImageManagePage from './admin/page/NullImageManagePage';
+import SlideManagePage from './admin/page/SlideManagePage.vue'
+import OrderPage from './admin/page/OrderPage.vue'
+import MyArticlePage from '../views/user/page/MyArticlePage.vue';
+import UserManagePage from './admin/page/UserManagePage.vue'
 
 const beforeAuth = isAuthenticated => (from, to, next) => {
   const isAuth = store.getters['user/isAuth'];
@@ -51,7 +57,13 @@ const routes = [
     component: UserPage,
     children: [
       {
-        path: 'review',
+        path: 'myarticle',
+        name: 'myarticle',
+        component: MyArticlePage,
+        meta: { metaName: '관심 리뷰'}
+      },
+      {
+        path: 'review/:id',
         name: 'review',
         component: Review,
         meta: { metaName: '리뷰 작성'}
@@ -72,11 +84,11 @@ const routes = [
         path: 'board/modify/:id',
         name: 'boardModify',
         component: BoardModify,
-
+        meta: { metaName: '리뷰 수정'}
       },
       {
         path: 'sign',
-        name: 'Sign',
+        name: 'sign',
         component: SignPage,
         meta: { metaName: '회원가입'}
       },
@@ -88,7 +100,7 @@ const routes = [
       },
       {
         path: 'menu',
-        name: 'Menu',
+        name: 'menu',
         component: MenuPage,
         meta: { metaName: '주문하기'}
       },
@@ -110,6 +122,12 @@ const routes = [
         name: 'mypage',
         component: UserMyPage,
         meta: { metaName: '주문 내역'}
+      },
+      {
+        path: 'shopinfo',
+        name: 'shopinfo',
+        component: ShopInfo,
+        meta: { metaName: '매장 정보' }
       }
     ]
   },
@@ -123,17 +141,30 @@ const routes = [
     //  nav가 어디에 포함되어야 할 지가 애매해짐.
     //  -> app.js 수준에서 라우터의 meta data를 읽어와서 선택적 렌더링
     children: [
-      // {
-      //   path: 'dashBoard',
-      //   name: "DashBoard",
-      //   component: DashBoard,
-      //   meta: { RootName: 'admin' },
-      // },
+      {
+        path: 'nullImage',
+        name: 'nullImage',
+        component: NullImageManagePage,
+      },
       {
         path: 'foodManagement',
         name: 'foodManagement',
         component: FoodManagePage,
-        meta: { RootName: 'admin' },
+      },
+      {
+        path: 'SlideImage',
+        name: 'SlideImage',
+        component: SlideManagePage,
+      },
+      {
+        path: 'order',
+        name: 'order',
+        component: OrderPage,
+      },
+      {
+        path: 'userManagement',
+        name: 'userManagement',
+        component: UserManagePage
       }
     ]
   },

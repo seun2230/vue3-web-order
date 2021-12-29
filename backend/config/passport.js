@@ -20,22 +20,71 @@ const LocalStrategyOption = {
   passwordField: "user_password"
 }
 
-async function kakaoVerify (accessToken, refreshToken, profile, done) { 
+async function kakaoVerify (accessToken, refreshToken, profile, done) {
   console.log(accessToken); 
   console.log(profile);
-  return done();
+  try {
+    console.log("kakaoVerify Start !");
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      const sql = "SELECT * FROM users WHERE user_id = ?"
+      const value = [ profile.id ]
+      const [rows] = await connection.query(sql, value);
+      let user = rows[0]
+      if(user === undefined) {
+        const salt = await bcrypt.genSalt(10);
+        const encryptedPassword = bcrypt.hashSync(profile.id + "kakao", salt);
+        let sql = 'INSERT INTO users'  +
+          '(user_id, user_name, user_password, user_birthday, user_phone, user_gender)' +
+          'VALUES(?, ?, ?, ?, ?, ?)';
+        let value = [
+          profile.id,
+          profile.username,
+          encryptedPassword,
+          profile._json.kakao_account.birthday,
+          null,
+          profile._json.kakao_account.gender
+        ]
+        await connection.query(sql, value);
+        const [rows] = await connection.query("SELECT * FROM users WHERE user_id = ? ", profile.id)
+        let user = rows[0]
+        console.log(user.user_password)
+        console.log(checkPassword)
+        const checkPassword = await bcrypt.compare(profile.id + "kakao", user.user_password);
+        if (!checkPassword) {
+          return done("비밀번호가 틀렸습니다.", false);
+        }
+        connection.release();
+        return done()
+      }
+      const checkPassword = await bcrypt.compare(profile.id + "kakao", user.user_password);
+      if (!checkPassword) {
+        return done("비밀번호가 틀렸습니다.", false);
+      }
+      return done()
+    } catch(err) {
+      connection.release();
+      console.log("Query Error")
+      console.log(err)
+      return done(err);
+    } 
+  } catch(err) {
+    console.log("DB Error")
+    console.log(err)
+    return done(err);
+  }
 };
 
 async function localVerify(user_id, user_password, done) {
   try {
     console.log("localVerify Start Connection")
-    const connection = await pool.getConnection(conn => conn);
+    const connection = await pool.getConnection(async conn => conn);
     try {
       const sql = 'SELECT * FROM users WHERE user_id = ?'
       const value = [ user_id ]
       const [rows] = await connection.query(sql, value)
       let user = rows[0]
-            
+      console.log("user", user);
       //  아이디가 존재 하지 않을 경우
       if(rows[0] === undefined) {
         return done("아이디가 존재 하지 않습니다.", false)

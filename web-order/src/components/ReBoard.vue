@@ -4,7 +4,7 @@
       <el-button
         class="btn-comment"
         type="text"
-        @click="writeComment()"><i class="far fa-edit"></i> 작성하기</el-button>
+        @click="writeComment()"><i class="far fa-edit"></i></el-button>
     </div>
     <ReBoardItem
       v-for="comment in paginatedData"
@@ -15,11 +15,12 @@
     </div>
     <div class="page-view">
       <el-button @click="prevPage" type="text" :disabled="pageNum === 0">
-        first <i class="fas fa-angle-left"></i>
+        prev <i class="fas fa-angle-left"></i>
       </el-button>
       <span class="page-count">{{ pageNum + 1}} / {{ pageCount }}</span>
-      <el-button @click="nextPage" type="text" :disabled="pageNum >= pageCount -1">
-        last <i class="fas fa-angle-right"></i>
+      <el-button @click="nextPage" type="text"
+        :disabled="pageNum >= pageCount -1">
+        next <i class="fas fa-angle-right"></i>
       </el-button>
     </div>
   </div>
@@ -36,7 +37,7 @@ export default {
     pageSize: {
       type: Number,
       required: false,
-      default: 6
+      default: 4
     },
   },
   beforeCreate() {
@@ -61,7 +62,7 @@ export default {
       this.pageNum -= 1;
     },
     writeComment() {
-      this.$router.push('/user/review');
+      this.$router.push('/user/mypage');
     },
   },
   computed: {
@@ -78,7 +79,7 @@ export default {
     paginatedData() {
       const start = this.pageNum * this.pageSize;
       const end = start + this.pageSize;
-      return this.comments.slice(start, end)
+      return this.comments.reverse().slice(start, end);
     }
   },
 }
@@ -87,16 +88,20 @@ export default {
 <style lang="scss">
 .btn-fade {
   position: fixed;
-  bottom: 120px;
+  bottom: 100px;
   right: 12px;
+  z-index: 30;
 
   .btn-comment {
     width: 20vh;
     color:red;
     background: #fff;
-    border-radius: 1rem;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.13);
+    border-radius: 10rem;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
     overflow: hidden;
+    font-size: 2rem;
+    width: 70px;
+    padding-left: 8px;
   }
 }
 .page-view {
@@ -107,15 +112,15 @@ export default {
   padding: 10px;
 }
 .star-ratings {
-  color: #aaa9a9; 
+  color: #aaa9a9;
   position: relative;
   unicode-bidi: bidi-override;
   width: max-content;
-  -webkit-text-fill-color: transparent; 
+  -webkit-text-fill-color: transparent;
   -webkit-text-stroke-width: 1.3px;
   -webkit-text-stroke-color: #2b2a29;
 }
- 
+
 .star-ratings-fill {
   color: #fff58c;
   padding: 0;
@@ -127,9 +132,14 @@ export default {
   overflow: hidden;
   -webkit-text-fill-color: gold;
 }
- 
+
 .star-ratings-base {
   z-index: 0;
   padding: 0;
+}
+
+p {
+  text-align: center;
+  margin-top: 100px;
 }
 </style>
