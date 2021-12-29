@@ -247,6 +247,7 @@ export default {
         console.log("keyword", keyword)
         formData.append("keyword", keyword);
       }
+      
       for(let i = 0; i < this.files.length; i++) {
         let file = this.files[i].file;
         console.log("file test", file)
