@@ -47,7 +47,7 @@ export default {
           }
         ];
         console.log(this.files);
-        this.$emit('setData', this.files)
+        this.$emit('set-data', this.files)
         num = i;
       }
       this.uploadImageIndex = num + 1;
@@ -55,7 +55,7 @@ export default {
     fileDeleteButton(e) {
       const name = e.target.getAttribute('name');
       this.files = this.files.filter(data => data.number !== Number(name));
-      this.$emit('setData', this.files)
+      this.$emit('set-data', this.files)
     },
   }
 }
