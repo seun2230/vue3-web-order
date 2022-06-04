@@ -1,10 +1,11 @@
 <template>
   <div class="container">
     <div class="btn-fade">
-      <el-button
-        class="btn-comment"
+      <button
         type="text"
-        @click="writeComment()"><i class="far fa-edit"></i></el-button>
+        class="gd-button"
+        @click="writeComment()">리뷰 등록
+      </button>
     </div>
     <ReBoardItem
       v-for="comment in paginatedData"
@@ -18,7 +19,10 @@
         prev <i class="fas fa-angle-left"></i>
       </el-button>
       <span class="page-count">{{ pageNum + 1}} / {{ pageCount }}</span>
-      <el-button @click="nextPage" type="text"
+      <el-button 
+        @click="nextPage"
+        
+        type="text"
         :disabled="pageNum >= pageCount -1">
         next <i class="fas fa-angle-right"></i>
       </el-button>
@@ -30,6 +34,7 @@
 import ReBoardItem from './ReBoardItem.vue'
 import { mapState } from 'vuex';
 export default {
+  name: 'ReBoard',
   components: {
     ReBoardItem
   },
@@ -79,13 +84,15 @@ export default {
     paginatedData() {
       const start = this.pageNum * this.pageSize;
       const end = start + this.pageSize;
-      return this.comments.reverse().slice(start, end);
+      return this.comments.slice(start, end).reverse();
     }
   },
 }
 </script>
 
 <style lang="scss">
+@import '../assets/scss/_components.scss';
+
 .btn-fade {
   position: fixed;
   bottom: 100px;
@@ -142,4 +149,5 @@ p {
   text-align: center;
   margin-top: 100px;
 }
+
 </style>

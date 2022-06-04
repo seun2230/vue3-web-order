@@ -1,39 +1,30 @@
 <template>
-  <router-link class="container-exterrior"
+  <router-link 
+    class="container-exterrior"
     :to="{name: 'boardItem', params: { id: comment.comments_id }}">
     <div class="cards">
-      <img
+      <!-- <img
         :src="comment.comments_image"
         :alt="comment.comments_id" />
-      {{ comment.food_price }}
-      <span v-if="formmatDate" class="badge-new">
-      new
-      </span>
-      <div class="card-content">
-        <div class="card-user">
-          <span class="user-info">{{ translateId }}</span>
-        </div>
-        <div class="ratings">
-          <div
-            class="ratings-fill"
-            :style="{ width: comment.ratings * 20 + '%' }">
-              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-          </div>
-          <div class="ratings-before">
-            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-          </div>
-        </div>
-        <div class="review-text">
+      {{ comment.food_price }} -->
+      <div class="content">
+        <div class="text">
           <h3 class="text">{{ comment.comments_text }}</h3>
         </div>
-        <div class="review-date">{{ comment.comments_date }}</div>
+
+        <div class="user">
+          <span class="user-info">{{ translateId }}</span>
+        </div>
+        <!-- <div class="review-date">{{ comment.comments_date }}</div> -->
       </div>
     </div>
   </router-link>
 </template>
 
 <script>
+
 export default {
+  name: 'ReBoardItem',
   props: {
     comment: {
       type: Object,
@@ -42,11 +33,6 @@ export default {
     },
   },
   methods: {
-    ratingToPercent() {
-      const score = this.comment.ratings;
-      console.log(score);
-      return score * 20;
-    },
   },
   computed: {
     // 하루 기준 시간 지나면 new badge가 없어짐
@@ -75,31 +61,19 @@ export default {
 
 <style scoped lang="scss">
 @import '../scss/variables.scss';
-.container {
-  display: flex;
-}
 
 .cards {
   display: flex;
-  border: 3px solid rgb(233, 240, 247);
-  width: 100vw;
-  height: 150px;
+  margin: 20px;
+  border: 1px solid rgb(139, 137, 137, 0.3);
+  box-shadow:  0px 2px 5px rgb(0,0,0, 0.1);
+  border-radius: 10px;
   transition: ease-out 300ms;
   transition-duration: 300ms;
 }
 
 .cards:active {
   background-color: rgba(0, 0, 0, 0.1);
-}
-
-.badge-new {
-  position: absolute;
-  background: orange;
-  width: 40px;
-  color: #fff;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-style: oblique;
 }
 
 img {
@@ -112,12 +86,11 @@ img {
   z-index: 0;
 }
 
-.card-content {
+.content {
   width: 100%;
   padding: 15px;
-  // text-align: center;
 
-  .user-info {
+  .user {
     color: rgb(99, 94, 94);
     font-weight: 600;
   }
@@ -139,24 +112,4 @@ img {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-.ratings {
-  display: inline-block;
-  position: relative;
-  unicode-bidi: bidi-override;
-  width: max-content;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke-width: 1.3px;
-  -webkit-text-stroke-color: rgba(255, 255, 255, 0.322);
-}
-
-.ratings-fill {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  overflow: hidden;
-  -webkit-text-fill-color: rgba(245, 148, 22, 0.842);
-}
-
 </style>
