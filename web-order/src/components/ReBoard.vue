@@ -1,10 +1,20 @@
 <template>
   <div class="container">
-    <div class="btn-fade">
+    <div class="nav">
+      <span>평점순</span>
+      <span>최신순</span>
+      <button>사진 리뷰</button>
+    </div>
+    <div class="comment">
+      전체 리뷰
+      <span>{{ comments.length }}</span>
+    </div>
+    <div class="btn btn--fade">
       <button
         type="text"
         class="gd-button"
-        @click="writeComment()">리뷰 등록
+        @click="writeComment()">
+        리뷰 등록
       </button>
     </div>
     <ReBoardItem
@@ -14,27 +24,29 @@
     <div v-if="comments.length == 0">
       <p>등록된 리뷰가 없습니다.</p>
     </div>
-    <div class="page-view">
-      <el-button @click="prevPage" type="text" :disabled="pageNum === 0">
+    <!-- <div class="page--view">
+      <el-button 
+        @click="prevPage" 
+        type="text" 
+        :disabled="pageNum === 0">
         prev <i class="fas fa-angle-left"></i>
       </el-button>
-      <span class="page-count">{{ pageNum + 1}} / {{ pageCount }}</span>
+      <span class="page--count">{{ pageNum + 1}} / {{ pageCount }}</span>
       <el-button 
         @click="nextPage"
-        
         type="text"
         :disabled="pageNum >= pageCount -1">
         next <i class="fas fa-angle-right"></i>
       </el-button>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import ReBoardItem from './ReBoardItem.vue'
 import { mapState } from 'vuex';
+
 export default {
-  name: 'ReBoard',
   components: {
     ReBoardItem
   },
@@ -45,30 +57,11 @@ export default {
       default: 4
     },
   },
-  beforeCreate() {
-    this.$store.commit('comment/getState')
-  },
-  create: {
-    ...mapState('comment', [
-      'comments'
-    ])
-  },
   data() {
     return {
       pageNum: 0,
       pageList: []
     }
-  },
-  methods: {
-    nextPage() {
-      this.pageNum += 1;
-    },
-    prevPage() {
-      this.pageNum -= 1;
-    },
-    writeComment() {
-      this.$router.push('/user/mypage');
-    },
   },
   computed: {
     ...mapState('comment', [
@@ -85,6 +78,20 @@ export default {
       const start = this.pageNum * this.pageSize;
       const end = start + this.pageSize;
       return this.comments.slice(start, end).reverse();
+    },
+  },
+  beforeCreate() {
+    this.$store.commit('comment/getState')
+  },
+  methods: {
+    nextPage() {
+      this.pageNum += 1;
+    },
+    prevPage() {
+      this.pageNum -= 1;
+    },
+    writeComment() {
+      this.$router.push('/user/mypage');
     }
   },
 }
@@ -93,61 +100,34 @@ export default {
 <style lang="scss">
 @import '../assets/scss/_components.scss';
 
-.btn-fade {
+.nav {
+  margin: 10px;
+}
+.comment {
+  margin: 10px;
+  padding: .5rem;
+  width: 350px;
+  outline: none;
+  border-radius: .2rem;
+  background-color: #f0eae4e8;
+  // box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  color: #334455;
+  font-size: 1rem;
+}
+
+.btn--fade {
   position: fixed;
   bottom: 100px;
   right: 12px;
   z-index: 30;
-
-  .btn-comment {
-    width: 20vh;
-    color:red;
-    background: #fff;
-    border-radius: 10rem;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
-    font-size: 2rem;
-    width: 70px;
-    padding-left: 8px;
-  }
 }
-.page-view {
+
+.page--view {
   text-align: center;
 }
 
-.page-count {
+.page--count {
   padding: 10px;
-}
-.star-ratings {
-  color: #aaa9a9;
-  position: relative;
-  unicode-bidi: bidi-override;
-  width: max-content;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke-width: 1.3px;
-  -webkit-text-stroke-color: #2b2a29;
-}
-
-.star-ratings-fill {
-  color: #fff58c;
-  padding: 0;
-  position: absolute;
-  z-index: 1;
-  display: flex;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  -webkit-text-fill-color: gold;
-}
-
-.star-ratings-base {
-  z-index: 0;
-  padding: 0;
-}
-
-p {
-  text-align: center;
-  margin-top: 100px;
 }
 
 </style>

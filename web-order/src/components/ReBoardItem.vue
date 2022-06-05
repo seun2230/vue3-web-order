@@ -1,19 +1,19 @@
 <template>
   <router-link 
-    class="container-exterrior"
+    class="container--exterrior"
     :to="{name: 'boardItem', params: { id: comment.comments_id }}">
     <div class="cards">
       <!-- <img
         :src="comment.comments_image"
         :alt="comment.comments_id" />
       {{ comment.food_price }} -->
-      <div class="content">
-        <div class="text">
-          <h3 class="text">{{ comment.comments_text }}</h3>
-        </div>
+      <div class="cards__content">
+        <h3 class="cards__text">
+          {{ comment.comments_text }}
+        </h3>
 
-        <div class="user">
-          <span class="user-info">{{ translateId }}</span>
+        <div class="cards__user">
+          <span class="cards__info">{{ translateId }}</span>
         </div>
         <!-- <div class="review-date">{{ comment.comments_date }}</div> -->
       </div>
@@ -64,8 +64,9 @@ export default {
 
 .cards {
   display: flex;
-  margin: 20px;
-  border: 1px solid rgb(139, 137, 137, 0.3);
+  // margin: 20px;
+  margin: 5px 10px;
+  border: 1px solid #f8f6f64d;
   box-shadow:  0px 2px 5px rgb(0,0,0, 0.1);
   border-radius: 10px;
   transition: ease-out 300ms;
@@ -86,11 +87,11 @@ img {
   z-index: 0;
 }
 
-.content {
+.cards__content {
   width: 100%;
   padding: 15px;
 
-  .user {
+  .cards__user {
     color: rgb(99, 94, 94);
     font-weight: 600;
   }
@@ -102,7 +103,7 @@ img {
   }
 }
 
-.text {
+.cards__text {
   margin-top: 10px;
   margin-bottom: 10px;
   width: 220px;
