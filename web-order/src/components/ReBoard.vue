@@ -1,54 +1,41 @@
 <template>
   <div class="container">
-    <div class="nav">
-      <span>평점순</span>
-      <span>최신순</span>
-      <button>사진 리뷰</button>
-    </div>
+    <ReBoardChart />
     <div class="comment">
-      전체 리뷰
+      리뷰
       <span>{{ comments.length }}</span>
+      <div>
+        <span>평점순</span>
+        <span @click="sortedDate">최신순</span>
+      </div>
     </div>
-    <div class="btn btn--fade">
+    <div class="btn__group">
       <button
         type="text"
-        class="gd-button"
+        class="btn btn--round"
         @click="writeComment()">
         리뷰 등록
       </button>
     </div>
     <ReBoardItem
-      v-for="comment in paginatedData"
+      v-for="comment in comments"
       :key="comment.comments_id"
       :comment="comment" />
     <div v-if="comments.length == 0">
       <p>등록된 리뷰가 없습니다.</p>
     </div>
-    <!-- <div class="page--view">
-      <el-button 
-        @click="prevPage" 
-        type="text" 
-        :disabled="pageNum === 0">
-        prev <i class="fas fa-angle-left"></i>
-      </el-button>
-      <span class="page--count">{{ pageNum + 1}} / {{ pageCount }}</span>
-      <el-button 
-        @click="nextPage"
-        type="text"
-        :disabled="pageNum >= pageCount -1">
-        next <i class="fas fa-angle-right"></i>
-      </el-button>
-    </div> -->
   </div>
 </template>
 
 <script>
-import ReBoardItem from './ReBoardItem.vue'
+import ReBoardItem from './ReBoardItem.vue';
+import ReBoardChart from './ReBoardChart.vue';
 import { mapState } from 'vuex';
 
 export default {
   components: {
-    ReBoardItem
+    ReBoardItem,
+    ReBoardChart
   },
   props: {
     pageSize: {
@@ -67,46 +54,42 @@ export default {
     ...mapState('comment', [
       'comments'
     ]),
-    pageCount() {
-      let listLeng = this.comments.length,
-          listSize = this.pageSize,
-          page = Math.floor(listLeng / listSize);
-      if(listLeng % listSize > 0) page += 1;
-      return page;
-    },
-    paginatedData() {
-      const start = this.pageNum * this.pageSize;
-      const end = start + this.pageSize;
-      return this.comments.slice(start, end).reverse();
-    },
   },
   beforeCreate() {
     this.$store.commit('comment/getState')
   },
   methods: {
-    nextPage() {
-      this.pageNum += 1;
-    },
-    prevPage() {
-      this.pageNum -= 1;
+    sortedDate() {
+      // 최신순으로 정렬 
+      // this.comments = 객체
+      const dateList = this.comments;
+      dateList.sort((a, b) => {
+        return a.comments_date - b.comments_date;
+      });
+      // for (let i = 0; i < dateList.length; i++) {
+      //   console.log("sotredDate", dateList[i].comments_date);
+      // }
+      return dateList.reverse();
     },
     writeComment() {
       this.$router.push('/user/mypage');
-    }
+    },
   },
 }
 </script>
 
 <style lang="scss">
-@import '../assets/scss/_components.scss';
+@import '../assets/scss/_common.scss';
 
 .nav {
-  margin: 10px;
+  // margin: 20px;
+  // // display: flex;
+  // left: 30px;
 }
 .comment {
   margin: 10px;
   padding: .5rem;
-  width: 350px;
+  width: auto;
   outline: none;
   border-radius: .2rem;
   background-color: #f0eae4e8;
@@ -115,11 +98,11 @@ export default {
   font-size: 1rem;
 }
 
-.btn--fade {
+.btn__group {
   position: fixed;
-  bottom: 100px;
-  right: 12px;
-  z-index: 30;
+  top: 60px;
+  right: 20px;
+  z-index: 1;
 }
 
 .page--view {

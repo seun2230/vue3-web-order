@@ -1,0 +1,65 @@
+
+.btn {
+  padding: 0.5rem;
+  border: 2px solid #333;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: #333;
+  // box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  color: #fff;
+  display: flex;
+  outline: none;
+  font-size: 16px;
+  transition: .5s;
+}
+
+// outline 
+.btn.btn--outline {
+  color: #eb2525c5;
+  border: 2px solid #eb2525c5;
+  background-color: #fff;
+}
+
+.btn.btn--outline {
+  color: #333;
+  border: 2px solid #333;
+  background-color: #fff;
+}
+
+.btn.btn--orange {
+  background-color: #e78529c5;
+  border: none;
+  color: #fff;
+}
+
+
+.btn.btn--purple {
+  background-color: #aa0ae9;
+  border: none;
+  color: #fff;
+}
+
+// round 지정
+.btn.btn--round {
+  border-radius: 15px;
+  border: 2px solid #aa0ae9;
+  background-color: #fff;
+  padding: .3rem;
+  font-size: 14px;
+  color: #aa0ae9;
+}
+
+// .gd-button {
+//   padding: .5rem;
+//   width: 350px;
+//   border: none;
+//   outline: none;
+//   border-radius: .5rem;
+//   background-color: #e78529c5;
+//   box-shadow: 0 4px 16px 0 rgba(0,0,0,0.2);
+//   color: #fff;
+//   font-size: 1rem;
+// }
+
+         
+

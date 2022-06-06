@@ -24,7 +24,6 @@
 <script>
 
 export default {
-  name: 'ReBoardItem',
   props: {
     comment: {
       type: Object,
