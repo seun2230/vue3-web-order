@@ -5,7 +5,7 @@
       리뷰
       <span>{{ comments.length }}</span>
       <div>
-        <span>평점순</span>
+        <span @click="bestComment">평점순</span>
         <span @click="sortedDate">최신순</span>
       </div>
     </div>
@@ -52,24 +52,32 @@ export default {
   },
   computed: {
     ...mapState('comment', [
-      'comments'
+      'comments',
+      'bestcomments'
     ]),
   },
   beforeCreate() {
     this.$store.commit('comment/getState')
   },
   methods: {
+    bestComment() {
+      this.$store.commit('comment/bestComments')
+    },
     sortedDate() {
       // 최신순으로 정렬 
-      // this.comments = 객체
+      // 다시 작성 필요함
       const dateList = this.comments;
       dateList.sort((a, b) => {
-        return a.comments_date - b.comments_date;
+        const x = new Date(a.comments_date).getDate();
+        const y = new Date(b.comments_date).getDate();
+        console.log(x);
+        console.log(y);
+        console.log(x > y); // x가 큰 상태
+        if ( x < y) {
+          return false;
+        }
       });
-      // for (let i = 0; i < dateList.length; i++) {
-      //   console.log("sotredDate", dateList[i].comments_date);
-      // }
-      return dateList.reverse();
+      dateList.reverse();
     },
     writeComment() {
       this.$router.push('/user/mypage');
@@ -81,11 +89,6 @@ export default {
 <style lang="scss">
 @import '../assets/scss/_common.scss';
 
-.nav {
-  // margin: 20px;
-  // // display: flex;
-  // left: 30px;
-}
 .comment {
   margin: 10px;
   padding: .5rem;

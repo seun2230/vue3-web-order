@@ -8,10 +8,11 @@ const logger = require('morgan');
 const passport = require("passport");
 const passportConfig = require('./config/passport');
 const authRouter = require("./routes/authRouter");
-const foodRouter = require("./routes/foodRouter");
 const adminRouter = require("./routes/adminRouter");
 const userRouter = require('./routes/userRouter');
 const userInfoRouter = require('./routes/userInfoRouter');
+const foodRouter = require("./routes/foodRouter");
+const commentRouter = require("./routes/commentRouter");
 
 const app = express();
 
@@ -25,11 +26,13 @@ app.use(passport.initialize())
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/food', foodRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/userinfo', userInfoRouter);
+app.use('/api/food', foodRouter);
+app.use('/api/comment', commentRouter);
+
 passportConfig();
 
 app.listen(app.get("port"), () => {
