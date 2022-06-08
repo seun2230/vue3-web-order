@@ -11,7 +11,6 @@
         <h3 class="cards__text">
           {{ comment.comments_text }}
         </h3>
-
         <div class="cards__user">
           <span class="cards__info">{{ translateId }}</span>
         </div>
@@ -34,7 +33,6 @@ export default {
   methods: {
   },
   computed: {
-    // 하루 기준 시간 지나면 new badge가 없어짐
     formmatDate() {
       const nowDate = this.comment.comments_date;
       const year = +nowDate.split('-')[0];
@@ -59,11 +57,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../scss/variables.scss';
+// @import '../../scss/variables.scss';
 
 .cards {
   display: flex;
-  // margin: 20px;
   margin: 5px 10px;
   border: 1px solid #f8f6f64d;
   box-shadow:  0px 2px 5px rgb(0,0,0, 0.1);

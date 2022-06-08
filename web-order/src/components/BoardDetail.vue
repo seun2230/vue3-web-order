@@ -3,21 +3,17 @@
     <div class="inner">
       <div class="user_info">
         <div class="user">
-          <el-avatar>{{ reviewInfo.comments_user_id }}</el-avatar>
+          <el-avatar>
+            {{ reviewInfo.comments_user_id }}
+          </el-avatar>
         </div>
         <div class="user">
-          <p>{{reviewInfo.comments_user_id}}</p>
-          <div class="ratings">
-            <div
-              class="ratings-fill"
-              :style="{ width: reviewInfo.ratings * 20 + '%' }">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-            </div>
-            <div class="ratings-before">
-              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-            </div>
-          </div>
-            <span class="user_date">{{ reviewInfo.comments_date  }}</span>
+          <p>
+            {{ reviewInfo.comments_user_id }}
+          </p>
+          <span class="user_date">
+            {{ reviewInfo.comments_date }}
+          </span>
         </div>
       </div>
       <el-carousel 
@@ -38,43 +34,67 @@
           <img
             v-if="reviewInfo.comments_image3 !== this.nullImage"
             :src="reviewInfo.comments_image3" />
-          </el-carousel-item>
-        </el-carousel>
+        </el-carousel-item>
+      </el-carousel>
       <div class="user_order">
-        <span>{{ reviewInfo.food_name}}</span>
+        <span>
+          {{ reviewInfo.food_name }}
+        </span>
       </div>
       <div class="keyword-box">
-        <div class="keyword-hidden" id="hidden" @click="clickHidden()">
-          <div class="keyword"
+        <div 
+          class="keyword-hidden"
+          id="hidden"
+          @click="clickHidden()">
+          <div 
+            class="keyword"
             v-for="keyword in keywords"
             :key="keyword.id_keyword">
-            <span class="keyword-text">{{ keyword.keyword }}</span>
+            <span class="keyword-text">
+              {{ keyword.keyword }}
+            </span>
           </div>
         </div>
       </div>
       <div class="user_text">
-        <p>{{ reviewInfo.comments_text}}</p>
+        <p>{{ reviewInfo.comments_text }}</p>
       </div>
       <div class="user-click">
-        <div v-if="!likeBtn" class="like-btn">
-          <p @click="clickLike()"><i class="far fa-thumbs-up fa-2x"></i>{{ this.likeUser.length }}</p>
+        <div 
+          v-if="!likeBtn" 
+          class="like-btn">
+          <p @click="clickLike()">
+            <i class="far fa-thumbs-up fa-2x"></i>
+            {{ this.likeUser.length }}
+          </p>
         </div>
-        <div v-else class="unlike-btn">
-          <p @click="deleteLike()" style="color: red"><i class="far fa-thumbs-up fa-2x"></i>{{ this.likeUser.length }}</p>
+        <div 
+          v-else 
+          class="unlike-btn">
+          <p 
+            @click="deleteLike()" 
+            style="color: red">
+            <i class="far fa-thumbs-up fa-2x"></i>
+            {{ this.likeUser.length }}
+          </p>
         </div>
         <div class="reply-btn">
-        <p @click="clickReply()"><i class="far fa-comment-dots fa-2x"></i> {{ reply.length }}</p>
+          <p @click="clickReply()">
+            <i class="far fa-comment-dots fa-2x"></i> 
+            {{ reply.length }}
+          </p>
         </div>
       </div>
       <div class="btn_group">
         <el-button
           type="default"
-          @click="deleteComment()">삭제
+          @click="deleteComment()">
+          삭제
         </el-button>
         <el-button
-         type="default"
-         @click="modifyComment()">
-         수정
+          type="default"
+          @click="modifyComment()">
+          수정
         </el-button>
       </div>
     </div>
@@ -87,12 +107,15 @@
           placeholder="댓글 달기 ..."
           show-word-limited
           type="text">
-          <template #append
-             style="text-align: center">
+          <template 
+            #append
+            style="text-align: center">
             <el-button
               type="text"
               class="btn_write"
-              @click="writeReply()">등록</el-button>
+              @click="writeReply()">
+              등록
+            </el-button>
           </template>
         </el-input>
       </div>
@@ -101,7 +124,7 @@
         :reply="replyChild"
         :key="replyChild.id_reply"
         :deleteReply="deleteReply"
-        :modifyReply="modifyReply"/>
+        :modifyReply="modifyReply" />
     </form>
   </div>
 </template>
@@ -126,7 +149,7 @@ export default {
   created() {
     const id = this.$route.params.id;
     this.$store.commit('user/getLikeUserList', id)
-    axios.get(`${process.env.VUE_APP_URL}/api/user/get/comment/` + id)
+    axios.get(`${process.env.VUE_APP_URL}/api/comment/get/comment/` + id)
     .then(res => {
       console.log("성공", res.data)
       this.reviewInfo = res.data[0]
@@ -197,7 +220,7 @@ export default {
     deleteComment() {
       var id = this.$route.params.id;
       console.log("id", id);
-      axios.get(`${process.env.VUE_APP_URL}/api/user/delete/comment/` + id)
+      axios.get(`${process.env.VUE_APP_URL}/api/post/delete/comment/` + id)
       .then(({data}) => {
         console.log("성공", data)
         this.deleteMessage = "삭제됐습니다."
@@ -413,24 +436,6 @@ img {
 
 .element-style {
   height: 100px;
-}
-.ratings {
-  display: inline-block;
-  position: relative;
-  unicode-bidi: bidi-override;
-  width: max-content;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke-width: 1.3px;
-  -webkit-text-stroke-color: rgba(255, 255, 255, 0.322);
-}
-
-.ratings-fill {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  overflow: hidden;
-  -webkit-text-fill-color: rgba(245, 148, 22, 0.842);
 }
 
 .btn_group {

@@ -7,7 +7,7 @@ import UserModify from '../views/user/page/Modify.vue'
 import SignPage from '../views/user/page/SignPage.vue'
 import LoginPage from '../views/user/page/LoginPage.vue'
 import Review from '../components/Review.vue'
-import ReBoard from '../components/ReBoard.vue'
+import CommentList from '../components/comment/CommentList.vue'
 import BoardDetail from '../components/BoardDetail.vue'
 import BoardModify from '../components/BoardModify'
 import MenuPage from '../views/user/page/MenuPage.vue'
@@ -47,7 +47,7 @@ const routes = [
   {
     path: '/board',
     name: 'board',
-    component: ReBoard,
+    component: CommentList,
     meta: { metaName: '게시판'}
   },
 
@@ -71,7 +71,7 @@ const routes = [
       {
         path: 'board',
         name: 'board',
-        component: ReBoard,
+        component: CommentList,
         meta: { metaName: '리뷰'}
       },
       {

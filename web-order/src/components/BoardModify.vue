@@ -11,7 +11,7 @@
             <el-select
               v-model="form.ratings"
               width="30px"
-              placeholder="음식/가격?" >
+              placeholder="음식/가격?">
               <el-option
                 label="😍: 아주 만족해요"
                 value="1" />
@@ -34,17 +34,20 @@
             <el-input
               v-model="form.review"
               placeholder="고객님의 의견을 남겨주세요. :)"
-              type="textarea"/>
+              type="textarea" />
           </el-form-item>
           <el-form-item>
-            <UserImagePreview @child="setData"/>
+            <UserImagePreview @child="setData" />
           </el-form-item>
           <el-form-item>
-            <el-button @click="returnBoard()">취소</el-button>
+            <el-button @click="returnBoard()">
+              취소
+            </el-button>
             <el-button
               color="black"
               class="btn-review"
-              @click="sendModify()">리뷰 수정
+              @click="sendModify()">
+              리뷰 수정
             </el-button>
           </el-form-item>
         </el-form>
@@ -85,18 +88,16 @@ export default {
       formData.append("review", this.form.review);
 
 
-      axios.post(`${process.env.VUE_APP_URL}/api/user/update/comment/` + id,
+      axios.post(`${process.env.VUE_APP_URL}/api/comment/post/update/comment/` + id,
       formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
       })
       .then((res) => {
-
         console.log("데이터 전달 성공", res);
         console.log(formData);
         console.log(id);
-        alert('고객님의 리뷰가 수정되었습니다.')
         this.$router.push('/user/board/')
       })
       .catch((err) => {
@@ -106,7 +107,6 @@ export default {
      setData(event) {
       this.files = event
     },
-
     removeFile() {
       this.files = [];
       console.log(this.files);

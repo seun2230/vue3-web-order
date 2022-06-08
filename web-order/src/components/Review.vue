@@ -11,7 +11,7 @@
             <el-select
               v-model="form.ratings"
               width="30px"
-              placeholder="음식/가격?" >
+              placeholder="음식/가격?">
               <el-option
                 label="😍: 아주 만족해요"
                 value="5" />
@@ -30,70 +30,68 @@
             </el-select>
           </el-form-item>
           <el-form-item label="키워드 등록(중복 선택 가능)" />
-          <el-carousel height="250px"
+          <el-carousel 
+            height="250px"
             :interval="8000"
             arrow="always">
             <el-carousel-item>
-               <h3>메뉴</h3>
-                <div class="keyword-menu"
-                    v-for="food in paginatedData"
-                    :key="food.food_id">
-                  <input
-                    type="checkbox"
-                    v-model="keywords"
-                    :id="food.food_name"
-                    :value="food.food_name"/>
-                  <label
-                    :for="food.food_name">{{ food.food_name }} 맛있어요</label>
-                </div>
-                <!-- <div class="page-view">
-                  <el-button @click="prevPage" type="text" :disabled="pageNum === 0">
-                    first <i class="fas fa-angle-left"></i>
-                  </el-button>
-                  <span class="page-count">{{ pageNum + 1}} / {{ pageCount }}</span>
-                  <el-button @click="nextPage" type="text" :disabled="pageNum >= pageCount -1">
-                    last <i class="fas fa-angle-right"></i>
-                  </el-button>
-                </div> -->
+              <h3>메뉴</h3>
+              <div 
+                class="keyword-menu"
+                v-for="food in paginatedData"
+                :key="food.food_id">
+                <input
+                  type="checkbox"
+                  v-model="keywords"
+                  :id="food.food_name"
+                  :value="food.food_name" />
+                <label
+                  :for="food.food_name">
+                  {{ food.food_name }} 
+                  맛있어요
+                </label>
+              </div>
             </el-carousel-item>
             <el-carousel-item>
               <h3>주문</h3>
-               <input
+              <input
                 type="checkbox"
                 v-model="keywords"
                 id="keyword1"
-                value="대기열이 짧아요"/>
+                value="대기열이 짧아요" />
               <label
-                for="keyword1">대기열 짧아요</label>
-             <input
-              type="checkbox"
-              v-model="keywords"
-               id="keyword2"
-               value="가성비가 좋아요"/>
+                for="keyword1">
+                대기열 짧아요
+              </label>
+              <input
+                type="checkbox"
+                v-model="keywords"
+                id="keyword2"
+                value="가성비가 좋아요" />
               <label for="keyword2">가성비가 좋아요</label>
-             <input
-              type="checkbox"
-              v-model="keywords"
-               id="keyword3"
-               value="주문 간편해요"/>
+              <input
+                type="checkbox"
+                v-model="keywords"
+                id="keyword3"
+                value="주문 간편해요" />
               <label for="keyword3">🛒주문 간편해요</label>
               <input
                 type="checkbox"
                 v-model="keywords"
                 id="keyword4"
-                value="결제가 빨라요"/>
+                value="결제가 빨라요" />
               <label for="keyword4">결제가 빨라요</label>
               <input
                 type="checkbox"
                 v-model="keywords"
                 id="keyword5"
-                value="주문 길어요"/>
+                value="주문 길어요" />
               <label for="keyword5">주문 길어요</label>
               <input
                 type="checkbox"
                 v-model="keywords"
                 id="keyword6"
-                value="주문 알림 필요해요"/>
+                value="주문 알림 필요해요" />
               <label for="keyword6">주문 알림 필요해요</label>
             </el-carousel-item>
             <el-carousel-item>
@@ -102,37 +100,37 @@
                 type="checkbox"
                 v-model="keywords"
                 id="keyword7"
-                value="사장님이 친절해요"/>
+                value="사장님이 친절해요" />
               <label for="keyword7">👩‍🍳사장님 친절해요"</label>
               <input
                 type="checkbox"
                 v-model="keywords"
                 id="keyword8"
-                value="뷰가 좋아요"/>
+                value="뷰가 좋아요" />
               <label for="keyword8">🏝 뷰가 좋아요</label> <br />
-               <input
+              <input
                 type="checkbox"
                 v-model="keywords"
                 id="keyword9"
-                value="분위기가 조용해요"/>
+                value="분위기가 조용해요" />
               <label for="keyword9">분위기가 조용해요</label>
               <input
                 type="checkbox"
                 v-model="keywords"
                 id="keyword10"
-                value="매장이 청결해요"/>
+                value="매장이 청결해요" />
               <label for="keyword10">매장이 청결해요</label>
-             <input
-              type="checkbox"
-              v-model="keywords"
-              id="keyword11"
-              value="주차 시설이 괜찮아요"/>
+              <input
+                type="checkbox"
+                v-model="keywords"
+                id="keyword11"
+                value="주차 시설이 괜찮아요" />
               <label for="keyword11">🚗주차 편리해요</label>
               <input
                 type="checkbox"
                 v-model="keywords"
                 id="keyword12"
-                value="혼자 와도 좋아요"/>
+                value="혼자 와도 좋아요" />
               <label for="keyword12">혼자도 편해요</label>
             </el-carousel-item>
           </el-carousel>
@@ -140,10 +138,10 @@
             <el-input
               v-model="form.review"
               placeholder="고객님의 의견을 남겨주세요. :)"
-              type="textarea"/>
+              type="textarea" />
           </el-form-item>
           <el-form-item>
-            <UserImagePreview @child="setData"/>
+            <UserImagePreview @child="setData" />
           </el-form-item>
           <el-form-item label="리뷰 공개">
             <el-radio-group v-model="form.status">
@@ -161,9 +159,12 @@
             <el-button
               type="default"
               class="btn-review"
-              @click="sendReview()">저장
+              @click="sendReview()">
+              저장
             </el-button>
-            <el-button @click="returnBoard()">취소</el-button>
+            <el-button @click="returnBoard()">
+              취소
+            </el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -259,7 +260,7 @@ export default {
       formData.append("status", this.form.status);
 
       const foodId =  this.$route.params.id;
-      axios.post(`${process.env.VUE_APP_URL}/api/user/post/comment/` + foodId,
+      axios.post(`${process.env.VUE_APP_URL}/api/comment/post/comment/` + foodId,
       formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -267,7 +268,6 @@ export default {
       })
       .then((res) => {
         console.log("데이터 전달 성공", res);
-        alert('고객님의 리뷰가 등록되었습니다.')
         this.$router.push('/user/board')
       })
       .catch((err) => {
@@ -276,7 +276,6 @@ export default {
     },
   }
 };
-
 </script>
 
 <style lang="scss" scoped>
@@ -354,5 +353,4 @@ input {
     padding: 0px;
   }
 }
-
 </style>

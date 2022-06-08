@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <ReBoardChart />
+    <CommentListChart />
     <div class="comment">
       리뷰
       <span>{{ comments.length }}</span>
@@ -17,7 +17,7 @@
         리뷰 등록
       </button>
     </div>
-    <ReBoardItem
+    <CommentListItem
       v-for="comment in comments"
       :key="comment.comments_id"
       :comment="comment" />
@@ -28,14 +28,14 @@
 </template>
 
 <script>
-import ReBoardItem from './ReBoardItem.vue';
-import ReBoardChart from './ReBoardChart.vue';
+import CommentListItem from '../comment/CommentListItem.vue';
+import CommentListChart from '../comment/CommentListChart.vue';
 import { mapState } from 'vuex';
 
 export default {
   components: {
-    ReBoardItem,
-    ReBoardChart
+    CommentListItem,
+    CommentListChart
   },
   props: {
     pageSize: {
@@ -87,7 +87,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../assets/scss/_common.scss';
+// @import '../assets/scss/_common.scss';
 
 .comment {
   margin: 10px;
