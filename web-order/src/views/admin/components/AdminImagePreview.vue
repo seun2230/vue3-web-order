@@ -1,28 +1,50 @@
 <template>
   <div class="main-container">
     <div class="room-file-upload-wrapper">
-      <div v-if="!files.length" class="room-file-upload-example-container">
+      <div 
+        v-if="!files.length" 
+        class="room-file-upload-example-container">
         <div class="room-file-upload-example">
-            <div class="room-file-notice-item room-file-upload-button">
-              <div class="image-box">
-                <label for="file">사진 등록</label>
-                <input type="file" id="file" ref="files" @change="imageUpload" multiple />
-              </div>
+          <div class="room-file-notice-item room-file-upload-button">
+            <div class="image-box">
+              <label for="file">사진 등록</label>
+              <input 
+                type="file" 
+                id="file" 
+                ref="files" 
+                @change="imageUpload" 
+                multiple />
             </div>
           </div>
         </div>
-        <div v-else class="file-preview-content-container">
-          <div class="file-preview-container">
-            <div v-for="(file, index) in files" :key="index" class="file-preview-wrapper">
-              <div class="file-close-button" @click="fileDeleteButton" :name="file.number">
+      </div>
+      <div 
+        v-else 
+        class="file-preview-content-container">
+        <div class="file-preview-container">
+          <div 
+            v-for="(file, index) in files" 
+            :key="index" 
+            class="file-preview-wrapper">
+            <div 
+              class="file-close-button" 
+              @click="fileDeleteButton" 
+              :name="file.number">
               x
-              </div>
-              <img :src="file.preview" />
             </div>
-            <div v-if="files.length < 3" class="file-preview-wrapper-upload">
-              <div class="image-box">
+            <img :src="file.preview" />
+          </div>
+          <div 
+            v-if="files.length < 3" 
+            class="file-preview-wrapper-upload">
+            <div class="image-box">
               <label for="file">추가 사진 등록</label>
-              <input type="file" id="file" ref="files" @change="imageAddUpload" multiple />
+              <input 
+                type="file" 
+                id="file" 
+                ref="files" 
+                @change="imageAddUpload" 
+                multiple />
             </div>
           </div>
         </div>
@@ -33,6 +55,7 @@
 
 <script>
 export default {
+emits: ['set-data'],
   data() {
     return {
       files: [],
@@ -53,7 +76,7 @@ export default {
           }
         ];
         console.log(this.files);
-        this.$emit('setData', this.files)
+        this.$emit('set-data', this.files)
         num = i;
       }
       this.uploadImageIndex = num + 1;
@@ -69,7 +92,7 @@ export default {
             number: i + this.uploadImageIndex
           }
         ];
-        this.$emit('setData', this.files)
+        this.$emit('set-data', this.files)
       num = i;
       }
       this.uploadImageIndex = this.uploadImageIndex + num + 1;
@@ -77,7 +100,7 @@ export default {
     fileDeleteButton(e) {
       const name = e.target.getAttribute('name');
       this.files = this.files.filter(data => data.number !== Number(name));
-      this.$emit('setData', this.files)
+      this.$emit('set-data', this.files)
     },
   }
 }
