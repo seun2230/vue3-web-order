@@ -9,6 +9,7 @@ export default {
       users: [],
       orderList: [],
       orderListComplete: [],
+      nullImages: []
     }
   },
   getters: {
@@ -55,7 +56,15 @@ export default {
         console.log(res.data)
         state.orderListComplete = res.data
       })
+    },
+    getNullImage(state, payload) {
+      axios.get(`${process.env.VUE_APP_URL}/api/admin/get/nullImage`, payload)
+      .then(res => {
+        console.log("null Image suceess", res.data);
+        state.nullImages = res.data[0].null_image;
+      })
     }
+
   },
   actions: {
 
