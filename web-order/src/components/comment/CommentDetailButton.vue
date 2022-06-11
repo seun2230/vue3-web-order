@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="btn-container">
     <div class="btn">
       <div 
         v-if="!likeBtn" 
@@ -15,13 +15,40 @@
         <i class="far fa-thumbs-up"></i>        
       </div>
     </div>
+    <div
+      @click="likeUserBtn"
+      class="btn">
+      <i class="far fa-comment-dots"></i>
+      {{ likeUser.length }}
+    </div>
+    <div>
+      <span @click="show = !show">
+        <i class="far fa-comment-dots"></i>
+      </span> 
+      <p v-if="!show">
+        <CommentDetailModal
+          @close="modal = !modal"
+          v-if="modal" />
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import CommentDetailModal from '../comment/CommentDetailModal.vue';
 import { mapState, mapGetters } from 'vuex';
+
 export default {
+  components: {
+    CommentDetailModal
+  },
+  data() {
+    return {
+      show: true,
+      modal: true
+    }
+  },
   created() {
     const id = this.$route.params.id;
     this.$store.commit('user/getLikeUserList', id);
@@ -62,16 +89,15 @@ export default {
 svg {
   color: #ccc;
 }
-/* .btn__text {
-  padding: 5px;
-  color: #ccc;
-} */
 
+.btn-container {
+  display: inline-flex;
+}
 .btn {
+  margin-right: 20px;
   color: #ccc;
   transition-duration: .3s;
 }
-
 .btn__text {
   margin: 5px;
 }

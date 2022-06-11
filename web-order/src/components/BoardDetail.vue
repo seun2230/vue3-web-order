@@ -5,7 +5,7 @@
         <el-avatar>{{ myComment.comments_user_id }}</el-avatar>
         <div class="inner__item">
           <span>{{ myComment.comments_user_id }}</span>
-          <span>5일전</span>
+          <span>{{ myComment.comments_date }}</span>
         </div>
       </div>
       <CommentNullImage
@@ -22,7 +22,6 @@
 import CommentDetailButton from './comment/CommentDetailButton.vue'
 import CommentNullImage from './comment/CommentNullImage.vue';
 import { mapState } from 'vuex';
-import axios from 'axios';
 
 export default {
   components: {
@@ -41,26 +40,6 @@ export default {
   computed: {
     ...mapState('comment', ['myComment']),
   },
-  methods: {
-    modifyComment() {
-      const id = this.$route.params.id;
-      this.$router.push('modify/' + id);
-    },
-    deleteComment() {
-      const id = this.$route.params.id;
-      axios.get(`${process.env.VUE_APP_URL}/api/post/delete/comment/` + id)
-      .then(({data}) => {
-        console.log("성공", data)
-        this.deleteMessage = "삭제됐습니다."
-        setTimeout(() => {
-          this.$router.push('/user/board');
-        },2000)
-      })
-      .catch(err => {
-        console.error("delete comment", err);
-      })
-    },
-  }
 }
 </script>
 
