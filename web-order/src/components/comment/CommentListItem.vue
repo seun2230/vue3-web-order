@@ -5,23 +5,38 @@
     <div class="cards">
       <!-- <img
         :src="comment.comments_image"
-        :alt="comment.comments_id" />
-      {{ comment.food_price }} -->
+        :alt="comment.comments_id" /> -->
+      <div class="cards__image">
+        <el-avatar>
+          {{ comment.comments_user_id }}
+        </el-avatar>
+      </div>
       <div class="cards__content">
-        <h3 class="cards__text">
-          {{ comment.comments_text }}
-        </h3>
         <div class="cards__user">
-          <span class="cards__info">{{ translateId }}</span>
+          <span class="cards__info">
+            {{ translateId }}
+          </span>
+          <span 
+            class="cards__date">
+            {{ comment.comments_date }}
+          </span>
+          <span>
+            주문 내역: {{ comment.food_items_food_id }}
+          </span>
         </div>
-        <!-- <div class="review-date">{{ comment.comments_date }}</div> -->
+        <span class="cards__text">
+          {{ comment.comments_text }}
+        </span>
+        <button class="cards__btn">
+          <i class="far fa-thumbs-up"></i>
+          도움돼요
+        </button>
       </div>
     </div>
   </router-link>
 </template>
 
 <script>
-
 export default {
   props: {
     comment: {
@@ -40,8 +55,7 @@ export default {
       const day = +nowDate.split('-')[2]
       const nowDateObject = new Date(year, month, day);
 
-    return new Date().getTime() - nowDateObject.getTime() < 24 * 60 * 60 * 1000;
-
+      return new Date().getTime() - nowDateObject.getTime() < 24 * 60 * 60 * 1000;
     },
     translateId() {
        const userId= this.comment.comments_user_id
@@ -50,8 +64,7 @@ export default {
         return userId.replace(/(?<=.).(?=.)/g, "*");
       }
       return null // return 값이 없으면 안됨
-    }
-
+    },
   }
 }
 </script>
@@ -61,16 +74,18 @@ export default {
 
 .cards {
   display: flex;
-  margin: 5px 10px;
-  border: 1px solid #f8f6f64d;
+  padding: .5rem;
+  // margin: 10px 20px;
+  height: auto;
+  background-color: #fff;
+  border-radius: .5rem;
   box-shadow:  0px 2px 5px rgb(0,0,0, 0.1);
-  border-radius: 10px;
   transition: ease-out 300ms;
   transition-duration: 300ms;
 }
 
 .cards:active {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: #333;
 }
 
 img {
@@ -88,25 +103,36 @@ img {
   padding: 15px;
 
   .cards__user {
-    color: rgb(99, 94, 94);
-    font-weight: 600;
+    padding-bottom: 10px;
+    color: #949393;
+    font-size: 12px;
+    font-weight: 600;  
   }
-  .review-date {
-    margin-top: 30px;
-    float: right;
-    font-size: 15px;
-    color: rgb(139, 137, 137);
+  .cards__date {
+    margin-left: 5px;
   }
+}
+.cards__image {
+  padding-top: 10px;
+}
+.cards__text {
+  font-size: 14px;
+  color: #333;
 }
 
-.cards__text {
+.cards__btn {
+  padding: .3rem;
   margin-top: 10px;
-  margin-bottom: 10px;
-  width: 220px;
-  font-weight: 500;
-  font-size: 1rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  box-sizing: border-box;
+  display: flex;
+  outline: none;
+  font-size: 16px;
+  font-weight: bold;
+  transition: .5s;
+  border-radius: .5rem;
+  border: 1px solid #eca115;
+  background-color: #fff;
+  color: #eca115;
 }
+
 </style>

@@ -2,11 +2,12 @@
   <div class="container">
     <CommentListChart />
     <div class="comment">
-      리뷰
-      <span>{{ comments.length }}</span>
-      <div>
+      <span class="comment__length">
+        리뷰 {{ comments.length }}건
+      </span>
+      <div class="comment__filter">
         <span @click="bestComment">평점순</span>
-        <span @click="sortedDate">최신순</span>
+        <span @click="sortDate">최신순</span>
       </div>
     </div>
     <div class="btn__group">
@@ -63,9 +64,7 @@ export default {
     bestComment() {
       this.$store.commit('comment/bestComments')
     },
-    sortedDate() {
-      // 최신순으로 정렬 
-      // 다시 작성 필요함
+    sortDate() {
       const dateList = this.comments;
       dateList.sort((a, b) => {
         const x = new Date(a.comments_date).getDate();
@@ -90,15 +89,25 @@ export default {
 // @import '../assets/scss/_common.scss';
 
 .comment {
-  margin: 10px;
-  padding: .5rem;
+  padding: 10px 20px;
+  display: flex;
   width: auto;
   outline: none;
   border-radius: .2rem;
-  background-color: #f0eae4e8;
-  // box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   color: #334455;
   font-size: 1rem;
+  .comment__length {
+    font-weight: bold;
+    font-size: large;
+  }
+  .comment__filter {
+    // float: right;
+    margin-left: auto;
+
+    span {
+      padding: 5px;
+    }
+  }
 }
 
 .btn__group {
@@ -107,13 +116,4 @@ export default {
   right: 20px;
   z-index: 1;
 }
-
-.page--view {
-  text-align: center;
-}
-
-.page--count {
-  padding: 10px;
-}
-
 </style>
