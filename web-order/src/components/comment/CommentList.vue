@@ -36,29 +36,18 @@ import { mapState } from 'vuex';
 export default {
   components: {
     CommentListItem,
-    CommentListChart
-  },
-  props: {
-    pageSize: {
-      type: Number,
-      required: false,
-      default: 4
-    },
-  },
-  data() {
-    return {
-      pageNum: 0,
-      pageList: []
-    }
+    CommentListChart,
   },
   computed: {
     ...mapState('comment', [
       'comments',
-      'bestcomments'
     ]),
   },
   beforeCreate() {
     this.$store.commit('comment/getState')
+  },
+  mounted() {
+    this.bestComment()
   },
   methods: {
     bestComment() {
@@ -69,9 +58,9 @@ export default {
       dateList.sort((a, b) => {
         const x = new Date(a.comments_date).getDate();
         const y = new Date(b.comments_date).getDate();
-        console.log(x);
-        console.log(y);
-        console.log(x > y); // x가 큰 상태
+        // console.log(x);
+        // console.log(y);
+        // console.log(x > y); // x가 큰 상태
         if ( x < y) {
           return false;
         }

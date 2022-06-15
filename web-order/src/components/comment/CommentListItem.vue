@@ -31,21 +31,25 @@
           <i class="far fa-thumbs-up"></i>
           도움돼요
         </button>
+        <CommentDetailButton 
+          :comment="comment" />
       </div>
     </div>
   </router-link>
 </template>
 
 <script>
+import CommentDetailButton  from '../comment/CommentDetailButton.vue';
 export default {
+  components: {
+    CommentDetailButton
+  },
   props: {
     comment: {
       type: Object,
       default: function() { return {} },
       required: true,
     },
-  },
-  methods: {
   },
   computed: {
     formmatDate() {
@@ -59,7 +63,7 @@ export default {
     },
     translateId() {
        const userId= this.comment.comments_user_id
-       console.log(userId)
+      //  console.log(userId)
       if(typeof userId === 'string') {
         return userId.replace(/(?<=.).(?=.)/g, "*");
       }

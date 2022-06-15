@@ -14,9 +14,9 @@
         @click="dislikeButton()">
         <i class="far fa-thumbs-up"></i>        
       </div>
+      {{ likeBtn }}
     </div>
     <div
-      @click="likeUserBtn"
       class="btn">
       <i class="far fa-comment-dots"></i>
       {{ likeUser.length }}
@@ -26,9 +26,9 @@
         <i class="far fa-comment-dots"></i>
       </span> 
       <p v-if="!show">
-        <CommentDetailModal
+        <!-- <CommentDetailModal
           @close="modal = !modal"
-          v-if="modal" />
+          v-if="modal" /> -->
       </p>
     </div>
   </div>
@@ -36,13 +36,13 @@
 
 <script>
 import axios from 'axios';
-import CommentDetailModal from '../comment/CommentDetailModal.vue';
+// import CommentDetailModal from '../comment/CommentDetailModal.vue';
 import { mapState, mapGetters } from 'vuex';
 
 export default {
-  components: {
-    CommentDetailModal
-  },
+  // components: {
+  //   CommentDetailModal
+  // },
   data() {
     return {
       show: true,
@@ -50,8 +50,16 @@ export default {
     }
   },
   created() {
-    const id = this.$route.params.id;
+    const id = this.comment.comments_id;
+    console.log("id check", id)
     this.$store.commit('user/getLikeUserList', id);
+  },
+  props: {
+    comment: {
+      type: Object,
+      default: function() { return {} },
+      required: true,
+    },
   },
   computed: {
     ...mapState('user', ['likeUser']),
@@ -59,7 +67,8 @@ export default {
   },
   methods: {
      likeButton() {
-      const id = this.$route.params.id;
+      // const id = this.$route.params.id;
+      const id = this.comment.comments_id;
       axios.post(`${process.env.VUE_APP_URL}/api/user/post/likeUp/` + id)
       .then(res => {
         console.log("server response", res.data);
