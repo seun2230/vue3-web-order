@@ -36,7 +36,7 @@ import { mapState } from 'vuex';
 export default {
   components: {
     CommentListItem,
-    CommentListChart,
+    CommentListChart
   },
   computed: {
     ...mapState('comment', [

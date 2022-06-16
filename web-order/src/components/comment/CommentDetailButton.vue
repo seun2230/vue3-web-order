@@ -6,15 +6,14 @@
         class="btn--like"
         @click="likeButton()">
         <i class="far fa-thumbs-up"></i>
-        <span class="btn__text">도움되요</span>
+        <span class="btn__text">도움돼요</span>
       </div>
       <div 
         v-else 
-        class="btn--unlike"
         @click="dislikeButton()">
-        <i class="far fa-thumbs-up"></i>        
+        <i class="far fa-thumbs-up"></i> 
+        <span>도움됐어요</span>       
       </div>
-      {{ likeBtn }}
     </div>
     <div
       class="btn">
@@ -50,25 +49,18 @@ export default {
     }
   },
   created() {
-    const id = this.comment.comments_id;
-    console.log("id check", id)
+    const id = this.$route.params.id;
+    // const id = this.comment.comments_id;
+    console.log("id check", id);
     this.$store.commit('user/getLikeUserList', id);
   },
-  props: {
-    comment: {
-      type: Object,
-      default: function() { return {} },
-      required: true,
-    },
-  },
   computed: {
-    ...mapState('user', ['likeUser']),
+    ...mapState('user', ['likeUser']),   
     ...mapGetters('user', ['likeBtn']),
   },
   methods: {
-     likeButton() {
-      // const id = this.$route.params.id;
-      const id = this.comment.comments_id;
+    likeButton() {
+      const id = this.$route.params.id;
       axios.post(`${process.env.VUE_APP_URL}/api/user/post/likeUp/` + id)
       .then(res => {
         console.log("server response", res.data);

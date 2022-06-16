@@ -31,18 +31,17 @@
           <i class="far fa-thumbs-up"></i>
           도움돼요
         </button>
-        <CommentDetailButton 
-          :comment="comment" />
       </div>
     </div>
+    <!-- <CommentDetailButton /> -->
   </router-link>
 </template>
 
 <script>
-import CommentDetailButton  from '../comment/CommentDetailButton.vue';
+// import CommentDetailButton from './CommentDetailButton.vue';
 export default {
   components: {
-    CommentDetailButton
+    // CommentDetailButton
   },
   props: {
     comment: {
