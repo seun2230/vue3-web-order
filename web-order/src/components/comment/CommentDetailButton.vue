@@ -12,51 +12,59 @@
         v-else 
         @click="dislikeButton()">
         <i class="far fa-thumbs-up"></i> 
-        <span>도움됐어요</span>       
+        <span>
+          {{ likeUser.length }}
+          도움됐어요
+        </span>       
       </div>
     </div>
     <div
-      class="btn">
+      class="btn"
+      @click="showReply()">
       <i class="far fa-comment-dots"></i>
-      {{ likeUser.length }}
+      {{ this.reply }}
     </div>
-    <div>
-      <span @click="show = !show">
-        <i class="far fa-comment-dots"></i>
-      </span> 
-      <p v-if="!show">
-        <!-- <CommentDetailModal
-          @close="modal = !modal"
-          v-if="modal" /> -->
-      </p>
-    </div>
+    <form v-if="!show">
+      <div class="form_group">
+        <input 
+          type="text" 
+          class="input-reply" 
+          v-model="textarea" 
+          placeholder="댓글을 입력하세요." />
+        <!-- <button
+          type="text"
+          class="btn-reply"
+          @click="writeReply()">
+          등록
+        </button> -->
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-// import CommentDetailModal from '../comment/CommentDetailModal.vue';
 import { mapState, mapGetters } from 'vuex';
 
 export default {
-  // components: {
-  //   CommentDetailModal
-  // },
   data() {
     return {
-      show: true,
+      show: '',
+      textarea: '',
       modal: true
     }
   },
   created() {
     const id = this.$route.params.id;
-    // const id = this.comment.comments_id;
     console.log("id check", id);
     this.$store.commit('user/getLikeUserList', id);
+    this.$store.commit('comment/getReply', id);
   },
   computed: {
     ...mapState('user', ['likeUser']),   
+    ...mapState('comment', ['Reply']),
     ...mapGetters('user', ['likeBtn']),
+  
   },
   methods: {
     likeButton() {
@@ -82,6 +90,9 @@ export default {
         console.log("err", err);
       })
     },
+    showReply() {
+      this.show = true;
+    },
   }
 }
 </script>
@@ -103,4 +114,40 @@ svg {
   margin: 5px;
 }
 
+.form_group {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 10px;
+  /* background-color: pink; */
+  position: absolute;
+  left: 0;
+  bottom: 100px;
+  /* top: ; */
+}
+
+.input-reply { 
+  border: 1px solid #ccc;
+  border-radius: .5rem;
+  padding: 10px;
+  width: 100%;
+  height: 50px;
+  /* height: 40%; */
+  /* margin-right: 100px; */
+}
+
+.btn-reply {
+  padding: .2rem;
+  /* margin-top: 10px; */
+  width: 20%;
+  box-sizing: border-box;
+  outline: none;
+  font-size: 16px;
+  font-weight: bold;
+  transition: .5s;
+  border-radius: .5rem;
+  border: 1px solid #eca115;
+  background-color: #fff;
+  color: #eca115;
+}
 </style>

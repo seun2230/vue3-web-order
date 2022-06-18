@@ -8,10 +8,11 @@ export default {
       myComment: [],
       mycomments: [],
       comment_best: [],
+      reply: []
     }
   },
   getters: {
-
+    
   },
   mutations: {
     getState(state) {
@@ -34,6 +35,13 @@ export default {
         console.log("getComment error", err);
       })
     },
+    getReply(state, payload) {
+      axios.get(`${process.env.VUE_APP_URL}/api/user/get/reply/` + payload)
+      .then(res => {
+        console.log("reply", res.data)
+        state.reply = res.data
+      })
+    },
     myArticle(state) {
       axios.get(`${process.env.VUE_APP_URL}/api/user/get/myarticle`)
       .then(res => {
@@ -54,7 +62,8 @@ export default {
       .catch(err => {
         console.log("error:", err);
       })
-    }
+    },
+    
   },
   actions: {
   }
