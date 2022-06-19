@@ -3,18 +3,21 @@
     <div class="btn">
       <div 
         v-if="!likeBtn" 
-        class="btn--like"
         @click="likeButton()">
         <i class="far fa-thumbs-up"></i>
-        <span class="btn__text">도움돼요</span>
+        <span class="btn__text">
+          {{ likeUser.length }}  
+          추천해요
+        </span>
       </div>
       <div 
         v-else 
+        :class="{'btn-dislike': isActive}"
         @click="dislikeButton()">
         <i class="far fa-thumbs-up"></i> 
         <span>
           {{ likeUser.length }}
-          도움됐어요
+          명에게 도움이 됐어요
         </span>       
       </div>
     </div>
@@ -22,21 +25,22 @@
       class="btn"
       @click="showReply()">
       <i class="far fa-comment-dots"></i>
-      {{ this.reply }}
+      {{ replys.length }}
     </div>
-    <form v-if="!show">
+    <form v-if="show">
       <div class="form_group">
         <input 
           type="text" 
           class="input-reply" 
           v-model="textarea" 
           placeholder="댓글을 입력하세요." />
-        <!-- <button
+        <button
           type="text"
           class="btn-reply"
+          :disabled="textarea.length < 1 ? true : false"
           @click="writeReply()">
           등록
-        </button> -->
+        </button>
       </div>
     </form>
   </div>
@@ -47,24 +51,29 @@ import axios from 'axios';
 import { mapState, mapGetters } from 'vuex';
 
 export default {
+  props: {
+    myComment: {
+      type: Object,
+      default: function() { return {} },
+      required: true,
+    },
+  },
   data() {
     return {
       show: '',
       textarea: '',
+      isActive: true,
       modal: true
     }
   },
   created() {
     const id = this.$route.params.id;
-    console.log("id check", id);
     this.$store.commit('user/getLikeUserList', id);
-    this.$store.commit('comment/getReply', id);
   },
   computed: {
     ...mapState('user', ['likeUser']),   
-    ...mapState('comment', ['Reply']),
+    ...mapState('comment', ['replys']),
     ...mapGetters('user', ['likeBtn']),
-  
   },
   methods: {
     likeButton() {
@@ -93,6 +102,31 @@ export default {
     showReply() {
       this.show = true;
     },
+    writeReply() {
+      const id = this.$route.params.id;
+      const foodId =  this.myComment.food_id;
+      console.log("food_id", foodId);
+      console.log("text", this.textarea);
+      // const userId = this.myComments.user_id;
+      const text = this.textarea;
+
+      let data = [{"food_id": foodId,
+        "comment_text": text }];
+      
+      console.log("data result", data);
+      axios.post(`${process.env.VUE_APP_URL}/api/user/reply/` + id,
+      JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(({data}) => {
+        console.log("data success!", data);
+      })
+      .catch(err => {
+        console.log("data fail", err);
+      })
+    },
   }
 }
 </script>
@@ -114,16 +148,17 @@ svg {
   margin: 5px;
 }
 
+.btn-dislike {
+  color: #f33c5a;
+}
 .form_group {
   display: flex;
   flex-direction: row;
   width: 100%;
   padding: 10px;
-  /* background-color: pink; */
-  position: absolute;
+  position: fixed;
   left: 0;
-  bottom: 100px;
-  /* top: ; */
+  bottom: 90px;
 }
 
 .input-reply { 
@@ -132,13 +167,10 @@ svg {
   padding: 10px;
   width: 100%;
   height: 50px;
-  /* height: 40%; */
-  /* margin-right: 100px; */
 }
 
 .btn-reply {
   padding: .2rem;
-  /* margin-top: 10px; */
   width: 20%;
   box-sizing: border-box;
   outline: none;
@@ -150,4 +182,5 @@ svg {
   background-color: #fff;
   color: #eca115;
 }
+
 </style>

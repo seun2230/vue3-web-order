@@ -13,7 +13,12 @@
       <div class="text">
         <p>{{ myComment.comments_text }}</p>
       </div>
-      <CommentDetailButton />
+      <CommentDetailButton
+        :my-comment="this.myComment" />
+      <ReplyList
+        v-for="reply in replys"
+        :reply="reply"
+        :key="reply.id_reply" />
     </div>
   </div>
 </template>
@@ -21,24 +26,32 @@
 <script>
 import CommentDetailButton from './comment/CommentDetailButton.vue'
 import CommentNullImage from './comment/CommentNullImage.vue';
+import ReplyList from './ReplyList.vue';
 import { mapState } from 'vuex';
 
 export default {
   components: {
     CommentDetailButton,
-    CommentNullImage
+    CommentNullImage,
+    ReplyList
+  },
+  props: {
   },
   data() {
     return {
-      deleteMessage: ""
+      deleteMessage: "",
     }
   },
   created() {
     const id = this.$route.params.id;
+    // const id = this.params.id;
+    console.log("id", id);
     this.$store.commit('comment/getComment', id);
+    this.$store.commit('comment/getReply', id);
   },
   computed: {
     ...mapState('comment', ['myComment']),
+    ...mapState('comment', ['replys']),
   },
 }
 </script>

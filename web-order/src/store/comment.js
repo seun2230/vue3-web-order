@@ -8,7 +8,7 @@ export default {
       myComment: [],
       mycomments: [],
       comment_best: [],
-      reply: []
+      replys: []
     }
   },
   getters: {
@@ -36,10 +36,14 @@ export default {
       })
     },
     getReply(state, payload) {
+      console.log("reply payload", payload);
       axios.get(`${process.env.VUE_APP_URL}/api/user/get/reply/` + payload)
       .then(res => {
         console.log("reply", res.data)
-        state.reply = res.data
+        state.replys = res.data
+      })
+      .catch (err => {
+        console.log("getReply error", err);
       })
     },
     myArticle(state) {
