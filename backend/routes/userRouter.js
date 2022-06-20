@@ -5,7 +5,6 @@ const { verifyToken } = require('../middleware/auth')
 const { upload } = require('../api/S3UploadStorage')
 const { format } = require('../utils/DateUtils')
 
-
 router.get('/get/orderList', verifyToken, async(req, res) => {
   try {
     const connection = await pool.getConnection(async conn => conn);
@@ -88,9 +87,9 @@ router.get('/get/reply/:id', async(req, res) => {
   }
 })
 
-router.post('/reply/:id', verifyToken, async(req,res) => {
+router.post('/write/reply/:id', verifyToken, async(req,res) => {
   try {
-    console.log("DB connection /reply/:id")
+    console.log("DB connection /write/reply/:id")
     const connection = await pool.getConnection(async conn => conn);
     try {
       const date = new Date().format('yyyy-MM-dd hh:mm')
@@ -109,7 +108,9 @@ router.post('/reply/:id', verifyToken, async(req,res) => {
       await connection.query(sql, value);
       await connection.commit();
       res.send({
-        message: "success"
+        text: req.body[0].comment_text,
+        userId: req.decoded.user_id,
+        date
       })
       connection.release();
     } catch(err) {

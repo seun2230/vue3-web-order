@@ -27,22 +27,22 @@
       <i class="far fa-comment-dots"></i>
       {{ replys.length }}
     </div>
-    <form v-if="show">
-      <div class="form_group">
-        <input 
-          type="text" 
-          class="input-reply" 
-          v-model="textarea" 
-          placeholder="댓글을 입력하세요." />
-        <button
-          type="text"
-          class="btn-reply"
-          :disabled="textarea.length < 1 ? true : false"
-          @click="writeReply()">
-          등록
-        </button>
-      </div>
-    </form>
+    <div 
+      class="form_group"
+      v-if="show">
+      <input 
+        id="textId"
+        type="text" 
+        class="input-reply" 
+        v-model="textarea" 
+        placeholder="댓글을 입력하세요." />
+      <button
+        class="btn-reply"
+        :disabled="textarea.length < 1 ? true : false"
+        @click.self.prevent="writeReply()">
+        등록
+      </button>
+    </div>
   </div>
 </template>
 
@@ -105,27 +105,14 @@ export default {
     writeReply() {
       const id = this.$route.params.id;
       const foodId =  this.myComment.food_id;
-      console.log("food_id", foodId);
-      console.log("text", this.textarea);
-      // const userId = this.myComments.user_id;
       const text = this.textarea;
 
-      let data = [{"food_id": foodId,
-        "comment_text": text }];
-      
-      console.log("data result", data);
-      axios.post(`${process.env.VUE_APP_URL}/api/user/reply/` + id,
-      JSON.stringify(data), {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      })
-      .then(({data}) => {
-        console.log("data success!", data);
-      })
-      .catch(err => {
-        console.log("data fail", err);
-      })
+      let data = [{ "food_id": foodId,
+        "comment_text": text,
+        "comment_id": id }];
+
+      this.$store.dispatch('comment/writeReply', data);
+      this.textarea='';
     },
   }
 }

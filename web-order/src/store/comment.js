@@ -15,6 +15,20 @@ export default {
     
   },
   mutations: {
+    addReply(state, payload) {
+      console.log("state", payload);
+      // // state.replys = [...state.replys, payload] 
+      let index = state.replys.find(x => x.users_user_id === payload.userId);
+
+      if(index) {
+        state.replys.push({ 
+          reply_text: payload.text,
+          reply_date: payload.date,
+          users_user_id: payload.userId
+        });
+        console.log("state.replys", state.replys);    
+      }
+    },
     getState(state) {
       axios.get(`${process.env.VUE_APP_URL}/api/comment/get/comment`)
       .then((res) => {
@@ -70,5 +84,21 @@ export default {
     
   },
   actions: {
+    writeReply({ commit }, payload) {
+      const id = payload[0].comment_id;
+      axios.post(`${process.env.VUE_APP_URL}/api/user/write/reply/` + id,
+      JSON.stringify(payload), {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      .then((res) => {
+        console.log("data success!", res.data);
+        commit('addReply', res.data);
+      })
+      .catch(err => {
+        console.log("data fail", err.response);
+      })
+    },
   }
 }
