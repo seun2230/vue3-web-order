@@ -39,21 +39,21 @@ export default {
 <style scoped lang="scss" >
 .reply-container {
   margin-top: 20px;
+  border: 2px solid #f8f9fa;
+  // background-color: #f4f4f5; 
+  box-shadow: 2px 2px 1px #0000001a;
+  border-radius: .5rem;
+  padding: 15px;
+  width: auto;
   .reply-content {
-    // background-color: beige;
     display: flex;
-
     .reply-item {
-      margin-left: 10px;
-      width: auto;
-    
+       padding: 10px;
       .reply-text {
         width: auto;
-        background-color: #e5eaf3;
-        border-radius: .5rem;
+        margin-top: 10px;
         font-size: 16px;
-        // margin: 30px;
-        padding: 15px;
+        // font-weight: bold;
       } 
     }
   }
@@ -62,6 +62,7 @@ export default {
 span {
   display: block;
   font-size: 14px;
-  color: slategray;
+  // color: slategray;
+  color: #333;
 }
 </style>

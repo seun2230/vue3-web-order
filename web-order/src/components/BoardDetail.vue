@@ -15,6 +15,22 @@
       </div>
       <CommentDetailButton
         :my-comment="this.myComment" />
+      <div 
+        class="reply-content"
+        v-if="!show">
+        <input 
+          id="textId"
+          type="text" 
+          class="reply-input" 
+          v-model="textarea" 
+          placeholder="댓글을 입력하세요." />
+        <button
+          class="reply-btn"
+          :disabled="textarea.length < 1 ? true : false"
+          @click.self.prevent="writeReply()">
+          등록
+        </button>
+      </div>
       <ReplyList
         v-for="reply in replys"
         :reply="reply"
@@ -40,6 +56,8 @@ export default {
   data() {
     return {
       deleteMessage: "",
+      show: '',
+      textarea: ''
     }
   },
   created() {
@@ -53,6 +71,23 @@ export default {
     ...mapState('comment', ['myComment']),
     ...mapState('comment', ['replys']),
   },
+  methods: {
+    showReply() {
+      this.show = true;
+    },
+    writeReply() {
+      const id = this.$route.params.id;
+      const foodId =  this.myComment.food_id;
+      const text = this.textarea;
+
+      let data = [{ "food_id": foodId,
+        "comment_text": text,
+        "comment_id": id }];
+
+      this.$store.dispatch('comment/writeReply', data);
+      this.textarea='';
+    },
+  }
 }
 </script>
 
@@ -74,4 +109,34 @@ export default {
     }
   }
 }
+
+.reply-content {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.reply-input { 
+  border: 1px solid #ccc;
+  border-radius: .5rem;
+  padding: 10px;
+  width: 100%;
+  height: 50px;
+}
+
+.reply-btn {
+  padding: .2rem;
+  width: 20%;
+  box-sizing: border-box;
+  outline: none;
+  font-size: 16px;
+  font-weight: bold;
+  transition: .5s;
+  border-radius: .5rem;
+  border: 1px solid #eca115;
+  background-color: #fff;
+  color: #eca115;
+}
+
 </style>
