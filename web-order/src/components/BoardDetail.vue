@@ -34,7 +34,8 @@
       <ReplyList
         v-for="reply in replys"
         :reply="reply"
-        :key="reply.id_reply" />
+        :key="reply.id_reply"
+        :my-comment="this.myComment" />
     </div>
   </div>
 </template>

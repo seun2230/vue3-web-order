@@ -132,34 +132,44 @@ router.post('/write/reply/:id', verifyToken, async(req,res) => {
 })
 
 router.post('/modify/reply/:id', verifyToken, async(req,res) => {
-
   try {
-    console.log("DB connection /post/modify/reply")
+    console.log("DB connection /post/modify/reply");
     const connection = await pool.getConnection(async conn => conn);
     try {
-      console.log("sss", req.body)
+      console.log("reply modify success", req.body);
+      console.log("req.body.text", req.body[0].reply_text);
+      console.log("req.body.comment_id", req.body[0].comment_id);
+
       let id = parseInt(req.params.id, 10);
+      const date = new Date().format('yyyy-MM-dd hh:mm');
+
       let sql = "UPDATE reply " +
                 "SET reply_text = ? " +
-                "WHERE comments_comments_id = ? AND id_reply = ? AND users_user_id = ?"
+                "WHERE comments_comments_id = ? AND id_reply = ? AND users_user_id = ? AND reply_date = ?";
       let params = [
-        req.body.comment_text,
+        req.body[0].reply_text,
         id,
-        req.body.reply_id,
+        req.body[0].reply_id,
         req.decoded.user_id,
+        date,
       ]
-      console.log("ss", params)
+      console.log("params data success", params);
 
       await connection.beginTransaction();
       await connection.query(sql, params);
       await connection.commit();
+      
       res.send({
-        message: "Delete Success!"
-      })
+        text: req.body[0].reply_text,
+        comment_id: id,
+        reply_id: req.body[0].reply_id,
+        userId: req.decoded.user_id,
+        date
+      });
       connection.release();
       } catch(err) {
       console.log("Query Error");
-      console.log("Err : ", err)
+      console.log("Err : ", err);
       await connection.rollback();
       connection.release();
       res.send({
@@ -175,7 +185,6 @@ router.post('/modify/reply/:id', verifyToken, async(req,res) => {
     })
   }
 })
-"DELETE FROM comments WHERE comments_id = ? AND comments_user_id = ?"
 
 router.post('/delete/reply/:id', verifyToken, async(req,res) => {
 

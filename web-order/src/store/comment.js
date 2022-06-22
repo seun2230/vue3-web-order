@@ -12,21 +12,40 @@ export default {
     }
   },
   getters: {
-    
   },
   mutations: {
     addReply(state, payload) {
       console.log("state", payload);
-      // // state.replys = [...state.replys, payload] 
+      // state.replys = [...state.replys, payload] 
       let index = state.replys.find(x => x.users_user_id === payload.userId);
 
       if(index) {
         state.replys.push({ 
           reply_text: payload.text,
           reply_date: payload.date,
-          users_user_id: payload.userId
+          users_user_id: payload.userId,
         });
         console.log("state.replys", state.replys);    
+      }
+    },
+    fixReply(state, payload) {
+      console.log("state", payload);
+      console.log("payload.reply_id", payload.reply_id);
+      console.log("state reply_date", payload.date);
+      let index = state.replys.find(x => x.id_reply === payload.reply_id);     
+      
+      if(index) {
+        state.replys[index] = {
+          ...state.replys[index],
+          id_reply: payload.reply_id,
+          reply_text: payload.text,
+          reply_date : payload.date
+        };
+        console.log("data insert", state.replys);
+        console.log("stte.replys[index]", state.replys[index]);   
+        return state.replys[index]; 
+      } else {
+        return false;
       }
     },
     getState(state) {
@@ -100,5 +119,23 @@ export default {
         console.log("data fail", err.response);
       })
     },
+    modifyReply({commit}, payload) {
+      console.log("response payload", payload);
+      const id = payload[0].comment_id;
+      console.log("payload id check", id);
+      axios.post(`${process.env.VUE_APP_URL}/api/user/modify/reply/` + id,
+      JSON.stringify(payload), {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      .then((res) => {
+        console.log("data response success", res.data);
+        commit('fixReply', res.data);
+      })
+      .catch(err => {
+        console.log("data response fail", err);
+      })
+    }
   }
 }
