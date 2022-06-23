@@ -35,15 +35,12 @@ export default {
       let index = state.replys.find(x => x.id_reply === payload.reply_id);     
       
       if(index) {
-        state.replys[index] = {
-          ...state.replys[index],
-          id_reply: payload.reply_id,
-          reply_text: payload.text,
-          reply_date : payload.date
-        };
-        console.log("data insert", state.replys);
-        console.log("stte.replys[index]", state.replys[index]);   
-        return state.replys[index]; 
+        state.replys.push({
+          reply_date : payload.date,
+          id_reply: payload.replyId,
+        })
+        console.log("data insert", state.replys);   
+        return state.replys; 
       } else {
         return false;
       }

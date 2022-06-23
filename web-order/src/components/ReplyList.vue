@@ -12,7 +12,7 @@
         v-model="textarea"
         type="textarea" />
       <button
-        @click.self.prevent="modifyReply()">
+        @click.self.prevent="modifyReply(this.reply.id_reply)">
         수정
       </button>
     </div>
@@ -44,11 +44,10 @@ export default {
     clickToggle() {
       this.toggle = true;
     },
-    modifyReply() {
+    modifyReply(reply_id) {
       console.log("click success");
+      console.log("reply_id", reply_id);
       const id = this.$route.params.id;
-      console.log("reply id", this.reply.id_reply);
-      const reply_id = this.reply.id_reply;
       const reply_text = this.textarea;
 
       let data = [{ 

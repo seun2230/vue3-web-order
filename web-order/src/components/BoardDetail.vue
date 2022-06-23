@@ -78,7 +78,7 @@ export default {
     },
     writeReply() {
       const id = this.$route.params.id;
-      const foodId =  this.myComment.food_id;
+      const foodId =  this.myComment.food_items_food_id;
       const text = this.textarea;
 
       let data = [{ "food_id": foodId,
