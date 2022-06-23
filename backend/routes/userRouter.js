@@ -210,7 +210,7 @@ router.post('/delete/reply/:id', verifyToken, async(req,res) => {
       await connection.commit();
       res.send({
         commentId: id,
-        replyId: req.body.reply_id,
+        replyId: req.body[0].reply_id,
         userId: req.decoded.user_id
       })
       connection.release();

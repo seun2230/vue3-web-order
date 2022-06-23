@@ -4,6 +4,7 @@ import user from './user.js'
 import userInfo from './userInfo.js'
 import admin from './admin.js'
 import comment from './comment.js'
+import reply from './reply.js'
 import createdPersistedState from 'vuex-persistedstate'
 
 export default createStore({
@@ -13,6 +14,7 @@ export default createStore({
     userInfo,
     admin,
     comment,
+    reply
   },
   plugins: [
     createdPersistedState({

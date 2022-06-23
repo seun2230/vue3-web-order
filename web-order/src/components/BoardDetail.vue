@@ -65,11 +65,11 @@ export default {
     // const id = this.params.id;
     console.log("id", id);
     this.$store.commit('comment/getComment', id);
-    this.$store.commit('comment/getReply', id);
+    this.$store.commit('reply/getReply', id);
   },
   computed: {
     ...mapState('comment', ['myComment']),
-    ...mapState('comment', ['replys']),
+    ...mapState('reply', ['replys']),
   },
   methods: {
     showReply() {
@@ -84,7 +84,7 @@ export default {
         "comment_text": text,
         "comment_id": id }];
 
-      this.$store.dispatch('comment/writeReply', data);
+      this.$store.dispatch('reply/writeReply', data);
       this.textarea='';
     },
   }
@@ -109,14 +109,12 @@ export default {
     }
   }
 }
-
 .reply-content {
   display: flex;
   flex-direction: row;
   width: 100%;
   margin-top: 20px;
 }
-
 .reply-input { 
   border: 1px solid #ccc;
   border-radius: .5rem;
@@ -124,7 +122,6 @@ export default {
   width: 100%;
   height: 50px;
 }
-
 .reply-btn {
   padding: .2rem;
   width: 20%;

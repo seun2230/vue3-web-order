@@ -54,7 +54,7 @@ export default {
   },
   computed: {
     ...mapState('user', ['likeUser']),   
-    ...mapState('comment', ['replys']),
+    ...mapState('reply', ['replys']),
     ...mapGetters('user', ['likeBtn']),
   },
   methods: {

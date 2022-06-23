@@ -20,7 +20,7 @@
             수정하기 
           </span> 
           <span
-            @click="deleteReply(this.reply.id_reply)">
+            @click.self.prevent="deleteReply(this.reply.id_reply)">
             <i class="fas fa-trash-alt"></i>
             삭제하기
           </span>
@@ -66,7 +66,7 @@ export default {
         "reply_id": reply_id,
         "reply_text": reply_text }];
 
-      this.$store.dispatch('comment/modifyReply', data);
+      this.$store.dispatch('reply/modifyReply', data);
       this.textarea='';
     },
     deleteReply(reply_id) {
@@ -79,7 +79,7 @@ export default {
         "reply_id": reply_id,
         "user_id": user_id }];
 
-      this.$store.dispatch('comment/deleteReply', data);
+      this.$store.dispatch('reply/deleteReply', data);
     },
     cancleReply(){
       this.show = false;
