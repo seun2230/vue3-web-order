@@ -15,7 +15,6 @@ export default {
   },
   mutations: {
     addReply(state, payload) {
-      console.log("state", payload);
       // state.replys = [...state.replys, payload] 
       let index = state.replys.find(x => x.users_user_id === payload.userId);
 
@@ -29,7 +28,6 @@ export default {
       }
     },
     fixReply(state, payload) {
-      console.log("state", payload);
       console.log("payload.reply_id", payload.reply_id);
       console.log("state reply_date", payload.date);
       let index = state.replys.find(x => x.id_reply === payload.reply_id);     
@@ -46,6 +44,18 @@ export default {
       } else {
         return false;
       }
+    },
+    deletedReply(state, payload) {
+      console.log("deleteReply payload", payload);
+    
+      let index = state.replys.find(x => x.users_user_id === payload.userId)
+
+      if(index) {
+        state.replys.splice({index, 1: 1});
+        return state.replys;
+      } else {
+        return false; 
+      }      
     },
     getState(state) {
       axios.get(`${process.env.VUE_APP_URL}/api/comment/get/comment`)
@@ -133,7 +143,23 @@ export default {
         commit('fixReply', res.data);
       })
       .catch(err => {
-        console.log("data response fail", err);
+        console.log("data response fail", err.respons);
+      })
+    },
+    deleteReply({commit}, payload) {
+      console.log("payload deleteReply", payload);
+      const id = payload[0].comment_id;
+      console.log("payload data commet_id", id);
+      axios.post(`${process.env.VUE_APP_URL}/api/user/delete/reply/` + id,
+      JSON.stringify(payload), {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }).then((res) => {
+        console.log("deleteReply response success", res.data);
+        commit('deletedReply', res.data);
+      }).catch(err => {
+        console.log("deleteReply response fail", err.response);
       })
     }
   }

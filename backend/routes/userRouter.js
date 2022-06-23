@@ -189,24 +189,29 @@ router.post('/modify/reply/:id', verifyToken, async(req,res) => {
 router.post('/delete/reply/:id', verifyToken, async(req,res) => {
 
   try {
-    console.log("DB connection /post/commentDelete")
+    console.log("DB connection /post/delete/reply");
     const connection = await pool.getConnection(async conn => conn);
     try {
+      console.log("deleteReply data success", req.body);
+      console.log("req.body.reply_id", req.body[0].reply_id);
+
       let id = parseInt(req.params.id, 10);
       let sql = "DELETE FROM reply" +
-      " WHERE comments_comments_id = ? AND id_reply = ? AND users_user_id = ?"
-      console.log(req.body)
+                " WHERE comments_comments_id = ? AND id_reply = ? AND users_user_id = ?";
+     
       let params = [
         id,
-        req.body.reply_id,
+        req.body[0].reply_id,
         req.decoded.user_id,
-      ]
+      ];
 
       await connection.beginTransaction();
       await connection.query(sql, params);
       await connection.commit();
       res.send({
-        message: "Delete Success!"
+        commentId: id,
+        replyId: req.body.reply_id,
+        userId: req.decoded.user_id
       })
       connection.release();
       } catch(err) {

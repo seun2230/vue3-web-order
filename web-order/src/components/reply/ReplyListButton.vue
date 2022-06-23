@@ -1,18 +1,16 @@
 <template>
   <div class="reply-btn">
+    {{ this.reply.id_reply }}
     <div 
       @click="show = !show">
       <i class="fas fa-ellipsis-v"></i>
     </div>
-    <transition 
-      class="btn-background"
-      name="fade">
+    <transition name="fade">
       <div class="btn__inner">
         <div 
           class="inner__card"
           v-if="show">
           <input 
-            v-if="!showHidden"
             class="reply__input"
             v-model="textarea"
             placeholder="댓글을 수정하세요 :)" />
@@ -21,8 +19,16 @@
             <i class="fas fa-pen"></i>
             수정하기 
           </span> 
-          <span><i class="fas fa-trash-alt"></i> 삭제하기</span>
-          <span><i class="fas fa-window-close"></i> 취소하기</span>
+          <span
+            @click="deleteReply(this.reply.id_reply)">
+            <i class="fas fa-trash-alt"></i>
+            삭제하기
+          </span>
+          <span
+            @click="cancleReply()">
+            <i class="fas fa-window-close"></i> 
+            취소하기
+          </span>
         </div>   
       </div>
     </transition>
@@ -47,15 +53,10 @@ export default {
       type: Object,
       default: function() { return{} }
     }
-  },
-  compued: {
-    showHidden() {
-      return this.hidden = false;
-    },
   },  
   methods: {
     modifyReply(reply_id) {
-      console.log("click success");
+      console.log("click modify");
       console.log("reply_id", reply_id);
       const id = this.$route.params.id;
       const reply_text = this.textarea;
@@ -67,6 +68,21 @@ export default {
 
       this.$store.dispatch('comment/modifyReply', data);
       this.textarea='';
+    },
+    deleteReply(reply_id) {
+      console.log("click deleteReply");
+      console.log("reply_id", reply_id);
+      const id = this.$route.params.id;
+      const user_id = this.reply.users_user_id;
+      let data = [{ 
+        "comment_id": id,
+        "reply_id": reply_id,
+        "user_id": user_id }];
+
+      this.$store.dispatch('comment/deleteReply', data);
+    },
+    cancleReply(){
+      this.show = false;
     }
   }
 }
