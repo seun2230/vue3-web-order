@@ -26,7 +26,6 @@
           placeholder="댓글을 입력하세요." />
         <button
           class="reply-btn"
-          :disabled="textarea.length < 1 ? true : false"
           @click.self.prevent="writeReply()">
           등록
         </button>
@@ -43,7 +42,7 @@
 <script>
 import CommentDetailButton from './comment/CommentDetailButton.vue'
 import CommentNullImage from './comment/CommentNullImage.vue';
-import ReplyList from './ReplyList.vue';
+import ReplyList from './reply/ReplyList.vue';
 import { mapState } from 'vuex';
 
 export default {

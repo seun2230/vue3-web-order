@@ -36,7 +36,9 @@ export default {
       
       if(index) {
         state.replys.push({
+          reply_text: payload.text,
           reply_date : payload.date,
+          users_user_id: payload.userId,
           id_reply: payload.replyId,
         })
         console.log("data insert", state.replys);   
