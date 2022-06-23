@@ -1,36 +1,33 @@
 # WEB-ORDER-SYSTEM 
-- 모바일 웹앱 WEB-ORDER-SYSTEM    
-
-<br />
 
 ## 🔧 Tools
-<img src="https://img.shields.io/badge/vue.js-4FC08D?style=flat-round&logo=vue.js&logoColor=white"/> <img src="https://img.shields.io/badge/express-000000?style=flat-round&logo=express&logoColor=white"/> <img src="https://img.shields.io/badge/nodejs-339933?style=flat-round&logo=nodejs&logoColor=white"/> <img src="https://img.shields.io/badge/mysql-4479A1?style=flat-round&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=flat-round&logo=amazonec2&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon S3-FF9900?style=flat-round&logo=amazons3&logoColor=white"/>   
+<img src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat-round&logo=vue.js&logoColor=white"/> <img src="https://img.shields.io/badge/express-000000?style=flat-round&logo=Express&logoColor=white"/> <img src="https://img.shields.io/badge/Node.js-339933?style=flat-round&logo=node.js&logoColor=white"/> <img src="https://img.shields.io/badge/Mysql-4479A1?style=flat-round&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=flat-round&logo=amazonec2&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon S3-FF9900?style=flat-round&logo=amazons3&logoColor=white"/>  
 
 <br />
 
 ## 🔦 Description   
-
+- 모바일 웹 주문 결제 시스템 페이지  
 - 비대면 주문 방식의 수요 증가와 키오스크 설치의 비용 감소를 위해 프로젝트 기획하였습니다.
 - 기존의 WEB_ORDER_SYSTEM_V1 결제 기능의 아쉬움과 리뷰의 UI/UX 개선을 위해 개인적으로 진행합니다.
 - 추가적으로 코드 리팩토링 및 기능 업데이트 필요성      
 
 <br />   
 
-### 📑프로젝트 PPT    
+## 📑프로젝트 PPT    
 
 <br />
 
-### ⏰ 프로젝트 개발 기간 
+## ⏰ 프로젝트 개발 기간 
 버전 | 기간  
------|:----:|
-v1   | 2021년 10월 18일- 2021년 12월 27일 (총 2달)
-`v1.1` | 2022년 06월 3일 - 2022년 07월
+-----|:----|
+v1.0   | 2021년 10월 18일- 2021년 12월 27일 (총 2달)
+<span style="color:#00AAFF">v1.1</span> | 2022년 06월 3일 - 2022년 07월 15일
 
 <br />
 
-### 🧑‍💻 프로젝트 팀원 업무 역할
+## 🧑‍💻 프로젝트 팀원 역할
 팀원 | 구분 | 업무  
------|:----:|:---
+-----|:----|:---
 강호진 | Frontend | 회원관리, 라우팅, UI/UX
 이성원 | FrontEnd & Backend | Datbase 설계, Server 구축, 메뉴 & 관리자페이지
 노승은 | FrontEnd | 메뉴, 리뷰, UI/UX 
@@ -49,57 +46,15 @@ v1   | 2021년 10월 18일- 2021년 12월 27일 (총 2달)
 
 <br />
 
-## 🔗 MySQL-ERD 
+## 🗃️ MySQL-ERD 
+- 추후 공지, 쿠폰 테이블 추가 계획중
+
 <img src="https://user-images.githubusercontent.com/87456904/175063480-0f12ac9e-45e9-4889-8851-cd0d6e4c7313.png" width="700" height="400" />
 
 <br />
 
 ## ⚙️ 개발 환경 설정 
-### npm install
 
-```
-npm init -y
-```
-### backend directory 
-
-### 해당 디렉터리 경로 이동
-```
-cd backend
-```
-
-### npm 패키지 설치
-```
-npm install
-``` 
-### 개발 모드로 프로그램 실행
-```
-npm start
-```
-
-### FrontEnd directory
-
-### 해당 디렉터리 경로 이동
-```
-cd web-order
-```
-### vue.js 3버전 설치 
-```
-npm install -g @vue/cli
-```
-
-### npm 패키지 설치
-```
-npm install
-```
-### 개발 모드로 프로그램 실행
-```
-npm run serve
-```
-
-### 빌드 실행
-```
-npm run build
-```
 <br />
 
 ## 🔥WEB-ORDER-SYSTEM.v1 기능
@@ -145,15 +100,17 @@ npm run build
 
 <br />
 
-## 💧프로젝트 v1.1 업데이트
-|week|기능|설명|여부|
-|:--:|:--:|:---|:--:
-|1주| 리뷰 | 리뷰 UI 개선 | ✔️
-|2주| 리뷰 | 코드 리팩토링, store 관리 | ✔️
-|3주| 리뷰 | 리뷰 댓글 등록, 수정 | 
-|4주| 리뷰 | example | 
-
+## 💧 프로젝트 v1.1 업데이트   
 <br />
+
+### 📝 사용자 리뷰 기능 
+| week | 설명 | 여부
+|:------:|:------|:------:|
+| 6월 1주 | 리뷰 UI 개선 | ✅
+| 6월 2주 | - <span style="color:#00AAFF">BoardDetail 코드 리팩토링</span><br />- 리뷰 vuex store 관리 | ✅
+| 6월 3주 | - 댓글 등록, 수정, 삭제 추가<br/>- 댓글 vuex store 관리 | ✅
+| 6월 4주 | example 
+<br /> 
 
 ## 테스트
 ## 배포
