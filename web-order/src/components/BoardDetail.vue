@@ -35,6 +35,9 @@
         :reply="reply"
         :key="reply.id_reply"
         :my-comment="this.myComment" />
+      <button @click="moreReplyList()">
+        댓글을 더 보고 싶으신가요?
+      </button>
     </div>
   </div>
 </template>
@@ -57,7 +60,7 @@ export default {
     return {
       deleteMessage: "",
       show: '',
-      textarea: ''
+      textarea: '',
     }
   },
   created() {
@@ -87,6 +90,10 @@ export default {
       this.$store.dispatch('reply/writeReply', data);
       this.textarea='';
     },
+    moreReplyList() {
+      const replyList = this.replys.length;
+      console.log("replyList", replyList);  
+    }
   }
 }
 </script>
