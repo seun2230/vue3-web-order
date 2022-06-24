@@ -2,7 +2,7 @@
   <div>
     <router-link 
       class="container--exterrior"
-      :to="{name: 'boardItem', params: { id: comment.comments_id }}">
+      :to="{name: 'boardItem', params: { id: comment.comments_id, page: 0 }, }">
       <div class="cards">
         <!-- <img
           :src="comment.comments_image"

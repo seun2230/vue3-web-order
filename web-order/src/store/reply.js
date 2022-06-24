@@ -13,13 +13,25 @@ export default {
   mutations: {
     getReply(state, payload) {
       console.log("getReply payload", payload);
-      axios.get(`${process.env.VUE_APP_URL}/api/user/get/reply/` + payload)
+      axios.get(`${process.env.VUE_APP_URL}/api/user/get/reply/` + payload.page +  '/' + payload.id)
       .then(res => {
         console.log("getReply response success", res.data);
         state.replys = res.data;
       })
       .catch (err => {
         console.log("getReply response error", err.response);
+      })
+    },
+    getMoreReply(state, payload) {
+      console.log("getReply payload", payload);
+      console.log("page", payload.page);
+      axios.get(`${process.env.VUE_APP_URL}/api/user/get/reply/` + payload.page +  '/' + payload.id)
+      .then(res => {
+        console.log("getMoreReply response success", res.data);
+        state.replys = res.data;
+      })
+      .catch (err => {
+        console.log("getMoreReply response error", err.response);
       })
     },
     addReply(state, payload) {

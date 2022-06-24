@@ -55,20 +55,24 @@ export default {
     ReplyList
   },
   props: {
+     page: {
+      type: Number,
+      default: 0
+    },
   },
   data() {
     return {
       deleteMessage: "",
       show: '',
-      textarea: '',
+      textarea: '', 
     }
   },
   created() {
     const id = this.$route.params.id;
-    // const id = this.params.id;
-    console.log("id", id);
-    this.$store.commit('comment/getComment', id);
-    this.$store.commit('reply/getReply', id);
+    const page = this.$route.params.page;
+    const data = { id , page};
+    this.$store.commit('comment/getComment', data);
+    this.$store.commit('reply/getReply', data);
   },
   computed: {
     ...mapState('comment', ['myComment']),
@@ -91,8 +95,10 @@ export default {
       this.textarea='';
     },
     moreReplyList() {
-      const replyList = this.replys.length;
-      console.log("replyList", replyList);  
+      const id = this.$route.params.id; 
+      const page = this.$route.params.page; 
+      const data = { id , page}; 
+      this.$store.commit('reply/getMoreReply', data);
     }
   }
 }

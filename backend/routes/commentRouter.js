@@ -22,16 +22,16 @@ router.get('/get/comment', async(req, res) => {
   }
 })
 
-router.get('/get/comment/:id', async(req, res) => {
+router.get('/get/comment/:page/:id/', async(req, res) => {
   try {
-    console.log('connection /get/orderList');
+    console.log('connection /get/comment');
     const connection = await pool.getConnection(async conn => conn);
-    var id = parseInt(req.params.id, 10);
-
+    let comment_id = parseInt(req.params.id, 10);
+    let page = parseInt(req.params.page, 10);
+    let value = [ comment_id, page ]; 
     try {
-      let sql = 'SELECT * FROM comments LEFT JOIN food_items' 
-                'ON food_items_food_id = food_id WHERE comments_id = ?';
-      const [row] = await connection.query(sql, id);
+      let sql = 'SELECT * FROM comments LEFT JOIN food_items ON food_items_food_id = food_id WHERE comments_id = ?';
+      const [row] = await connection.query(sql, value);
       connection.release();
       res.send(row);
     } catch (err) {

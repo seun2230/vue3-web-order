@@ -75,16 +75,17 @@ const routes = [
         meta: { metaName: '리뷰'}
       },
       {
-        path: 'board/:id',
+        path: 'board/:page/:id',
         name: 'boardItem',
         component: BoardDetail,
+        props: true,
         meta: { metaName: '리뷰 상세보기'}
       },
       {
         path: 'board/modify/:id',
         name: 'boardModify',
         component: BoardModify,
-        meta: { metaName: '리뷰 수정'}
+        meta: { metaName: '리뷰 수정'},
       },
       {
         path: 'sign',

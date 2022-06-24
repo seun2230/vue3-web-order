@@ -58,16 +58,20 @@ router.get('/get/keyword/:id', async(req, res) => {
 })
 
 
-router.get('/get/reply/:id', async(req, res) => {
+router.get('/get/reply/:page/:id', async(req, res) => {
   try {
     console.log("DB Connection /get/reply")
     const connection = await pool.getConnection(async conn => conn);
+    console.log("/get/reply/ req.params", req.params);
 
     try {
-      let sql = "SELECT * FROM reply WHERE comments_comments_id = ? "
-      let value = [ parseInt(req.params.id, 10) ]
+      let sql = "SELECT * FROM reply WHERE comments_comments_id = ? limit 0,5 ";
+      let comment_id = parseInt(req.params.id, 10);
+      let page = parseInt(req.params.page, 10);
+
+      let value = [ comment_id, page ];
       const [row] = await connection.query(sql, value);
-      res.send(row)
+      res.send(row);
       connection.release();
       } catch(err) {
       console.log("Query Error");
