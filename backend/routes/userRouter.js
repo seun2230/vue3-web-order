@@ -57,21 +57,66 @@ router.get('/get/keyword/:id', async(req, res) => {
   }
 })
 
-
 router.get('/get/reply/:page/:id', async(req, res) => {
   try {
-    console.log("DB Connection /get/reply")
+    console.log("DB Connection /get/reply");
     const connection = await pool.getConnection(async conn => conn);
     console.log("/get/reply/ req.params", req.params);
+    console.log(req.body);
 
     try {
-      let sql = "SELECT * FROM reply WHERE comments_comments_id = ? limit 0,5 ";
       let comment_id = parseInt(req.params.id, 10);
       let page = parseInt(req.params.page, 10);
 
       let value = [ comment_id, page ];
+      let sql = "SELECT * FROM reply " +
+               "WHERE comments_comments_id = ? " +
+               "ORDER BY id_reply asc LIMIT 5";
+      console.log("sql", sql);
       const [row] = await connection.query(sql, value);
       res.send(row);
+
+       
+      
+      connection.release();
+      } catch(err) {
+      console.log("Query Error");
+      console.log("Err : ", err)
+      connection.release();
+      res.send({
+        error: "Query Error",
+        err
+      })
+    }
+  } catch(err) {
+    console.log("DB Error")
+    res.send({
+      error: "DB error",
+      err
+    })
+  }
+})
+
+router.get('/get/reply/more/:page/:id', async(req, res) => {
+  try {
+    console.log("DB Connection /get/reply/more/");
+    const connection = await pool.getConnection(async conn => conn);
+    console.log("/get/reply/ req.params", req.params);
+    console.log("req.body", req.body);
+
+    try {
+      let comment_id = parseInt(req.params.id, 10);
+      let page = parseInt(req.params.page, 10);
+
+      let value = [ comment_id, page ];
+      let sql = "SELECT id_reply, reply_text, reply_date FROM reply " +
+               "WHERE comments_comments_id = ? AND id_reply > 838 "
+               "ORDER BY id_reply ASC LIMIT 5";
+      const [row] = await connection.query(sql, value);
+      
+      console.log("response send data", row);
+      res.send(row);
+      
       connection.release();
       } catch(err) {
       console.log("Query Error");

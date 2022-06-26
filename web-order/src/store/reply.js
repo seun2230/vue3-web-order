@@ -25,7 +25,7 @@ export default {
     getMoreReply(state, payload) {
       console.log("getReply payload", payload);
       console.log("page", payload.page);
-      axios.get(`${process.env.VUE_APP_URL}/api/user/get/reply/` + payload.page +  '/' + payload.id)
+      axios.get(`${process.env.VUE_APP_URL}/api/user/get/reply/more/` + payload.page +  '/' + payload.id)
       .then(res => {
         console.log("getMoreReply response success", res.data);
         state.replys = res.data;

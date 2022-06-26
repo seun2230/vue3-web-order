@@ -37,7 +37,7 @@
         :my-comment="this.myComment" />
       <button @click="moreReplyList()">
         댓글을 더 보고 싶으신가요?
-      </button>
+      </button> 
     </div>
   </div>
 </template>
@@ -93,11 +93,13 @@ export default {
 
       this.$store.dispatch('reply/writeReply', data);
       this.textarea='';
-    },
+    }, 
     moreReplyList() {
       const id = this.$route.params.id; 
       const page = this.$route.params.page; 
-      const data = { id , page}; 
+      const reply_id = this.replys[0].id_reply;
+      console.log("ReplyId", reply_id);
+      const data = { id , page, reply_id}; 
       this.$store.commit('reply/getMoreReply', data);
     }
   }
