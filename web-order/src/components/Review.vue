@@ -17,7 +17,8 @@
         주문 날짜 : <span>{{ orderList[0].order_date }}</span>
       </div>
       <div>
-        상품 평점
+        <CommentRating 
+          @child="saveRating" />
       </div>
       <div>
         상품 작성란
@@ -36,11 +37,16 @@
 </template>
 
 <script>
+import CommentRating from './comment/CommentRating.vue';
 import { mapGetters, mapState } from 'vuex'
 
 export default {
+  components: {
+    CommentRating
+  },
   data() {
     return {
+      childRating: []
     }
   },
   created() {
@@ -52,6 +58,10 @@ export default {
   
   },
   methods: {
+    saveRating(rating_id) {
+      this.childRating = rating_id;
+      console.log("parent emit data", this.childRating);
+    }
   }
 };
 </script>
