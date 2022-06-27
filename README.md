@@ -18,10 +18,10 @@
 <br />
 
 ## ⏰ 프로젝트 개발 기간 
-버전 | 기간  
------|:----|
-v1.0   | 2021년 10월 18일- 2021년 12월 27일 (총 2달)
-<span style="color:#00AAFF">v1.1</span> | 2022년 06월 3일 - 2022년 07월 15일
+버전 | 기간| Git
+-----|:----|:----
+v1.0   | 2021년 10월 18일- 2021년 12월 27일 (총 2달) | [vue3-web-order](https://github.com/seun2230/web-order)
+<span style="color:#00AAFF">v1.1</span> | 2022년 06월 3일 - 2022년 07월 15일(예정) | [vue3-web-order(refactor)](https://github.com/seun2230/vue3-web-order) 
 
 <br />
 
@@ -109,7 +109,7 @@ v1.0   | 2021년 10월 18일- 2021년 12월 27일 (총 2달)
 | 6월 1주 | 리뷰 UI 개선 | ✅
 | 6월 2주 | - <span style="color:#00AAFF">BoardDetail 코드 리팩토링</span><br />- 리뷰 vuex store 관리 | ✅
 | 6월 3주 | - 댓글 등록, 수정, 삭제 추가<br/>- 댓글 vuex store 관리 | ✅
-| 6월 4주 | example 
+| 6월 4주 | - 댓글 페이징 처리, 리뷰 작성 <br /> - AWS S3 연동|  ✅
 <br /> 
 
 ## 테스트

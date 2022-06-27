@@ -1,19 +1,20 @@
-## 2022-WEB-ORDER-v1.1    
+
+## ⚙️ 개발 환경 설치 / 시작
 
 <br />
 
-## ⚙️개발 환경 설치 / 시작
+```
+  // 해당 폴더 접속
+  cd backend
+  // npm 패키지 설치
+  npm install 
+  // 개발 모드 프로그램 실행
+  npm start 
+```
+
 <br/>
 
-      // 해당 폴더 접속
-      cd backend
-      // npm 패키지 설치
-      npm install 
-      // 개발 모드 프로그램 실행
-      npm start 
-<br/>
-
-## 🔦AWS EC2
+## 🔦 AWS EC2
 
 ### 특징
 1. 사용자에게 유연한 웹서비스를 제공함.
@@ -24,7 +25,8 @@
 
 <br/>
 
-### AWS EC2 구축 방법 
+### AWS EC2 구축 방법
+
  1. 인스턴스 생성 (HVM 우분투 이용)
  2. Puttygen을 통해 key.pem 파일을 key.ppk파일로 변경한다. 
  
@@ -66,8 +68,6 @@
     // private repo -> $ git clone https://아이디:비밀번호@[git 저장소]
 
     ```
-
-  
   5. 탄력적 IP 설정
   - 생성한 인스턴스와 IP 연결 버튼 클릭한다.
 
@@ -87,10 +87,10 @@
 
 - `사용하지 않는 탄력적IP`는 비용이 발생되므로 `릴리스 제거를 해야 추가 비용이 발생하지 않는다.`
 
-## dotenv 
+## 🔧 Dotenv 
 
 - WEB-ORDER.V1 프로젝트 개발 시 서버주소, DB의 민감한 정보를 dotenv로 관리함.     
+
 - root directory에서 .env 파일 생성하여 환경변수 입력해야한다.
 - gitignore 파일에 .env를 추가하면 안전하다.
-- `로컬에서 사용한 .env를 EC2에서도 추가해야 한다. `
-
+- `로컬에서 사용한 .env를 EC2 우분투 터미널에서도 추가해야 한다. `
