@@ -31,7 +31,7 @@ export default {
     checkRating(rating_id) {
       console.log("click ratings", rating_id);
       // eslint-disable-next-line vue/require-explicit-emits
-      this.$emit('child', rating_id);
+      this.$emit('rating', rating_id);
     }
   }
 }
@@ -51,7 +51,7 @@ export default {
     font-weight: bold;
 
     .inner__item {
-      margin-top: 30px;
+      margin-top: 20px;
       font-size: 18px;
     }
   }
