@@ -32,7 +32,7 @@
             placeholder="자유롭게 리뷰를 작성해주세요 :)">
           </textarea>
         </div>
-        <div>
+        <div class="option">
           <span>리뷰 공개</span>
           <input 
             type="radio" 
@@ -118,10 +118,10 @@ export default {
       for(let i = 0; i < this.files.length; i++) {
         let file = this.files[i].file;
         console.log("save fileList", file);
-        formData.append("append fileList", file);
+        formData.append("file", file);
       }
 
-      formData.append("review", this.text);
+      formData.append("text", this.text);
       formData.append("ratings", this.childRating);
       formData.append("status", this.status);
       formData.append("keyword", this.keyword);
