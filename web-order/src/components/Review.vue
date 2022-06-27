@@ -16,8 +16,15 @@
         주문 가격 : <span>{{ orderList[0].price }}</span>
         주문 날짜 : <span>{{ orderList[0].order_date }}</span>
       </div>
-      <CommentRating 
-        @rating="saveRating" />
+      <div @click="show = !show">
+        평점을 작성하세요!
+      </div>
+      <Transition>
+        <p v-if="show">
+          <CommentRating 
+            @rating="saveRating" />
+        </p>
+      </Transition>
       <form>
         <div class="keyword">
           키워드 :
@@ -48,16 +55,13 @@
           <label for="false">비공개</label>
           {{ this.status }}
         </div>
-        <div>
+        <div class="photos">
+          <span>사진 업로드</span>
           <CommentImageUpload @child="setData" />
         </div>
         <button
           type="button"
-          @click="cancleComment()">
-          취소 
-        </button>
-        <button
-          type="button"
+          class="save-button"
           @click="saveComment()">
           리뷰 등록 
         </button>
@@ -70,7 +74,7 @@
 import axios from 'axios';
 import CommentRating from './comment/CommentRating.vue';
 import CommentImageUpload from './comment/CommentImageUpload.vue';
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex';
 
 export default {
   components: {
@@ -83,7 +87,8 @@ export default {
       keyword: [],
       files: [],
       text: '',
-      status: ''
+      status: '',
+      show: ''
     }
   },
   created() {
@@ -107,12 +112,8 @@ export default {
     thisFilesCheck() {
       console.log("this.files", this.file);
     },
-    cancleComment() {
-      this.$router.push('/user/board');
-    },
     saveComment() {
       console.log("save keywords", this.keywords);
-      // console.log("ratings", this.childRating);
       let formData = new FormData();
       
       for(let i = 0; i < this.files.length; i++) {
@@ -139,7 +140,6 @@ export default {
       })
       .then((res) => {
         console.log("saveComment response success", res.data);
-        alert('고객님의 리뷰가 등록되었습니다.');
         this.$router.push('/user/board');
       })
       .catch((err) => {
@@ -191,11 +191,39 @@ export default {
 }
 .text {
   margin-top: 10px;
+  textarea {
+    width: 100%;
+    height: 130px;
+    padding: .2rem;
+    border-radius: .5rem;
+  }
 }
-textarea {
+
+.photos {
+  padding-top: 20px;
+}
+.save-button {
+  padding: .3rem;
+  margin-top: 10px;
   width: 100%;
-  height: 170px;
-  // border: 2px solid #5050FF; 
+  outline: none;
+  font-size: 16px;
+  font-weight: bold;
+  transition: .5s;
   border-radius: .5rem;
+  border: 0;
+  background: #4B89DC;
+  box-shadow:  0px 2px 5px rgb(0,0,0, 0.1);
 }
+ 
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
 </style>
