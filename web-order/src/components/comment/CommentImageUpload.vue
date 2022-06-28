@@ -5,7 +5,9 @@
         v-if="!files.length"
         class="file-upload-button">
         <div class="image-box">
-          <label for="file">+</label>
+          <label 
+            id="upload-button"
+            for="file">+</label>
           <input 
             type="file" 
             id="file" 
@@ -16,8 +18,8 @@
       </div>
       <div 
         v-else
-        class="file-preview-wrapper">
-        <div class="file-preview-content">
+        class="file-preview-container">
+        <div class="file-preview-wrapper">
           <div 
             v-for="(file, index) in files"
             :key="index"
@@ -26,14 +28,14 @@
               class="file-close-button" 
               @click="fileDeleteButton" 
               :name="file.number">
-              x
+              <span>x</span>
             </div>
             <img :src="file.preview" />
           </div>
           <div 
             v-if="files.length < 3" 
             class="file-preview-wrapper-upload">
-            <div class="image-box">
+            <div class="preview-image-box">
               <label for="file">추가 사진 등록</label>
               <input 
                 type="file" 
@@ -109,22 +111,19 @@ emits: ['child'],
   width: 120px;
   height: 120px;
   .file-upload-wrapper {
-    border: 2px dotted #dddddd;
-    background-color: #f4f4f4;
+    border: 1px dotted #dddddd;
+    border-radius: .5rem;
+    background-color: #f4f4f5;
+    box-shadow: 2px 4px 2px #0000001a;
     padding: 30px;
     width: 100%;
     height: 100%;
     font-size: 20px;
     color: #888888;
-    .file-upload-button {
-      text-align: center;
-      // align-items: center;
-      // vertical-align: middle;
-    }
   }
-
 }
-.image-box input[type='file'] {
+.image-box input[type='file'],
+.preview-image-box input[type='file'] {
   position: absolute;
   width: 0;
   height: 0;
@@ -132,7 +131,66 @@ emits: ['child'],
   overflow: hidden;
   border: 0;
 }
-.image-box {
+.preview-image-box label {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  color: #333;
+  background-color: #ffa600a9;
+}
+.file-preview-wrapper {
+  min-width: 240px;  
+  min-height: 220px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: flex-start; 
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.file-preview-content>img {
+  position: relative;
+  background-color: purple;
+  width: 120px;
+  height: 120px;
+  z-index: 1;
+}
+
+.file-preview-wrapper-upload {
+  margin: 10px;
+  vertical-align: middle;
+  width: 100%;
+  height: 200px;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  border-radius: .5rem;
+  z-index: 1;
+}
+.file-upload-button {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+.file-close-button {
+  width: 20px;
+  padding-left: 5px;
+  border: 1px solid #333;
+  border-radius: .5rem;
+  color: #333;
+  display: flex;
   text-align: center;
+  outline: none;
+  font-size: 16px;
+  position: fixed;
+  bottom: 410px;
+  left: 120px;
+  z-index: 5;
+  transition: .5s;
 }
 </style>

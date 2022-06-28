@@ -1,67 +1,68 @@
 <template>
   <div class="container">
     <div class="inner">
-      <div class="user">
-        <span class="user__list">
+      <div class="inner__user">
+        <span class="user-list">
           {{ getUserName }}님
         </span> 주문하신 
         <span>
           {{ orderList[0].food_name }}
         </span> 마음에 드셨나요?
       </div>
-      <div class="order">
-        <span class="order__name">
+      <div class="inner__order">
+        <span class="order-name">
           {{ orderList[0].food_name }}
         </span>
         주문 가격 : <span>{{ orderList[0].price }}</span>
         주문 날짜 : <span>{{ orderList[0].order_date }}</span>
       </div>
-      <div @click="show = !show">
-        평점을 작성하세요!
+      <div 
+        class="inner__choice"
+        @click="show = !show">
+        평점과 키워드를 선택해주세요.
       </div>
       <Transition>
-        <p v-if="show">
+        <div v-if="show">
           <CommentRating 
             @rating="saveRating" />
-        </p>
+          <div class="keyword">
+            키워드 :
+            <input 
+              type="input"
+              v-model="keyword" /> 
+          </div>
+        </div>
       </Transition>
       <form>
-        <div class="keyword">
-          키워드 :
-          <input 
-            type="input"
-            v-model="keyword" /> 
-        </div>
-        <div class="text">
-          <span>고객님만의 리뷰를 남겨주세요.</span>
+        <div class="form__text">
           <textarea 
             v-model="text"
-            placeholder="자유롭게 리뷰를 작성해주세요 :)">
+            placeholder="작성하신 리뷰는 100 point 적립됩니다. :)">
           </textarea>
         </div>
-        <div class="option">
-          <span>리뷰 공개</span>
-          <input 
-            type="radio" 
-            id="status" 
-            value="true" 
-            v-model="status" />
-          <label for="true">공개</label>
-          <input 
-            type="radio" 
-            id="status" 
-            value="false" 
-            v-model="status" />
-          <label for="false">비공개</label>
-          {{ this.status }}
-        </div>
-        <div class="photos">
-          <span>사진 업로드</span>
+        <div class="form__photos">
           <CommentImageUpload @child="setData" />
+        </div>
+        <div class="form__option">
+          <span>리뷰 공개</span>
+          <div>
+            <input 
+              type="radio" 
+              id="status" 
+              value="true" 
+              v-model="status" />
+            <label for="true">공개</label>
+            <input 
+              type="radio" 
+              id="status" 
+              value="false" 
+              v-model="status" />
+            <label for="false">비공개</label>
+          </div>
         </div>
         <button
           type="button"
-          class="save-button"
+          class="btn-orange"
           @click="saveComment()">
           리뷰 등록 
         </button>
@@ -150,7 +151,10 @@ export default {
 }
 </script>
 
+
 <style lang="scss" scoped>
+@import '../scss/btn.scss';
+@import '../scss/common.scss';
 .container {
   display: flex;
   flex-direction: column;
@@ -159,63 +163,59 @@ export default {
   padding: 1rem 1rem;
   border-radius: .25rem;
 }
-.user {
+.inner__user {
   margin: 20px 0px;
-  .user__list {
+  .user-list {
     padding: 10 0px;
-    color: #5050FF;
+    color: #ffa500;
     font-size: 20px;
     font-weight: 900;
   }
 }
-.order {
+.inner__order {
   padding: .5rem;
+  margin-bottom: 30px;
+  color: rgb(107, 103, 103);
   display: inline-block;
   display: flex;
   flex-direction: column;
-  background-color: #fffdfd;
-  box-shadow: 2px 2px 2px #0000001a;
+  background-color: #fcb22a86;
+  box-shadow: 2px 2px 4px #0000001a;
   border-radius: .5rem;
-   
+
   span {
     margin-bottom: 10px;
+    color: #333;
     font-weight: bold;
   }
-  .order__name {
+  .order-name {
     width: 100px;
-    background: linear-gradient(to top, #95ecfc98 50%, transparent 50%);
+    background: linear-gradient(to top, #e7eceb93 50%, transparent 50%);
     align-items: center;
     font-weight: bold;
     transition: .2s all;
   }
 }
-.text {
-  margin-top: 10px;
-  textarea {
-    width: 100%;
-    height: 130px;
-    padding: .2rem;
-    border-radius: .5rem;
+.inner__choice {
+  font-weight: bold;
+}
+
+form {
+  font-weight: bold;
+  margin: 10px 0px;
+  .form__text {
+    margin: 10px 0px;
+  }
+  .form__photos {
+    margin: 10px 0px;
+  }
+  .form__option {
+    margin: 10px 0px;
+    display: flex;
+    justify-content: space-between;
   }
 }
 
-.photos {
-  padding-top: 20px;
-}
-.save-button {
-  padding: .3rem;
-  margin-top: 10px;
-  width: 100%;
-  outline: none;
-  font-size: 16px;
-  font-weight: bold;
-  transition: .5s;
-  border-radius: .5rem;
-  border: 0;
-  background: #4B89DC;
-  box-shadow:  0px 2px 5px rgb(0,0,0, 0.1);
-}
- 
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;
