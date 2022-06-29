@@ -20,7 +20,7 @@ input[type="radio"]:checked {
 
 input[type="radio"]:checked {
   border-radius: 50%;
-   background: linear-gradient(#fac146, orange);
+  background: linear-gradient(#fac146, orange);
 }
 
 input[type="radio"],
@@ -39,4 +39,23 @@ textarea {
   background-color: #f4f4f5;
   box-shadow: 2px 2px 4px #0000001a;
   font-size: 16px;
+}
+
+progress {
+  appearance: none;
+  height: .5rem;
+}
+
+progress::-webkit-progress-bar {  
+  appearance: 0;
+  height: .5rem;
+  border-radius: .5rem;
+  background-color: rgb(241, 241, 241);
+} 
+
+progress::-webkit-progress-value {    
+  appearance: 0;
+  height: .5rem;
+  border-radius: .5rem;
+  background: linear-gradient(#fac146, orange);
 }
