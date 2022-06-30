@@ -60,6 +60,13 @@ progress::-webkit-progress-value {
   background: linear-gradient(#fac146, orange);
 }
 
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+}
+
 .star-background-small {
   font-family: none;
   font-size: 1px;

@@ -1,4 +1,5 @@
 @import './variables.scss';
+@import './common.scss';
 
 @mixin colorBtn($color) {
   background: $yellow;
@@ -109,10 +110,9 @@
   border-radius: 4px;
 }
 
-.btn-orange {
-  width: 100%;
-  height: 40px;
-  margin-top: 5px;
+.btn--orange {
+  width: 0;
+  height: 50px;
   outline: none;
   color: #fff;
   font-weight: bold;
@@ -122,4 +122,88 @@
   box-shadow: 2px 2px 5px rgb(0,0,0, 0.1);
   z-index: 2;
   transition: .5s;
+
+  &.btn--sm {
+    width: 70px;
+  }
+  &.btn--md {
+    width: 12px;
+  }
+  &.btn--large {
+    width: 100%;
+  }
+}
+
+// other color
+.btn--purple {
+  border: none;
+  background-color: #aa0ae9;
+  box-shadow: 2px 2px 5px #0000001a;
+  color: #fff;
+}
+
+// button round
+.btn--round {
+  border-radius: 15px;
+  background-color: $gray-600;
+  box-shadow: 2px 2px 4px #00000017;
+  outline: 0;
+  border: 0;
+  padding: 10px;
+  margin: 10px 2px;
+  font-weight: 500;
+  font-size: 16px;
+  color: #fff;
+  &.btn--sm {
+    width: 70px;
+  }
+  &.btn--md {
+    width: 12px;
+  }
+  &.btn--large {
+    width: 100%;
+  }
+}
+
+// button square
+.btn--square {
+  border-radius: .2rem;
+  background-color: $gray-600;
+  box-shadow: 2px 2px 4px #00000017;
+  outline: 0;
+  border: 0;
+  padding: 10px;
+  margin: 10px 5px;
+  font-weight: 500;
+  font-size: 16px;
+  color: #fff;
+  &.btn--sm {
+    width: 70px;
+  }
+  &.btn--md {
+    width: 12px;
+  }
+  &.btn--large {
+    width: 100%;
+  }
+}
+
+// button outline 
+.btn--outline {
+  border: 2px solid #aa0ae9;
+  border-radius: 15px;
+  background-color: #fff;
+  box-shadow: 2px 2px 4px #0000001a;
+  padding: .3rem;
+  font-size: 14px;
+  color: #aa0ae9;
+  &.btn--sm {
+    width: 70px;
+  }
+  &.btn--md {
+    width: 12px;
+  }
+  &.btn--large {
+    width: 100%;
+  }
 }

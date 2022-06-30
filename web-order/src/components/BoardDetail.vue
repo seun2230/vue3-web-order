@@ -4,10 +4,16 @@
       <div class="inner__left">
         <el-avatar>{{ myComment.comments_user_id }}</el-avatar>
         <div class="inner__item">
-          <span>{{ myComment.comments_user_id }}</span>
+          <span 
+            :style="{'font-weight': 'bold' }">
+            {{ myComment.comments_user_id }}
+          </span>
           <span>{{ myComment.comments_date }}</span>
         </div>
       </div>
+      <div class="item">
+        <CommentDetailModal />
+      </div>  
       <CommentNullImage
         :my-comment="this.myComment" />
       <div class="text">
@@ -25,7 +31,7 @@
           v-model="textarea" 
           placeholder="댓글을 입력하세요." />
         <button
-          class="reply-btn"
+          class="btn--orange btn--sm"
           @click.self.prevent="writeReply()">
           등록
         </button>
@@ -35,14 +41,19 @@
         :reply="reply"
         :key="reply.id_reply"
         :my-comment="this.myComment" />
-      <button @click="moreReplyList()">
-        댓글을 더 보고 싶으신가요?
-      </button> 
+      <div class="btn_more">
+        <button
+          class="btn--round btn--large"
+          @click="moreReplyList()">
+          댓글 더보기
+        </button>
+      </div> 
     </div>
   </div>
 </template>
 
 <script>
+import CommentDetailModal from './comment/CommentDetailModal.vue'
 import CommentDetailButton from './comment/CommentDetailButton.vue'
 import CommentNullImage from './comment/CommentNullImage.vue';
 import ReplyList from './reply/ReplyList.vue';
@@ -50,6 +61,7 @@ import { mapState } from 'vuex';
 
 export default {
   components: {
+    CommentDetailModal, 
     CommentDetailButton,
     CommentNullImage,
     ReplyList
@@ -106,23 +118,31 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped >
+@import '@/scss/variables.scss';
+@import '@/scss/btn.scss';
 .inner {
   padding: 20px;
   height: auto;
 }
 .inner__left {
+  width: 100%;
   display: flex;
   margin-bottom: 10px;
   .inner__item {
     margin-left: 10px;
     height: auto;
-    
     span {
       display: block;
-      color: #333;
+      color: $gray-text;
     }
   }
+}
+.item {
+  position: absolute;
+  top: 70px;
+  right: 30px;
+  color: $gray-600;
 }
 .reply-content {
   display: flex;
@@ -137,18 +157,4 @@ export default {
   width: 100%;
   height: 50px;
 }
-.reply-btn {
-  padding: .2rem;
-  width: 20%;
-  box-sizing: border-box;
-  outline: none;
-  font-size: 16px;
-  font-weight: bold;
-  transition: .5s;
-  border-radius: .5rem;
-  border: 1px solid #eca115;
-  background-color: #fff;
-  color: #eca115;
-}
-
 </style>
