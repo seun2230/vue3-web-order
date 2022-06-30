@@ -1,22 +1,15 @@
 <template>
   <div class="container">
-    <CommentListChart />
+    <CommentListChart />  
     <div class="comment">
-      <span class="comment__length">
-        리뷰 {{ comments.length }}건
-      </span>
+      <div class="comment__length">
+        리뷰
+        <span class="length">{{ comments.length }}건</span>
+      </div>
       <div class="comment__filter">
         <span @click="bestComment">평점순</span>
         <span @click="sortDate">최신순</span>
       </div>
-    </div>
-    <div class="btn__group">
-      <button
-        type="text"
-        class="btn btn--round"
-        @click="writeComment()">
-        리뷰 등록
-      </button>
     </div>
     <CommentListItem
       v-for="comment in comments"
@@ -75,26 +68,25 @@ export default {
 </script>
 
 <style lang="scss">
-// @import '../assets/scss/_common.scss';
-
 .comment {
   padding: 10px 20px;
   display: flex;
+  justify-content: space-between;
+  align-content: flex-end;
   width: auto;
   outline: none;
   border-radius: .2rem;
   color: #334455;
   font-size: 1rem;
-  .comment__length {
+  .length {
+    color: #ffae00;
     font-weight: bold;
-    font-size: large;
+    font-size: 18px;
   }
   .comment__filter {
-    // float: right;
     margin-left: auto;
-
     span {
-      padding: 5px;
+      padding-left: 5px;
     }
   }
 }

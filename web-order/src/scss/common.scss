@@ -59,3 +59,37 @@ progress::-webkit-progress-value {
   border-radius: .5rem;
   background: linear-gradient(#fac146, orange);
 }
+
+.star-background-small {
+  font-family: none;
+  font-size: 1px;
+  -webkit-text-fill-color: rgb(241, 241, 241);
+  -webkit-text-stroke-width: 2.7px;
+  -webkit-text-stroke-color: rgb(241, 241, 241);
+}
+
+
+.star-content-small {
+  font-family: none;
+  font-size: 1px;
+  -webkit-text-fill-color: #ffa600e5;
+  -webkit-text-stroke-width: 2.7px;
+  -webkit-text-stroke-color: #ffa600e5;
+}
+
+.star-background {
+  font-family: none;
+  font-size: 14px;
+  -webkit-text-fill-color: rgb(241, 241, 241);
+  -webkit-text-stroke-width: 2.7px;
+  -webkit-text-stroke-color: rgb(241, 241, 241);
+}
+
+
+.star-content {
+  font-family: none;
+  font-size: 14px;
+  -webkit-text-fill-color: #ffa600e5;
+  -webkit-text-stroke-width: 2.7px;
+  -webkit-text-stroke-color: #ffa600e5;
+}

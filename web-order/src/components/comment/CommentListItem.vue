@@ -4,61 +4,53 @@
       class="container--exterrior"
       :to="{name: 'boardItem', params: { id: comment.comments_id, page: 0 }, }">
       <div class="cards">
-        <!-- <img
-          :src="comment.comments_image"
-          :alt="comment.comments_id" /> -->
-        <div class="cards__image">
-          <el-avatar>
-            {{ comment.comments_id }}
-          </el-avatar>
-        </div>
-        <div class="cards__content">
-          <div class="cards__user">
-            <span class="cards__info">
-              {{ translateId }}
-            </span>
-            <span 
-              class="cards__date">
-              {{ comment.comments_date }}
-            </span>
-            <span>
-              주문 내역: {{ comment.food_items_food_id }}
-            </span>
+        <div class="cards__inner">
+          <div class="inner__user">
+            <el-avatar>
+              {{ comment.comments_id }}
+            </el-avatar>
+            <div class="user">
+              <span class="user__name">
+                {{ translateId }}
+              </span>
+              <div class="user__info">
+                <div 
+                  class="inner__star"
+                  v-for="item in 5"
+                  :key="item">
+                  <div 
+                    class="star-background-small"
+                    :class="{'star-content-small': item <= comment.ratings }">
+                    ☆
+                  </div>
+                </div>
+                <span :style="{ 'margin-right': '10px'}">{{ comment.comments_date }}</span>
+              </div>
+            </div>
           </div>
           <span class="cards__text">
             {{ comment.comments_text }}
-          </span>
+          </span> 
+          <div>
+            <img
+              :src="comment.comments_image"
+              :alt="comment.comments_id" /> 
+          </div>
         </div>
       </div>
     </router-link>
-    <button 
-      class="cards__btn"
-      @click="likeBtn(this.comment.comments_id)">
-      <i class="far fa-thumbs-up"></i>
-      도움돼요 
-    </button>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 export default {
-  components: {
-    // CommentDetailButton
-  },
   props: {
     comment: {
       type: Object,
       default: function() { return {} },
       required: true,
     },
-  },
-   created() {
-  console.log("created!");
-  // const id = this.$route.params.id;
-  const id = this.comment.comments_id;
-  // console.log("id check", id);
-  this.$store.commit('user/getLikeUserList', id);
   },
   computed: { 
     formmatDate() {
@@ -71,12 +63,11 @@ export default {
       return new Date().getTime() - nowDateObject.getTime() < 24 * 60 * 60 * 1000;
     },
     translateId() {
-       const userId= this.comment.comments_user_id
-      //  console.log(userId)
+       const userId= this.comment.comments_user_id;
       if(typeof userId === 'string') {
         return userId.replace(/(?<=.).(?=.)/g, "*");
       }
-      return null // return 값이 없으면 안됨
+      return null
     },
   },
   methods: {
@@ -95,69 +86,72 @@ export default {
 </script>
 
 <style scoped lang="scss">
-// @import '../../scss/variables.scss';
+@import '@/scss/btn.scss';
+@import '@/scss/common.scss';
 
 .cards {
   display: flex;
-  padding: .5rem;
-  // margin: 10px 20px;
+  padding: .2rem;
   height: auto;
   background-color: #fff;
-  border-radius: .5rem;
-  box-shadow:  0px 2px 5px rgb(0,0,0, 0.1);
   transition: ease-out 300ms;
   transition-duration: 300ms;
+
+  .cards__inner {
+    width: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 1rem;
+    box-shadow: 2px 2px 4px #0000001a;
+    border-radius: .5rem;
+
+    .inner__user {
+      display: flex;
+      flex-direction: row;
+      width: auto;
+      line-height: 12px;
+      .user {
+        color: #949393;
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+        font-weight: 600;  
+        margin-left: 5px;
+      }
+    }
+  }
+  .cards__text {
+    margin: 15px 0px;
+    display: block;
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+  }
 }
 
 .cards:active {
   background-color: #333;
 }
+.user__name {
+  margin-bottom: 5px;
+  display: block;
+  color:#333;
+}
+.user__info {
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
+}
+.inner__star {
+  width: 18px;
+  height: 10px;
+}
 
 img {
   border-radius: .2rem;
-  width: 150px;
-  min-height: 140px;
-  max-width: 32vw;
-  min-width: 32vw;
+  height: 100px;
+  width: 100px;
   object-fit: cover;
-  z-index: 0;
+  z-index: 1;
 }
-
-.cards__content {
-  width: 100%;
-  padding: 15px;
-
-  .cards__user {
-    padding-bottom: 10px;
-    color: #949393;
-    font-size: 12px;
-    font-weight: 600;  
-  }
-  .cards__date {
-    margin-left: 5px;
-  }
-}
-.cards__image {
-  padding-top: 10px;
-}
-.cards__text {
-  font-size: 14px;
-  color: #333;
-}
-
-.cards__btn {
-  padding: .3rem;
-  margin-top: 10px;
-  box-sizing: border-box;
-  display: flex;
-  outline: none;
-  font-size: 16px;
-  font-weight: bold;
-  transition: .5s;
-  border-radius: .5rem;
-  border: 1px solid #eca115;
-  background-color: #fff;
-  color: #eca115;
-}
-
 </style>

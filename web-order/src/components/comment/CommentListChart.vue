@@ -1,8 +1,20 @@
 <template>
   <div class="container">
-    <div class="progress-inner">
-      <span>{{ getTotalRating }}</span>
-      <div class="progress-content">
+    <div class="container__inner">
+      <div 
+        class="inner__star"
+        v-for="item in 5"
+        :key="item">
+        <span 
+          class="star-background"
+          :class="{'star-content': item <= getTotalRating }">
+          ☆
+        </span>
+      </div>
+      <div class="inner__total">
+        총 평점<span class="total">{{ getTotalRating }}</span>
+      </div>
+      <div class="inner__progress">
         <div 
           class="progress-item"
           v-for="(item, index) in getRatingPercent"
@@ -13,7 +25,7 @@
             :value="item">
           </progress>
           <label :for="item">
-            {{ (( item / comments.length ) * 100).toFixed(0)+ '%' }}
+            {{ (( item / comments.length ) * 100).toFixed(0) + '%' }}
           </label>
         </div>
       </div>
@@ -25,10 +37,13 @@
 import { mapState } from 'vuex';
 
 export default {
+  data() {
+    return {
+      flag: true
+    }
+  },
   computed: {
     ...mapState('comment', ['comments']),
-    
-    // 고객 총 평점 
     getTotalRating() {
       let index = this.comments.map(comment => comment.ratings);
       let plusRating = index.reduce((total, val) => total + val, 0); 
@@ -42,10 +57,9 @@ export default {
           let rating = item.ratings;
           return rating;
         }
-      }).filter(ratings => ratings);   // undefind 제거 완료 : [3, 5, 3, 4, 3]
+      }).filter(ratings => ratings);  
     
       const rating = calcRating.reduce((prev, curr) => {
-        // console.log(prev[curr] ? prev[curr] + 1 : prev); // 중복값 3만 찾아옴
         prev[curr] = (prev[curr] || 0) + 1;
         return prev;
       }, {});
@@ -60,27 +74,30 @@ export default {
 @import '@/scss/common.scss';
 .container {
   max-width: 500px;
-  height: 200px;
+  height: 100%;
   margin: auto;
-  padding: 1rem 1rem;
+  padding: 2rem 1rem;
   background-color: #fff;
-  border-radius: .2rem;
-  box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.26);
+  border-bottom: 1px solid #ccc;
 
-  .progress-inner {
-    // background-color: purple;
-    padding-top: 10px;
-    min-width: 150px;
+  .container__inner {
+    height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-content: flex-end;
-    span {
-      padding: 30px;
+
+    .inner__total {
+      margin: 20px;
       display: block;
-      font-size: 18px;
-      font-weight: bold;
-      align-items: center;
+      position: absolute;
+      top: 50px;
+      left: 30px;
+      .total {
+        padding-left: 5px;
+        font-weight: bold;
+        color: #ffae00;
+      }
     }
   }
 }
@@ -89,8 +106,15 @@ label {
   appearance: none;
   font-size: 14px;
   font-weight: none;
-  color: #ccc;
+  color: #aca7a7;
   padding: 8px;
 }
 
+.inner__star {
+  width: 25px;
+  height: 50px;
+  margin-top: 5px;
+  align-items: center;
+  line-height: 50px;
+}
 </style>
