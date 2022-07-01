@@ -9,7 +9,7 @@ router.get('/get/orderList', verifyToken, async(req, res) => {
   try {
     const connection = await pool.getConnection(async conn => conn);
     try {
-      let sql = "SELECT id_order_list as id ,id_order_num, order_quantity as quantity, order_date, order_status as status, order_total_price as price, food_name, food_id " +
+      let sql = "SELECT id_order_list as id ,id_order_num, order_quantity as quantity, order_date, order_status as status, order_total_price as price, food_name, food_id, food_image1 " +
         "FROM order_list " +
         "LEFT JOIN order_num ON order_num_id_order_num = id_order_num " +
         "LEFT JOIN food_items ON food_items_food_id = food_id " +
