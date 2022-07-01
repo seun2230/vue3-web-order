@@ -41,9 +41,11 @@
         :reply="reply"
         :key="reply.id_reply"
         :my-comment="this.myComment" />
-      <div class="btn_more">
-        <button
-          class="btn--round btn--large"
+      <div 
+        class="btn_more">
+        <button 
+          v-if="replys.length > 1"
+          class="btn--round btn--xl"
           @click="moreReplyList()">
           댓글 더보기
         </button>
@@ -155,6 +157,6 @@ export default {
   border-radius: .5rem;
   padding: 10px;
   width: 100%;
-  height: 50px;
+  height: 40px;
 }
 </style>

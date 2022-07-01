@@ -41,6 +41,7 @@
           </textarea>
         </div>
         <div class="form__photos">
+          <span class="photos-text">사진 업로드</span>
           <CommentImageUpload @child="setData" />
         </div>
         <div class="form__option">
@@ -62,7 +63,7 @@
         </div>
         <button
           type="button"
-          class="btn-orange"
+          class="btn--orange btn--xl"
           @click="saveComment()">
           리뷰 등록 
         </button>
@@ -153,8 +154,9 @@ export default {
 
 
 <style lang="scss" scoped>
-@import '../scss/btn.scss';
-@import '../scss/common.scss';
+@import '@/scss/btn.scss';
+@import '@/scss/common.scss';
+
 .container {
   display: flex;
   flex-direction: column;
@@ -173,8 +175,8 @@ export default {
   }
 }
 .inner__order {
-  padding: .5rem;
-  margin-bottom: 30px;
+  padding: 20px;
+  margin-bottom: 15px;
   color: rgb(107, 103, 103);
   display: inline-block;
   display: flex;
@@ -208,6 +210,10 @@ form {
   }
   .form__photos {
     margin: 10px 0px;
+    .photos-text {
+      display: block;
+      padding-bottom: 5px;
+    }
   }
   .form__option {
     margin: 10px 0px;

@@ -1,31 +1,22 @@
 <template>
   <div class="container">
-    <div class="empty-item" v-if="this.orderList < 1">
+    <div 
+      class="empty-item" 
+      v-if="this.orderList < 1">
       주문 내역이 존재하지 않습니다.
     </div>
-    <div class="order_item" v-else
+    <div 
+      class="order_item" 
+      v-else
       v-for="order in orderList.slice().reverse()"
       :key="order.id"
-      :order="order" >
+      :order="order">
       <div class="order_date">
-        {{ order.order_date }}
-        <div class="done">
-        결제완료
-        </div>
+        {{ order.order_date }} 
+        <span class="order_done">
+          결제완료
+        </span>
       </div>
-      <!-- <div class="del_modal">
-        <button class="btn-area" @click="openModal()">
-          <div class="del-btn">
-          <icon-base icon-name="VerticalDots"
-            width="33" height="32" >
-            <vertical-dots />
-          </icon-base>
-          </div>
-        </button>
-        <ModalAdd
-          @close="closeModal()"
-          v-if="modal" />
-      </div> -->
       <div class="order_food">
         <span>{{ order.food_name }}</span>
       </div>
@@ -33,13 +24,21 @@
         <span>수량 : {{ order.quantity }}</span>
       </div>
       <div class="order_price">
-        <span>합계 : {{ order.price }}</span>
+        <span> {{ order.price }}원</span>
       </div>
       <div class="reviw-btn-area">
-        <router-link class="container-exterrior"
-        :to="{name: 'review', params: { id: order.food_id }}">
-          <el-button  class="blue-btn"
-          type="default">리뷰 작성</el-button>
+        <button
+          class="btn--gray btn--md"
+          @click="repurchase()">
+          재구매
+        </button>
+        <router-link 
+          :to="{name: 'review', params: { id: order.food_id }}">
+          <button
+            class="btn--orange btn--md"
+            type="default">
+            리뷰 작성
+          </button>
         </router-link>
       </div>
     </div>
@@ -48,16 +47,9 @@
 
 <script>
 import { mapState } from 'vuex';
-// import IconBase from '../../../assets/navicons/IconBase.vue'
-// import VerticalDots from '../../../assets/VerticalDots.vue'
-// import ModalAdd from '../components/ModalAdd.vue';
+
 
 export default {
-  components: {
-    // IconBase,
-    // VerticalDots,
-    // ModalAdd,
-  },
   data() {
     return {
       isEmpty: true,
@@ -66,57 +58,20 @@ export default {
   created() {
     this.$store.commit("user/getOrderList")
   },
-  // methods: {
-  //   resetOrder() {
-
-  //   },
-  //   openModal() {
-  //     this.modal = !this.modal;
-  //   },
-  //   closeModal() {
-  //     this.modal = false;
-  //   },
-  //   writeReview() {
-
-  //   }
-  // },
   computed: {
     ...mapState('user', ['orderList']),
+  },
+  methods: {
+    repurchase() {
+      this.$router.push('/user/menu');
+    },
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../../../scss/variables.scss';
-@mixin colorBtn($color) {
-  background: $mainBg;
-  height: 50%;
-  width: 50%;
-  min-height: 25px;
-  border-radius: 9px;
-  color: $color;
-  font-weight: 800;
-  justify-content: center;
-  vertical-align: middle;
-  padding: 0px;
-  &:hover {
-    color: $color;
-
-    &:before,
-    &:after {
-      background: $mainBg;
-    }
-  }
-}
-
-.blue-btn {
-  @include colorBtn($blue);
-  border-radius: 5px;
-  width: 100px;
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
-  transition: ease-out 300ms;
-  transition-duration: 300ms;
-}
+@import '@/scss/variables.scss';
+@import '@/scss/btn.scss';
 
 .container {
   padding: 10px;
@@ -135,12 +90,6 @@ export default {
   align-content: stretch;
   background-color: white;
 }
-
-// .del-btn {
-// viewport scale 차이 문제
-// 모달
-// }
-
 .order_item {
   margin: 10px;
   min-height: 150px;
@@ -155,21 +104,24 @@ export default {
   margin-bottom: 10px;
   text-align: left;
   font-size: 0.9rem;
+  color: $gray-text;
 }
 
-.done {
+.order_done {
   margin-top: 5px;
+  color: $orange-400;
+  font-weight: 500;
 }
-
 .order_food {
   margin-top: 10px;
   margin-bottom: 10px;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 1.2rem;
 }
 
 .order_price {
   margin-top: 5px;
+  font-weight: 700;
 }
 
 .empty-item {

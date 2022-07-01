@@ -1,17 +1,21 @@
 <template>
   <div class="conainer">
     <div class="inner">
-      <span>💙고객님의 평점을 선택해주세요💙</span>
+      <span>🧡고객님의 평점을 선택해주세요🧡</span>
       <div class="inner__item">
       </div>
       <div class="rating">
-        <div 
-          class="rating-item"
+        <div
+          class="rating__item" 
           v-for="rating in ratings"
           :key="rating.id"
           :v-model="rating.id"
           @click="checkRating(rating.id)">
-          {{ rating.id }}
+          <div 
+            class="star-background-lg"
+            :class="{'star-forward-lg': rating.id }">
+            ☆
+          </div>
         </div>
       </div> 
     </div>
@@ -38,6 +42,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/scss/common.scss';
 .container {
   display: flex;
   flex-direction: column;
@@ -45,28 +50,21 @@ export default {
   margin: 30px;
   padding: 1rem 1rem;
   .inner {
-    margin-top: 30px;
+    margin-top: 15px;
     color: #333;
     font-size: 16px;
     font-weight: bold;
 
     .inner__item {
-      margin-top: 20px;
+      margin-top: 15px;
       font-size: 18px;
     }
   }
+
   .rating {
     display: flex;
-    flex-direction: row;
-    .rating-item {
-      margin: 5px;
-      width: 50px;
-      height: 50px;
-      border: 6px solid  #409EFF;
-      box-shadow: 2px 4px 4px #0000001a;
-      border-radius: 50%;
-      align-items: center;
-    } 
+    padding: 5px;
+    height: 30px;
   }
 }
 </style>
