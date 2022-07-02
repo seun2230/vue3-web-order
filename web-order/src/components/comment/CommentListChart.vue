@@ -6,8 +6,8 @@
         v-for="item in 5"
         :key="item">
         <span 
-          class="star-background"
-          :class="{'star-content': item <= getTotalRating }">
+          class="star-background-md"
+          :class="{'star-forward-md': item <= getTotalRating }">
           ☆
         </span>
       </div>
@@ -73,22 +73,23 @@ export default {
 @import '@/scss/btn.scss';
 @import '@/scss/common.scss';
 .container {
-  max-width: 500px;
-  height: 100%;
+  max-width: auto;
+  height: 150px;
   margin: auto;
-  padding: 2rem 1rem;
+  padding: 1.5rem;
   background-color: #fff;
   border-bottom: 1px solid #ccc;
 
   .container__inner {
     height: 100%;
+    padding: 5px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-content: flex-end;
 
     .inner__total {
-      margin: 20px;
+      margin-top: 30px;
       display: block;
       position: absolute;
       top: 50px;
@@ -97,7 +98,11 @@ export default {
         padding-left: 5px;
         font-weight: bold;
         color: #ffae00;
+        text-align: center;
       }
+    }
+    .inner__progress {
+      margin-left: 10px;
     }
   }
 }
@@ -107,13 +112,14 @@ label {
   font-size: 14px;
   font-weight: none;
   color: #aca7a7;
-  padding: 8px;
+  margin-left: 2px;
 }
 
 .inner__star {
-  width: 25px;
-  height: 50px;
-  margin-top: 5px;
+  width: 15px;
+  height: 20px;
+  margin-right: 5px;
+  margin-top: 12px;
   align-items: center;
   line-height: 50px;
 }

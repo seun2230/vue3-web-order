@@ -19,13 +19,15 @@
                   v-for="item in 5"
                   :key="item">
                   <div 
-                    class="star-background-small"
-                    :class="{'star-content-small': item <= comment.ratings }">
+                    class="star-background-sm"
+                    :class="{'star-forward-sm': item <= comment.ratings }">
                     ☆
                   </div>
                 </div>
-                <span :style="{ 'margin-right': '10px'}">{{ comment.comments_date }}</span>
               </div>
+            </div>
+            <div>
+              <span class="cards__date">{{ formmatDate }}</span>
             </div>
           </div>
           <span class="cards__text">
@@ -55,12 +57,8 @@ export default {
   computed: { 
     formmatDate() {
       const nowDate = this.comment.comments_date;
-      const year = +nowDate.split('-')[0];
-      const month = +nowDate.split('-')[1];
-      const day = +nowDate.split('-')[2]
-      const nowDateObject = new Date(year, month, day);
-
-      return new Date().getTime() - nowDateObject.getTime() < 24 * 60 * 60 * 1000;
+      const formmatDate = nowDate.replace(/(\d{4}).(\d{2}).(\d{2})/,'$1.$2.$3');
+      return formmatDate;
     },
     translateId() {
        const userId= this.comment.comments_user_id;
@@ -88,7 +86,6 @@ export default {
 <style scoped lang="scss">
 @import '@/scss/btn.scss';
 @import '@/scss/common.scss';
-
 .cards {
   display: flex;
   padding: .2rem;
@@ -104,19 +101,31 @@ export default {
     padding: 1rem;
     box-shadow: 2px 2px 4px #0000001a;
     border-radius: .5rem;
-
     .inner__user {
       display: flex;
       flex-direction: row;
-      width: auto;
-      line-height: 12px;
+      width: 100%;
+      line-height: 20px;
       .user {
+        flex: 2;
         color: #949393;
+        height: 100%;
         display: flex;
         flex-direction: column;
         font-size: 14px;
-        font-weight: 600;  
-        margin-left: 5px;
+        font-weight: bold;
+        margin-left: 10px;
+        .user__name {
+          display: block;
+          width: 150px;
+          color: $gray-text;
+        }
+        .user__info {
+          display: flex;
+          width: 100%;
+          flex-direction: row;
+          font-size: 15px;
+        }
       }
     }
   }
@@ -124,29 +133,25 @@ export default {
     margin: 15px 0px;
     display: block;
     font-size: 16px;
-    font-weight: 400;
-    color: #333;
+    font-weight: 500;
+    color: $gray-text;
   }
 }
 
+.cards__date {
+  width: 50%;
+  margin-left: 0 auto;
+  text-align: right;
+  color: $gray-600;
+  line-height: 30px;
+}
 .cards:active {
-  background-color: #333;
-}
-.user__name {
-  margin-bottom: 5px;
-  display: block;
-  color:#333;
-}
-.user__info {
-  display: flex;
-  flex-direction: row;
-  font-size: 16px;
+  background-color: $gray-text;
 }
 .inner__star {
-  width: 18px;
-  height: 10px;
+  width: 15px;
+  height: 2px;
 }
-
 img {
   border-radius: .2rem;
   height: 100px;

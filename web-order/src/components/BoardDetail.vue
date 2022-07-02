@@ -8,7 +8,7 @@
             :style="{'font-weight': 'bold' }">
             {{ myComment.comments_user_id }}
           </span>
-          <span>{{ myComment.comments_date }}</span>
+          <span>{{ formmatDate }}</span>
         </div>
       </div>
       <div class="item">
@@ -91,6 +91,12 @@ export default {
   computed: {
     ...mapState('comment', ['myComment']),
     ...mapState('reply', ['replys']),
+    formmatDate() {
+      const commentDate = this.myComment.comments_date;
+      console.log("nowDate", commentDate);
+      const formmatDate = commentDate.replace(/(\d{4}).(\d{2}).(\d{2})/,'$1.$2.$3');
+      return formmatDate;
+    },
   },
   methods: {
     showReply() {
