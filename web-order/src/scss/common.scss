@@ -67,33 +67,31 @@ button {
   background-color: transparent;
 }
 
-.star-background-small {
+.star-background-sm {
   font-family: none;
   font-size: 1px;
-  -webkit-text-fill-color: rgb(241, 241, 241);
+  -webkit-text-fill-color: $gray-400;
   -webkit-text-stroke-width: 2.7px;
-  -webkit-text-stroke-color: rgb(241, 241, 241);
+  -webkit-text-stroke-color: $gray-400;
 }
 
-
-.star-content-small {
+.star-forward-sm {
   font-family: none;
   font-size: 1px;
-  -webkit-text-fill-color: #ffa600e5;
+  -webkit-text-fill-color: orange;
   -webkit-text-stroke-width: 2.7px;
   -webkit-text-stroke-color: #ffa600e5;
 }
 
-.star-background {
+.star-background-md {
   font-family: none;
   font-size: 14px;
-  -webkit-text-fill-color: rgb(241, 241, 241);
+  -webkit-text-fill-color: $gray-400;
   -webkit-text-stroke-width: 2.7px;
-  -webkit-text-stroke-color: rgb(241, 241, 241);
+  -webkit-text-stroke-color: $gray-400;
 }
 
-
-.star-content {
+.star-forward-md {
   font-family: none;
   font-size: 14px;
   -webkit-text-fill-color: #ffa600e5;
@@ -106,12 +104,10 @@ button {
   font-size: 15px;
   padding-right: 20px;
   padding-bottom: 5px;
-  -webkit-text-fill-color: rgb(241, 241, 241);
+  -webkit-text-fill-color: $gray-400;
   -webkit-text-stroke-width: 5px;
-  -webkit-text-stroke-color: rgb(241, 241, 241);
+  -webkit-text-stroke-color: $gray-400;
 }
-
-
 .star-forward-lg {
   font-family: none;
   font-size: 15px;

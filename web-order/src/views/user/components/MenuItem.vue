@@ -1,27 +1,40 @@
 <template>
-    <div class="container"
-      @click="addCart()">
-      <div class="infos">
-      <img
+  <div 
+    class="container"
+    @click="addCart()">
+    <div class="infos">
+      <!-- <img
         :src="food.food_image1"
-        :alt="food.food_name" />
-        <div class="detail">
-          <div class="name">
-            <span>{{ food.food_name }}</span>
+        :alt="food.food_name" /> -->
+      <img src="../../../assets/cook.jpg" />
+      <div class="detail">
+        <div class="name">
+          <span>{{ food.food_name }}</span>
+          <div 
+            v-if="ratingAverage > 1"
+            class="rating-section">
+            <span 
+              class="star-background-sm"
+              :class="{'star-forward-sm': ratingAverage }">
+              ☆ 
+            </span>
+            <span class="rating-text">
+              {{ ratingAverage }}
+            </span>
           </div>
-          <div class="description">
-          </div>
-          <div class="price">
-            <span class="price-num">{{ food.food_price }}</span>&nbsp;<span>원</span>
-          </div>
+        </div>
+        <div class="price">
+          <span class="price-num">
+            {{ food.food_price }}원
+          </span>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
-
-
+import { mapState } from 'vuex';
 export default {
   props: {
     food: {
@@ -29,17 +42,33 @@ export default {
       default: function() { return {} }
     }
   },
+  created() {
+    this.$store.commit("comment/getState")
+  },
   methods: {
     addCart() {
       this.$store.dispatch('food/addCart', this.food)
+    }
+  },
+  computed: {
+    ...mapState('comment', ['comments']),
+    ratingAverage() {
+      const foodId = this.food.food_id;
+      const findRatings =  this.comments.filter(comment => comment.food_items_food_id === foodId).map(item => item.ratings);
+      const addRating = findRatings.reduce((prev, current) => prev + current ,0);
+      console.log("addRating", addRating);
+      console.log("findRatings", findRatings);
+
+      const result = (addRating/ this.comments.length).toFixed(1);
+      console.log("result", result);
+      return result;
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../../../scss/variables.scss';
-
+@import '@/scss/variables.scss';
 .container {
   display: flex;
   width: 100%;
@@ -64,16 +93,16 @@ export default {
     transition-duration: 300ms;
     .detail {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       justify-content: space-between;
-      padding: 10px;
-      margin-left: 10px;
+      padding: 15px;
+      margin-left: 5px;
       height: 100%;
       width: 100%;
       .name {
         text-align: left;
-        width: 100%;
-        height: 30%;
+        width: 60%;
+        height: 30%;    
       }
       .description {
         width: 100%;
@@ -82,16 +111,28 @@ export default {
         white-space: nowrap;
         overflow: hidden;
       }
-      .price {
+      .rating-section {
         display: flex;
-        justify-content: flex-end;
+        flex-direction: row;
+        width: 80px;
+    
+      }
+      .rating-text {
+        display: block;
+        color: $gray-text;
+        margin-left: 5px;
+        font-size: .9rem;
+      }
+      .price {
+        width: 40%;
+        height: 100%;
         padding-top:5px;
         text-align: right;
-        width: 100%;
-        height: 30%;
-      }
-      .price-num {
-        font-size: 1.1rem;
+        .price-num {
+          display: block;
+          font-size: 1.1rem;
+          bottom: 0;
+        }
       }
     }
   }
