@@ -1,10 +1,5 @@
 # WEB-ORDER-SYSTEM 
 
-## 🔧 Tools
-<img src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat-round&logo=vue.js&logoColor=white"/> <img src="https://img.shields.io/badge/express-000000?style=flat-round&logo=Express&logoColor=white"/> <img src="https://img.shields.io/badge/Node.js-339933?style=flat-round&logo=node.js&logoColor=white"/> <img src="https://img.shields.io/badge/Mysql-4479A1?style=flat-round&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=flat-round&logo=amazonec2&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon S3-FF9900?style=flat-round&logo=amazons3&logoColor=white"/>  
-
-<br />
-
 ## 🔦 Description   
 - 모바일 웹 주문 결제 시스템 페이지  
 - 비대면 주문 방식의 수요 증가와 키오스크 설치의 비용 감소를 위해 프로젝트 기획하였습니다.
@@ -12,6 +7,11 @@
 - 추가적으로 코드 리팩토링 및 기능 업데이트 필요성      
 
 <br />   
+
+## 🔧 Tools
+<img src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat-round&logo=vue.js&logoColor=white"/> <img src="https://img.shields.io/badge/express-000000?style=flat-round&logo=Express&logoColor=white"/> <img src="https://img.shields.io/badge/Node.js-339933?style=flat-round&logo=node.js&logoColor=white"/> <img src="https://img.shields.io/badge/Mysql-4479A1?style=flat-round&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=flat-round&logo=amazonec2&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon S3-FF9900?style=flat-round&logo=amazons3&logoColor=white"/>  
+
+<br />
 
 ## 📑프로젝트 PPT    
 
@@ -62,8 +62,8 @@ v1.0   | 2021년 10월 18일- 2021년 12월 27일 (총 2달) | [vue3-web-order](
 | 6월 1주 | 리뷰 UI 개선 | ✅
 | 6월 2주 | - <span style="color:#00AAFF">BoardDetail 코드 리팩토링</span><br />- 리뷰 vuex store 관리 | ✅
 | 6월 3주 | - 댓글 등록, 수정, 삭제 추가<br/>- 댓글 vuex store 관리 | ✅
-| 6월 4주 | - 댓글 페이징 처리, 리뷰 작성 <br /> - AWS S3 연동 <br /> |  ✅
-| 6월 5주 | -리뷰 progress bar, 평점 추가 
+| 6월 4주 | - 댓글 페이징 처리<span style="color:red">(보완 필요함)</span>, 리뷰 작성 <br /> - AWS S3 연동 <br /> |  ✅
+| 6월 5주 | - 리뷰 차트 progress bar <br /> - 차트, 개별 게시물, 리뷰 작성, 개별 상품 별점 반영 및 평점 계산 <br /> - 주문 내역 이미지 추가 <br /> - 리뷰 전체 페이지 좋아요 버튼 추가<span style="color:red">(보완 필요함)</span><br /> | ✅
 <br /> 
 
 ## 테스트
