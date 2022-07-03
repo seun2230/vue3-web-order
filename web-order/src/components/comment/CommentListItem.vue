@@ -10,7 +10,8 @@
               {{ comment.comments_id }}
             </el-avatar>
             <div class="user">
-              <span class="user__name">
+              <span 
+                class="user__name">
                 {{ translateId }}
               </span>
               <div class="user__info">
@@ -41,11 +42,31 @@
         </div>
       </div>
     </router-link>
+    <div 
+      v-if="!likeBtn" 
+      @click="likeButton()">
+      <i class="far fa-thumbs-up"></i>
+      도움됐어요
+      <span>
+        {{ likeUser.length }}  
+      </span>
+    </div>
+    <div 
+      v-else
+      style="color: red"
+      @click="dislikeButton()">
+      <i class="far fa-thumbs-up"></i> 
+      도움됐어요
+      <span>
+        {{ likeUser.length }}
+      </span>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import { mapState, mapGetters } from 'vuex';
 export default {
   props: {
     comment: {
@@ -54,7 +75,14 @@ export default {
       required: true,
     },
   },
+  created() {
+    const id = this.comment.comments_id;
+    console.log("id", id);
+    this.$store.commit('user/getLikeUserList', id);
+  },
   computed: { 
+    ...mapState('user', ['likeUser']),
+    ...mapGetters('user', ['likeBtn']),
     formmatDate() {
       const nowDate = this.comment.comments_date;
       const formmatDate = nowDate.replace(/(\d{4}).(\d{2}).(\d{2})/,'$1.$2.$3');
@@ -69,17 +97,30 @@ export default {
     },
   },
   methods: {
-    likeBtn(id) {
-      console.log("id check", id);
+    likeButton() {
+      let id = this.comment.comments_id;
+      console.log("commentListItem id", id);
+
       axios.post(`${process.env.VUE_APP_URL}/api/user/post/likeUp/` + id)
       .then(res => {
-        console.log("server response", res.data);
+        console.log("likeBtn response success", res.data);
       })
       .catch(err => {
-        console.log("err", err);
+        console.log("likeBtn response fail", err.response);
       })
     },
-  }
+  },
+  disLikeButton() {
+    const id = this.comment.comments_id;
+    axios.post(`${process.env.VUE_APP_URL}/api/user/post/likeDown/` + id)
+    .then(res => {
+      console.log("dislikeBtn response success", res.data);
+        this.$router.go();
+    })
+    .catch(err => {
+      console.log("dislikeBtn response fail", err.response);
+    })
+  },
 }
 </script>
 
