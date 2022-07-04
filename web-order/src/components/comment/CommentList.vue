@@ -51,9 +51,6 @@ export default {
       dateList.sort((a, b) => {
         const x = new Date(a.comments_date).getDate();
         const y = new Date(b.comments_date).getDate();
-        // console.log(x);
-        // console.log(y);
-        // console.log(x > y); // x가 큰 상태
         if ( x < y) {
           return false;
         }
@@ -67,7 +64,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+@import '@/scss/variables.scss';
 .comment {
   padding: 10px 20px;
   display: flex;
@@ -75,6 +73,7 @@ export default {
   align-content: flex-end;
   width: auto;
   outline: none;
+  border-bottom: 1px solid $gray-500;
   border-radius: .2rem;
   color: #334455;
   font-size: 1rem;
@@ -90,7 +89,6 @@ export default {
     }
   }
 }
-
 .btn__group {
   position: fixed;
   top: 60px;
