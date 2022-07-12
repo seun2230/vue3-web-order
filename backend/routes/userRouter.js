@@ -57,7 +57,7 @@ router.get('/get/keyword/:id', async(req, res) => {
   }
 })
 
-router.get('/get/reply/:page/:id', async(req, res) => {
+router.get('/get/reply/:id', async(req, res) => {
   try {
     console.log("DB Connection /get/reply");
     const connection = await pool.getConnection(async conn => conn);
@@ -66,18 +66,13 @@ router.get('/get/reply/:page/:id', async(req, res) => {
 
     try {
       let comment_id = parseInt(req.params.id, 10);
-      let page = parseInt(req.params.page, 10);
-
-      let value = [ comment_id, page ];
+      let value = [ comment_id];
       let sql = "SELECT * FROM reply " +
                "WHERE comments_comments_id = ? " +
                "ORDER BY id_reply asc LIMIT 5";
       console.log("sql", sql);
       const [row] = await connection.query(sql, value);
       res.send(row);
-
-       
-      
       connection.release();
       } catch(err) {
       console.log("Query Error");
@@ -97,7 +92,7 @@ router.get('/get/reply/:page/:id', async(req, res) => {
   }
 })
 
-router.get('/get/reply/more/:page/:id', async(req, res) => {
+router.get('/get/reply/more/:id', async(req, res) => {
   try {
     console.log("DB Connection /get/reply/more/");
     const connection = await pool.getConnection(async conn => conn);
@@ -106,9 +101,7 @@ router.get('/get/reply/more/:page/:id', async(req, res) => {
 
     try {
       let comment_id = parseInt(req.params.id, 10);
-      let page = parseInt(req.params.page, 10);
-
-      let value = [ comment_id, page ];
+      let value = [ comment_id];
       let sql = "SELECT id_reply, reply_text, reply_date FROM reply " +
                "WHERE comments_comments_id = ? AND id_reply > 838 "
                "ORDER BY id_reply ASC LIMIT 5";

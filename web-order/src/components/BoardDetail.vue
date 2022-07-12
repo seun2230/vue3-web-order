@@ -8,7 +8,7 @@
             :style="{'font-weight': 'bold' }">
             {{ myComment.comments_user_id }}
           </span>
-          <span>{{ formmatDate }}</span>
+          <span>{{ myComment.comments_date }}</span>
         </div>
       </div>
       <div class="item">
@@ -83,20 +83,12 @@ export default {
   },
   created() {
     const id = this.$route.params.id;
-    const page = this.$route.params.page;
-    const data = { id , page};
-    this.$store.commit('comment/getComment', data);
-    this.$store.commit('reply/getReply', data);
+    this.$store.commit('comment/getComment', id);
+    this.$store.commit('reply/getReply', id);
   },
   computed: {
     ...mapState('comment', ['myComment']),
     ...mapState('reply', ['replys']),
-    formmatDate() {
-      const commentDate = this.myComment.comments_date;
-      console.log("nowDate", commentDate);
-      const formmatDate = commentDate.replace(/(\d{4}).(\d{2}).(\d{2})/,'$1.$2.$3');
-      return formmatDate;
-    },
   },
   methods: {
     showReply() {
@@ -116,10 +108,9 @@ export default {
     }, 
     moreReplyList() {
       const id = this.$route.params.id; 
-      const page = this.$route.params.page; 
       const reply_id = this.replys[0].id_reply;
       console.log("ReplyId", reply_id);
-      const data = { id , page, reply_id}; 
+      const data = { id , reply_id}; 
       this.$store.commit('reply/getMoreReply', data);
     }
   }

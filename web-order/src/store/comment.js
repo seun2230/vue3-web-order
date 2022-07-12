@@ -25,7 +25,7 @@ export default {
     },
     getComment(state, payload) {
       console.log("comment payload", payload);
-      axios.get(`${process.env.VUE_APP_URL}/api/comment/get/comment/` + payload.page + '/' +  payload.id)
+      axios.get(`${process.env.VUE_APP_URL}/api/comment/get/comment/` + payload)
       .then(res => {
         console.log("getComment response success", res.data);
         state.myComment = res.data[0];

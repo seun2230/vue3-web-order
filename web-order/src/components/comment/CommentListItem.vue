@@ -2,7 +2,7 @@
   <div class="container">
     <router-link 
       class="container--exterrior"
-      :to="{name: 'boardItem', params: { id: comment.comments_id, page: 0 }, }">
+      :to="{name: 'boardItem', params: { id: comment.comments_id }, }">
       <div class="cards">
         <el-avatar>
           {{ comment.comments_id }}

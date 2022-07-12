@@ -75,7 +75,7 @@ const routes = [
         meta: { metaName: '리뷰'}
       },
       {
-        path: 'board/:page/:id',
+        path: 'board/:id',
         name: 'boardItem',
         component: BoardDetail,
         props: true,

@@ -30,12 +30,9 @@ import { mapState, mapGetters } from 'vuex';
 
 export default {
   created() {
-    const id = this.comment.comments_id;
-    // const page = 0;
-    // const data = { id , page};
-    // this.$store.commit('comment/getComment', data);
+    let id = this.comment.comments_id;
+    console.log("id", id);
     this.$store.commit('user/getLikeUserList', id);
-    // this.$store.commit('reply/getReply', data);
   },
   props: {
     comment: {
@@ -49,7 +46,7 @@ export default {
     ...mapState('reply', ['replys']),
     ...mapGetters('user', ['likeBtn']),
   },
-   methods: {
+  methods: {
     likeButton() {
       let id = this.comment.comments_id;
       console.log("commentListItem id", id);
