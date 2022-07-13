@@ -6,6 +6,7 @@ export default {
       return {
         carts: [],
         foods: [],
+        eachFood: [],
         order: [],
         food_main: [],
         food_side: [],
@@ -30,6 +31,17 @@ export default {
         })
         .catch((res) => {
           console.log(res)
+        })
+      },
+      getEachFood(state, payload) {
+        console.log("payload", payload);
+        axios.get(`${process.env.VUE_APP_URL}/api/food/get/EachFood/` + payload)
+        .then((res) => {
+          console.log("getEachFood response success", res.data);
+          state.eachFood = res.data;
+        })
+        .catch((err) => {
+          console.log("getEachFood response fail", err.response);
         })
       },
       getOrder(state) {

@@ -6,15 +6,21 @@
           {{ getUserName }}님
         </span> 주문하신 
         <span>
-          {{ orderList[0].food_name }}
+          {{ eachFood[0].food_name }}
         </span> 마음에 드셨나요?
       </div>
       <div class="inner__order">
-        <span class="order-name">
-          {{ orderList[0].food_name }}
-        </span>
-        주문 가격 : <span>{{ orderList[0].price }}</span>
-        주문 날짜 : <span>{{ orderList[0].order_date }}</span>
+        <!-- <img
+        :src="eachFood[0].food_image1"
+        :alt="eachFood[0].food_name" /> -->
+        <img src="../assets/Pizza.jpg" />
+        <div>
+          <span class="order-name">
+            {{ eachFood[0].food_name }}
+          </span>
+          <span>주문 가격 :{{ eachFood[0].food_price }}</span>
+          <span>주문 날짜 :{{ orderList[0].order_date }}</span>
+        </div>
       </div>
       <div 
         class="inner__choice"
@@ -94,13 +100,14 @@ export default {
     }
   },
   created() {
+    const id = this.$route.params.id;
     this.$store.commit("user/getOrderList"),
-    this.$store.commit('food/getState')
+    this.$store.commit('food/getEachFood', id);
   },
   computed: {
     ...mapGetters('user', ['getUserName']),
     ...mapState('user', ['orderList']),
-    ...mapState('food', ['foods']),
+    ...mapState('food', ['eachFood']),
   },
   methods: {
     saveRating(rating_id) {
@@ -152,7 +159,6 @@ export default {
 }
 </script>
 
-
 <style lang="scss" scoped>
 @import '@/scss/btn.scss';
 @import '@/scss/common.scss';
@@ -175,27 +181,32 @@ export default {
   }
 }
 .inner__order {
+  width: 100%;
   padding: 20px;
   margin-bottom: 15px;
   color: rgb(107, 103, 103);
-  display: inline-block;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   background-color: #fcb22a86;
   box-shadow: 2px 2px 4px #0000001a;
   border-radius: .5rem;
 
   span {
-    margin-bottom: 10px;
-    color: #333;
-    font-weight: bold;
+    display: block;
+    margin-left: 10px;
+    margin-bottom: 5px;
   }
   .order-name {
-    width: 100px;
-    background: linear-gradient(to top, #e7eceb93 50%, transparent 50%);
+    width: 70px;
+    background: linear-gradient(to top, #e99b5293 50%, transparent 50%);
     align-items: center;
     font-weight: bold;
-    transition: .2s all;
+  }
+
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: .2rem;
   }
 }
 .inner__choice {
@@ -231,5 +242,4 @@ form {
 .fade-leave-to {
   opacity: 0;
 }
-
 </style>
