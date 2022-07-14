@@ -36,7 +36,7 @@
             class="btn--gray btn--md"
             @click="repurchase()">
             재구매
-          </button>
+          </button> 
           <router-link 
             :to="{name: 'review', params: { id: order.food_id }}">
             <button
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 
 export default {
@@ -63,9 +63,12 @@ export default {
   },
   created() {
     this.$store.commit("user/getOrderList")
+    this.$store.commit("comment/getState")
   },
   computed: {
     ...mapState('user', ['orderList']),
+    ...mapState('comment', ['comments']),
+    ...mapGetters('comment', ['isDisabledBtn']),
   },
   methods: {
     repurchase() {
@@ -78,13 +81,11 @@ export default {
 <style lang="scss" scoped>
 @import '@/scss/variables.scss';
 @import '@/scss/btn.scss';
-
 .container {
   padding: 10px;
   display: flex;
   flex-direction: column;
 }
-
 .btn-area {
   border: none;
   margin-top: 20px;
@@ -108,7 +109,6 @@ export default {
   display: flex;
   flex-direction: row;
 }
-
 .order_date {
   width: 30%;
   padding: 10px;
@@ -127,7 +127,6 @@ export default {
     border-radius: .2rem;
   }
 }
-
 .order_info {
   width: 70%;
   padding: 30px;
@@ -144,7 +143,6 @@ export default {
     }
   }
 }
-
 .empty-item {
   padding: 20vh 10vw 0 10vw;
   text-align: center;

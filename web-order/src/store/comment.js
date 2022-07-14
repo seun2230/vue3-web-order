@@ -11,6 +11,13 @@ export default {
     }
   },
   getters: {
+    isDisabledBtn(state, getters, rootState) {
+      console.log("getters", getters);
+      console.log("rootState", rootState.user.orderList);
+      const result = state.comments.map(comment => rootState.user.orderList.find(orderItem => orderItem.food_id === comment.food_items_food_id));
+      console.log("result", result);
+      return result;
+    },
   },
   mutations: {
     getState(state) {
