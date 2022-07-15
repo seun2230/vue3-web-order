@@ -1,23 +1,32 @@
 <template>
-  <div class="container">
-    <div class="foods">
-      <MenuItem 
-        v-for="food in foods" 
-        :key="food.food_name" 
-        :food="food" />
+  <div>
+    <span class="menu-total">전체</span>
+    <div 
+      class="section-category"
+      v-for="item in getCategoryName"
+      :key="item">
+      <span 
+        class="category__item"
+        @click="test(item)">
+        {{ item }}
+      </span>
+    </div>
+    <div class="section-menu">
+      <div class="foods">
+        <MenuItem 
+          v-for="food in category" 
+          :key="food.food_category" 
+          :food="food" /> 
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import MenuItem from "./MenuItem.vue";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 export default {
-  data() {
-    return {
-    }
-  },
   components: {
     MenuItem,
   },
@@ -26,22 +35,53 @@ export default {
   },
   computed: {
     ...mapState("food", ["foods"]),
+    ...mapState("food", ["category"]),
+    ...mapGetters("food", ["getCategoryName"]),
   },
-  methods: {    
+  methods: {   
+    test(category) {
+      console.log("check", category);
+      this.$store.commit('food/getCategory', category);
+    } 
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../../../scss/variables.scss";
-
-.container {
+@import "@/scss/variables.scss";
+.section-menu {
   display: flex;
-  // margin-top: 10px;
   margin-bottom: 10px;
   .foods {
     display: grid;
     width: 100%;
+  }
+}
+.menu-total {
+  width: 80px;
+  padding: .2rem;
+  margin-left: 5px;
+  background-color: $gray-300;
+  border-radius: .5rem;
+  text-align: center;
+}
+.section-category {
+  width: 80px;
+  margin: 10px 5px;
+  display: inline-block;
+  .category__item {
+    display: block;
+    width: 80px;
+    padding: .2rem;
+    background-color: $gray-300;
+    border-radius: .5rem;
+    text-align: center;
+  }
+  .category__item:hover {
+    display: block;
+    width: 80px;
+    background-color: #fac146;
+    border-radius: .5rem;
   }
 }
 </style>

@@ -8,18 +8,16 @@ export default {
         foods: [],
         eachFood: [],
         order: [],
-        food_main: [],
-        food_side: [],
-        food_beverage: [],
+        category: [],
       }  
     },
     getters: {
-      totalPrice(state) {
-        let total = 0;
-        state.carts.forEach(item => {
-          total += item.food_price * item.quantity;
-        })
-        return total;
+      getCategoryName(state) {
+        const totalCategory = state.foods.map(food => food.food_category);
+        console.log("getCategoryName category", totalCategory);
+        const result = totalCategory.filter((item, index, updateCategory) => updateCategory.indexOf(item) == index);
+        console.log("getCategoryName result", result);
+        return result;
       }
     },
     mutations: {
@@ -57,10 +55,10 @@ export default {
         axios.get(`${process.env.VUE_APP_URL}/api/admin/order`)
         .then((res) => {
          state.order = res.data 
-         console.log("jjj",res.data);
+         console.log("getOrderList response success",res.data);
         })
         .catch((err) => {
-          console.log(err);
+          console.log("getOrderList response fail", err.response);
         })
       },
 
@@ -106,6 +104,20 @@ export default {
         const filteredCarts = state.carts.filter(item => item.food_id !== food.food_id);
         state.carts = filteredCarts
       },
+
+      totalPrice(state) {
+        let total = 0;
+        state.carts.forEach(item => {
+          total += item.food_price * item.quantity;
+        })
+        return total;
+      },
+      getCategory(state, menuItem) {
+        console.log("menuItem", menuItem);
+        const CategoryItem = state.foods.filter(food => food.food_category === menuItem);
+        state.category = CategoryItem;
+        console.log("state.category", state.category);
+      } 
     },
 
     actions: {
