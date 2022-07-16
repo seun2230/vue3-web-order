@@ -1,24 +1,37 @@
 <template>
-  <div>
-    <span 
-      class="menu-total">전체</span>
-    <div 
-      class="section-category"
-      v-for="item in getCategoryName"
-      :key="item">
-      <span 
-        class="category__item"
-        @click="test(item)">
-        {{ item }}
+  <div class="container">
+    <div class="category">
+      <span
+        class="category-total"
+        @click="getTotalFood()">
+        전체
       </span>
-    </div>
-    <div class="section-menu">
-      <div class="foods">
-        <MenuItem 
-          v-for="food in category" 
-          :key="food.food_category" 
-          :food="food" /> 
+      <div 
+        class="section-category"
+        v-for="item in getCategoryName"
+        :key="item">
+        <span 
+          class="category__item"
+          @click="getCategoryItem(item)">
+          {{ item }}
+        </span>
       </div>
+    </div>
+    <div 
+      class="section-menu menu__foods"
+      v-if="showTotalFood">
+      <MenuItem 
+        v-for="food in foods" 
+        :key="food.food_name" 
+        :food="food" /> 
+    </div>
+    <div 
+      class="section-menu menu__foods"
+      v-if="showEachFood">
+      <MenuItem
+        v-for="food in category" 
+        :key="food.food_category" 
+        :food="food" /> 
     </div>
   </div>
 </template>
@@ -34,59 +47,71 @@ export default {
   created() {
     this.$store.commit("food/getState");
   },
+  data() {
+    return {
+      showTotalFood: true,
+      showEachFood: false
+    }
+  },
   computed: {
     ...mapState("food", ["foods"]),
     ...mapState("food", ["category"]),
     ...mapGetters("food", ["getCategoryName"]),
   },
-  methods: {   
-    test(category) {
-      console.log("check", category);
+  methods: {  
+    getCategoryItem(category) {
       this.$store.commit('food/getCategory', category);
+      this.showTotalFood = false;
+      this.showEachFood = true;
     },
-    getTotalFood(foods) {
-      console.log("foods", foods);
-    } 
+    getTotalFood() {
+      this.showTotalFood = true;
+      this.showEachFood = false;
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/scss/variables.scss";
+
 .section-menu {
-  .foods {
+  &.menu__foods {
     display: grid;
     grid-template-columns: 210px 210px;
     grid-template-rows: 270px;
-    margin-bottom: 10px;
   }
 }
-.menu-total {
-  width: 80px;
-  padding: .2rem;
-  margin-top: 5px;
-  margin-left: 5px;
-  background-color: $gray-300;
-  border-radius: .5rem;
-  text-align: center;
-}
-.section-category {
-  width: 80px;
-  margin: 10px 5px;
-  display: inline-block;
-  .category__item {
-    display: block;
-    width: 80px;
-    padding: .2rem;
+.category {
+  font-size: 1.2rem;
+  margin: 10px;
+  padding: 5px;
+  .category-total {
+    margin-right: 8px;
+    width: 80px auto;
+    padding: .5rem;
     background-color: $gray-300;
     border-radius: .5rem;
     text-align: center;
+    &:hover {
+      background-color: #fac146;
+    }
   }
-  .category__item:hover {
-    display: block;
-    width: 80px;
-    background-color: #fac146;
-    border-radius: .5rem;
+  .section-category {
+    width: 100px auto;
+    margin-right: 8px;
+    display: inline-block;
+    .category__item {
+      display: block;
+      width: 100%;
+      padding: .5rem;
+      background-color: $gray-300;
+      border-radius: .5rem;
+      text-align: center;
+      &:hover {
+        background-color: #fac146;
+      }
+    }
   }
 }
 </style>
