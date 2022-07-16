@@ -1,6 +1,7 @@
 <template>
   <div>
-    <span class="menu-total">전체</span>
+    <span 
+      class="menu-total">전체</span>
     <div 
       class="section-category"
       v-for="item in getCategoryName"
@@ -42,6 +43,9 @@ export default {
     test(category) {
       console.log("check", category);
       this.$store.commit('food/getCategory', category);
+    },
+    getTotalFood(foods) {
+      console.log("foods", foods);
     } 
   }
 };
@@ -50,16 +54,17 @@ export default {
 <style lang="scss" scoped>
 @import "@/scss/variables.scss";
 .section-menu {
-  display: flex;
-  margin-bottom: 10px;
   .foods {
     display: grid;
-    width: 100%;
+    grid-template-columns: 210px 210px;
+    grid-template-rows: 270px;
+    margin-bottom: 10px;
   }
 }
 .menu-total {
   width: 80px;
   padding: .2rem;
+  margin-top: 5px;
   margin-left: 5px;
   background-color: $gray-300;
   border-radius: .5rem;

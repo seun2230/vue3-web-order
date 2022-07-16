@@ -11,8 +11,8 @@
         <div class="name">
           <span>{{ food.food_name }}</span>
           <div 
-            v-if="ratingAverage > 1"
-            class="rating-section">
+            class="section-rating"
+            v-if="ratingAverage > 1">
             <span 
               class="star-background-sm"
               :class="{'star-forward-sm': ratingAverage }">
@@ -28,6 +28,11 @@
             {{ food.food_price }}원
           </span>
         </div>
+      </div>
+      <div
+        class="icon-cart" 
+        @click="addToCart()">
+        <i class="fas fa-shopping-cart"></i>
       </div>
     </div>
   </div>
@@ -70,74 +75,47 @@ export default {
 <style lang="scss" scoped>
 @import '@/scss/variables.scss';
 .container {
-  display: flex;
   width: 100%;
-  height: 100px;
-  padding: 5px;
+  margin-right: 5px;
+  border: 1px solid $gray-400;
+  padding: .2rem;
   img {
-    border-radius: 9px;
-    height: 100px;
-    width: 100px;
+    display: block;
+    margin: 5px auto;
+    border-radius: .2rem;
+    height: 150px;
+    width: 170px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.233);
   }
   .infos {
-    display: flex;
-    margin-left: 5px;
-    background-color: #ffffffa6;
-    border-radius: 9px;
-    height: 100px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    text-align: center;
     font-weight: 800;
-    color: $menuBg;
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
-    transition: ease-out 300ms;
-    transition-duration: 300ms;
     .detail {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      padding: 15px;
-      margin-left: 5px;
-      height: 100%;
-      width: 100%;
+      margin-top: 10px;
       .name {
-        text-align: left;
-        width: 60%;
-        height: 30%;    
-      }
-      .description {
-        width: 100%;
-        height: 24px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-      }
-      .rating-section {
-        display: flex;
-        flex-direction: row;
-        width: 80px;
-    
-      }
-      .rating-text {
-        display: block;
+        font-size: 1.1rem;
         color: $gray-text;
-        margin-left: 5px;
-        font-size: .9rem;
+      }
+      .section-rating {
+        margin-top: 5px;
       }
       .price {
-        width: 40%;
-        height: 100%;
-        padding-top:5px;
-        text-align: right;
+        margin-top: 10px;
         .price-num {
-          display: block;
-          font-size: 1.1rem;
-          bottom: 0;
+          font-size: 1.2rem;
+          color: $pink;
         }
       }
     }
   }
-  span {
-    height: 100%;
+  .icon-cart {
+    color: $gray-500;
+    text-align: left;
+    bottom: 10px;
   }
 }
 .infos:active {
