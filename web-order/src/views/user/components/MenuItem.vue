@@ -1,8 +1,8 @@
 <template>
-  <div 
-    class="container"
-    @click="addCart()">
-    <div class="infos">
+  <div class="container">
+    <div 
+      class="infos"
+      @click="addCart()">
       <!-- <img
         :src="food.food_image1"
         :alt="food.food_name" /> -->
@@ -19,20 +19,28 @@
               ☆ 
             </span>
             <span class="rating-text">
-              {{ ratingAverage }}
+              {{ ratingAverage }} 
             </span>
+            <span>{{ "(" +reviewTotalCount + ")" }}</span>
           </div>
+          <div 
+            v-else 
+            class="section-no-rating"></div>
         </div>
-        <div class="price">
+        <div
+          class="price">
+          {{ translatePrice }}
           <span class="price-num">
-            {{ food.food_price }}원
+            {{ translatePrice }}원
           </span>
         </div>
-      </div>
-      <div
-        class="icon-cart" 
-        @click="addToCart()">
-        <i class="fas fa-shopping-cart"></i>
+        <div>
+          <span
+            class="icon-cart" 
+            @click="addToLike()">
+            <i class="far fa-bookmark"></i>
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -48,11 +56,11 @@ export default {
     }
   },
   created() {
-    this.$store.commit("comment/getState")
+    this.$store.commit("comment/getState");
   },
   methods: {
     addCart() {
-      this.$store.dispatch('food/addCart', this.food)
+      this.$store.dispatch('food/addCart', this.food);
     }
   },
   computed: {
@@ -61,12 +69,17 @@ export default {
       const foodId = this.food.food_id;
       const findRatings =  this.comments.filter(comment => comment.food_items_food_id === foodId).map(item => item.ratings);
       const addRating = findRatings.reduce((prev, current) => prev + current ,0);
-      console.log("addRating", addRating);
-      console.log("findRatings", findRatings);
-
       const result = (addRating/ this.comments.length).toFixed(1);
-      console.log("result", result);
       return result;
+    },
+    reviewTotalCount() {
+      const foodId = this.food.food_id;
+      const findFoodId = this.comments.filter(comment => comment.food_items_food_id === foodId);
+      return findFoodId.length;
+    },
+    translatePrice() {
+      const totalPrice = this.food.food_price;
+      return totalPrice.toString().replace(/\B(?=(\d{3}))/g, ',');
     }
   }
 }
@@ -76,49 +89,61 @@ export default {
 @import '@/scss/variables.scss';
 .container {
   width: 100%;
-  margin-right: 5px;
-  border: 1px solid $gray-400;
-  padding: .2rem;
-  img {
-    display: block;
-    margin: 5px auto;
-    border-radius: .2rem;
-    height: 150px;
-    width: 170px;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.233);
-  }
+  height: 100%;
   .infos {
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    text-align: center;
     font-weight: 800;
+    img {
+      display: block;
+      border-radius: .2rem;
+      margin-left: 5px;
+      width: 192px;
+      height: 180px;
+    }
     .detail {
       margin-top: 10px;
+      padding-left: 15px;
       .name {
+        margin-top: 5px;
         font-size: 1.1rem;
-        color: $gray-text;
+        color: $gray-color-100;
       }
       .section-rating {
         margin-top: 5px;
       }
-      .price {
+      .section-no-rating {
         margin-top: 10px;
+        height: 10px;
+      }
+      .price {
+        margin-top: 10px;  
         .price-num {
           font-size: 1.2rem;
-          color: $pink;
+          color: #e73251;
+          text-decoration: line-through;
+          text-decoration-color: #e73251;
         }
       }
     }
   }
+  .infos:active {
+    width: 195px;
+    height: 300px;
+    border-radius: .2rem;
+    background-color:#f7b423;
+  }
   .icon-cart {
     color: $gray-500;
-    text-align: left;
-    bottom: 10px;
+    bottom: 5px;
+    flex: 1;
+    padding-right: 15px;
+    &:active {
+      color: #f7b423;    
+    }
   }
-}
-.infos:active {
-  background-color: rgba(0, 0, 0, 0.1);
 }
 </style>

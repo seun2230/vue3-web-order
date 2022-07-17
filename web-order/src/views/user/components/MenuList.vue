@@ -74,18 +74,16 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/scss/variables.scss";
-
 .section-menu {
   &.menu__foods {
     display: grid;
-    grid-template-columns: 210px 210px;
-    grid-template-rows: 270px;
+    grid-template-columns: 205px 205px;
+    grid-template-rows: 320px 350px;
   }
 }
 .category {
   font-size: 1.2rem;
-  margin: 10px;
-  padding: 5px;
+  margin: 20px 5px;
   .category-total {
     margin-right: 8px;
     width: 80px auto;

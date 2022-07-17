@@ -12,6 +12,13 @@ export default {
       }  
     },
     getters: {
+      totalPrice(state) {
+        let total = 0;
+        state.carts.forEach(item => {
+          total += item.food_price * item.quantity;
+        })
+        return total;
+      },
       getCategoryName(state) {
         const totalCategory = state.foods.map(food => food.food_category);
         console.log("getCategoryName category", totalCategory);
@@ -104,7 +111,10 @@ export default {
         const filteredCarts = state.carts.filter(item => item.food_id !== food.food_id);
         state.carts = filteredCarts
       },
-
+      
+      resetCart(state) {
+        state.carts = [];
+      },
       totalPrice(state) {
         let total = 0;
         state.carts.forEach(item => {
