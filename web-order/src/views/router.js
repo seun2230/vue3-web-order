@@ -19,7 +19,9 @@ import NullImageManagePage from './admin/page/NullImageManagePage'
 import SlideManagePage from './admin/page/SlideManagePage.vue'
 import OrderPage from './admin/page/OrderPage.vue'
 import MyArticlePage from '../views/user/page/MyArticlePage.vue';
-import UserManagePage from './admin/page/UserManagePage.vue'
+import UserManagePage from './admin/page/UserManagePage.vue';
+import CouponManagePage from './admin/page/CouponManagePage.vue'
+
 
 const beforeAuth = isAuthenticated => (from, to, next) => {
   const isAuth = store.getters['user/isAuth'];
@@ -166,6 +168,11 @@ const routes = [
         path: 'userManagement',
         name: 'userManagement',
         component: UserManagePage
+      },
+      {
+        path: 'coupon',
+        name: 'coupon',
+        component: CouponManagePage
       }
     ]
   },

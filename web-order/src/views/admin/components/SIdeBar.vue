@@ -29,6 +29,9 @@
       <el-menu-item index="/admin/SlideImage">
         SlideImage/Notice
       </el-menu-item>
+      <el-menu-item index="/admin/coupon">
+        Coupon
+      </el-menu-item>
     </el-sub-menu>
   </el-menu>
 </template>

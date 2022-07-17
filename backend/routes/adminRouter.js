@@ -1,154 +1,192 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../db/index')
-const { upload } = require('../api/S3UploadStorage');
+const pool = require('../db/index');
+const { verifyToken } = require('../middleware/auth');
 
 router.post('/post/foodUpload', upload.array('files'), async function(req, res) {
-    try { 
-      console.log("DB Connection! /post/foodUpload")
-      const connection = await pool.getConnection(async conn => conn);
-      try {
-        const files = req.files
-        let image = []
-  
-        await connection.beginTransaction();
-  
-        for (let i = 0; i < req.files.length; i++) {
-          image[i] = files[i].transforms[0].location
-        }
-  
-          let sql = "INSERT INTO food_items" + 
-            "(food_name, food_image1, food_image2, food_image3, food_info, food_price, food_category)" +
-            "VALUES(?, ?, ?, ?, ?, ?, ?)"
-  
-          let value = [
-            req.body.name,
-            image[0],
-            image[1],
-            image[2],
-            req.body.info,
-            req.body.price,
-            req.body.category
-          ]
-  
-          await connection.query(sql, value)
-          await connection.commit();
-          connection.release();
-          res.send({
-            success: "true"
-          })
-        } catch(err) {
-          console.log("Query Error")
-          await connection.rollback();
-          connection.release();
-          res.send({
-            error: "Query Error",
-            err
-          })
-        }
-      } catch(err) {
-        console.log("DB Error", err)
-        res.send({
-          error: "DB Error",
-          err
-        })
-      }
-    })
+  try { 
+    console.log("DB Connection! /post/foodUpload")
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      const files = req.files
+      let image = []
 
-    router.get('/get/slides', async(req, res) => {
-      try {
-        console.log("DB Connection! /get/slide")
-        const connection = await pool.getConnection(async conn => conn);
-        try {
-          const [rows] = await connection.query('SELECT * FROM slide')
-          connection.release();
-          res.send(rows)
-        } catch(err) {
-          console.log("Query Error")
-          connection.release();
-          res.send({
-            error: "Query Error",
-            err
-          })
-        }
-      } catch(err) {
-        console.log("DB Error", err)
-        res.send({
-          error: "DB Error",
-          err
-        })
-      }
-    })
+      await connection.beginTransaction();
 
-    router.post("/post/delete/slide/:id", async (req, res) => {
-      try {
-        console.log("DB Connection! /post/delete/slide")
-        console.log('re', req.params.id)
-        const connection = await pool.getConnection(async conn => conn);
-        try {
-          let id = (parseInt(req.params.id,10))
-          let sql = "DELETE FROM slide WHERE id_slide = ?"
-          let value = [ id ]
-          await connection.beginTransaction();
-          await connection.query(sql, value)
-          await connection.commit();
-          connection.release();
-          res.send({
-            message: "success"
-          })
-        } catch(err) {
-          await connection.rollback();
-          connection.release();
-          console.log(err)
-        }
-      } catch(err) {
-        console.log(err)
+      for (let i = 0; i < req.files.length; i++) {          
+        image[i] = files[i].transforms[0].location
       }
-    })
 
-    router.post('/post/slideUpload', upload.array('files'), async function(req, res) {
-      try { 
-        console.log("DB Connection! /post/slideUpload")
-        const connection = await pool.getConnection(async conn => conn);
-        try {
-          const files = req.files
-          let image = []  
-    
-          await connection.beginTransaction();
-    
-          for (let i = 0; i < req.files.length; i++) {
-            image[i] = files[i].transforms[0].location
-          }
-    
-            let sql = "INSERT INTO slide" + 
-              "(slide_image)" +
-              "VALUES(?)"
-    
-            let value = [ image[0] ]
-    
-            await connection.query(sql, value)
-            await connection.commit();
-            connection.release();
-            res.send({
-              success: "true"
-            })
-          } catch(err) {
-            console.log("Query Error", err)
-            await connection.rollback();
-            connection.release();
-            res.send({
-              error: "Query Error",
-              err
-            })
-          }
-        } catch(err) {
-          console.log("DB Error", err)
-          res.send({
-            error: "DB Error",
-            err
-          })
-        }
+      let sql = "INSERT INTO food_items" + 
+        "(food_name, food_image1, food_image2, food_image3, food_info, food_price, food_category)" +
+        "VALUES(?, ?, ?, ?, ?, ?, ?)"
+
+      let value = [
+        req.body.name,
+        image[0],
+        image[1],
+        image[2],
+        req.body.info,
+        req.body.price,
+        req.body.category
+      ]
+
+      await connection.query(sql, value)
+      await connection.commit();
+      connection.release();
+      res.send({
+        success: "true"
       })
+    } catch(err) {
+      console.log("Query Error")
+      await connection.rollback();
+      connection.release();
+      res.send({
+        error: "Query Error",
+        err
+      })
+    }
+  } catch(err) {
+    console.log("DB Error", err)
+    res.send({
+      error: "DB Error",
+      err
+    })
+  }
+})
+
+router.post('/post/couponUpload', upload.array('files'), verifyToken, async function(req, res) {
+  try { 
+    console.log("DB Connection! /post/couponUpload");
+    console.log("req.body", req.body);
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      await connection.beginTransaction();
+
+      let sql = "INSERT INTO coupon" + 
+        "(coupon_name, coupon_description, coupon_type, coupon_date, coupon_price, coupon_percent, coupon_status, users_user_id)" +
+        "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+
+      let value = [
+        req.body.name,
+        req.body.description,
+        req.body.type,
+        req.body.date,
+        req.body.price,
+        req.body.percent,
+        req.body.status,
+        req.decoded.user_id
+      ];
+
+      await connection.query(sql, value);
+      await connection.commit();
+      connection.release();
+      res.send({success: "true"})
+    } catch(err) {
+      console.log("couponUpload Query Error", err.response);
+      await connection.rollback();
+      connection.release();
+      res.send({ error: "couponUpload Query Error"});
+    }
+  } catch(err) {
+    console.log("couponUpload DB Error", err.response);
+    res.send({ error: "couponUpload DB Error", err });
+  }
+})
+router.get('/get/slides', async(req, res) => {
+  try {
+    console.log("DB Connection! /get/slide")
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      const [rows] = await connection.query('SELECT * FROM slide')
+      connection.release();
+      res.send(rows)
+    } catch(err) {
+      console.log("Query Error")
+      connection.release();
+      res.send({
+        error: "Query Error",
+        err
+      })
+    }
+  } catch(err) {
+    console.log("DB Error", err)
+    res.send({
+      error: "DB Error",
+      err
+    })
+  }
+})
+
+router.post("/post/delete/slide/:id", async (req, res) => {
+  try {
+    console.log("DB Connection! /post/delete/slide")
+    console.log('re', req.params.id)
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      let id = (parseInt(req.params.id,10))
+      let sql = "DELETE FROM slide WHERE id_slide = ?"
+      let value = [ id ]
+      await connection.beginTransaction();
+      await connection.query(sql, value)
+      await connection.commit();
+      connection.release();
+      res.send({
+        message: "success"
+      })
+    } catch(err) {
+      await connection.rollback();
+      connection.release();
+      console.log(err)
+    }
+  } catch(err) {
+    console.log(err)
+  }
+})
+
+router.post('/post/slideUpload', upload.array('files'), async function(req, res) {
+  try { 
+    console.log("DB Connection! /post/slideUpload")
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      const files = req.files
+      let image = []  
+
+      await connection.beginTransaction();
+
+      for (let i = 0; i < req.files.length; i++) {
+        image[i] = files[i].transforms[0].location
+      }
+
+      let sql = "INSERT INTO slide" + 
+        "(slide_image)" +
+        "VALUES(?)"
+
+      let value = [ image[0] ]
+
+      await connection.query(sql, value)
+      await connection.commit();
+      connection.release();
+      res.send({
+        success: "true"
+      })
+    } catch(err) {
+      console.log("Query Error", err)
+      await connection.rollback();
+      connection.release();
+      res.send({
+        error: "Query Error",
+        err
+      })
+    }
+  } catch(err) {
+    console.log("DB Error", err)
+    res.send({
+      error: "DB Error",
+      err
+    })
+  }
+})
   
     
 router.post('/post/update/status', async(req, res) => {
@@ -182,6 +220,7 @@ router.post('/post/update/status', async(req, res) => {
     })
   }
 })
+
 router.get("/get/orderListComplete", async(req, res) => {
   try {
     console.log("DB Connection! /orderListComplete")
@@ -500,6 +539,5 @@ router.post('/post/delete/user', async(req, res) => {
     })
   }
 })
-
 
 module.exports = router;
