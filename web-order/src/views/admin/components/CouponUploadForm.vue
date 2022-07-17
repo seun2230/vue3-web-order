@@ -6,26 +6,73 @@
     <form>
       <div class="section-coupon">
         <label>쿠폰명</label>
-        <input 
-          v-model="name" />
-        <label>쿠폰 설명</label>
-        <input 
-          v-model="description" /> 
-        <label> 쿠폰 종류</label>
-        <input 
-          v-model="type" />
+        <input
+          type="text"
+          size="4" 
+          placeholder="쿠폰명을 입력해주세요."
+          v-model="name" /> 
+        <label>쿠폰 종류</label>
+        <select>
+          <option 
+            v-for="option in options"
+            :key="option">
+            <span :value="option"></span>{{ option }}
+          </option>
+        </select>
         <label>쿠폰 유효 기간</label>
-        <input 
-          v-model="date" /> 
-        <label>쿠폰 조건</label>
-        <input 
-          v-model="filter" />                
-        <label>쿠폰 할인가</label>
-        <input 
-          v-model="salePrice" /> 
+        <div>
+          <input 
+            type="date"
+            v-model="date" />~
+          <input 
+            type="date"
+            v-model="date" />  
+        </div>
+        <label>쿠폰 비회원 노출 조건</label>
+        <div class="coupon-filter">
+          <div 
+            v-for="radio in radios"
+            :key="radio"
+            :v-model="radio">
+            <input 
+              type="radio"
+              :id="radio" />
+            <span>{{ radio }}</span>  
+          </div>
+        </div>
+        <label for="number">할인 가격</label>
+        <div class="total-price">
+          <input
+            id="number"
+            type="number" 
+            placeholder="1000원부터 입력해주세요."
+            v-model="totalPrice"
+            min="1000"
+            max="10000"
+            step="1000" /> 
+          <div 
+            v-for="price in priceType"
+            :key="price"
+            :v-model="price">
+            <input 
+              type="radio"
+              :id="price" />
+            <span>{{ price }}</span>  
+          </div>
+        </div>
         <label>쿠폰 유저</label>
-        <input 
-          v-model="selectedUser" />                
+        <select>
+          <option :v-model="selectedUser">
+            전체
+            {{ users.length }} 명
+          </option>
+          <option 
+            v-for="user in users"
+            :key="user.user_id"
+            :v-model="selectedUser">
+            {{ user.user_id }}
+          </option>
+        </select>             
         <label>쿠폰 이미지 등록</label>
         <div class="section-image">
           <AdminImagePreview @setData="setData" />
@@ -59,12 +106,16 @@ export default {
     return {
       files: [],
       name: '',
-      description: '',
-      type: '',
       date: '',
-      filter: '',
-      salePrice: '',
-      selectedUser: ''
+      totalPrice: '',
+      priceType: ['%', '원'],
+      selectedUser: '',
+      options: [
+        '전체 상품 쿠폰',
+        '개별 상품 쿠폰',
+        '기타 쿠폰'
+      ],
+      radios: ['노출함', '노출안함'],
     }
   },
   methods: {
@@ -79,12 +130,12 @@ export default {
       }
 
       formData.append('name', this.name);
-      formData.append('description', this.description);
-      formData.append('type', this.type);
+      formData.append('type', this.option);
       formData.append('date', this.date);
-      formData.append('filter', this.filter);
-      formData.append('price', this.salePrice);
+      formData.append('price', this.totalPrice);
+      formData.append('percent', this.price);
       formData.append('user', this.selectedUser);
+      formData.append('status', this.radio);
 
 
       axios.post(`${process.env.VUE_APP_URL}/api/admin/post/couponUpload`,
@@ -107,7 +158,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/scss/btn.scss';
-@import '@/scss/variables.scss';
+@import '@/scss/common.scss';
 
 .container {
   width: 0 auto;
@@ -120,12 +171,14 @@ export default {
   .section-coupon {
     display: flex;
     flex-direction: column;
-    label {
-      margin: 5px;
+    .coupon-filter {
+      width: 300px;
+      display: flex;
+      flex-direction: row;  
     }
-    input {
-      margin: 5px;
-      border-radius: .5rem;
+    .total-price {
+      display: flex;
+      flex-direction: row;
     }
   }
   .section-image {

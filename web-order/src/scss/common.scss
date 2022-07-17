@@ -1,13 +1,40 @@
 @import './variables.scss';
 
+@mixin input-total {
+  padding: .5rem;
+  opacity: 1;
+  border: 0;
+  border-radius: .5rem;
+  outline: 0;
+  background-color: $gray-200;
+  box-shadow: 2px 2px 2px #cecbcb36;
+  color: $gray-700;
+}
 input {
   border: 1px solid #ccc;
   border-radius: .5rem;
-  padding: 10px;
+  padding: .5rem;
+  margin: 5px;
 }
 
 label {
   font-weight: 0;
+  margin: 5px;
+}
+
+input[type="number"] {
+  width: 200px;
+  @include input-total;
+}
+
+input[type="text"] {
+  width: 200px;
+  @include input-total;
+}
+
+input[type="date"] {
+  width: 150px;
+  @include input-total;
 }
 
 input[type="radio"],
@@ -27,6 +54,12 @@ input[type="radio"],
 input[type="radio"] + label {
   margin-right: 5px;
   padding: 5px;
+}
+
+select {
+  margin: 5px;
+  width: 150px;
+  @include input-total;
 }
 
 textarea {

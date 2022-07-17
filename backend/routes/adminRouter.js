@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db/index');
+const { upload } = require('../api/S3UploadStorage');
 const { verifyToken } = require('../middleware/auth');
 
 router.post('/post/foodUpload', upload.array('files'), async function(req, res) {
@@ -64,12 +65,11 @@ router.post('/post/couponUpload', upload.array('files'), verifyToken, async func
       await connection.beginTransaction();
 
       let sql = "INSERT INTO coupon" + 
-        "(coupon_name, coupon_description, coupon_type, coupon_date, coupon_price, coupon_percent, coupon_status, users_user_id)" +
-        "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        "(coupon_name, coupon_type, coupon_date, coupon_price, coupon_percent, coupon_status, users_user_id)" +
+        "VALUES(?, ?, ?, ?, ?, ?, ?)";
 
       let value = [
         req.body.name,
-        req.body.description,
         req.body.type,
         req.body.date,
         req.body.price,
