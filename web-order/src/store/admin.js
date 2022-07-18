@@ -9,7 +9,8 @@ export default {
       users: [],
       orderList: [],
       orderListComplete: [],
-      nullImages: []
+      nullImages: [],
+      couponList: []
     }
   },
   getters: {
@@ -48,6 +49,13 @@ export default {
       .then(res => {
         console.log(res.data)
         state.orderList = res.data
+      })
+    },
+    getCouponList(state) {
+      axios.get(`${process.env.VUE_APP_URL}/api/admin/get/couponList`)
+      .then(res => {
+        console.log("getCouponeList response success", res.data);
+        state.couponList = res.data;
       })
     },
     getOrderListComplete(state) {

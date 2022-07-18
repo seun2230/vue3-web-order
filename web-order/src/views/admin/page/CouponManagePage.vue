@@ -1,31 +1,27 @@
 <template>
   <div class="container">
-    <div 
-      class="icon-sort-up"
-      @click="isShow">
-      <span>쿠폰 정보 등록</span>
-      <i class="fas fa-sort-down"></i>
-      <CouponUploadForm />
+    <div>
+      <AdminCouponList />
     </div>
   </div>
 </template>
 
 <script>
-import CouponUploadForm from '../components/CouponUploadForm.vue'
+import AdminCouponList from '../components/AdminCouponList.vue'
 export default {
   components: {
-    CouponUploadForm
+    AdminCouponList
   },
   data() {
-    return {
-      isActive: false,
-    }
+    return {}
   },
   methods: {
-    isShow() {
-      this.isActive = !this.isActive;
-    }
   }
 }
 </script>
 
+<style lang="scss" scoped>
+span {
+  font-size: 16px;
+}
+</style>

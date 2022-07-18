@@ -12,11 +12,18 @@
           placeholder="쿠폰명을 입력해주세요."
           v-model="name" /> 
         <label>쿠폰 종류</label>
-        <select>
+        <select 
+          v-model="choice">
+          <option
+            value=""
+            selected
+            disabled> 
+            쿠폰 종류 선택
+          </option>
           <option 
-            v-for="option in options"
-            :key="option">
-            <span :value="option"></span>{{ option }}
+            v-for="entity in entities"
+            :key="entity">
+            {{ entity }}
           </option>
         </select>
         <label>쿠폰 유효 기간</label>
@@ -30,15 +37,16 @@
         </div>
         <label>쿠폰 비회원 노출 조건</label>
         <div class="coupon-filter">
-          <div 
-            v-for="radio in radios"
-            :key="radio"
-            :v-model="radio">
-            <input 
-              type="radio"
-              :id="radio" />
-            <span>{{ radio }}</span>  
-          </div>
+          <input 
+            type="radio" 
+            id="option" 
+            value="노출 함" 
+            v-model="option" />노출 함
+          <input 
+            type="radio" 
+            id="option" 
+            value="노출 안함" 
+            v-model="option" />노출 안함
         </div>
         <label for="number">할인 가격</label>
         <div class="total-price">
@@ -50,26 +58,34 @@
             min="1000"
             max="10000"
             step="1000" /> 
-          <div 
-            v-for="price in priceType"
-            :key="price"
-            :v-model="price">
+          <div>
             <input 
-              type="radio"
-              :id="price" />
-            <span>{{ price }}</span>  
+              type="radio" 
+              id="status" 
+              value="%" 
+              v-model="status" />%
+            <input 
+              type="radio" 
+              id="status" 
+              value="원" 
+              v-model="status" />원
           </div>
         </div>
-        <label>쿠폰 유저</label>
-        <select>
-          <option :v-model="selectedUser">
+        <label>쿠폰 대상</label>
+        <select
+          v-model="selectedUser">
+          <option 
+            value="" 
+            disabled>
+            쿠폰 대상 선택
+          </option>
+          <option>
             전체
             {{ users.length }} 명
           </option>
           <option 
             v-for="user in users"
-            :key="user.user_id"
-            :v-model="selectedUser">
+            :key="user.user_id">
             {{ user.user_id }}
           </option>
         </select>             
@@ -108,9 +124,10 @@ export default {
       name: '',
       date: '',
       totalPrice: '',
-      priceType: ['%', '원'],
+      status: '',
       selectedUser: '',
-      options: [
+      choic:'',
+      entities: [
         '전체 상품 쿠폰',
         '개별 상품 쿠폰',
         '기타 쿠폰'
@@ -130,13 +147,12 @@ export default {
       }
 
       formData.append('name', this.name);
-      formData.append('type', this.option);
+      formData.append('type', this.choice);
       formData.append('date', this.date);
       formData.append('price', this.totalPrice);
-      formData.append('percent', this.price);
+      formData.append('percent', this.status);
       formData.append('user', this.selectedUser);
-      formData.append('status', this.radio);
-
+      formData.append('status', this.option);
 
       axios.post(`${process.env.VUE_APP_URL}/api/admin/post/couponUpload`,
         formData,
@@ -147,7 +163,7 @@ export default {
         }
       ).then(res => {
         console.log("couponUpload response success", res.data);
-        // this.$router.go();
+        this.$router.go();
       }).catch(err => {
         console.log("couponeUpload response fail", err.response);
       })

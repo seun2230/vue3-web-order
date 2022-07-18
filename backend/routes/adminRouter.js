@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require('../db/index');
 const { upload } = require('../api/S3UploadStorage');
 const { verifyToken } = require('../middleware/auth');
-
+    
 router.post('/post/foodUpload', upload.array('files'), async function(req, res) {
   try { 
     console.log("DB Connection! /post/foodUpload")
@@ -267,6 +267,24 @@ router.get("/get/orderList", async (req, res) => {
   }
 })
 
+router.get("/get/couponList", async (req, res) => {
+  try {
+    console.log("DB Connection! /couponList");
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      let sql = "SELECT * FROM coupon"; 
+      const [rows] = await connection.query(sql);
+      connection.release();
+      res.send(rows);
+    } catch(err) {
+      console.log(err)
+    }
+  } catch(err) {
+    console.log(err)
+  }
+})
+
+
 router.post('/post/foodDelete', async(req, res) => {
   try {
     console.log("DB connection /admin/delete")
@@ -470,7 +488,7 @@ router.post('/post/nullImageUpload', upload.array('files'), async function(req, 
     console.log("DB Connection! /post/nullImageUpload")
     const connection = await pool.getConnection(async conn => conn);
     try {
-      let image = req.files[0].transforms[0].location
+      let image = files[0].transforms[0].location
       await connection.beginTransaction();
 
       let sql = "INSERT INTO null_image (null_image) VALUE(?)"
