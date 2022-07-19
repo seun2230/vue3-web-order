@@ -31,28 +31,40 @@
         <td>{{ coupon.coupon_date }}</td>
         <td>{{ coupon.coupon_price }}</td>
         <td>{{ coupon.coupon_users_user_id }}</td>
-        <td @click="onAdd">
-          수정
-        </td>
-        <td @click="onDelete">
-          수정
-        </td>
       </tr>
+      <button
+        type="text"
+        @click.prevent="onModify()">
+        수정
+      </button>
+      <button 
+        type="text"
+        @click.prevent="onDelete()">
+        삭제
+      </button>
     </table>
+    <div>
+      <Coupon
+        :coupon="this.couponList"
+        v-if="couponModal" />
+    </div>
   </div>
 </template>
 
 <script>
 import CouponUploadForm from '../components/CouponUploadForm.vue';
+import Coupon from '../components/modal/Coupon.vue';
 import { mapState } from 'vuex';
 
 export default {
   components: {
-    CouponUploadForm
+    CouponUploadForm,
+    Coupon
   },
   data() {
     return {
-      isActive: false
+      isActive: false,
+      couponModal: true,
     }
   },
   created() {
@@ -65,11 +77,10 @@ export default {
     onForm() {
       this.isActive = !this.isActive;
     },
-    onAdd(){
-
+    onModify(){
+      this.couponModal = true;
     },
     onDelete() {
-
     }
   },
 }
