@@ -20,10 +20,15 @@
             disabled> 
             쿠폰 종류 선택
           </option>
+          <option>기타 쿠폰</option>
+          <option>
+            전체 상품 쿠폰
+            {{ foods.length }} 
+          </option>
           <option 
-            v-for="entity in entities"
-            :key="entity">
-            {{ entity }}
+            v-for="food in foods"
+            :key="food.food_id">
+            {{ food.food_name }}
           </option>
         </select>
         <label>쿠폰 유효 기간</label>
@@ -73,7 +78,8 @@
         </div>
         <label>쿠폰 대상</label>
         <select
-          v-model="selectedUser">
+          v-model="selectedUser"
+          multiple>
           <option 
             value="" 
             disabled>
@@ -88,7 +94,8 @@
             :key="user.user_id">
             {{ user.user_id }}
           </option>
-        </select>             
+        </select>      
+        {{ selectedUser }}       
         <label>쿠폰 이미지 등록</label>
         <div class="section-image">
           <AdminImagePreview @setData="setData" />
@@ -114,9 +121,12 @@ export default {
   },
   created() {
     this.$store.commit('admin/getUserList');
+    this.$store.commit('food/getState');
+
   },
   computed: {
    ...mapState('admin', ['users']),
+   ...mapState('food', ['foods']),
   },
   data() {
     return {
@@ -125,13 +135,8 @@ export default {
       date: '',
       totalPrice: '',
       status: '',
-      selectedUser: '',
+      selectedUser: [],
       choic:'',
-      entities: [
-        '전체 상품 쿠폰',
-        '개별 상품 쿠폰',
-        '기타 쿠폰'
-      ],
       radios: ['노출함', '노출안함'],
     }
   },

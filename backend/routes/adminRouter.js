@@ -3,6 +3,7 @@ const router = express.Router();
 const pool = require('../db/index');
 const { upload } = require('../api/S3UploadStorage');
 const { verifyToken } = require('../middleware/auth');
+const { format } = require('../utils/DateUtils');
 
  router.post('/post/foodUpload', upload.array('files'), async function(req, res) {
   try { 
@@ -56,34 +57,43 @@ const { verifyToken } = require('../middleware/auth');
   }
 })
 
-router.post('/post/couponUpload', upload.array('files'), verifyToken, async function(req, res) {
+router.post('/post/couponUpload', upload.array('files'), async function(req, res) {
   try { 
     console.log("DB Connection! /post/couponUpload");
     console.log("req.body", req.body);
     const connection = await pool.getConnection(async conn => conn);
     try {
       await connection.beginTransaction();
-
-      let sql = "INSERT INTO coupon" + 
-        "(coupon_name, coupon_type, coupon_date, coupon_price, coupon_percent, coupon_status, users_user_id)" +
-        "VALUES(?, ?, ?, ?, ?, ?, ?)";
-
+      const date = new Date().format('yyyy-MM-dd');
+      let sql = "INSERT INTO coupon " + 
+        "(coupon_name, coupon_type, coupon_date, coupon_price, coupon_percent, coupon_status) " +
+        "VALUES(?, ?, ?, ?, ?, ?)";
+   
       let value = [
         req.body.name,
         req.body.type,
-        req.body.date,
+        date,
         req.body.price,
         req.body.percent,
         req.body.status,
-        req.decoded.user_id
       ];
 
       await connection.query(sql, value);
+
+      const [coupon_id] = await connection.query("SELECT max(coupon_id) FROM coupon");
+      let sqlCouponList = "INSERT INTO coupon_list (coupon_coupon_id, users_user_id, coupon_status, food_items_food_id) VALUES (?,?,?,?)";
+      let valueCouponList = [
+        coupon_id[0]["max(coupon_id)"],
+        req.body.user,
+        false,
+        5
+      ];
+      await connection.query(sqlCouponList, valueCouponList);
       await connection.commit();
       connection.release();
       res.send({success: "true"})
     } catch(err) {
-      console.log("couponUpload Query Error", err.response);
+      console.log("couponUpload Query Error", err);
       await connection.rollback();
       connection.release();
       res.send({ error: "couponUpload Query Error"});
@@ -93,6 +103,7 @@ router.post('/post/couponUpload', upload.array('files'), verifyToken, async func
     res.send({ error: "couponUpload DB Error", err });
   }
 })
+
 router.get('/get/slides', async(req, res) => {
   try {
     console.log("DB Connection! /get/slide")
@@ -118,7 +129,7 @@ router.get('/get/slides', async(req, res) => {
   }
 })
 
-router.post('/post/couponModify', verifyToken, async(req, res) => {
+router.post('/post/couponModify', async(req, res) => {
   try {
     console.log("DB Connection! /post/couponModify");
     console.log("req.body", req.body);
@@ -129,22 +140,24 @@ router.post('/post/couponModify', verifyToken, async(req, res) => {
         req.body.choice,
         req.body.date,
         req.body.price,
-        req.decoded.user_id,
         req.body.couponId
       ];
       
-      let sql = "UPDATE coupon SET coupon_name = ?, coupon_type = ?,coupon_date = ?, coupon_price = ?, users_user_id = ?" 
-                " where coupon_id = ?";
+      let sql = "UPDATE coupon SET coupon_name = ?, coupon_type = ?, coupon_date = ?, coupon_price = ? " 
+                "where coupon_id = ?";
       console.log("req.body value", value);
+      
 
       await connection.beginTransaction();
-      await connection.query(sql, value);
+      const [rows] = await connection.query(sql, value);
+      console.log("rows", [rows]);
+
       await connection.commit();
       connection.release();
 
       res.send({ message: "CouponModfiy Success" });
     } catch (err) {
-      console.log("CouponModify Query Error", err.response);
+      console.log("CouponModify Query Error", err);
       res.send({ err: "CouponModify Query Error" });
       await connection.rollback();
       connection.release();
@@ -161,10 +174,13 @@ router.post('/post/couponDelete', async(req, res) => {
     console.log(req.body);
     const connection = await pool.getConnection(async conn => conn);
     try {
-      let sql = "DELETE FROM coupon WHERE coupon_id = ?";
+      let sql = "delete coupon, coupon_list from coupon_list "
+        + "left join coupon on coupon_id = coupon_coupon_id "
+        + "where coupon_coupon_id = ?";
       let value = req.body.coupon_id;
       await connection.beginTransaction();
       await connection.query(sql, value);
+
       await connection.commit();
 
       res.send({ message: 'CouponDelete Response Success'});
