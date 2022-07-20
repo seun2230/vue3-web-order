@@ -25,8 +25,6 @@
       <tr 
         v-for="coupon in couponList"
         :key="coupon.coupon_id">
-        {{ index }}
-        {{ coupon.coupon_users_user_id }}
         <td>{{ coupon.coupon_id }}</td>
         <td>{{ coupon.coupon_name }}</td>
         <td>{{ coupon.coupon_type }}</td>
@@ -35,11 +33,13 @@
         <td>{{ coupon.users_user_id }}</td>
         <td>
           <button
+            class="btn--outline--white btn--sm"
             type="text"
             @click.prevent="onModify(coupon)">
             수정
           </button>
           <button 
+            class="btn--outline--white btn--sm"
             type="text"
             @click.prevent="onDelete(coupon.coupon_id)">
             삭제
@@ -132,7 +132,7 @@ export default {
     align-items: center;
   }
   .btn--gray.btn--sm {
-    height: 25px;
+    height: 30px;
   }
   .title {
     text-align: left;
@@ -153,5 +153,4 @@ table {
     padding: 12px;
   }
 }
-
 </style>

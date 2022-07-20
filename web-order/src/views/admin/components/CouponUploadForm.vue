@@ -12,23 +12,22 @@
           placeholder="쿠폰명을 입력해주세요."
           v-model="name" /> 
         <label>쿠폰 종류</label>
-        <select 
-          v-model="choice">
+        <div 
+          class="coupon-type"
+          v-for="entity in entities"
+          :key="entity">
+          <input 
+            type="radio"
+            :value="entity"
+            v-model="choice" />
+          {{ entity }}
+        </div>
+        <select
+          v-model="foodId">
           <option
-            value=""
-            selected
-            disabled> 
-            쿠폰 종류 선택
-          </option>
-          <option>기타 쿠폰</option>
-          <option>
-            전체 상품 쿠폰
-            {{ foods.length }} 
-          </option>
-          <option 
             v-for="food in foods"
             :key="food.food_id">
-            {{ food.food_name }}
+            {{ food.food_id }}
           </option>
         </select>
         <label>쿠폰 유효 기간</label>
@@ -102,9 +101,9 @@
         </div>
       </div>
       <button 
-        class="btn--orange btn--sm"
+        class="btn--blue btn--sm"
         type="button"
-        @click="couponRegistration">
+        @click="couponRegistration()">
         등록
       </button>
     </form>
@@ -137,14 +136,17 @@ export default {
       status: '',
       selectedUser: [],
       choic:'',
+      foodId: '',
       radios: ['노출함', '노출안함'],
+      entities: ['기타 쿠폰', '전체 상품 쿠폰', '개별 상품 쿠폰']
     }
   },
   methods: {
     setData(imageFile) {
       this.files = imageFile;
     },
-    couponRegistration() {
+    couponRegistration(food) {
+      console.log("foods", food);
       let formData = new FormData();
       for(let i = 0; i < this.files.length; i++ ){
         let file = this.files[i].file;
@@ -158,6 +160,8 @@ export default {
       formData.append('percent', this.status);
       formData.append('user', this.selectedUser);
       formData.append('status', this.option);
+      formData.append('foodId', this.foodId);
+
 
       axios.post(`${process.env.VUE_APP_URL}/api/admin/post/couponUpload`,
         formData,
@@ -168,7 +172,7 @@ export default {
         }
       ).then(res => {
         console.log("couponUpload response success", res.data);
-        this.$router.go();
+        // this.$router.go();
       }).catch(err => {
         console.log("couponeUpload response fail", err.response);
       })
@@ -192,6 +196,11 @@ export default {
   .section-coupon {
     display: flex;
     flex-direction: column;
+    .coupon-type {
+      width: 150px;
+      display: flex;
+      flex-direction: row;
+    }
     .coupon-filter {
       width: 300px;
       display: flex;
@@ -204,10 +213,6 @@ export default {
   }
   .section-image {
     margin: 5px;
-  }
-  .btn--orange {
-    margin: 5px;
-    background: linear-gradient(#0751f1c9, $blue-900);
   }
 }
 </style>

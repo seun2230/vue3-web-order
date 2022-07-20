@@ -7,58 +7,81 @@
         <div>
           <form class="modal-content">
             <h3>{{ couponItem.coupon_name }}의 정보를 수정하세요.</h3>
-            <label>쿠폰 이름</label>
-            <input
-              type="text"
-              :placeholder="couponItem.coupon_name"
-              v-model="modifyForm.name" />
-            <label>쿠폰 종류</label>
-            <select 
-              :placeholder="couponItem.coupon_type"
-              v-model="modifyForm.choice">
-              <option
-                v-for="entity in entities"
-                :key="entity">
-                {{ entity }}
-              </option>  
-            </select>
-            <label>쿠폰 유효 기간</label>
-            <input
-              type="date" 
-              :placeholder="couponItem.coupon_date"
-              v-model="modifyForm.date" />
-            <label>할인 가격</label>
-            <input
-              type="number" 
-              min="10"
-              max="10000"
-              step="1000"
-              :placeholder="couponItem.coupon_price"
-              v-model="modifyForm.price" />
-            <label>쿠폰 대상자</label>
-            <select
-              :placeholder="couponItem.users_user_id"
-              v-model="modifyForm.userInfo">
-              <option>
-                전체
-                {{ users.length }} 명
-              </option>
-              <option
-                v-for="user in users"
-                :key="user.user_id">
-                {{ user.user_id }}  
-              </option>
-            </select>
+            <div>
+              <label>쿠폰 이름</label>
+              <input
+                type="text"
+                :placeholder="couponItem.coupon_name"
+                v-model="modifyForm.name" />
+            </div>
+            <div>
+              <label>쿠폰 종류</label>
+              <select 
+                :placeholder="couponItem.coupon_type"
+                v-model="modifyForm.choice">
+                <option 
+                  value="" 
+                  disabled>
+                  쿠폰 종류 선택
+                </option>
+                <option
+                  v-for="entity in entities"
+                  :key="entity">
+                  {{ entity }}
+                </option>  
+              </select>
+            </div>
+            <div>
+              <label>쿠폰 유효 기간</label>
+              <input
+                type="date" 
+                :placeholder="couponItem.coupon_date"
+                v-model="modifyForm.date" />
+            </div>
+            <div>
+              <label>할인 가격</label>
+              <input
+                type="number" 
+                min="10"
+                max="10000"
+                step="1000"
+                :placeholder="couponItem.coupon_price"
+                v-model="modifyForm.price" />
+            </div>
+            <div>
+              <label>쿠폰 대상자</label>
+              <select
+                :placeholder="couponItem.users_user_id"
+                v-model="modifyForm.userInfo">
+                <option 
+                  value="" 
+                  disabled
+                  selected>
+                  쿠폰 대상 선택
+                </option>
+                <option>
+                  전체
+                  {{ users.length }} 명
+                </option>
+                <option
+                  v-for="user in users"
+                  :key="user.user_id">
+                  {{ user.user_id }}  
+                </option>
+              </select>
+            </div>
           </form>
         </div>
         <footer class="modal-footer">
           <slot name="footer"></slot>
           <button 
+            class="btn--white btn--sm"
             type="text"
             @click="$emit('close')">
             닫기
           </button>
           <button
+            class="btn--blue btn--sm"
             type="text"
             @click="submit(this.modifyForm)">
             제출
@@ -127,7 +150,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/scss/variables.scss';
-
+@import '@/scss/btn.scss';
 .container {
   padding: 10px;
   background: #ffffff;
@@ -164,10 +187,14 @@ export default {
     padding: 20px;
     width: 500px;
     height: 500px;
+    text-align: left;
+    align-items: left;
+    align-content: space-around;
   }
   &-footer {
     width: 500px;
     padding: 10px;
+    background-color: #fff;
     text-align: center;
   }
 }

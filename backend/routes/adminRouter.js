@@ -4,8 +4,8 @@ const pool = require('../db/index');
 const { upload } = require('../api/S3UploadStorage');
 const { verifyToken } = require('../middleware/auth');
 const { format } = require('../utils/DateUtils');
-
- router.post('/post/foodUpload', upload.array('files'), async function(req, res) {
+    
+router.post('/post/foodUpload', upload.array('files'), async function(req, res) {
   try { 
     console.log("DB Connection! /post/foodUpload")
     const connection = await pool.getConnection(async conn => conn);
@@ -86,7 +86,7 @@ router.post('/post/couponUpload', upload.array('files'), async function(req, res
         coupon_id[0]["max(coupon_id)"],
         req.body.user,
         false,
-        5
+        req.body.foodId
       ];
       await connection.query(sqlCouponList, valueCouponList);
       await connection.commit();
@@ -234,7 +234,7 @@ router.post('/post/slideUpload', upload.array('files'), async function(req, res)
       await connection.beginTransaction();
 
       for (let i = 0; i < req.files.length; i++) {
-        image[i] = files[i].transforms[0].location
+        image[i] = files[i].transforms[0].location         
       }
 
       let sql = "INSERT INTO slide" + 
@@ -351,7 +351,8 @@ router.get("/get/couponList", async (req, res) => {
     console.log("DB Connection! /couponList");
     const connection = await pool.getConnection(async conn => conn);
     try {
-      let sql = "SELECT * FROM coupon"; 
+      let sql = "SELECT * FROM coupon_list "
+              + "LEFT JOIN coupon ON coupon_coupon_id = coupon_id ";
       const [rows] = await connection.query(sql);
       connection.release();
       res.send(rows);

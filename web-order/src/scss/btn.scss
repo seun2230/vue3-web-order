@@ -110,6 +110,36 @@
   border-radius: 4px;
 }
 
+.btn--white {
+  width: 0;
+  height: 0;
+  outline: none;
+  color: black;
+  font-weight: bold;
+  border-radius: .5rem;
+  border: 0;
+  background: linear-gradient(#fdfafaad, #fff);
+  box-shadow: 2px 2px 5px rgb(0,0,0, 0.1);
+  z-index: 2;
+  transition: .5s;
+  &.btn--sm {
+    width: 70px;
+    height: 40px;
+  }
+  &.btn--md {
+    width: 100px;
+    height: 35px;
+  }
+  &.btn--lg {
+    width: 50%;
+    height: 35px;
+  }
+  &.btn--xl {
+    width: 100%;
+    height: 45px;
+  }
+}
+
 .btn--orange {
   width: 0;
   height: 0;
@@ -179,6 +209,37 @@
   box-shadow: 2px 2px 4px #0000001a;
   font-weight: bold;
   color: orange;
+}
+
+.btn--blue {
+  width: 0;
+  height: 0;
+  margin-right: 3px;
+  border: 0;
+  border-radius: .5rem;
+  background: linear-gradient(#1f5de2c9, $blue-800);
+  box-shadow: 2px 2px 5px rgb(0,0,0, 0.1);
+  color: #fff;
+  outline: 0;
+  font-weight: 600;
+  font-size: 16px;
+  
+  &.btn--sm {
+    width: 70px;
+    height: 40px;
+  }
+  &.btn--md {
+    width: 100px;
+    height: 35px;
+  }
+  &.btn--lg {
+    width: 50%;
+    height: 35px;
+  }
+  &.btn--xl {
+    width: 100%;
+    height: 45px;
+  }
 }
 
 // other color
@@ -263,6 +324,36 @@
   color: orange;
   &.btn--sm {
     width: 70px;
+    height: 40px;
+  }
+  &.btn--md {
+    width: 100px;
+    height: 35px;
+  }
+  &.btn--lg {
+    width: 50%;
+    height: 35px;
+  }
+  &.btn--xl {
+    width: 100%;
+    height: 45px;
+  }
+}
+
+.btn--outline--white {
+  width: 0;
+  height: 0;
+  outline: 0;
+  border: 1px solid #ccc;
+  border-radius: .2rem;
+  background-color: #fff;
+  box-shadow: none;
+  padding: .3rem;
+  font-size: 14px;
+  font-weight: bold;
+  color: $gray-text;
+  &.btn--sm {
+    width: 50px;
     height: 40px;
   }
   &.btn--md {
