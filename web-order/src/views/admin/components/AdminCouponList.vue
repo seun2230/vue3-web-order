@@ -1,14 +1,16 @@
 <template>
   <div class="container">
-    <h4 class="title">
-      쿠폰 리스트
-    </h4>
-    <button
-      type="text"
-      class="btn--gray btn--sm" 
-      @click="onForm">
-      등록
-    </button>
+    <div class="section-title">
+      <h4 class="title">
+        쿠폰 리스트
+      </h4>
+      <button
+        type="text"
+        class="btn--gray btn--sm" 
+        @click="onForm">
+        등록
+      </button>
+    </div>
     <div v-if="isActive">
       <CouponUploadForm />
     </div>
@@ -19,34 +21,40 @@
       <th>쿠폰 날짜</th>
       <th>쿠폰 가격</th>
       <th>쿠폰 대상(사용자)</th>
-      <th>수정</th>
-      <th>삭제</th>
+      <th>옵션</th>
       <tr 
         v-for="coupon in couponList"
         :key="coupon.coupon_id">
+        {{ index }}
         {{ coupon.coupon_users_user_id }}
         <td>{{ coupon.coupon_id }}</td>
         <td>{{ coupon.coupon_name }}</td>
         <td>{{ coupon.coupon_type }}</td>
         <td>{{ coupon.coupon_date }}</td>
         <td>{{ coupon.coupon_price }}</td>
-        <td>{{ coupon.coupon_users_user_id }}</td>
+        <td>{{ coupon.users_user_id }}</td>
+        <td>
+          <button
+            type="text"
+            @click.prevent="onModify(coupon)">
+            수정
+          </button>
+          <button 
+            type="text"
+            @click.prevent="onDelete(coupon.coupon_id)">
+            삭제
+          </button>
+        </td>
       </tr>
-      <button
-        type="text"
-        @click.prevent="onModify()">
-        수정
-      </button>
-      <button 
-        type="text"
-        @click.prevent="onDelete()">
-        삭제
-      </button>
     </table>
     <div>
       <Coupon
-        :coupon="this.couponList"
-        v-if="couponModal" />
+        v-if="couponModal"
+        :coupon-item="couponItem"
+        @close="closeModal()">
+        <template #footer>
+        </template>
+      </Coupon>
     </div>
   </div>
 </template>
@@ -55,6 +63,7 @@
 import CouponUploadForm from '../components/CouponUploadForm.vue';
 import Coupon from '../components/modal/Coupon.vue';
 import { mapState } from 'vuex';
+import axios from 'axios';
 
 export default {
   components: {
@@ -64,7 +73,8 @@ export default {
   data() {
     return {
       isActive: false,
-      couponModal: true,
+      couponModal: false,
+      couponItem:''
     }
   },
   created() {
@@ -77,10 +87,32 @@ export default {
     onForm() {
       this.isActive = !this.isActive;
     },
-    onModify(){
+    onModify(modifyId){
+      console.log("couponModal modifyId", modifyId);
+      this.couponItem = modifyId;
+      // console.log(header, this.index);
       this.couponModal = true;
     },
-    onDelete() {
+    onDelete(deleteId) {
+      console.log("coupon deleteId", deleteId);
+      let couponId = { coupon_id: deleteId};
+      axios.post(`${process.env.VUE_APP_URL}/api/admin/post/couponDelete`,
+      JSON.stringify(couponId),
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then((res) => {
+        console.log("couponDelete respon success", res.data);
+        this.$router.go();
+      })
+      .catch(err => {
+        console.log("couponDelete response fail", err.response);
+      })
+    },
+    closeModal() {
+      this.couponModal = false;
     }
   },
 }
@@ -93,8 +125,17 @@ export default {
   width: 0 auto;
   padding: 20px;
   background: #fff;
+  .section-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .btn--gray.btn--sm {
+    height: 25px;
+  }
   .title {
-    text-align: center;
+    text-align: left;
   }
 }
 

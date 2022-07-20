@@ -3,8 +3,8 @@ const router = express.Router();
 const pool = require('../db/index');
 const { upload } = require('../api/S3UploadStorage');
 const { verifyToken } = require('../middleware/auth');
-    
-router.post('/post/foodUpload', upload.array('files'), async function(req, res) {
+
+ router.post('/post/foodUpload', upload.array('files'), async function(req, res) {
   try { 
     console.log("DB Connection! /post/foodUpload")
     const connection = await pool.getConnection(async conn => conn);
@@ -14,8 +14,8 @@ router.post('/post/foodUpload', upload.array('files'), async function(req, res) 
 
       await connection.beginTransaction();
 
-      for (let i = 0; i < req.files.length; i++) {          
-        image[i] = files[i].transforms[0].location
+      for (let i = 0; i < req.files.length; i++) { 
+        image[i] = files[i].transforms[0].location         
       }
 
       let sql = "INSERT INTO food_items" + 
@@ -115,6 +115,69 @@ router.get('/get/slides', async(req, res) => {
       error: "DB Error",
       err
     })
+  }
+})
+
+router.post('/post/couponModify', verifyToken, async(req, res) => {
+  try {
+    console.log("DB Connection! /post/couponModify");
+    console.log("req.body", req.body);
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      let value = [
+        req.body.name,
+        req.body.choice,
+        req.body.date,
+        req.body.price,
+        req.decoded.user_id,
+        req.body.couponId
+      ];
+      
+      let sql = "UPDATE coupon SET coupon_name = ?, coupon_type = ?,coupon_date = ?, coupon_price = ?, users_user_id = ?" 
+                " where coupon_id = ?";
+      console.log("req.body value", value);
+
+      await connection.beginTransaction();
+      await connection.query(sql, value);
+      await connection.commit();
+      connection.release();
+
+      res.send({ message: "CouponModfiy Success" });
+    } catch (err) {
+      console.log("CouponModify Query Error", err.response);
+      res.send({ err: "CouponModify Query Error" });
+      await connection.rollback();
+      connection.release();
+    }
+  } catch (err) {
+    console.log("CouponModify DB Error", err.response);
+    res.send({err: "CouponModify DB Error"});
+  }
+})
+
+router.post('/post/couponDelete', async(req, res) => {
+  try {
+    console.log("DB Connection /post/couponDelete");
+    console.log(req.body);
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+      let sql = "DELETE FROM coupon WHERE coupon_id = ?";
+      let value = req.body.coupon_id;
+      await connection.beginTransaction();
+      await connection.query(sql, value);
+      await connection.commit();
+
+      res.send({ message: 'CouponDelete Response Success'});
+      connection.release();
+    } catch (err) {
+      console.log("CouponDelete Query Error", err);
+      await connection.rollback();
+      connection.release();
+      res.send({ error: "CouponDelete Query Error", err});
+    }
+  } catch (err) {
+    console.log("CouponDelete DB Error", err);
+    res.send({error: "CouponDelete DB Error", err});
   }
 })
 
