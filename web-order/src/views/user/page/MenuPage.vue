@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import MenuList from '../components/MenuList.vue'
-import CartList from '../components/CartList.vue'
+import MenuList from '../components/menus/MenuList.vue'
+import CartList from '../components/carts/CartList.vue'
 
 export default {
   components: {

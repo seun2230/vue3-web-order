@@ -11,8 +11,9 @@ import CommentList from '../components/comment/CommentList.vue'
 import BoardDetail from '../components/BoardDetail.vue'
 import BoardModify from '../components/BoardModify'
 import MenuPage from '../views/user/page/MenuPage.vue'
+import MenuDetail from '../views/user/page/MenuDetail.vue';
 import UserPage from '../views/user/UserPage.vue'
-import UserMyPage from '../views/user/page/UserMyPage.vue'
+import MyOrderHistory from '../views/user/page/MyOrderHistory.vue'
 import ShopInfo from '../views/user/page/ShopInfo.vue'
 import store from '../store'
 import NullImageManagePage from './admin/page/NullImageManagePage'
@@ -105,7 +106,13 @@ const routes = [
         path: 'menu',
         name: 'menu',
         component: MenuPage,
-        meta: { metaName: '주문하기'}
+        meta: { metaName: '주문하기'},
+      },
+      {
+        path: 'menu/:id',
+        name: 'menuDetail',
+        component: MenuDetail,
+        meta: { metaName: '상품 상세'}
       },
       {
         path: 'userinfo',
@@ -123,7 +130,7 @@ const routes = [
       {
         path: 'mypage',
         name: 'mypage',
-        component: UserMyPage,
+        component: MyOrderHistory,
         meta: { metaName: '주문 내역'}
       },
       {

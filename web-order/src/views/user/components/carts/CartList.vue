@@ -21,7 +21,7 @@
 
 <script>
 import CartItem from "./CartItem.vue";
-import TotalPrice from "./TotalPrice.vue";
+import TotalPrice from "./CartTotalPrice.vue";
 import { mapGetters, mapState } from "vuex";
 import axios from "axios";
 
@@ -62,8 +62,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../../scss/variables.scss";
-@import "../../../scss/btn.scss";
+@import "@/scss/variables.scss";
+@import "@/scss/btn.scss";
 
 .container {
   display: grid;

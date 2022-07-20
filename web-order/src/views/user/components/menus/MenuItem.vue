@@ -1,12 +1,13 @@
 <template>
   <div class="container">
     <div 
-      class="infos"
-      @click="addCart()">
-      <!-- <img
-        :src="food.food_image1"
-        :alt="food.food_name" /> -->
-      <img src="../../../assets/cook.jpg" />
+      class="infos">
+      <router-link 
+        :to="{ name:'menuDetail', params: { id: food.food_id } }">
+        <img 
+          src="../../../../assets/cook.jpg" 
+          @click="moveMenuDetail" />
+      </router-link>
       <div class="detail">
         <div class="name">
           <span>{{ food.food_name }}</span>

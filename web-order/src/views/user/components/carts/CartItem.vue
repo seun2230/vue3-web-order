@@ -12,15 +12,18 @@
       </div>
     </div>
     <div class="btn-group">
-      <div class="btn-menu"
+      <div 
+        class="btn-menu"
         @click="addCart(this.cart)">
         <i class="fas fa-angle-up"></i>
       </div>
-      <div class="btn-menu"
+      <div 
+        class="btn-menu"
         @click="realRemoveCart(this.cart)">
         <i class="fas fa-ban"></i>
       </div>
-      <div class="btn-menu"
+      <div 
+        class="btn-menu"
         @click="removeCart(this.cart)">
         <i class="fas fa-angle-down"></i>
       </div>
@@ -53,7 +56,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../scss/variables.scss';
+@import '@/scss/variables.scss';
 span {
   width: 100%;
 }

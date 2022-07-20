@@ -135,7 +135,6 @@ export default {
   .order_food {
     margin: 3px 0px;
     font-size: 1.2rem;
-    // background-color: red;
   }
   .order_option{
     span {
