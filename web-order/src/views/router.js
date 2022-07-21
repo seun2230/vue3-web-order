@@ -12,6 +12,8 @@ import BoardDetail from '../components/BoardDetail.vue'
 import BoardModify from '../components/BoardModify'
 import MenuPage from '../views/user/page/MenuPage.vue'
 import MenuDetail from '../views/user/page/MenuDetail.vue';
+import MenuInformation from '../views/user/components/menus/MenuInformation.vue';
+import MenuReview from '../views/user/components/menus/MenuReview.vue';
 import UserPage from '../views/user/UserPage.vue'
 import MyOrderHistory from '../views/user/page/MyOrderHistory.vue'
 import ShopInfo from '../views/user/page/ShopInfo.vue'
@@ -112,7 +114,19 @@ const routes = [
         path: 'menu/:id',
         name: 'menuDetail',
         component: MenuDetail,
-        meta: { metaName: '상품 상세'}
+        meta: { metaName: '상품 상세'},
+        children: [
+          {
+            path: '',
+            name: 'menuInfo',
+            component: MenuInformation,
+          },
+          {
+            path: 'review',
+            name: 'menuReview',
+            component: MenuReview,
+          },
+        ]
       },
       {
         path: 'userinfo',

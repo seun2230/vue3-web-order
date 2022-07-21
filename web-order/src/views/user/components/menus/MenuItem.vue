@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <div 
-      class="infos">
+      class="infos"
+      @click="addCart">
       <router-link 
         :to="{ name:'menuDetail', params: { id: food.food_id } }">
         <img 
