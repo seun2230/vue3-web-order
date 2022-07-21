@@ -1,42 +1,52 @@
 <template>
-  <div class="container">
-    <div class="cartList">
-      <CartItem
-        class="cart_item"
-        v-for="cart in carts"
-        :key="cart.name"
-        :cart="cart" />
+  <div 
+    class="container">
+    <div
+      class="section-cart"
+      v-if="onCart">
+      <div 
+        class="cartList">
+        <CartItem
+          class="cart_item"
+          v-for="cart in carts"
+          :key="cart.name"
+          :cart="cart" />
+      </div>
+      <CartTotalPrice />
     </div>
-    <TotalPrice />
-    <div class="btn-container">
-      <div
-        class="btn-order"
+    <div class="section-button">
+      <button
+        class="btn--orange btn--xl"
         type="text"
         @click="submitCart(this.carts, this.totalPrice)">
         결제하기
-      </div>
+      </button>
     </div>
   </div>
 </template>
 
 <script>
 import CartItem from "./CartItem.vue";
-import TotalPrice from "./CartTotalPrice.vue";
+import CartTotalPrice from "./CartTotalPrice.vue";
 import { mapGetters, mapState } from "vuex";
 import axios from "axios";
 
 export default {
   data() {
     return {
+      show: false,
     }
   },
   components: {
     CartItem,
-    TotalPrice,
+    CartTotalPrice,
   },
   computed: {
     ...mapState("food", ["carts"]),
     ...mapGetters("food", ["totalPrice"]),
+    onCart() {
+      return this.carts.length === 0 ? this.show : !this.show;
+    }
   },
   methods: {
     submitCart(carts, totalPrice) {
@@ -68,37 +78,32 @@ export default {
 .container {
   display: grid;
   width: 100%;
-  .cartList {
-    min-height: 100px;
-    padding: 5px;
-    .cart_item {
-      display: flex;
-    }
-  }
-  .btn-container {
-    padding: 5px;
+  .section-cart {
+    position: fixed;
     width: 100%;
-    height: 8vh;
-    text-align: center;
-    .btn-order {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      background-color: rgba($color: black, $alpha: 0.9);
-      border-radius: 9px;
-      width: 100%;
-      height: 80%;
-      color: white;
-      box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
-      font-weight: 800;
-      font-size: 1.3rem;
-      letter-spacing: 1px;
-      transition: ease-out 300ms;
-      transition-duration: 300ms;
+    border-top-left-radius: 10%;
+    border-top-right-radius: 10%;
+    background: linear-gradient(#fdfafaf6, #fff);
+    box-shadow: 2px 2px 5px #0000001a;;
+    bottom: 142px;
+    z-index: 2;
+    .cartList {
+      min-height: 100px;
+      padding: 5px;
+      .cart_item {
+        display: flex;
+      }
     }
   }
-  .btn-order:active {
-    background-color: rgba(255, 0, 0, 0.5);
+  .section-button {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    bottom: 98px;
+    .btn--orange .btn--xl {
+      border-radius: none;
+    }
   }
 }
 </style>

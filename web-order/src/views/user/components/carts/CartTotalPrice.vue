@@ -1,9 +1,9 @@
 <template>
   <div class="container-child">
-    <div class="message-box">
-      <span class="message">총 금액</span>
-    </div>
-    <div class="price-box">
+    <div
+      v-if="hiddenPrice" 
+      class="child-box">
+      <label>총 금액</label>
       <span class="price">{{ totalPrice }} 원</span>
     </div>
   </div>
@@ -13,8 +13,16 @@
 import { mapGetters } from 'vuex'
 
 export default {
+  data() {
+    return {
+      isHidden: false
+    }
+  },
   computed: {
-    ... mapGetters('food', ['totalPrice'])
+    ... mapGetters('food', ['totalPrice']),
+    hiddenPrice() {
+      return this.totalPrice === 0 ? this.isHidden : !this.isHidden;
+    }
   },
 }
 </script>
@@ -23,30 +31,17 @@ export default {
 @import '@/scss/variables.scss';
 
 .container-child {
-  text-align: center;
-  display: grid;
-    margin: 5px;
+  margin: 5px;
   padding: 5px;
-  border-radius: 9px;
-  .message-box {
-    width: 100%;
-    height: 35px;
-    padding: 5px;
-    .message {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: $menuBg;
-    }
-  }
-  .price-box {
-    margin-bottom: 5px;
-    padding: 5px;
-    width: 100%;
-    border-radius: 9px;
+  text-align: right;
+  
+  .child-box {
+    font-size: 1.5rem;
+    line-height: 20px;
     .price {
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: $menuBg;
+      font-size: 1.3rem;
+      font-weight: bolder;
+      color: #e73251;
     }
   }
 }

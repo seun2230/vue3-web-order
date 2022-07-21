@@ -1,31 +1,32 @@
 <template>
   <div class="container">
-    <div class="infos-container">
-      <div class="name-box">
+    <div class="section-carts">
+      <div class="cart-box">
         <span class="name">{{ cart.food_name }}</span>
-      </div>
-      <div class="quantity-box">
-        <span class="quantity">{{ cart.quantity }} 개</span>
-      </div>
-      <div class="price-box">
-        <span class="price">{{ cart.food_price * cart.quantity }} 원</span>
+        {{ cart.food_price * cart.quantity }} 원
       </div>
     </div>
-    <div class="btn-group">
+    <div class="section-button">
       <div 
-        class="btn-menu"
-        @click="addCart(this.cart)">
-        <i class="fas fa-angle-up"></i>
-      </div>
-      <div 
-        class="btn-menu"
+        class="btn-remove"
         @click="realRemoveCart(this.cart)">
-        <i class="fas fa-ban"></i>
+        x
       </div>
-      <div 
-        class="btn-menu"
-        @click="removeCart(this.cart)">
-        <i class="fas fa-angle-down"></i>
+      <div class="btn-count">
+        <div 
+          class="btn--white btn--sm"
+          @click="removeCart(this.cart)">
+          -
+        </div>
+        <div
+          class="btn-quantity">
+          {{ cart.quantity }}
+        </div>
+        <div 
+          class="btn--white btn--sm"
+          @click="addCart(this.cart)">
+          +
+        </div>
       </div>
     </div>
   </div>
@@ -57,53 +58,70 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/scss/variables.scss';
-span {
-  width: 100%;
-}
-
 .container {
+  width: 100%;
+  height: 100px;
   margin-top: 10px;
   display: flex;
-  padding: 10px;
-  border-radius: 9px;
-  height: 100px;
-  width: 100%;
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
-  .infos-container {
+  border-bottom: 1px solid $gray-500;
+  .section-carts {
+    width: 100%;
+    padding: 10px;
     display: grid;
+    align-items: center;
     font-weight: 800;
     color: $menuBg;
-    width: 100%;
-    .name-box {
+    .cart-box {
       width: 100%;
       height: 25px;
-    }
-    .quantity-box {
-      margin-top: 5px;
-      flex-grow: 100%;
-      height: 25px;
-    }
-    .price-box {
-      margin-top: 5px;
-      flex-grow: 100%;
-      height: 25px;
+
+      .name {
+        font-size: 1.4rem;
+        font-weight: bolder;
+        line-height: 40px;
+      }
     }
   }
-  .btn-group {
-    display: grid;
-    width: 50px;
-    .btn-menu {
-      font-size: 1.2rem;
-      text-align: center;
-      margin: 0px;
+}
+
+.section-button {
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-weight: 500;
+  .btn-remove {
+    margin-right: 5px;
+    text-align: right;
+    font-size: 1.2rem;
+    font-weight: bolder;
+    color: $gray-700;
+  }
+  .btn-count {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    align-items: center;
+
+    .btn-quantity {
       width: 40px;
-      height: 20px;
-      transition: ease-out 300ms;
-      transition-duration: 300ms;
+      height: 30px;
+      border: 1px solid $gray-500;
+      border-radius: .2rem;
+      box-shadow: 2px 2px 5px #0000001a;
+      color: $gray-700;
+      font-size: 1.2em;
+      line-height: 30px;
     }
-  }
-  .btn-menu:active {
-    background-color: rgba(0, 0, 0, 0.1);
+    .btn--white.btn--sm {
+      width: 40px;
+      height: 30px;
+      border: 1px solid $gray-500;
+      border-radius: .2rem;
+      color: $gray-700;
+      font-size: 1.5rem;
+      line-height: 30px;
+    }
   }
 }
 </style>

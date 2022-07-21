@@ -39,6 +39,20 @@
           </div>
         </div>
       </div>
+      <div class="section-button">
+        <button
+          class="btn--outline--white btn--xl"
+          type="text"
+          @click="moveCart()">
+          장바구니 담기
+        </button>
+        <button 
+          class="btn--black btn--xl"
+          type="text"
+          @click="moveOrder()">
+          주문하기
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -81,12 +95,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/scss/btn.scss';
 @import '@/scss/variables.scss';
 @import '@/scss/common.scss';
 
 .container {
   padding-top: 50px;
-
   .section-content {
     padding-top: 2px;
     display: flex;
@@ -142,6 +156,21 @@ export default {
   .rating-text {
     margin-right: 5px;
     font-family: none;
+    font-size: 16px;
+    font-weight: bolder;
+  }
+}
+.section-button {
+  position: fixed;
+  width: 100%;
+  bottom: 100px;
+  display: flex;
+  flex-direction: row;
+
+  .btn--outline--white.btn--xl {
+    margin-right: 2px;
+    border: 1px solid $gray-500;
+    border-radius: .5rem;
     font-size: 16px;
     font-weight: bolder;
   }
