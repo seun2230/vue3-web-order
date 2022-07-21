@@ -18,6 +18,7 @@ input {
 }
 
 label {
+  font-size: 20px;
   font-weight: 0;
   margin: 5px;
 }
@@ -104,7 +105,7 @@ button {
   font-family: none;
   font-size: 1px;
   -webkit-text-fill-color: $gray-400;
-  -webkit-text-stroke-width: 2.7px;
+  -webkit-text-stroke-width: 3.5px;
   -webkit-text-stroke-color: $gray-400;
 }
 
@@ -112,7 +113,7 @@ button {
   font-family: none;
   font-size: 1px;
   -webkit-text-fill-color: orange;
-  -webkit-text-stroke-width: 2.7px;
+  -webkit-text-stroke-width: 3.5px;
   -webkit-text-stroke-color: #ffa600e5;
 }
 
