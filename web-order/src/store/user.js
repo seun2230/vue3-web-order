@@ -1,5 +1,5 @@
 import axios from 'axios'
-import router from '../views/router';
+import router from '../routes/index.js';
 
 export default {
   namespaced: true,

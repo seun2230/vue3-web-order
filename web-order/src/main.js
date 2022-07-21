@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import store from './store'
 import ElementPlus from 'element-plus'
-import VueRouter from './views/router.js'
+import VueRouter from './routes/index.js'
 import axios from 'axios'
 // import * as jose from 'jose'
 
